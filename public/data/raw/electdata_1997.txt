@@ -1,0 +1,660 @@
+Name;MP;Area;County;Electorate;CON;LAB;LIB;NAT;MIN;OTH
+Aldershot;G. Howarth;12;Hampshire;76189;23119;13057;16498;0;0;1477
+Aldridge-Brownhills;R. Shepherd;7;Black Country;62441;21856;19330;5184;0;0;0
+Altrincham and Sale West;G. Brady;4;Central Manchester;70625;22348;20843;6535;0;0;2056
+Amber Valley;Ms J. Mallaber;8;Derbyshire;72005;18330;29943;4219;0;0;2283
+Arundel and South Downs;H. Flight;12;West Sussex;67641;27251;9376;13216;0;0;1494
+Ashfield;G. Hoon;8;Nottinghamshire;72269;10251;32979;4882;0;0;2491
+Ashford;D. Green;12;Kent;74149;22899;17544;10901;0;0;3950
+Ashton under Lyne;Rt.Hon. R. Sheldon;4;Eastern Manchester;72206;8954;31919;4603;0;0;1804
+Aylesbury;D. Lidington;12;Buckinghamshire;79047;25426;12759;17007;0;0;2362
+Banbury;A. Baldry;12;Oxfordshire;77456;25076;20339;9761;0;0;3270
+Barking;Mrs M. Hodge;11;Barking and Dagenham;53682;5802;21698;3128;0;0;2336
+Barnsley Central;E. Illsley;5;South Yorkshire;61133;3589;28090;3481;0;0;1325
+Barnsley East and Mexborough;J. Ennis;5;South Yorkshire;67840;4936;31699;4489;0;0;2211
+Barnsley West and Penistone;M. Clapham;5;South Yorkshire;64894;7750;25017;7613;0;0;1828
+Barrow and Furness;J. Hutton;4;Cumbria;66960;13133;27630;4264;0;0;3203
+Basildon;Ms A. Smith;9;Essex;73989;16366;29646;4608;0;0;2462
+Basingstoke;A. Hunter;12;Hampshire;77035;24751;22354;9714;0;0;310
+Bassetlaw;J. Ashton;8;Nottinghamshire;68101;11838;29298;4950;0;0;1838
+Bath;D. Foster;10;Bristol Area;70815;16850;8828;26169;0;0;2142
+Batley and Spen;M. Wood;5;West Yorkshire;64209;17072;23213;4133;0;0;2547
+Battersea;M. Linton;11;Wandsworth;66928;18687;24047;3482;0;0;1181
+Beaconsfield;D. Grieve;12;Buckinghamshire;68959;24709;10063;10722;0;0;4707
+Beckenham;P. Merchant;11;Bromley;72807;23084;18131;9858;0;0;3277
+Bedford;P. Hall;9;Bedfordshire;66560;16474;24774;6044;0;0;1652
+Bedfordshire Mid;J. Sayeed;9;Bedfordshire;66979;24176;17086;8823;0;0;2431
+Bedfordshire North East;Rt.Hon. Sir N. Lyell;9;Bedfordshire;64743;22311;16428;7179;0;0;4470
+Bedfordshire South West;Sir D. Madel;9;Bedfordshire;69781;21534;21402;7559;0;0;2369
+Berwick-upon-Tweed;A. Beith;3;Northumberland;56428;10056;10965;19007;0;0;1775
+Bethnal Green and Bow;Ms O. King;11;Tower Hamlets;73008;9412;20697;5361;0;0;9212
+Beverley and Holderness;J. Cran;5;Humber area;71916;21629;20818;9689;0;0;806
+Bexhill and Battle;C. Wardle;12;East Sussex;65584;23570;8866;12470;0;0;4088
+Bexleyheath and Crayford;N. Beard;11;Bexley;63334;18527;21942;5391;0;0;2363
+Billericay;Mrs T. Gorman;9;Essex;76550;22033;20677;8763;0;0;3947
+Birkenhead;F. Field;4;Merseyside;59782;5982;27825;3548;0;0;1968
+Birmingham Edgbaston;Mrs G. Stuart;7;Birmingham;70204;18712;23554;4691;0;0;1508
+Birmingham Erdington;R. Corbett;7;Birmingham;66380;11107;23764;4112;0;0;1424
+Birmingham Hall Green;S. McCabe;7;Birmingham;58767;13952;22372;4034;0;0;1461
+Birmingham Hodge Hill;T. Davis;7;Birmingham;56066;8198;22398;2891;0;0;660
+Birmingham Ladywood;Ms C. Short;7;Birmingham;70013;5052;28134;3020;0;0;1771
+Birmingham Northfield;R. Burden;7;Birmingham;56842;10873;22316;4078;0;0;1580
+Birmingham Perry Barr;J. Rooker;7;Birmingham;71031;9964;28921;4523;0;0;2479
+Birmingham Selly Oak;Dr L. Jones;7;Birmingham;72049;14033;28121;6121;0;0;2275
+Birmingham Sparkbrook and Small Heath;R. Godsiff;7;Birmingham;73130;7315;26841;3889;0;0;3720
+Birmingham Yardley;Ms E. Morris;7;Birmingham;53058;6736;17778;12463;0;0;810
+Bishop Auckland;Rt.Hon. D. Foster;3;Durham;66754;9295;30359;4223;0;0;2104
+Blaby;A. Robathan;8;Leicestershire;70471;24564;18090;8001;0;0;2938
+Blackburn;J. Straw;4;Lancashire;73058;11690;26141;4990;0;0;4676
+Blackpool North and Fleetwood;Mrs J. Humble;4;Lancashire;74989;19105;28051;4600;0;0;1992
+Blackpool South;G. Marsden;4;Lancashire;75720;17666;29282;4392;0;0;0
+Blaydon;J. McWilliam;3;Newcastle area;64699;6048;27535;10930;0;0;1412
+Blyth Valley;R. Campbell;3;Northumberland;61761;5666;27276;9540;0;0;0
+Bognor Regis and Littlehampton;N. Gibb;12;West Sussex;66480;20537;13216;11153;0;0;1537
+Bolsover;D. Skinner;8;Derbyshire;66476;7924;35073;4417;0;0;0
+Bolton North East;D. Crausby;4;Western Manchester;67930;14952;27621;4862;0;0;1772
+Bolton South East;B. Iddon;4;Western Manchester;66459;8545;29856;3805;0;0;1143
+Bolton West;Ms R. Kelly;4;Western Manchester;63535;17270;24342;5309;0;0;2239
+Bootle;J. Benton;4;Merseyside;57284;3247;31668;2191;0;0;1117
+Boston and Skegness;Sir R. Body;8;Lincolnshire;67623;19750;19103;7721;0;0;0
+Bosworth;D. Tredinnick;8;Leicestershire;68113;21189;20162;9281;0;0;1521
+Bournemouth East;D. Atkinson;10;Dorset;61862;17997;9181;13651;0;0;2599
+Bournemouth West;J. Butterfill;10;Dorset;62028;17115;10093;11405;0;0;2459
+Bracknell;A. Mackay;12;Berkshire;79292;27983;17596;9122;0;0;4390
+Bradford North;T. Rooney;5;West Yorkshire;66228;10723;23493;6083;0;0;1596
+Bradford South;G. Sutcliffe;5;West Yorkshire;68391;12622;25558;5093;0;0;1785
+Bradford West;M. Singh;5;West Yorkshire;71961;15055;18932;6737;0;0;4844
+Braintree;A. Hurst;9;Essex;72772;22278;23729;6418;0;0;3151
+Brent East;K. Livingstone;11;Brent;53548;7866;23748;2751;0;0;907
+Brent North;B. Gardiner;11;Brent;54149;15324;19343;3104;0;0;403
+Brent South;P. Boateng;11;Brent;53505;5489;25180;2670;0;0;1159
+Brentford and Isleworth;Mrs A. Keen;11;Hounslow;79058;17825;32249;4613;0;0;1448
+Brentwood and Ongar;E. Pickles;9;Essex;66005;23031;11231;13341;0;0;3123
+Bridgwater;Rt.Hon. T. King;10;Somerset;73038;20174;13519;18378;0;0;2551
+Brigg and Goole;I. Cawsey;5;Humber area;63648;17104;23493;4692;0;0;1513
+Brighton Kemptown;D. Turner;12;East Sussex;65147;17945;21479;4478;0;0;2230
+Brighton Pavilion;D. Lepper;12;East Sussex;66431;13556;26737;4644;0;0;4014
+Bristol East;Ms J. Corston;10;Bristol Area;68990;11259;27418;7121;0;0;2403
+Bristol North West;D. Naysmith;10;Bristol Area;75009;16193;27575;7263;0;0;4214
+Bristol South;Ms D. Primarolo;10;Bristol Area;72393;10562;29890;6691;0;0;2716
+Bristol West;Ms V. Davey;10;Bristol Area;84870;20575;22068;17551;0;0;2447
+Bromley and Chislehurst;Rt.Hon. E. Forth;11;Bromley;71104;24428;13310;12530;0;0;2470
+Bromsgrove;Miss J. Kirkbride;7;Hereford and Worcestershire;67744;24620;19725;6200;0;0;1662
+Broxbourne;Mrs M. Roe;9;Hertfordshire;66720;22952;16299;5310;0;0;2415
+Broxtowe;N. Palmer;8;Nottinghamshire;74144;21768;27343;6934;0;0;2092
+Buckingham;J. Bercow;12;Buckinghamshire;62945;24594;12208;12175;0;0;421
+Burnley;P. Pike;4;Lancashire;67582;9148;26210;7877;0;0;2010
+Burton;Ms J. Dean;7;Staffordshire;72601;21480;27810;4617;0;0;604
+Bury North;D. Chaytor;4;Western Manchester;70515;20657;28523;4536;0;0;1337
+Bury South;I. Lewis;4;Western Manchester;66568;16225;28658;4227;0;0;1216
+Bury St Edmunds;D. Ruffley;9;Suffolk;74017;21290;20922;10102;0;0;3211
+Calder Valley;Ms C. McCafferty;5;West Yorkshire;74901;19795;26050;8322;0;0;2299
+Camberwell and Peckham;Ms H. Harman;11;Southwark;50214;3383;19734;3198;0;0;2159
+Cambridge;Mrs A. Campbell;9;Cambridgeshire;71669;13299;27436;8287;0;0;2317
+Cambridgeshire North East;M. Moss;9;Cambridgeshire;76056;23855;18754;9070;0;0;3746
+Cambridgeshire North West;Rt.Hon. Dr B. Mawhinney;9;Cambridgeshire;65791;23488;15734;7388;0;0;2208
+Cambridgeshire South;A. Lansley;9;Cambridgeshire;69850;22572;13485;13860;0;0;3766
+Cambridgeshire South East;J. Paice;9;Cambridgeshire;75666;24397;15048;14246;0;0;3116
+Cannock Chase;Dr A. Wright;7;Staffordshire;72362;14227;28705;4537;0;0;4897
+Canterbury;J. Brazier;12;Kent;74548;20913;16949;12854;0;0;3393
+Carlisle;E. Martlew;4;Cumbria;59917;12641;25031;4576;0;0;1359
+Carshalton and Wallington;T. Brake;11;Sutton;66038;16223;11565;18490;0;0;2145
+Castle Point;Ms C. Butler;9;Essex;67146;19489;20605;4477;0;0;4001
+Charnwood;Rt.Hon. S. Dorrell;8;Leicestershire;72692;26110;20210;7224;0;0;2629
+Chatham and Aylesford;J. Shaw;12;Kent;69172;18401;21191;7389;0;0;2180
+Cheadle;S. Day;4;Eastern Manchester;67627;22944;8253;19755;0;0;1511
+Chelmsford West;S. Burns;9;Essex;76086;23781;15436;17090;0;0;2270
+Cheltenham;N. Jones;10;Gloucestershire;67950;18232;5100;24877;0;0;2094
+Chesham and Amersham;Mrs C. Gillan;12;Buckinghamshire;69244;26298;10240;12439;0;0;3220
+Chester, City Of;Ms C. Russell;4;Cheshire;71730;19253;29806;5353;0;0;1845
+Chesterfield;Rt.Hon. A. Benn;8;Derbyshire;72472;4752;26105;20330;0;0;202
+Chichester;A. Tyrie;12;West Sussex;74489;25895;9605;16161;0;0;4118
+Chingford and Woodford Green;I. Duncan Smith;11;Waltham Forest;62904;21109;15395;6885;0;0;1059
+Chipping Barnet;Sir S. Chapman;11;Barnet;69049;21317;20282;6121;0;0;1845
+Chorley;L. Hoyle;4;Lancashire;74387;20737;30607;4900;0;0;1462
+Christchurch;C. Chope;10;Dorset;71488;26095;3884;23930;0;0;2290
+Cities of London and Westminster;Rt.Hon. P. Brooke;11;City of Westminster;69047;18981;14100;4933;0;0;2141
+Cleethorpes;Ms S. McIsaac;5;Humber area;68763;16882;26058;5746;0;0;1787
+Colchester;R. Russell;9;Essex;74743;16305;15891;17886;0;0;1924
+Colne Valley;Ms K. Mountford;5;West Yorkshire;73388;18445;23285;12755;0;0;1926
+Congleton;Mrs A. Winterton;4;Cheshire;68873;22012;14714;15882;0;0;811
+Copeland;Rt.Hon. Dr J. Cunningham;4;Cumbria;54263;12081;24025;3814;0;0;1425
+Corby;P. Hope;8;Northamptonshire;69252;18028;29888;4045;0;0;1996
+Cornwall North;P. Tyler;10;Cornwall;80076;17253;5523;31186;0;0;4619
+Cornwall South East;C. Breed;10;Cornwall;75825;20564;7358;27044;0;0;2466
+Cotswold;G. Clifton-Brown;10;Gloucestershire;67333;23698;11608;11733;0;0;4082
+Coventry North East;R. Ainsworth;7;Coventry and Solihull;74274;9287;31856;3866;0;0;3076
+Coventry North West;G. Robinson;7;Coventry and Solihull;76439;14300;30901;5690;0;0;3431
+Coventry South;J. Cunningham;7;Coventry and Solihull;71826;14558;25511;4617;0;0;5438
+Crawley;Mrs L. Moffatt;12;West Sussex;69040;16043;27750;4141;0;0;2483
+Crewe and Nantwich;Mrs G. Dunwoody;4;Cheshire;68694;13662;29460;5940;0;0;1543
+Crosby;Ms C. Curtis-Tansley;4;Merseyside;57190;15367;22549;5080;0;0;1145
+Croydon Central;G. Davies;11;Croydon;80152;21535;25432;6061;0;0;2771
+Croydon North;M. Wicks;11;Croydon;77063;14274;32672;4066;0;0;1551
+Croydon South;R. Ottaway;11;Croydon;73787;25649;13719;11441;0;0;3390
+Dagenham;Mrs J. Church;11;Barking and Dagenham;58573;6705;23759;2704;0;0;2995
+Darlington;A. Milburn;3;Teesside;65140;13633;29658;3483;0;0;1399
+Dartford;H. Stoate;12;Kent;69726;20950;25278;4827;0;0;943
+Daventry;T. Boswell;8;Northamptonshire;80151;28615;21237;9233;0;0;2665
+Denton and Reddish;A. Bennett;4;Eastern Manchester;68866;9826;30137;6121;0;0;0
+Derby North;R. Laxton;8;Derbyshire;76116;19229;29844;5059;0;0;2011
+Derby South;Rt.Hon. Mrs M. Beckett;8;Derbyshire;76386;13048;29154;7438;0;0;2179
+Derbyshire North East;H. Barnes;8;Derbyshire;71653;13104;31425;7450;0;0;0
+Derbyshire South;M. Todd;8;Derbyshire;76672;18742;32709;5408;0;0;3108
+Derbyshire West;P. McLoughlin;8;Derbyshire;72716;23945;19060;9940;0;0;3938
+Devizes;Rt.Hon. M. Ancram;10;Wiltshire;80383;25710;14551;15928;0;0;3847
+Devon East;Rt.Hon. Sir P. Emery;10;Devon;69094;22797;9292;15308;0;0;5153
+Devon North;N. Harvey;10;Devon;70350;21643;5367;27824;0;0;0
+Devon South West;G. Streeter;10;Devon;69293;22695;15262;12542;0;0;2318
+Devon West and Torridge;J. Burnett;10;Devon;75919;22787;7319;24744;0;0;4295
+Dewsbury;Mrs A. Taylor;5;West Yorkshire;61523;12963;21286;4422;0;0;4404
+Doncaster Central;Ms R. Winterton;5;South Yorkshire;67965;9105;26961;4091;0;0;3286
+Doncaster North;K. Hughes;5;South Yorkshire;63019;5906;27843;3369;0;0;2770
+Don Valley;Ms C. Flint;5;South Yorkshire;65643;10717;25376;4238;0;0;3226
+Dorset Mid and Poole North;C. Fraser;10;Dorset;67049;20632;8014;19951;0;0;2136
+Dorset North;R. Walter;10;Dorset;68923;23294;5380;20548;0;0;3365
+Dorset South;I. Bruce;10;Dorset;66318;17755;17678;9936;0;0;3813
+Dorset West;O. Letwin;10;Dorset;70369;22036;9491;20196;0;0;1829
+Dover;G. Prosser;12;Kent;68669;17796;29535;4302;0;0;2567
+Dudley North;R. Cranston;7;Black Country;68835;15014;24471;3939;0;0;4384
+Dudley South;I. Pearson;7;Black Country;66731;14097;27124;5214;0;0;1467
+Dulwich and West Norwood;R. Gough;11;Lambeth;69655;11038;27807;4916;0;0;1854
+Durham North;G. Radice;3;Durham;67891;6843;33142;5225;0;0;1958
+Durham North West;Miss H. Armstrong;3;Durham;67156;7101;31855;4991;0;0;2372
+Durham, City Of;G. Steinberg;3;Durham;69340;8598;31102;7499;0;0;1936
+Ealing Acton and Shepherd's Bush;C. Soley;11;Ealing;72028;12405;28052;5163;0;0;2444
+Ealing North;S. Pound;11;Ealing;78144;20744;29904;3887;0;0;1191
+Ealing Southall;P. Khabra;11;Ealing;81704;11368;32791;5687;0;0;4796
+Easington;J. Cummings;3;Durham;62518;3588;33600;3025;0;0;1682
+Eastbourne;N. Waterson;12;East Sussex;72347;22183;6576;20189;0;0;3719
+East Ham;S. Timms;11;Newham;65591;6421;25779;2599;0;0;5090
+Eastleigh;D. Chidgey;12;Hampshire;72155;18699;14883;19453;0;0;2459
+Eccles;I. Stewart;4;Central Manchester;69645;8552;30468;4905;0;0;1765
+Eddisbury;Rt.Hon. A. Goodlad;4;Cheshire;65256;21027;19842;6540;0;0;2041
+Edmonton;A. Love;11;Enfield;63718;13557;27029;2847;0;0;1405
+Ellesmere Port and Neston;A. Miller;4;Cheshire;67573;15274;31310;4673;0;0;1305
+Elmet;C. Burgon;5;West Yorkshire;70423;19569;28348;4691;0;0;1487
+Eltham;C. Efford;11;Greenwich;57358;13528;23710;3701;0;0;2489
+Enfield North;Ms J. Ryan;11;Enfield;67680;17326;24148;4264;0;0;1931
+Enfield Southgate;S. Twigg;11;Enfield;65796;19137;20570;4966;0;0;1860
+Epping Forest;Mrs E. Laing;9;Essex;72795;24117;18865;7074;0;0;2951
+Epsom and Ewell;Rt.Hon. Sir A. Hamilton;12;Surrey;73222;24717;13192;12380;0;0;3892
+Erewash;Ms E. Blackman;8;Derbyshire;77402;22061;31196;5181;0;0;1900
+Erith and Thamesmead;J. Austin-Walker;11;Bexley;62887;8388;25812;5001;0;0;2386
+Esher and Walton;I. Taylor;12;Surrey;72382;26747;12219;10937;0;0;3764
+Essex North;B. Jenkin;9;Essex;68008;22480;17004;10028;0;0;1697
+Exeter;B. Bradshaw;10;Devon;79154;17693;29398;11148;0;0;3625
+Falmouth and Camborne;Ms C. Atherton;10;Cornwall;71383;15463;18151;13512;0;0;6506
+Fareham;Rt.Hon. Sir P. Lloyd;12;Hampshire;68787;24436;14078;10234;0;0;3429
+Faversham and Kent Mid;A. Rowe;12;Kent;67490;22016;17843;6138;0;0;3609
+Feltham and Heston;A. Keen;11;Hounslow;71093;12563;27836;4264;0;0;1958
+Finchley and Golders Green;R. Vis;11;Barnet;72225;19991;23180;5670;0;0;1465
+Folkestone and Hythe;Rt.Hon. M. Howard;12;Kent;71153;20313;12939;13981;0;0;4817
+Forest of Dean;Ms D. Organ;10;Gloucestershire;63465;17860;24203;6165;0;0;1956
+Fylde;Rt.Hon. M. Jack;4;Lancashire;71385;25443;16480;7609;0;0;2535
+Gainsborough;E. Leigh;8;Lincolnshire;64106;20593;13767;13436;0;0;0
+Gateshead East and Washington West;Miss J. Quin;3;Newcastle area;64114;6097;31047;4622;0;0;1315
+Gedling;V. Coaker;8;Nottinghamshire;68820;20588;24390;5180;0;0;2006
+Gillingham;P. Clark;12;Kent;70389;18207;20187;9649;0;0;2640
+Gloucester;Ms T. Kingham;10;Gloucestershire;78682;20684;28943;6069;0;0;2218
+Gosport;P. Viggers;12;Hampshire;68830;21085;14827;9479;0;0;2964
+Grantham and Stamford;Q. Davies;8;Lincolnshire;72310;22672;19980;6612;0;0;3706
+Gravesham;C. Pond;12;Kent;69234;20681;26460;4128;0;0;1984
+Great Grimsby;A. Mitchell;5;Humber area;65043;9521;25765;7810;0;0;0
+Great Yarmouth;A. Wright;9;Norfolk;68625;17416;26084;5381;0;0;0
+Greenwich and Woolwich;N. Raynsford;11;Greenwich;61352;7502;25630;5049;0;0;2222
+Guildford;N. St Aubyn;12;Surrey;75541;24230;9945;19439;0;0;3344
+Hackney North and Stoke Newington;Ms D. Abbott;11;Hackney;62045;5483;21110;3806;0;0;2307
+Hackney South and Shoreditch;B. Sedgemore;11;Hackney;61728;4494;20048;5068;0;0;4136
+Halesowen and Rowley Regis;Mrs S. Heal;7;Black Country;66245;16029;26366;4169;0;0;2197
+Halifax;Mrs A. Mahon;5;West Yorkshire;71701;16253;27465;6059;0;0;779
+Haltemprice and Howden;Rt.Hon. D. Davis;5;Humber area;65602;21809;11701;14295;0;0;1745
+Halton;D. Twigg;4;Cheshire;64987;7847;31497;3263;0;0;1832
+Hammersmith and Fulham;I. Coleman;11;Hammersmith and Fulham;78637;21420;25262;4728;0;0;2616
+Hampshire East;M. Mates;12;Hampshire;76604;27927;9945;16337;0;0;3919
+Hampshire North East;J. Arbuthnot;12;Hampshire;69111;26017;8203;11619;0;0;5272
+Hampshire North West;Rt.Hon. Sir G. Young Bt;12;Hampshire;73222;24730;12900;13179;0;0;3858
+Hampstead and Highgate;Ms G. Jackson;11;Camden;64889;11991;25275;5481;0;0;1284
+Harborough;E. Garnier;8;Leicestershire;70424;22170;13332;15646;0;0;1859
+Harlow;W. Rammell;9;Essex;64072;15347;25861;4523;0;0;2081
+Harrogate and Knaresborough;P. Willis;5;North Yorkshire;65155;18322;4159;24558;0;0;614
+Harrow East;A. McNulty;11;Harrow;79846;20189;29927;4697;0;0;2172
+Harrow West;G. Thomas;11;Harrow;72005;20571;21811;8127;0;0;1997
+Hartlepool;P. Mandelson;3;Teesside;67712;9489;26997;6248;0;0;1718
+Harwich;I. Henderson;9;Essex;75775;19524;20740;7037;0;0;6213
+Hastings and Rye;M. Foster;12;East Sussex;70388;14307;16867;13717;0;0;4178
+Havant;D. Willetts;12;Hampshire;68420;19204;15475;10806;0;0;2837
+Hayes and Harlington;J. McDonnell;11;Hillingdon;56829;11167;25458;3049;0;0;1417
+Hazel Grove;A. Stunell;4;Eastern Manchester;63694;15069;5882;26883;0;0;1506
+Hemel Hempstead;A. McWalter;9;Hertfordshire;71468;21539;25175;6789;0;0;1589
+Hemsworth;J. Trickett;5;West Yorkshire;66964;8096;32088;4033;0;0;1260
+Hendon;A. Dismore;11;Barnet;76195;18528;24683;5427;0;0;1398
+Henley;Rt.Hon. M. Heseltine;12;Oxfordshire;66424;23908;11700;12741;0;0;3194
+Hereford;P. Keetch;7;Hereford and Worcestershire;69864;18550;6596;25198;0;0;2209
+Hertford and Stortford;B. Wells;9;Hertfordshire;71759;24027;17142;9679;0;0;3713
+Hertfordshire North East;O. Heald;9;Hertfordshire;67161;21712;18624;9493;0;0;2166
+Hertfordshire South West;R. Page;9;Hertfordshire;71671;25462;15441;12381;0;0;2127
+Hertsmere;J. Clappison;9;Hertfordshire;68011;22305;19230;6466;0;0;2347
+Hexham;P. Atkinson;3;Northumberland;58914;17701;17479;7959;0;0;2532
+Heywood and Middleton;J. Dobbin;4;Eastern Manchester;73898;11637;29179;7908;0;0;1826
+High Peak;T. Levitt;8;Derbyshire;72315;20261;29052;6420;0;0;1420
+Hitchin and Harpenden;Rt.Hon. P. Lilley;9;Hertfordshire;67219;24038;17367;10515;0;0;507
+Holborn and St Pancras;F. Dobson;11;Camden;63037;6804;24707;4750;0;0;1736
+Hornchurch;J. Cryer;11;Havering;60775;16386;22066;3446;0;0;2043
+Hornsey and Wood Green;Mrs B. Roche;11;Haringey;74537;11293;31792;5794;0;0;2608
+Horsham;Rt.Hon. F. Maude;12;West Sussex;75432;29015;10691;14153;0;0;3306
+Houghton and Washington East;F. Kemp;3;Newcastle area;67343;5391;31946;3209;0;0;1277
+Hove;I. Caplin;12;East Sussex;69016;17499;21458;4645;0;0;4519
+Huddersfield;B. Sheerman;5;West Yorkshire;65824;9323;25171;7642;0;0;2418
+Hull East;Rt.Hon. J. Prescott;5;Humber area;68733;5552;28870;3965;0;0;2099
+Hull North;K. McNamara;5;Humber area;68106;5837;25542;5667;0;0;1748
+Hull West and Hessle;A. Johnson;5;Humber area;65840;6933;22520;6995;0;0;1906
+Huntingdon;Rt.Hon. J. Major;9;Cambridgeshire;76094;31501;13361;8390;0;0;3711
+Hyndburn;G. Pope;4;Lancashire;66806;15383;26831;4141;0;0;1917
+Ilford North;Ms L. Perham;11;Redbridge;68218;19911;23135;5049;0;0;750
+Ilford South;M. Gapes;11;Redbridge;72104;15073;29273;3152;0;0;2521
+Ipswich;J. Cann;9;Suffolk;66947;15045;25484;5881;0;0;1952
+Isle of Wight;Dr P. Brand;12;Hampshire;101680;24868;9646;31274;0;0;7371
+Islington North;J. Corbyn;11;Islington;57385;4631;24834;4879;0;0;1516
+Islington South and Finsbury;C. Smith;11;Islington;55468;4587;22079;7516;0;0;1134
+Jarrow;S. Hepburn;3;Newcastle area;63828;6564;28497;4865;0;0;4016
+Keighley;Mrs A. Cryer;5;West Yorkshire;67231;18907;26039;5064;0;0;1470
+Kensington and Chelsea;Rt.Hon. A. Clark;11;Kensington and Chelsea;67786;19887;10368;5668;0;0;1165
+Kettering;P. Sawford;8;Northamptonshire;75153;24461;24650;6098;0;0;1748
+Kingston and Surbiton;E. Davey;11;Kingston upon Thames;73879;20355;12811;20411;0;0;2088
+Kingswood;Dr R. Berry;10;Bristol Area;77026;17928;32181;7672;0;0;2106
+Knowsley North and Sefton East;G. Howarth;4;Merseyside;70918;8600;34747;5499;0;0;857
+Knowsley South;E. O'Hara;4;Merseyside;70532;5987;36695;3954;0;0;954
+Lancashire West;C. Pickthall;4;Lancashire;73175;15903;33022;3938;0;0;1866
+Lancaster and Wyre;H. Dawson;4;Lancashire;78168;23878;25173;6802;0;0;3009
+Leeds Central;D. Fatchett;5;West Yorkshire;67664;5077;25766;4164;0;0;2002
+Leeds East;G. Mudie;5;West Yorkshire;56963;6685;24151;3689;0;0;1267
+Leeds North East;F. Hamilton;5;West Yorkshire;63185;15409;22368;6318;0;0;1414
+Leeds North West;H. Best;5;West Yorkshire;69972;15850;19694;11689;0;0;2143
+Leeds West;J. Battle;5;West Yorkshire;63965;7048;26819;3622;0;0;2731
+Leicester East;K. Vaz;8;Leicestershire;64012;10661;29083;3105;0;0;1553
+Leicester South;J. Marshall;8;Leicestershire;71750;11421;27914;6654;0;0;2125
+Leicester West;Ms P. Hewitt;8;Leicestershire;64570;9716;22580;5795;0;0;2823
+Leicestershire North West;D. Taylor;8;Leicestershire;65069;16113;29332;4492;0;0;2088
+Leigh;L. Cunliffe;4;Western Manchester;69908;7156;31652;5163;0;0;1949
+Leominster;P. Temple-Morris;7;Hereford and Worcestershire;65993;22888;8831;14053;0;0;4781
+Lewes;N. Baker;12;East Sussex;64340;19950;5232;21250;0;0;2737
+Lewisham Deptford;Mrs J. Ruddock;11;Lewisham;58141;4949;23827;3004;0;0;1864
+Lewisham East;Ms B. Prentice;11;Lewisham;56333;9694;21821;4178;0;0;1715
+Lewisham West;J. Dowd;11;Lewisham;58659;8936;23273;3672;0;0;1663
+Leyton and Wanstead;H. Cohen;11;Waltham Forest;62176;8736;23922;5920;0;0;744
+Lichfield;M. Fabricant;7;Staffordshire;62720;20853;20615;5473;0;0;1652
+Lincoln;Ms G. Merron;8;Lincolnshire;65485;14433;25563;5048;0;0;1504
+Liverpool Garston;Ms M. Eagle;4;Merseyside;66755;6819;26667;8250;0;0;1746
+Liverpool Riverside;Ms L. Ellman;4;Merseyside;73429;3635;26858;5059;0;0;2583
+Liverpool Walton;P. Kilfoyle;4;Merseyside;67527;2551;31516;4478;0;0;1662
+Liverpool Wavertree;Ms J. Kennedy;4;Merseyside;73063;4944;29592;9891;0;0;1491
+Liverpool West Derby;R. Wareing;4;Merseyside;68682;3656;30002;3805;0;0;4694
+Loughborough;A. Reed;8;Leicestershire;68945;19736;25448;6190;0;0;991
+Louth and Horncastle;Sir P. Tapsell;8;Lincolnshire;68824;21699;14799;12207;0;0;1248
+Ludlow;C. Gill;7;Shropshire;61267;19633;11745;13724;0;0;1183
+Luton North;K. Hopkins;9;Bedfordshire;64618;16234;25860;4299;0;0;939
+Luton South;Ms M. Moran;9;Bedfordshire;68395;15109;26428;4610;0;0;2037
+Macclesfield;N. Winterton;4;Cheshire;72049;26888;18234;9075;0;0;0
+Maidenhead;Mrs T. May;12;Berkshire;67302;25344;9205;13363;0;0;2977
+Maidstone and The Weald;Rt.Hon. Miss A. Widdecombe;12;Kent;72466;23657;14054;11986;0;0;3911
+Makerfield;I. McCartney;4;Western Manchester;67358;6942;33119;3743;0;0;1210
+Maldon and Chelmsford East;J. Whittingdale;9;Essex;66184;24524;14485;9758;0;0;1620
+Manchester Blackley;G. Stringer;4;Central Manchester;62227;5454;25042;3937;0;0;1323
+Manchester Central;A. Lloyd;4;Central Manchester;63815;3964;23803;4121;0;0;1649
+Manchester Gorton;Rt.Hon. G. Kaufman;4;Central Manchester;64349;4249;23704;6362;0;0;1996
+Manchester Withington;K. Bradley;4;Central Manchester;66116;8522;27103;6000;0;0;2402
+Mansfield;A. Meale;8;Nottinghamshire;67057;10038;30556;5244;0;0;1588
+Medway;R. Marshall-Andrews;12;Kent;61736;16504;21858;4555;0;0;1825
+Meriden;Mrs C. Spelman;7;Coventry and Solihull;76287;22997;22415;7098;0;0;2208
+Middlesbrough;S. Bell;3;Teesside;70931;7907;32925;3934;0;0;1331
+Middlesbrough South and Cleveland East;Dr A. Kumar;3;Teesside;70481;18712;29319;4004;0;0;1552
+Milton Keynes North East;B. White;12;Buckinghamshire;70395;19961;20201;8907;0;0;2167
+Milton Keynes South West;Mrs P. Starkey;12;Buckinghamshire;71070;17006;27298;6065;0;0;389
+Mitcham and Morden;Ms S. McDonagh;11;Merton;65385;14243;27984;3632;0;0;2087
+Mole Valley;Sir P. Beresford;12;Surrey;69140;26178;8057;15957;0;0;4332
+Morecambe and Lunesdale;Ms G. Smith;4;Lancashire;68013;18096;24061;5614;0;0;1478
+Morley and Rothwell;J. Gunnell;5;West Yorkshire;68385;12086;26836;5087;0;0;1888
+New Forest East;Dr J. Lewis;12;Hampshire;65717;21053;12161;15838;0;0;0
+New Forest West;D. Swayne;12;Hampshire;66522;25149;7092;13817;0;0;3692
+Newark;Ms F. Jones;8;Nottinghamshire;69763;20480;23496;5960;0;0;2035
+Newbury;D. Rendel;12;Berkshire;73680;21370;3107;29887;0;0;2112
+Newcastle-under-Lyme;Mrs L. Golding;7;Staffordshire;66686;10537;27743;6858;0;0;3991
+Newcastle upon Tyne Central;J. Cousins;3;Newcastle area;69781;10792;27272;6911;0;0;1113
+Newcastle upon Tyne East and Wallsend;N. Brown;3;Newcastle area;63272;5796;29607;4415;0;0;1771
+Newcastle upon Tyne North;D. Henderson;3;Newcastle area;65357;8793;28125;6578;0;0;1733
+Norfolk Mid;K. Simpson;9;Norfolk;75311;22739;21403;8617;0;0;4698
+Norfolk North;D. Prior;9;Norfolk;77113;21456;14736;20163;0;0;2458
+Norfolk North West;Dr G. Turner;9;Norfolk;77083;23911;25250;5513;0;0;2923
+Norfolk South;Rt.Hon. J. MacGregor;9;Norfolk;79239;24935;16188;17557;0;0;3417
+Norfolk South West;Rt.Hon. Mrs G. Shephard;9;Norfolk;80236;24694;22230;8178;0;0;3694
+Normanton;W. O'Brien;5;West Yorkshire;62980;10153;26046;5347;0;0;1458
+Northampton North;Ms S. Keeble;8;Northamptonshire;73664;17247;27247;6579;0;0;625
+Northampton South;A. Clarke;8;Northamptonshire;79384;23470;24214;6316;0;0;3105
+Northavon;Prof S. Webb;10;Bristol Area;78943;24363;9767;26500;0;0;1900
+Norwich North;Dr I. Gibson;9;Norfolk;72521;17876;27346;6951;0;0;2884
+Norwich South;C. Clarke;9;Norfolk;70009;12028;26267;9457;0;0;3049
+Nottingham East;J. Heppell;8;Nottinghamshire;65581;9336;24755;4008;0;0;1645
+Nottingham North;G. Allen;8;Nottinghamshire;65698;8402;27203;3301;0;0;2495
+Nottingham South;A. Simpson;8;Nottinghamshire;72418;13461;26825;6265;0;0;1969
+Nuneaton;W. Olner;7;Warwickshire;72032;16540;30080;4732;0;0;2161
+Old Bexley and Sidcup;Rt.Hon. Sir E. Heath;11;Bexley;68044;21608;18039;8284;0;0;3460
+Oldham East and Saddleworth;P. Woolas;4;Eastern Manchester;73189;10666;22546;19157;0;0;1732
+Oldham West and Royton;M. Meacher;4;Eastern Manchester;69203;10693;26894;5434;0;0;2717
+Orpington;J. Horam;11;Bromley;78749;24417;10753;21465;0;0;3527
+Oxford East;A. Smith;12;Oxfordshire;69339;10540;27205;7038;0;0;3094
+Oxford West and Abingdon;Dr E. Harris;12;Oxfordshire;79329;19983;12361;26268;0;0;2584
+Pendle;G. Prentice;4;Lancashire;63049;14235;25059;5460;0;0;2281
+Penrith and The Border;Rt.Hon. D. Maclean;4;Cumbria;66496;23300;10576;13067;0;0;2018
+Peterborough;Ms H. Brinton;9;Cambridgeshire;65926;17042;24365;5170;0;0;1850
+Plymouth Devonport;D. Jamieson;10;Devon;74483;12562;31629;5570;0;0;2202
+Plymouth Sutton;Mrs L. Gilroy;10;Devon;70666;14441;23881;6613;0;0;2717
+Pontefract and Castleford;Ms Y. Cooper;5;West Yorkshire;62350;5614;31339;3042;0;0;1401
+Poole;R. Syms;10;Dorset;66078;19726;10100;14428;0;0;2556
+Poplar and Canning Town;J. Fitzpatrick;11;Tower Hamlets;67172;5892;24807;4072;0;0;4497
+Portsmouth North;S. Rapson;12;Hampshire;64539;17016;21339;4788;0;0;2127
+Portsmouth South;M. Hancock;12;Hampshire;80514;16094;13086;20421;0;0;2094
+Preston;Mrs A. Wise;4;Lancashire;72933;10540;29220;7045;0;0;1269
+Pudsey;P. Truswell;5;West Yorkshire;70922;19163;25370;7375;0;0;823
+Putney;A. Colman;11;Wandsworth;60176;17108;20084;4739;0;0;2064
+Rayleigh;Dr M. Clark;9;Essex;68737;25516;14832;10137;0;0;829
+Reading East;Ms J. Griffiths;12;Berkshire;71586;17666;21461;9307;0;0;1786
+Reading West;M. Salter;12;Berkshire;69073;18844;21841;6153;0;0;1551
+Redcar;Dr M. Mowlam;3;Teesside;68965;11308;32972;4679;0;0;0
+Redditch;Ms J. Smith;7;Hereford and Worcestershire;60841;16155;22280;4935;0;0;1378
+Regent's Park and Kensington North;Ms K. Buck;11;City of Westminster;73752;13710;28367;4041;0;0;1226
+Reigate;C. Blunt;12;Surrey;64750;21123;13382;9615;0;0;4054
+Ribble South;D. Borrow;4;Lancashire;71670;20772;25856;5879;0;0;2724
+Ribble Valley;N. Evans;4;Lancashire;72664;26702;9013;20062;0;0;1444
+Richmond;Rt.Hon. W. Hague;5;North Yorkshire;65058;23326;13275;8773;0;0;2367
+Richmond Park;Dr J. Tonge;11;Richmond upon Thames;71572;22442;7172;25393;0;0;1846
+Rochdale;Ms L. Fitzsimons;4;Eastern Manchester;68529;4237;23758;19213;0;0;874
+Rochford and Southend East;Sir E. Taylor;9;Essex;72848;22683;18458;4387;0;0;1070
+Romford;Mrs E. Gordon;11;Havering;59611;17538;18187;3341;0;0;3053
+Romsey;M. Colvin;12;Hampshire;67306;23834;9623;15249;0;0;3115
+Rossendale and Darwen;Mrs J. Anderson;4;Lancashire;69749;16521;27470;5435;0;0;1782
+Rother Valley;K. Barron;5;South Yorkshire;68622;7699;31184;5342;0;0;1932
+Rotherham;D. MacShane;5;South Yorkshire;59895;5383;26852;3919;0;0;1496
+Rugby and Kenilworth;A. King;7;Warwickshire;79384;25861;26356;8737;0;0;251
+Ruislip-Northwood;J. Wilkinson;11;Hillingdon;60393;22526;14732;7279;0;0;296
+Runnymede and Weybridge;P. Hammond;12;Surrey;72177;25051;15176;8397;0;0;2937
+Rushcliffe;Rt.Hon. K. Clarke;8;Nottinghamshire;78735;27558;22503;8851;0;0;3200
+Rutland and Melton;A. Duncan;8;Leicestershire;70150;24107;15271;10112;0;0;3140
+Ryedale;J. Greenway;5;North Yorkshire;65215;21351;8762;16293;0;0;2377
+Saffron Walden;Sir A. Haselhurst;9;Essex;74097;25871;12275;15298;0;0;3606
+St Albans;K. Pollard;9;Hertfordshire;65560;16879;21338;10692;0;0;1896
+St Helens North;D. Watts;4;Merseyside;71380;8536;31953;6270;0;0;2471
+St Helens South;G. Bermingham;4;Merseyside;66526;6628;30367;5919;0;0;1344
+St Ives;A. George;10;Cornwall;71680;16796;8184;23966;0;0;4955
+Salford;Ms H. Blears;4;Central Manchester;58610;5779;22848;3407;0;0;1088
+Salisbury;R. Key;10;Wiltshire;78973;25012;10242;18736;0;0;4249
+Scarborough and Whitby;L. Quinn;5;North Yorkshire;75862;19667;24791;7672;0;0;2191
+Scunthorpe;E. Morley;5;Humber area;60393;10934;25107;3497;0;0;2036
+Sedgefield;Rt.Hon. A. Blair;3;Durham;64923;8383;33526;3050;0;0;2157
+Selby;J. Grogan;5;North Yorkshire;75141;22002;25838;6778;0;0;1698
+Sevenoaks;M. Fallon;12;Kent;66474;22776;12315;12086;0;0;2972
+Sheffield Attercliffe;C. Betts;5;South Yorkshire;68548;7119;28937;6973;0;0;1289
+Sheffield Brightside;D. Blunkett;5;South Yorkshire;58930;2850;24901;4947;0;0;1167
+Sheffield Central;R. Caborn;5;South Yorkshire;68667;4341;23179;6273;0;0;2626
+Sheffield Hallam;R. Allan;5;South Yorkshire;62834;15074;6147;23345;0;0;913
+Sheffield Heeley;W. Michie;5;South Yorkshire;66599;6767;26274;9196;0;0;1029
+Sheffield Hillsborough;Mrs H. Jackson;5;South Yorkshire;74642;7707;30150;13699;0;0;1468
+Sherwood;P. Tipping;8;Nottinghamshire;74788;16259;33071;4889;0;0;2314
+Shipley;C. Leslie;5;West Yorkshire;69281;19966;22962;7984;0;0;1960
+Shrewsbury and Atcham;P. Marsden;7;Shropshire;73542;18814;20484;13838;0;0;2208
+Shropshire North;O. Paterson;7;Shropshire;70852;20730;18535;10489;0;0;1764
+Sittingbourne and Sheppey;D. Wyatt;12;Kent;63850;16794;18723;8447;0;0;2198
+Skipton and Ripon;Rt.Hon. D. Curry;5;North Yorkshire;72042;25294;12171;13674;0;0;3212
+Sleaford and North Hykeham;Rt.Hon. D. Hogg;8;Lincolnshire;71486;23358;18235;8063;0;0;3520
+Slough;Ms F. MacTaggart;12;Berkshire;70283;13958;27029;3509;0;0;3236
+Solihull;J. Taylor;7;Coventry and Solihull;78898;26299;14334;14902;0;0;3371
+Somerton and Frome;D. Heath;10;Somerset;73988;22554;9385;22684;0;0;2780
+Southampton Itchen;J. Denham;12;Hampshire;76869;15289;29498;6289;0;0;2782
+Southampton Test;A. Whitehead;12;Hampshire;72893;14712;28396;7171;0;0;2162
+Southend West;D. Amess;9;Essex;66493;18029;10600;15414;0;0;2471
+South Holland and The Deepings;J. Hayes;8;Lincolnshire;69642;24691;16700;7836;0;0;902
+Southport;R. Fearn;4;Merseyside;70194;18186;6125;24346;0;0;1939
+South Shields;Dr D. Clark;3;Newcastle area;62261;5681;27834;3429;0;0;2034
+Southwark North and Bermondsey;S. Hughes;11;Southwark;65598;2835;16444;19831;0;0;1685
+Spelthorne;D. Wilshire;12;Surrey;70562;23306;19833;6821;0;0;1957
+Stafford;D. Kidney;7;Staffordshire;67555;20292;24606;5480;0;0;1394
+Staffordshire Moorlands;Ms C. Atkins;7;Staffordshire;66095;16637;26686;6191;0;0;1603
+Staffordshire South;Sir P. Cormack;7;Staffordshire;68896;25568;17747;5797;0;0;2002
+Stalybridge and Hyde;T. Pendry;4;Eastern Manchester;65468;10557;25363;5169;0;0;1992
+Stevenage;Ms B. Follett;9;Hertfordshire;66889;16858;28440;4588;0;0;1500
+Stockport;Ms A. Coffey;4;Eastern Manchester;65232;10426;29338;4951;0;0;1954
+Stockton North;F. Cook;3;Teesside;64380;8369;29726;4816;0;0;1563
+Stockton South;Ms D. Taylor;3;Teesside;68470;17205;28790;4721;0;0;1400
+Stoke-on-Trent Central;M. Fisher;7;Staffordshire;64113;6738;26662;4809;0;0;2036
+Stoke-on-Trent North;Ms J. Walley;7;Staffordshire;59030;7798;25190;4141;0;0;1537
+Stoke-on-Trent South;G. Stevenson;7;Staffordshire;69968;10342;28645;4710;0;0;2539
+Stone;W. Cash;7;Staffordshire;68242;24859;21041;6392;0;0;782
+Stourbridge;Ms D. Shipley;7;Black Country;64966;17807;23452;7123;0;0;1319
+Stratford-on-Avon;J. Maples;7;Warwickshire;81434;29967;12754;15861;0;0;3514
+Streatham;K. Hill;11;Lambeth;74509;9758;28181;6082;0;0;864
+Stretford and Urmston;Ms B. Hughes;4;Central Manchester;69913;14840;28480;3978;0;0;1397
+Stroud;D. Drew;10;Gloucestershire;77494;23260;26170;9502;0;0;3415
+Suffolk Central and Ipswich North;M. Lord;9;Suffolk;70222;22493;18955;10886;0;0;489
+Suffolk Coastal;Rt.Hon. J. Gummer;9;Suffolk;74219;21696;18442;12036;0;0;4082
+Suffolk South;T. Yeo;9;Suffolk;67323;19402;15227;14395;0;0;2951
+Suffolk West;R. Spring;9;Suffolk;68638;20081;18214;6892;0;0;3895
+Sunderland North;W. Etherington;3;Newcastle area;64711;6370;26067;3973;0;0;1803
+Sunderland South;C. Mullin;3;Newcastle area;67937;7536;27174;4606;0;0;609
+Surrey East;P. Ainsworth;12;Surrey;72852;27389;11573;12296;0;0;3398
+Surrey Heath;N. Hawkins;12;Surrey;73813;28231;11511;11944;0;0;3038
+Surrey South West;Rt.Hon. Mrs V. Bottomley;12;Surrey;72350;25165;5333;22471;0;0;3489
+Sussex Mid;N. Soames;12;West Sussex;68784;23231;9969;16377;0;0;3886
+Sutton and Cheam;P. Burstow;11;Sutton;62785;17822;7280;19919;0;0;2071
+Sutton Coldfield;Rt.Hon. Sir N. Fowler;7;Birmingham;71864;27373;12488;10139;0;0;2401
+Swindon North;M. Wills;10;Wiltshire;65535;16341;24029;6237;0;0;1663
+Swindon South;Ms J. Drown;10;Wiltshire;70207;18298;23943;7371;0;0;1550
+Tamworth;B. Jenkins;7;Staffordshire;67205;18312;25808;4025;0;0;1709
+Tatton;M. Bell;4;Cheshire;63822;18277;0;0;0;29354;1161
+Taunton;Mrs J. Ballard;10;Somerset;79783;23621;8248;26064;0;0;3078
+Teignbridge;P. Nicholls;10;Devon;81667;24679;11311;24398;0;0;2557
+Telford;B. Grocott;7;Shropshire;56558;10166;21456;4371;0;0;1119
+Tewkesbury;L. Robertson;10;Gloucestershire;68208;23859;13665;14625;0;0;0
+Thanet North;R. Gale;12;Kent;71112;21586;18820;5576;0;0;2973
+Thanet South;Dr S. Ladyman;12;Kent;62792;17899;20777;5263;0;0;1049
+Thurrock;A. MacKinlay;9;Essex;71600;12640;29896;3843;0;0;833
+Tiverton and Honiton;Mrs A. Browning;10;Devon;75744;24438;7598;22785;0;0;4308
+Tonbridge and Malling;Rt.Hon. Sir J. Stanley;12;Kent;64798;23640;13410;9467;0;0;2712
+Tooting;T. Cox;11;Wandsworth;66653;12505;27516;4320;0;0;1764
+Torbay;A. Sanders;10;Devon;72258;21082;7923;21094;0;0;3223
+Totnes;Sir A. Steen;10;Devon;70473;19637;8796;18760;0;0;6576
+Tottenham;B. Grant;11;Haringey;66173;5921;26121;4064;0;0;1598
+Truro and St Austell;M. Taylor;10;Cornwall;76824;15001;8697;27502;0;0;5547
+Tunbridge Wells;A. Norman;12;Kent;65259;21853;9879;14347;0;0;2275
+Twickenham;Dr V. Cable;11;Richmond upon Thames;73281;21956;9065;26237;0;0;886
+Tyne Bridge;D. Clelland;3;Newcastle area;61058;3861;26767;2785;0;0;1437
+Tynemouth;A. Campbell;3;Newcastle area;66341;17045;28318;4509;0;0;1281
+Tyneside North;S. Byers;3;Newcastle area;66449;6167;32810;4762;0;0;1382
+Upminster;K. Darvill;11;Havering;57149;16315;19085;3919;0;0;2000
+Uxbridge;Sir M. Shersby;11;Hillingdon;57497;18095;17371;4528;0;0;1551
+Vale of York;Miss A. McIntosh;5;North Yorkshire;70077;23815;14094;12656;0;0;2700
+Vauxhall;Ms K. Hoey;11;Lambeth;70402;5942;24920;6260;0;0;1944
+Wakefield;D. Hinchcliffe;5;West Yorkshire;73210;14373;28977;5656;0;0;1480
+Wallasey;Ms A. Eagle;4;Merseyside;63714;11190;30264;3899;0;0;1490
+Walsall North;D. Winnick;7;Black Country;67587;11929;24517;4050;0;0;2806
+Walsall South;B. George;7;Black Country;64221;13712;25024;2698;0;0;1806
+Walthamstow;N. Gerrard;11;Waltham Forest;63818;8138;25287;5491;0;0;1139
+Wansbeck;D. Murphy;3;Northumberland;62998;6299;29569;7202;0;0;2102
+Wansdyke;D. Norris;10;Bristol Area;69032;19318;24117;9205;0;0;2082
+Wantage;R. Jackson;12;Oxfordshire;71657;22311;16272;14822;0;0;2654
+Warley;J. Spellar;7;Black Country;59758;9362;24813;3777;0;0;941
+Warrington North;Ms H. Jones;4;Cheshire;72694;12300;31827;5308;0;0;1816
+Warrington South;Ms H. Southworth;4;Cheshire;72262;17914;28721;7199;0;0;1248
+Warwick and Leamington;J. Plaskitt;7;Warwickshire;79374;23349;26747;7133;0;0;2862
+Warwickshire North;M. O'Brien;7;Warwickshire;72602;16902;31669;4040;0;0;1628
+Watford;Ms C. Ward;9;Hertfordshire;74015;19227;25019;9272;0;0;1718
+Waveney;R. Blizzard;9;Suffolk;75266;19393;31846;5054;0;0;318
+Wealden;Rt.Hon. Sir G. Johnson Smith;12;East Sussex;79519;29417;10185;15213;0;0;4284
+Weaver Vale;M. Hall;4;Cheshire;66011;13796;27244;5949;0;0;1312
+Wellingborough;P. Stinchcombe;8;Northamptonshire;74955;24667;24854;5279;0;0;1489
+Wells;Rt.Hon. D. Heathcoat-Amory;10;Somerset;72178;22208;10204;21680;0;0;2288
+Welwyn Hatfield;Ms M. Johnson;9;Hertfordshire;67395;19341;24936;7161;0;0;1530
+Wentworth;J. Healey;5;South Yorkshire;63951;6266;30225;3867;0;0;1423
+West Bromwich East;P. Snape;7;Black Country;63401;10126;23710;6179;0;0;1472
+West Bromwich West;Rt.Hon. Miss B. Boothroyd;7;Black Country;67496;0;23969;0;0;0;12727
+Westbury;D. Faber;10;Wiltshire;74301;23037;11969;16969;0;0;4776
+West Ham;A. Banks;11;Newham;57058;5037;24531;2479;0;0;1614
+Westmorland and Lonsdale;T. Collins;4;Cumbria;68389;21470;10459;16949;0;0;1931
+Weston-super-Mare;B. Cotter;10;Bristol Area;72445;20133;9557;21407;0;0;2280
+Wigan;R. Stott;4;Western Manchester;61689;7400;30043;4390;0;0;1986
+Wiltshire North;J. Gray;10;Wiltshire;77237;25390;8261;21915;0;0;2447
+Wimbledon;R. Casale;11;Merton;64070;17694;20674;8014;0;0;1972
+Winchester;M. Oaten;12;Hampshire;78884;26098;6528;26100;0;0;3328
+Windsor;M. Trend;12;Berkshire;69132;24476;9287;14559;0;0;2459
+Wirral South;B. Chapman;4;Merseyside;59372;17495;24499;5018;0;0;1083
+Wirral West;S. Hesford;4;Merseyside;60908;18297;21035;5945;0;0;1613
+Witney;S. Woodward;12;Oxfordshire;73520;24282;17254;11202;0;0;3663
+Woking;H. Malins;12;Surrey;70053;19553;10695;13875;0;0;6791
+Wokingham;Rt.Hon. J. Redwood;12;Berkshire;66161;25086;8424;15721;0;0;877
+Wolverhampton North East;K. Purchase;7;Black Country;61642;11547;24534;2214;0;0;3108
+Wolverhampton South East;D. Turner;7;Black Country;54291;7020;22202;3292;0;0;2316
+Wolverhampton South West;Ms J. Jones;7;Black Country;67482;19539;24657;4012;0;0;713
+Woodspring;Dr L. Fox;10;Bristol Area;69964;24425;11377;16691;0;0;2434
+Worcester;M. Foster;7;Hereford and Worcestershire;69234;18423;25848;6462;0;0;886
+Worcestershire Mid;P. Luff;7;Hereford and Worcestershire;68381;24092;14680;9458;0;0;2589
+Worcestershire West;Sir M. Spicer;7;Hereford and Worcestershire;64712;22223;7738;18377;0;0;1006
+Workington;D. Campbell-Savours;4;Cumbria;65766;12061;31717;3967;0;0;1629
+Worsley;T. Lewis;4;Central Manchester;68978;11342;29083;6356;0;0;0
+Worthing East and Shoreham;T. Loughton;12;West Sussex;70771;20864;12335;15766;0;0;2604
+Worthing West;P. Bottomley;12;West Sussex;71329;23733;8347;16020;0;0;3342
+Wrekin, The;P. Bradley;7;Shropshire;59126;18218;21243;5807;0;0;0
+Wycombe;Sir R. Whitney;12;Buckinghamshire;73589;20890;18520;9678;0;0;3231
+Wyre Forest;D. Lock;7;Hereford and Worcestershire;73063;19897;26843;4377;0;0;3938
+Wythenshawe and Sale East;P. Goggins;4;Central Manchester;71986;11429;26448;5639;0;0;2017
+Yeovil;Rt.Hon. J. Ashdown;10;Somerset;74165;14946;8053;26349;0;0;4705
+York, City Of;H. Bayley;5;North Yorkshire;79383;14433;34956;6537;0;0;2419
+Yorkshire East;J. Townend;5;Humber area;69409;20904;17567;9070;0;0;1430
+Aberavon;Rt.Hon. J. Morris;6;West Glamorgan;50025;2835;25650;4079;2088;0;1311
+Alyn and Deeside;B. Jones;6;Clwyd;58091;9552;25955;4076;738;0;1627
+Blaenau Gwent;L. Smith;6;Gwent;54800;2607;31493;3458;2072;0;0
+Brecon and Radnorshire;R. Livsey;6;Powys;52142;12419;11424;17516;622;0;900
+Bridgend;W. Griffiths;6;Mid Glamorgan;59721;9867;25115;4968;1649;0;1662
+Caernarfon;D. Wigley;6;Gwynedd;46815;4230;9667;1686;17616;0;811
+Caerphilly;R. Davies;6;Gwent;64621;4858;30697;3724;4383;0;1607
+Cardiff Central;J. Owen Jones;6;South Glamorgan;60354;8470;18464;10541;1504;0;3274
+Cardiff North;Ms J. Morgan;6;South Glamorgan;60430;16334;24460;5294;1201;0;1199
+Cardiff South and Penarth;A. Michael;6;South Glamorgan;61383;8766;22647;3964;1356;0;5667
+Cardiff West;R. Morgan;6;South Glamorgan;58198;8669;24297;4366;1949;0;996
+Carmarthen East and Dinefwr;Dr A. Wynne Williams;6;Dyfed;53079;5022;17907;3150;14457;0;1196
+Carmarthen West and Pembrokeshire South;N. Ainger;6;Dyfed;55724;11335;20956;3516;5402;0;1432
+Ceredigion;C. Dafis;6;Dyfed;54378;5983;9767;6616;16728;0;1092
+Clwyd South;M. Jones;6;Clwyd;53495;9091;22901;3684;2500;0;1207
+Clwyd West;G. Thomas;6;Clwyd;53467;13070;14918;5151;5421;0;1697
+Conwy;Mrs B. Williams;6;Clwyd;55092;10085;14561;12965;2844;0;1105
+Cynon Valley;Mrs A. Clwyd;6;Mid Glamorgan;48286;2262;23307;3459;3552;0;844
+Delyn;D. Hanson;6;Clwyd;53693;10607;22300;4160;1558;0;1117
+Gower;M. Caton;6;West Glamorgan;57691;10306;23313;5624;2226;0;1867
+Islwyn;D. Touhig;6;Gwent;50540;2864;26995;3064;2272;0;1209
+Llanelli;Rt.Hon. D. Davies;6;Dyfed;58323;5003;23851;3788;7812;0;757
+Meirionnydd Nant Conwy;E. Llwyd;6;Gwynedd;32345;3922;5660;1719;12465;0;809
+Merthyr Tydfil and Rhymney;T. Rowlands;6;Mid Glamorgan;56507;2508;30012;2926;2344;0;1351
+Monmouth;H. Edwards;6;Gwent;60703;19226;23404;4689;516;0;1190
+Montgomeryshire;L. Opik;6;Powys;42618;8344;6109;14647;1608;0;1217
+Neath;P. Hain;6;West Glamorgan;55525;3583;30324;2597;3344;0;1395
+Newport East;A. Howarth;6;Gwent;50997;7958;21481;3880;721;0;3218
+Newport West;P. Flynn;6;Gwent;53914;9794;24331;3907;648;0;1522
+Ogmore;Sir R. Powell;6;Mid Glamorgan;52078;3716;28163;3510;2679;0;0
+Pontypridd;Dr K. Howells;6;Mid Glamorgan;64185;5910;29290;6161;2977;0;1517
+Preseli Pembrokeshire;Mrs J. Lawrence;6;Dyfed;54088;11741;20477;5527;2683;0;1975
+Rhondda;A. Rogers;6;Mid Glamorgan;57105;1551;30381;2307;5450;0;1118
+Swansea East;D. Anderson;6;West Glamorgan;57373;3582;29151;3440;1308;0;1193
+Swansea West;Rt.Hon. A. Williams;6;West Glamorgan;58703;8289;22748;5872;2675;0;885
+Torfaen;P. Murphy;6;Gwent;60343;5327;29863;5249;1042;0;1764
+Vale of Clwyd;C. Ruane;6;Clwyd;52418;11662;20617;3425;2301;0;1127
+Vale of Glamorgan;J. Smith;6;South Glamorgan;67213;18522;29054;4945;1393;0;0
+Wrexham;Dr J. Marek;6;Clwyd;50741;8688;20450;4833;1170;0;1281
+Ynys Mon;I. Wyn Jones;6;Gwynedd;52952;8569;13275;1537;15756;0;793
+Aberdeen Central;F. Doran;2;Grampian;54257;6944;17745;4714;5767;0;446
+Aberdeen North;M. Savidge;2;Grampian;54302;5763;18389;5421;8379;0;463
+Aberdeen South;Ms A. Begg;2;Grampian;60490;11621;15541;12176;4299;0;425
+Aberdeenshire West and Kincardine;Sir R. Smith;2;Grampian;59123;15080;3923;17742;5639;0;805
+Airdrie and Shotts;Mrs H. Liddell;2;Glasgow area;57673;3660;25460;1719;10048;0;294
+Angus;A. Welsh;2;Tayside;59708;10603;6733;4065;20792;0;883
+Argyll and Bute;Mrs R. Michie;2;Argyll and Bute;49451;6774;5596;14359;8278;0;713
+Ayr;Mrs S. Osborne;2;Ayrshire and Lanark;55829;15136;21679;2116;5625;0;200
+Banff and Buchan;A. Salmond;2;Grampian;58493;9564;4747;2398;22409;0;1060
+Caithness Sutherland and Easter Ross;R. Maclennan;2;Highland;41566;3148;8122;10381;6710;0;811
+Carrick Cumnock and Doon Valley;G. Foulkes;2;Ayrshire and Lanark;65593;8336;29398;2613;8190;0;634
+Clydebank and Milngavie;A. Worthington;2;Glasgow area;52092;4885;21583;4086;8263;0;269
+Clydesdale;J. Hood;2;Dumfries and Galloway;53428;7396;23859;3796;10050;0;311
+Coatbridge and Chryston;T. Clarke;2;Glasgow area;52024;3216;25697;2048;6402;0;249
+Cumbernauld and Kilsyth;Ms R. McKenna;2;Glasgow area;48032;2441;21141;1368;10013;0;1061
+Cunninghame North;B. Wilson;2;Glasgow area;55526;9647;20686;2271;7584;0;941
+Cunninghame South;B. Donohoe;2;Glasgow area;49543;3571;22233;1604;7364;0;672
+Dumbarton;J. McFall;2;Glasgow area;56229;7283;20470;3144;9587;0;780
+Dumfries;R. Brown;2;Dumfries and Galloway;62759;13885;23528;5487;5977;0;650
+Dundee East;J. McAllion;2;Tayside;58388;6397;20718;1677;10757;0;979
+Dundee West;E. Ross;2;Tayside;57346;5105;20875;2972;9016;0;839
+Dunfermline East;Rt.Hon. G. Brown;2;Fife;52072;3656;24441;2164;5690;0;632
+Dunfermline West;Ms R. Squire;2;Fife;52467;4606;19338;4963;6984;0;543
+East Kilbride;A. Ingram;2;Ayrshire and Lanark;65229;5863;27584;3527;10200;0;1622
+East Lothian;J. Home Robertson;2;Edinburgh area;57441;8660;22881;4575;6825;0;491
+Eastwood;J. Murphy;2;Glasgow area;66697;17530;20766;6110;6826;0;1003
+Edinburgh Central;A. Darling;2;Edinburgh area;63695;9055;20125;5605;6750;0;1200
+Edinburgh East and Musselburgh;Dr G. Strang;2;Edinburgh area;59648;6483;22564;4511;8034;0;526
+Edinburgh North and Leith;M. Chisholm;2;Edinburgh area;61617;7312;19209;5335;8231;0;858
+Edinburgh Pentlands;Ms L. Clark;2;Edinburgh area;59635;14813;19675;4575;5952;0;727
+Edinburgh South;N. Griffiths;2;Edinburgh area;62467;9541;20993;7911;5791;0;602
+Edinburgh West;D. Gorrie;2;Edinburgh area;61133;13325;8948;20578;4210;0;570
+Falkirk East;M. Connarty;2;Central;56792;5813;23344;2153;9959;0;326
+Falkirk West;D. Canavan;2;Central;52850;4639;22772;1970;8989;0;0
+Fife Central;H. McLeish;2;Fife;58315;3669;23912;2610;10199;0;375
+Fife North East;M. Campbell;2;Fife;58794;11076;4301;21432;4545;0;485
+Galloway and Upper Nithsdale;A. Morgan;2;Dumfries and Galloway;52751;12825;6861;2700;18449;0;1183
+Glasgow Anniesland;Rt.Hon. D. Dewar;2;Glasgow area;52955;3881;20951;2453;5797;0;797
+Glasgow Baillieston;J. Wray;2;Glasgow area;51152;2468;20925;1217;6085;0;1158
+Glasgow Cathcart;J. Maxton;2;Glasgow area;49312;4248;19158;2302;6913;0;1489
+Glasgow Govan;M. Sarwar;2;Glasgow area;49836;2839;14216;1915;11302;0;1970
+Glasgow Kelvin;G. Galloway;2;Glasgow area;57438;3539;16643;4629;6978;0;865
+Glasgow Maryhill;Ms M. Fyfe;2;Glasgow area;52523;1747;19301;2119;5037;0;1517
+Glasgow Pollok;I. Davidson;2;Glasgow area;49284;1979;19653;1137;5862;0;4171
+Glasgow Rutherglen;T. McAvoy;2;Glasgow area;50646;3288;20430;5167;5423;0;1213
+Glasgow Shettleston;D. Marshall;2;Glasgow area;47990;1484;19616;1061;3748;0;904
+Glasgow Springburn;M. Martin;2;Glasgow area;53473;1893;22534;1349;5208;0;593
+Gordon;M. Bruce;2;Grampian;58767;11002;4350;17999;8435;0;459
+Greenock and Inverclyde;Dr N. Godman;2;Glasgow area;48818;3976;19480;4791;6440;0;0
+Hamilton North and Bellshill;Dr J. Reid;2;Ayrshire and Lanark;53607;3944;24322;1924;7255;0;554
+Hamilton South;G. Robertson;2;Ayrshire and Lanark;46562;2858;21709;1693;5831;0;1000
+Inverness East Nairn and Lochaber;D. Stewart;2;Highland;65701;8355;16187;8364;13848;0;1014
+Kilmarnock and Loudoun;D. Browne;2;Ayrshire and Lanark;61376;5125;23621;1891;16365;0;407
+Kirkcaldy;L. Moonie;2;Fife;52186;4779;18730;3031;8020;0;413
+Linlithgow;T. Dalyell;2;Central;53706;4964;21469;2331;10631;0;259
+Livingston;Rt.Hon. R. Cook;2;Edinburgh area;60296;4028;23510;2876;11763;0;657
+Midlothian;E. Clarke;2;Edinburgh area;47552;3842;18861;3235;8991;0;320
+Moray;Mrs M. Ewing;2;Grampian;58302;10963;7886;3548;16529;0;840
+Motherwell and Wishaw;F. Roy;2;Glasgow area;52252;4024;21020;2331;8229;0;1015
+Ochil;M. O'Neill;2;Tayside;56572;6383;19707;2262;15055;0;379
+Orkney and Shetland;J. Wallace;2;Orkney and Shetland;32291;2527;3775;10743;2624;0;996
+Paisley North;Mrs I. Adams;2;Glasgow area;49725;3267;20295;2365;7481;0;727
+Paisley South;G. McMaster;2;Glasgow area;54040;3237;21482;3500;8732;0;400
+Perth;Ms R. Cunningham;2;Tayside;60313;13068;11036;3583;16209;0;655
+Renfrewshire West;T. Graham;2;Glasgow area;52348;7387;18525;3045;10546;0;283
+Ross Skye and Inverness West;C. Kennedy;2;Highland;55639;4368;11453;15472;7821;0;841
+Roxburgh and Berwickshire;A. Kirkwood;2;Borders;47259;8337;5226;16243;3959;0;1166
+Stirling;Mrs A. McGuire;2;Central;52491;13971;20382;2675;5752;0;178
+Strathkelvin and Bearsden;S. Galbraith;2;Glasgow area;62974;9986;26278;4843;8111;0;494
+Tayside North;J. Swinney;2;Tayside;61398;16287;5141;3716;20447;0;0
+Tweeddale Ettrick and Lauderdale;M. Moore;2;Borders;50891;8623;10689;12178;6671;0;840
+Western Isles;C. Macdonald;2;Western Isles;22983;1071;8955;495;5379;0;206
+Antrim East;R. Beggs;1;Antrim;58693;13318;1576;6682;543;0;12234
+Antrim North;Rev I. Paisley;1;Antrim;72411;10921;7333;21495;2896;0;3541
+Antrim South;C. Forsythe;1;Antrim;69414;23108;6497;0;2229;0;8361
+Belfast East;P. Robinson;1;Antrim;61744;9886;629;16640;810;0;11064
+Belfast North;C. Walker;1;Antrim;64577;21478;8454;0;8375;0;3145
+Belfast South;Rev M Smyth;1;Antrim;63439;14201;9601;0;2019;0;13663
+Belfast West;G. Adams;1;Antrim;61785;1556;17753;0;25662;0;914
+Down North;R. McCartney;1;Down;63010;11368;1602;0;0;12817;10779
+Down South;E. McGrady;1;Down;69855;16248;26181;0;5127;0;1930
+Fermanagh and South Tyrone;K. Maginnis;1;Fermanagh;64600;24862;11060;0;11174;0;1194
+Foyle;J. Hume;1;Londonderry;67620;0;25109;10290;11445;0;971
+Lagan Valley;J. Donaldson;1;Down;71225;24560;3436;6005;1110;0;9199
+Londonderry East;W. Ross;1;Londonderry;58831;13558;8273;9764;3463;0;3044
+Newry and Armagh;S. Mallon;1;Armagh;70652;18015;22904;0;11218;0;1138
+Strangford;Rt.Hon. J. Taylor;1;Down;69980;18431;2775;12579;503;0;7331
+Tyrone West;W. Thompson;1;Tyrone;58168;16003;14842;0;14280;0;1150
+Ulster Mid;M. McGuinness;1;Tyrone;58836;0;11205;18411;20294;0;759
+Upper Bann;D. Trimble;1;Armagh;70398;20836;11584;5482;5773;0;4112

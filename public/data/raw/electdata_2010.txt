@@ -1,0 +1,651 @@
+Name;MP;Area;County;Electorate;CON;LAB;LIB;NAT;MIN;OTH
+Aldershot;Gerald Howarth;12;Hampshire;71469;21203;5489;15617;0;2041;1034
+Aldridge-Brownhills;Richard Shepherd;7;Black Country;59355;22913;7647;6833;0;0;1241
+Altrincham and Sale West;Graham Brady;4;Central Manchester;71254;24176;11073;12581;0;0;1563
+Amber Valley;Nigel Mills;8;Derbyshire;70171;17746;17210;6636;0;3195;1171
+Arundel and South Downs;Nick Herbert;12;West Sussex;77564;32333;4835;15642;0;3172;0
+Ashfield;Gloria de Piero;8;Nottinghamshire;77379;10698;16239;16047;0;2781;2431
+Ashford;Damian Green;12;Kent;81269;29878;9204;12581;0;2508;1014
+Ashton under Lyne;David Heyes;4;Eastern Manchester;67564;9510;18604;5703;0;2929;1686
+Aylesbury;David Lidington;12;Buckinghamshire;77934;27736;6695;15118;0;3613;0
+Banbury;Tony Baldry;12;Oxfordshire;86986;29703;10773;11476;0;2806;1483
+Barking;Margaret Hodge;11;Barking and Dagenham;73864;8073;24628;3719;0;6620;2303
+Barnsley Central;Eric Illsley;5;South Yorkshire;65543;6388;17487;6394;0;3307;3425
+Barnsley East;Michael Dugher;5;South Yorkshire;68435;6329;18059;6969;0;3301;3728
+Barrow and Furness;John Woodcock;4;Cumbria;68758;16018;21226;4424;0;0;2456
+Basildon and Billericay;John Baron;9;Essex;65482;21922;9584;6538;0;1934;1591
+Basildon South and East Thurrock;Stephen Metcalfe;9;Essex;71815;19624;13852;5977;0;2639;2643
+Basingstoke;Maria Miller;12;Hampshire;75470;25590;10327;12414;0;2076;247
+Bassetlaw;John Mann;8;Nottinghamshire;76542;16803;25018;5570;0;1779;407
+Bath;Don Foster;10;Bristol area;65603;14768;3251;26651;0;1120;1296
+Batley and Spen;Mike Wood;5;West Yorkshire;76732;17159;21565;8095;0;3685;605
+Battersea;Jane Ellison;11;Wandsworth;74300;23103;17126;7176;0;0;1387
+Beaconsfield;Dominic Grieve;12;Buckinghamshire;74982;32053;6135;10271;0;2597;1434
+Beckenham;Bob Stewart;11;Bromley;66219;27597;6893;9813;0;0;3383
+Bedford;Richard Fuller;9;Bedfordshire;68491;17546;16193;8957;0;0;2406
+Bedfordshire Mid;Nadine Dorries;9;Bedfordshire;76023;28815;8108;13663;0;2826;1485
+Bedfordshire North East;Alistair Burt;9;Bedfordshire;78060;30989;8957;12047;0;2294;1265
+Bedfordshire South West;Andrew Selous;9;Bedfordshire;76559;26815;9948;10166;0;2142;1703
+Bermondsey and Old Southwark;Simon Hughes;11;Southwark;77623;7638;13060;21590;0;0;2363
+Berwick-upon-Tweed;Alan Beith;3;Northumberland;57403;14116;5061;16806;0;1243;1213
+Bethnal Green and Bow;Rushanara Ali;11;Tower Hamlets;81243;7071;21784;10210;0;8532;3131
+Beverley and Holderness;Graham Stuart;5;Humber area;79611;25063;11224;12076;0;2080;2756
+Bexhill and Battle;Greg Barker;12;East Sussex;79208;28147;6524;15267;0;2699;1950
+Bexleyheath and Crayford;David Evennett;11;Bexley;64985;21794;11450;5502;0;0;4436
+Birkenhead;Frank Field;4;Merseyside;62773;6687;22082;6554;0;0;0
+Birmingham Edgbaston;Gisela Stuart;7;Birmingham;68573;15620;16894;6387;0;0;2670
+Birmingham Erdington;Jack Dromey;7;Birmingham;66405;11592;14869;5742;0;0;3343
+Birmingham Hall Green;Roger Godsiff;7;Birmingham;76580;7320;16039;11988;0;12240;1140
+Birmingham Hodge Hill;Liam Byrne;7;Birmingham;75040;4936;22077;11775;0;0;3684
+Birmingham Ladywood;Shabana Mahmood;7;Birmingham;73646;4277;19950;9845;0;0;1761
+Birmingham Northfield;Richard Burden;7;Birmingham;71338;14059;16841;6550;0;0;4364
+Birmingham Perry Barr;Khalid Mahmood;7;Birmingham;71304;8960;21142;9234;0;0;2709
+Birmingham Selly Oak;Stephen McCabe;7;Birmingham;74805;14468;17950;10371;0;0;3774
+Birmingham Yardley;John Hemming;7;Birmingham;72321;7836;13160;16162;0;0;3692
+Bishop Auckland;Helen Goodman;3;Durham;68370;10805;16023;9189;0;0;5119
+Blackburn;Jack Straw;4;Lancashire;72331;11895;21751;6918;0;0;4935
+Blackley and Broughton;Graham Stringer;4;Central Manchester;69489;6260;18563;4861;0;0;4520
+Blackpool North and Cleveleys;Paul Maynard;4;Lancashire;65888;16964;14814;5400;0;0;3413
+Blackpool South;Gordon Marsden;4;Lancashire;63025;12597;14449;5082;0;0;3064
+Blaydon;David Anderson;3;Newcastle area;67808;7159;22297;13180;0;0;2277
+Blyth Valley;Ronnie Campbell;3;Northumberland;64263;6412;17156;10488;0;0;4510
+Bognor Regis and Littlehampton;Nick Gibb;12;West Sussex;70812;24087;6580;11024;0;0;5161
+Bolsover;Dennis Skinner;8;Derbyshire;72766;10812;21994;6821;0;0;4361
+Bolton North East;David Crausby;4;Western Manchester;67281;15786;19870;5624;0;0;1997
+Bolton South East;Yasmin Qureshi;4;Western Manchester;69928;10148;18782;6289;0;0;4385
+Bolton West;Julie Hilling;4;Western Manchester;71250;18235;18327;8177;0;0;2837
+Bootle;Joe Benton;4;Merseyside;71426;3678;27426;6245;0;2514;1414
+Boston and Skegness;Mark Simmonds;8;Lincolnshire;70529;21325;8899;6371;0;4081;2449
+Bosworth;David Tredinnick;8;Leicestershire;77296;23132;8674;18100;0;0;4368
+Bournemouth East;Tobias Ellwood;10;Dorset;71125;21320;5836;13592;0;0;3276
+Bournemouth West;Conor Burns;10;Dorset;71753;18808;6171;13225;0;0;3455
+Bracknell;Phillip Lee;12;Berkshire;76885;27327;8755;11623;0;0;4431
+Bradford East;David Ward;5;West Yorkshire;65116;10860;13272;13637;0;0;2688
+Bradford South;Gerry Sutcliffe;5;West Yorkshire;63580;11060;15682;6948;0;0;4305
+Bradford West;Marsha Singh;5;West Yorkshire;62519;12638;18401;4732;0;1370;3435
+Braintree;Brooks Newmark;9;Essex;71162;25901;9780;9247;0;0;4275
+Brent Central;Sarah Teather;11;Brent;74076;5067;18681;20026;0;0;1549
+Brent North;Barry Gardiner;11;Brent;83896;16486;24514;8879;0;0;2419
+Brentford and Isleworth;Mary Macleod;11;Hounslow;83546;20022;18064;12718;0;0;2961
+Brentwood and Ongar;Eric Pickles;9;Essex;73224;28793;4992;11872;0;2037;2898
+Bridgwater and West Somerset;Ian Liddell-Grainger;10;Somerset;76560;24675;9332;15426;0;0;5060
+Brigg and Goole;Andrew Percy;5;Humber area;67345;19680;14533;6414;0;0;3247
+Brighton Kemptown;Simon Kirby;12;East Sussex;66017;16217;14889;7691;0;2330;1578
+Brighton Pavilion;Caroline Lucas;12;East Sussex;74004;12275;14986;7159;0;16238;1176
+Bristol East;Kerry McCarthy;10;Bristol area;69448;12749;16471;10993;0;0;4804
+Bristol North West;Charlotte Leslie;10;Bristol area;73469;19115;13059;15841;0;0;2321
+Bristol South;Dawn Primarolo;10;Bristol area;78579;11086;18600;13866;0;0;4825
+Bristol West;Stephen Williams;10;Bristol area;82728;10169;15227;26593;0;0;3358
+Broadland;Keith Simpson;9;Norfolk;73168;24338;7287;17046;0;0;4005
+Bromley and Chislehurst;Bob Neill;11;Bromley;65427;23569;7295;9669;0;0;3504
+Bromsgrove;Sajid Javid;7;Hereford and Worcestershire;73086;22558;11250;10124;0;0;7698
+Broxbourne;Charles Walker;9;Hertfordshire;71391;26844;8040;6107;0;0;4667
+Broxtowe;Anna Soubry;8;Nottinghamshire;72042;20585;20196;8907;0;0;3039
+Buckingham;John Bercow;12;Buckinghamshire;74996;22860;0;0;0;10331;15144
+Burnley;Gordon Birtwistle;4;Lancashire;66616;6950;13114;14932;0;3747;3102
+Burton;Andrew Griffiths;7;Staffordshire;74874;22188;15884;7891;0;0;3860
+Bury North;David Nuttall;4;Western Manchester;66759;18070;15827;7645;0;0;3419
+Bury South;Ivan Lewis;4;Western Manchester;73544;16216;19508;8796;0;0;3747
+Bury St Edmunds;David Ruffley;9;Suffolk;84727;27899;9776;15519;0;0;5524
+Calder Valley;Craig Whittaker;5;West Yorkshire;76903;20397;13966;13037;0;0;4380
+Camberwell and Peckham;Harriet Harman;11;Southwark;78618;6080;27619;10432;0;0;2528
+Camborne and Redruth;George Eustice;10;Cornwall;63968;15969;6945;15903;0;0;3676
+Cambridge;Julian Huppert;9;Cambridgeshire;77081;12829;12174;19621;0;3804;1702
+Cambridgeshire North East;Stephen Barclay;9;Cambridgeshire;73224;26862;9274;10437;0;0;5491
+Cambridgeshire North West;Shailesh Vara;9;Cambridgeshire;88857;29425;9877;12748;0;4826;1407
+Cambridgeshire South;Andrew Lansley;9;Cambridgeshire;78995;27995;6024;20157;0;0;4880
+Cambridgeshire South East;James Paice;9;Cambridgeshire;83068;27629;4380;21683;0;0;3910
+Cannock Chase;Aidan Burley;7;Staffordshire;74509;18271;15076;7732;0;2168;2312
+Canterbury;Julian Brazier;12;Kent;76808;22050;7940;16002;0;0;3217
+Carlisle;John Stevenson;4;Cumbria;65263;16589;15736;6567;0;0;3308
+Carshalton and Wallington;Tom Brake;11;Sutton;66520;16920;4015;22180;0;0;2803
+Castle Point;Rebecca Harris;9;Essex;67284;19806;6609;4232;0;12174;2205
+Charnwood;Stephen Dorrell;8;Leicestershire;74473;26560;10536;11531;0;0;4915
+Chatham and Aylesford;Tracey Crouch;12;Kent;71122;20230;14161;5832;0;0;3584
+Cheadle;Mark Hunter;4;Eastern Manchester;72458;21445;4920;24717;0;0;1430
+Chelmsford;Simon Burns;9;Essex;77529;25207;5980;20097;0;0;3309
+Chelsea and Fulham;Greg Hands;11;Hammersmith and Fulham;66295;24093;7371;6473;0;0;1919
+Cheltenham;Martin Horwood;10;Gloucestershire;78998;21739;2703;26659;0;0;1685
+Chesham and Amersham;Cheryl Gillan;12;Buckinghamshire;70333;31658;2942;14948;0;2129;767
+Chester, City of;Stephen Mosley;4;Cheshire;68874;18995;16412;8930;0;0;2453
+Chesterfield;Toby Perkins;8;Derbyshire;71878;7214;17891;17342;0;0;3392
+Chichester;Andrew Tyrie;12;West Sussex;81462;31427;5937;15550;0;0;3873
+Chingford and Woodford Green;Iain Duncan Smith;11;Waltham Forest;64831;22743;9780;7242;0;0;3341
+Chippenham;Duncan Hames;10;Wiltshire;72105;21500;3620;23970;0;0;3295
+Chipping Barnet;Theresa Villiers;11;Barnet;77798;24700;12773;10202;0;0;2933
+Chorley;Lindsay Hoyle;4;Lancashire;70950;18922;21515;6957;0;0;2380
+Christchurch;Christopher Chope;10;Dorset;68861;27888;4849;12478;0;0;4201
+Cities of London and Westminster;Mark Field;11;City of Westminster;66489;19264;8188;7574;0;0;1905
+Clacton;Douglas Carswell;9;Essex;67194;22867;10799;5577;0;0;3880
+Cleethorpes;Martin Vickers;5;Humber area;70214;18939;14641;8192;0;0;3194
+Colchester;Bob Russell;9;Essex;74062;15169;5680;22151;0;0;3139
+Colne Valley;Jason McCartney;5;West Yorkshire;80062;20440;14589;15603;0;0;4664
+Congleton;Fiona Bruce;4;Cheshire;73692;23250;8747;16187;0;0;2596
+Copeland;Jamie Reed;4;Cumbria;63291;15866;19699;4365;0;0;2857
+Corby;Louise Bagshaw;8;Northamptonshire;78305;22886;20991;7834;0;0;2525
+Cornwall North;Dan Rogerson;10;Cornwall;68662;19531;1971;22512;0;2300;530
+Cornwall South East;Sheryll Murray;10;Cornwall;72237;22390;3507;19170;0;3083;1467
+Cotswolds, The;Geoffrey Clifton-Brown;10;Gloucestershire;76728;29075;5886;16211;0;0;3660
+Coventry North East;Bob Ainsworth;7;Coventry and Solihull;73035;9609;21384;7210;0;0;5180
+Coventry North West;Geoffrey Robinson;7;Coventry and Solihull;72871;13648;19936;8344;0;0;4632
+Coventry South;Jim Cunningham;7;Coventry and Solihull;73652;15352;19197;8278;0;0;3097
+Crawley;Henry Smith;12;West Sussex;72781;21264;15336;6844;0;0;4060
+Crewe and Nantwich;Edward Timpson;4;Cheshire;77460;23420;17374;7656;0;0;2634
+Croydon Central;Gavin Barwell;11;Croydon;78880;19657;16688;6553;0;3239;3620
+Croydon North;Malcolm Wicks;11;Croydon;85212;12466;28947;7226;0;0;3037
+Croydon South;Richard Ottaway;11;Croydon;81301;28684;11287;12866;0;0;3485
+Dagenham and Rainham;Jon Cruddas;11;Barking and Dagenham;69764;15183;17813;3806;0;4952;2478
+Darlington;Jenny Chapman;3;Durham;69352;13503;16891;10046;0;0;2456
+Dartford;Gareth Johnson;12;Kent;76271;24428;13800;7361;0;0;4491
+Daventry;Chris Heaton-Harris;8;Northamptonshire;71451;29252;8168;10064;0;0;4290
+Denton and Reddish;Andrew Gwynne;4;Eastern Manchester;64765;9360;19191;6727;0;0;2357
+Derby North;Chris Williamson;8;Derbyshire;71484;14283;14896;12638;0;0;3263
+Derby South;Margaret Beckett;8;Derbyshire;71012;11729;17851;8430;0;0;3178
+Derbyshire Dales;Patrick McLoughlin;8;Derbyshire;63367;24378;9061;10512;0;0;2829
+Derbyshire Mid;Pauline Latham;8;Derbyshire;66297;22877;11585;9711;0;0;3169
+Derbyshire North East;Natascha Engel;8;Derbyshire;71422;15503;17948;10947;0;0;2636
+Derbyshire South;Heather Wheeler;8;Derbyshire;70610;22935;15807;8012;0;0;3665
+Devizes;Claire Perry;10;Wiltshire;67374;25519;4711;12514;0;0;3596
+Devon Central;Mel Stride;10;Devon;71204;27737;3715;18507;0;2870;1044
+Devon East;Hugo Swire;10;Devon;73109;25662;5721;16548;0;4346;815
+Devon North;Nick Harvey;10;Devon;74508;18484;2671;24305;0;3720;2141
+Devon South West;Gary Streeter;10;Devon;70059;27908;6193;12034;0;0;3725
+Devon West and Torridge;Geoffrey Cox;10;Devon;76574;25230;2917;22273;0;3021;1816
+Dewsbury;Simon Reevell;5;West Yorkshire;78901;18898;17372;9150;0;3813;4775
+Don Valley;Caroline Flint;5;South Yorkshire;73214;12877;16472;7422;0;0;6659
+Doncaster Central;Rosie Winterton;5;South Yorkshire;75207;10340;16569;8795;0;0;6041
+Doncaster North;Ed Miliband;5;South Yorkshire;72381;8728;19637;6174;0;2818;4126
+Dorset Mid and Poole North;Annette Brooke;10;Dorset;64660;20831;2748;21100;0;0;2109
+Dorset North;Robert Walter;10;Dorset;73698;27640;2910;20015;0;2812;764
+Dorset South;Richard Drax;10;Dorset;73838;22667;15224;9557;0;0;2862
+Dorset West;Oliver Letwin;10;Dorset;76869;27287;3815;23364;0;0;2871
+Dover;Charlie Elphicke;12;Kent;71832;22174;16900;7962;0;0;3349
+Dudley North;Ian Austin;7;Black Country;60838;14274;14923;4066;0;3267;2072
+Dudley South;Chris Kelly;7;Black Country;60572;16450;12594;5989;0;0;3132
+Dulwich and West Norwood;Tessa Jowell;11;Lambeth;72817;10684;22461;13096;0;0;1973
+Durham North;Kevan Jones;3;Durham;67548;8622;20698;8617;0;0;3030
+Durham North West;Pat Glass;3;Durham;70618;8766;18539;10927;0;2472;3111
+Durham, City of;Roberta Blackman-Woods;3;Durham;68832;6146;20496;17429;0;0;2181
+Ealing Central and Acton;Angie Bray;11;Ealing;63489;17944;14228;13041;0;0;1987
+Ealing North;Stephen Pound;11;Ealing;67902;14722;24023;6283;0;0;2650
+Ealing Southall;Virendra Sharma;11;Ealing;60379;12733;22024;6383;0;0;1616
+Easington;Grahame Morris;3;Durham;63873;4790;20579;5597;0;0;3948
+East Ham;Stephen Timms;11;Newham;90675;7645;35471;5849;0;0;1408
+Eastbourne;Stephen Lloyd;12;East Sussex;77840;21223;2497;24658;0;1327;2419
+Eastleigh;Christopher Huhne;12;Hampshire;77435;21102;5153;24966;0;0;2429
+Eddisbury;Stephen O'Brien;4;Cheshire;65306;23472;9794;10217;0;0;1931
+Edmonton;Andy Love;11;Enfield;63902;12052;21665;4252;0;0;2408
+Ellesmere Port and Neston;Andrew Miller;4;Cheshire;63097;15419;19750;6663;0;0;2401
+Elmet and Rothwell;Alec Shelbrooke;5;West Yorkshire;77724;23778;19257;9109;0;0;3645
+Eltham;Clive Efford;11;Greenwich;62590;15753;17416;5299;0;0;3496
+Enfield North;Nick de Bois;11;Enfield;66258;18804;17112;5403;0;0;3134
+Enfield Southgate;David Burrowes;11;Enfield;64138;21928;14302;6124;0;0;1998
+Epping Forest;Eleanor Laing;9;Essex;72198;25148;6641;10017;0;0;4778
+Epsom and Ewell;Chris Grayling;12;Surrey;78104;30868;6538;14734;0;0;2815
+Erewash;Jessica Lee;8;Derbyshire;69654;18805;16304;8343;0;0;4190
+Erith and Thamesmead;Teresa Pearce;11;Bexley;69918;13365;19068;5116;0;2184;2743
+Esher and Walton;Dominic Raab;12;Surrey;75338;32134;5829;13541;0;0;3039
+Exeter;Ben Bradshaw;10;Devon;77157;17221;19942;10581;0;0;4503
+Fareham;Mark Hoban;12;Hampshire;75878;30037;7719;12945;0;0;3644
+Faversham and Kent Mid;Hugh Robertson;12;Kent;68858;26250;7748;9162;0;0;3552
+Feltham and Heston;Alan Keen;11;Hounslow;81058;16516;21174;6679;0;0;4167
+Filton and Bradley Stoke;Jack Lopresti;10;Bristol area;69003;19686;12772;12197;0;0;3646
+Finchley and Golders Green;Mike Freer;11;Barnet;77198;21688;15879;8036;0;0;1554
+Folkestone and Hythe;Damian Collins;12;Kent;78003;26109;5719;15987;0;0;4985
+Forest of Dean;Mark Harper;10;Gloucestershire;68419;22853;11789;10676;0;0;3445
+Fylde;Mark Menzies;4;Lancashire;65917;22826;8624;9641;0;0;2599
+Gainsborough;Edward Leigh;8;Lincolnshire;72144;24266;7701;13707;0;0;3577
+Garston and Halewood;Maria Eagle;4;Merseyside;71312;6908;25493;8616;0;0;1808
+Gateshead;Ian Mearns;3;Newcastle area;66492;5716;20712;8163;0;0;3666
+Gedling;Vernon Coaker;8;Nottinghamshire;70590;17962;19821;7350;0;0;3057
+Gillingham and Rainham;Rehman Chishti;12;Kent;70865;21624;12944;8484;0;0;3734
+Gloucester;Richard Graham;10;Gloucestershire;79322;20267;17847;9767;0;0;2883
+Gosport;Caroline Dinenage;12;Hampshire;72720;24300;7944;9887;0;0;4808
+Grantham and Stamford;Nicholas Boles;8;Lincolnshire;78000;26552;9503;11726;0;0;5018
+Gravesham;Adam Holloway;12;Kent;70195;22956;13644;6293;0;0;4410
+Great Grimsby;Austin Mitchell;5;Humber area;61229;10063;10777;7388;0;0;4726
+Great Yarmouth;Brandon Lewis;9;Norfolk;70315;18571;14295;6188;0;0;4003
+Greenwich and Woolwich;Nick Raynsford;11;Greenwich;65489;10109;20262;7498;0;0;3319
+Guildford;Anne Milton;12;Surrey;77082;29618;2812;21836;0;0;1301
+Hackney North and Stoke Newington;Diane Abbott;11;Hackney;73874;6759;25553;11092;0;0;3084
+Hackney South and Shoreditch;Meg Hillier;11;Hackney;72816;5800;23888;9600;0;0;3570
+Halesowen and Rowley Regis;James Morris;7;Black Country;63693;18115;16092;6515;0;0;3257
+Halifax;Linda Riordan;5;West Yorkshire;70380;14806;16278;8335;0;0;4136
+Haltemprice and Howden;David Davis;5;Humber area;70403;24486;7630;12884;0;0;3737
+Halton;Derek Twigg;4;Cheshire;68884;8339;23843;5718;0;0;3438
+Hammersmith;Andy Slaughter;11;Hammersmith and Fulham;72348;17261;20810;7567;0;0;1814
+Hampshire East;Damian Hinds;12;Hampshire;72250;29137;4043;15640;0;0;2497
+Hampshire North East;James Arbuthnot;12;Hampshire;72196;32075;5173;13478;0;0;2213
+Hampshire North West;Sir George Young;12;Hampshire;76040;31072;6980;12489;0;0;2751
+Hampstead and Kilburn;Glenda Jackson;11;Camden;79713;17290;17332;16491;0;0;1709
+Harborough;Edward Garnier;8;Leicestershire;77917;26894;6981;17097;0;0;3973
+Harlow;Robert Halfon;9;Essex;67439;19691;14766;5990;0;0;3431
+Harrogate and Knaresborough;Andrew Jones;5;North Yorkshire;75269;24305;3413;23266;0;0;2150
+Harrow East;Bob Blackman;11;Harrow;68554;21435;18032;6850;0;0;1689
+Harrow West;Gareth Thomas;11;Harrow;71510;16968;20111;7458;0;0;1579
+Hartlepool;Iain Wright;3;Teesside;68923;10758;16267;6533;0;0;4684
+Harwich and North Essex;Bernard Jenkin;9;Essex;70743;23001;9774;11554;0;0;4671
+Hastings and Rye;Amber Rudd;12;East Sussex;78000;20468;18475;7825;0;0;3046
+Havant;David Willetts;12;Hampshire;69712;22433;7777;10273;0;0;3420
+Hayes and Harlington;John McDonnell;11;Hillingdon;70233;12553;23377;3726;0;0;2981
+Hazel Grove;Andrew Stunell;4;Eastern Manchester;63074;14114;5234;20485;0;0;2148
+Hemel Hempstead;Michael Penning;9;Hertfordshire;72754;24721;10295;11315;0;0;3140
+Hemsworth;Jon Trickett;5;West Yorkshire;72552;10662;20506;5667;0;3946;3059
+Hendon;Matthew Offord;11;Barnet;78923;19635;19529;5734;0;0;1476
+Henley;John Howell;12;Oxfordshire;75005;30054;5835;13466;0;0;4165
+Hereford and South Herefordshire;Jesse Norman;7;Hereford and Worcestershire;71435;22366;3506;19885;0;0;2624
+Herefordshire North;Bill Wiggin;7;Hereford and Worcestershire;66525;24631;3373;14744;0;2701;2119
+Hertford and Stortford;Mark Prisk;9;Hertfordshire;78459;29810;7620;14373;0;0;3574
+Hertfordshire North East;Oliver Heald;9;Hertfordshire;72200;26995;8291;11801;0;0;3338
+Hertfordshire South West;David Gauke;9;Hertfordshire;78248;30773;6526;15853;0;0;3598
+Hertsmere;James Clappison;9;Hertfordshire;73062;26476;8871;8210;0;0;3713
+Hexham;Guy Opperman;3;Northumberland;61375;18795;8253;13007;0;0;3428
+Heywood and Middleton;Jim Dobbin;4;Eastern Manchester;80171;12528;18499;10474;0;0;4624
+High Peak;Andrew Bingham;8;Derbyshire;71973;20587;15910;10993;0;0;2847
+Hitchin and Harpenden;Peter Lilley;9;Hertfordshire;73851;29869;7413;14598;0;0;2827
+Holborn and St Pancras;Frank Dobson;11;Camden;86863;11134;25198;15256;0;0;3061
+Hornchurch and Upminster;Angela Watkinson;11;Havering;78487;27469;11098;7426;0;3421;3976
+Hornsey and Wood Green;Lynne Featherstone;11;Haringey;79916;9174;18720;25595;0;0;1553
+Horsham;Francis Maude;12;West Sussex;76835;29447;4189;17987;0;0;4218
+Houghton and Sunderland South;Bridget Phillipson;3;Newcastle area;68729;8147;19137;5292;0;2462;2983
+Hove;Mike Weatherley;12;East Sussex;71708;18294;16426;11240;0;0;3859
+Huddersfield;Barry Sheerman;5;West Yorkshire;66316;11253;15725;10023;0;0;3523
+Hull East;Karl Turner;5;Humber area;67530;5667;16387;7790;0;0;4340
+Hull North;Diana Johnson;5;Humber area;64082;4365;13044;12403;0;0;3479
+Hull West and Hessle;Alan Johnson;5;Humber area;57264;6361;13378;7636;0;0;4130
+Huntingdon;Jonathan Djanogly;9;Cambridgeshire;83557;26516;5982;15697;0;3258;2813
+Hyndburn;Graham Jones;4;Lancashire;67221;14441;17531;5033;0;2137;3530
+Ilford North;Lee Scott;11;Redbridge;72372;21506;16102;5966;0;0;3444
+Ilford South;Mike Gapes;11;Redbridge;86220;14014;25301;8679;0;0;3197
+Ipswich;Ben Gummer;9;Suffolk;78371;18371;16292;8556;0;0;3722
+Isle of Wight;Andrew Turner;12;Hampshire;109966;32810;8169;22283;0;0;7002
+Islington North;Jeremy Corbyn;11;Islington;68120;6339;24276;11875;0;0;2064
+Islington South and Finsbury;Emily Thornberry;11;Islington;67649;8449;18407;14838;0;0;1861
+Jarrow;Stephen Hepburn;3;Newcastle area;64350;8002;20910;7163;0;0;2709
+Keighley;Kris Hopkins;5;West Yorkshire;65893;20003;17063;7059;0;0;3567
+Kenilworth and Southam;Jeremy Wright;7;Warwickshire;64362;25945;6949;13393;0;0;2144
+Kensington;Sir Malcolm Rifkind;11;Kensington and Chelsea;65961;17595;8979;6872;0;0;1704
+Kettering;Philip Hollobone;8;Northamptonshire;68837;23247;14153;7498;0;0;2430
+Kingston and Surbiton;Edward Davey;11;Kingston Upon Thames;81116;20868;5337;28428;0;0;2478
+Kingswood;Chris Skidmore;10;Bristol area;66361;19362;16917;8072;0;0;3555
+Knowsley;George Howarth;4;Merseyside;79561;4004;31650;5964;0;0;3040
+Lancashire West;Rosie Cooper;4;Lancashire;75975;17540;21883;6573;0;0;2477
+Lancaster and Fleetwood;Eric Ollerenshaw;4;Lancashire;69908;15404;15071;8167;0;0;4059
+Leeds Central;Hilary Benn;5;West Yorkshire;64698;7541;18434;7789;0;0;3630
+Leeds East;George Mudie;5;West Yorkshire;65067;8763;19056;6618;0;0;3376
+Leeds North East;Fabian Hamilton;5;West Yorkshire;67899;15742;20287;9310;0;0;2196
+Leeds North West;Greg Mulholland;5;West Yorkshire;65399;11550;9132;20653;0;0;2148
+Leeds West;Rachel Reeves;5;West Yorkshire;67453;7641;16389;9373;0;0;5349
+Leicester East;Keith Vaz;8;Leicestershire;72986;11722;25804;6817;0;0;3652
+Leicester South;Peter Soulsby;8;Leicestershire;77175;10066;21479;12671;0;0;2908
+Leicester West;Elizabeth Kendall;8;Leicestershire;64900;9728;13745;8107;0;0;4239
+Leicestershire North West;Andrew Bridgen;8;Leicestershire;71219;23147;15636;8639;0;0;4530
+Leicestershire South;Andrew Robathan;8;Leicestershire;76639;27000;11392;11476;0;0;4709
+Leigh;Andrew Burnham;4;Western Manchester;76350;9284;21295;8049;0;0;5704
+Lewes;Norman Baker;12;East Sussex;68708;18401;2508;26048;0;1728;1403
+Lewisham Deptford;Joan Ruddock;11;Lewisham;67058;5551;22132;9633;0;0;3904
+Lewisham East;Heidi Alexander;11;Lewisham;65926;9850;17966;11750;0;0;2153
+Lewisham West and Penge;Jim Dowd;11;Lewisham;69022;11489;18501;12673;0;0;2365
+Leyton and Wanstead;John Cryer;11;Waltham Forest;63541;8928;17511;11095;0;0;2625
+Lichfield;Michael Fabricant;7;Staffordshire;72586;28048;10230;10365;0;0;2920
+Lincoln;Karl McCartney;8;Lincolnshire;73540;17163;16105;9256;0;0;3197
+Liverpool Riverside;Louise Ellman;4;Merseyside;74539;4243;22998;8825;0;0;2735
+Liverpool Walton;Steve Rotheram;4;Merseyside;62612;2241;24709;4891;0;1104;1390
+Liverpool Wavertree;Luciana Berger;4;Merseyside;62518;2830;20132;12965;0;0;1987
+Liverpool West Derby;Stephen Twigg;4;Merseyside;63082;3311;22953;4486;0;3327;1707
+Loughborough;Nicky Morgan;8;Leicestershire;77502;21971;18227;9675;0;0;2965
+Louth and Horncastle;Sir Peter Tapsell;8;Lincolnshire;77650;25065;8760;11194;0;0;5475
+Ludlow;Philip Dunne;7;Shropshire;66631;25720;3272;15971;0;2127;1642
+Luton North;Kelvin Hopkins;9;Bedfordshire;65062;13672;21192;4784;0;0;3370
+Luton South;Gavin Shuker;9;Bedfordshire;59962;12396;14725;9567;0;0;5528
+Macclesfield;David Rutley;4;Cheshire;73417;23503;10164;11544;0;0;4848
+Maidenhead;Theresa May;12;Berkshire;72844;31937;3795;15168;0;0;2820
+Maidstone and The Weald;Helen Grant;12;Kent;71041;23491;4769;17602;0;0;3066
+Makerfield;Yvonne Fovargue;4;Western Manchester;73641;8210;20700;7082;0;3424;4355
+Maldon;John Whittingdale;9;Essex;68861;28661;6070;9254;0;0;3910
+Manchester Central;Tony Lloyd;4;Central Manchester;90110;4704;21059;10620;0;0;3544
+Manchester Gorton;Sir Gerald Kaufman;4;Central Manchester;75933;4224;19211;12508;0;0;2382
+Manchester Withington;John Leech;4;Central Manchester;74371;5005;18216;20110;0;0;1700
+Mansfield;Alan Meale;8;Nottinghamshire;80069;12741;18753;7469;0;4339;5093
+Meon Valley;George Hollingbery;12;Hampshire;70488;28818;3266;16693;0;0;2461
+Meriden;Caroline Spelman;7;Coventry and Solihull;83826;26956;10703;9278;0;0;5225
+Middlesbrough;Sir Stuart Bell;3;Teesside;65148;6283;15351;6662;0;0;5159
+Middlesbrough South and Cleveland East;Tom Blenkinsop;3;Teesside;72664;16461;18138;7340;0;0;4275
+Milton Keynes North;Mark Lancaster;12;Buckinghamshire;85841;23419;14458;11894;0;0;4117
+Milton Keynes South;Iain Stewart;12;Buckinghamshire;90487;23034;17833;9787;0;0;4679
+Mitcham and Morden;Siobhain McDonagh;11;Merton;65939;11056;24722;5202;0;0;2817
+Mole Valley;Sir Paul Beresford;12;Surrey;72612;31263;3804;15610;0;0;3647
+Morecambe and Lunesdale;David Morris;4;Lancashire;69965;18035;17169;5791;0;0;2441
+Morley and Outwood;Ed Balls;5;West Yorkshire;74200;17264;18365;8186;0;3535;1506
+New Forest East;Julian Lewis;12;Hampshire;72858;26443;4915;15136;0;0;3542
+New Forest West;Desmond Swayne;12;Hampshire;68332;27980;4666;11084;0;0;3842
+Newark;Patrick Mercer;8;Nottinghamshire;71785;27590;11438;10246;0;0;1954
+Newbury;Richard Benyon;12;Berkshire;78329;33057;2505;20809;0;0;2218
+Newcastle upon Tyne Central;Chi Onwurah;3;Newcastle area;60507;6611;15694;8228;0;0;3624
+Newcastle upon Tyne East;Nick Brown;3;Newcastle area;64487;6068;17043;12590;0;0;2139
+Newcastle upon Tyne North;Catherine McKinnell;3;Newcastle area;67110;7966;17950;14536;0;0;3494
+Newcastle-under-Lyme;Paul Farrelly;7;Staffordshire;69433;14841;16393;8466;0;0;3491
+Newton Abbot;Anne-Marie Morris;10;Devon;69343;20774;3387;20251;0;3088;783
+Norfolk Mid;George Freeman;9;Norfolk;74260;25123;8857;11267;0;0;5518
+Norfolk North;Norman Lamb;9;Norfolk;67841;15928;2896;27554;0;2680;603
+Norfolk North West;Henry Bellingham;9;Norfolk;73207;25916;6353;11106;0;0;4425
+Norfolk South;Richard Bacon;9;Norfolk;76165;27133;7252;16193;0;0;4415
+Norfolk South West;Elizabeth Truss;9;Norfolk;74298;23753;9119;10613;0;0;5665
+Normanton, Pontefract and Castleford;Yvette Cooper;5;West Yorkshire;82239;11314;22293;7585;0;0;5047
+Northampton North;Michael Ellis;8;Northamptonshire;64230;13735;11799;11250;0;0;3487
+Northampton South;Brian Binley;8;Northamptonshire;66923;15917;9913;7579;0;0;5569
+Northamptonshire South;Andrea Leadsom;8;Northamptonshire;82032;33081;10380;12603;0;0;3826
+Norwich North;Chloe Smith;9;Norfolk;65258;17280;13379;7783;0;0;4131
+Norwich South;Simon Wright;9;Norfolk;73649;10902;13650;13960;0;7095;1944
+Nottingham East;Christopher Leslie;8;Nottinghamshire;58707;7846;15022;8053;0;0;2191
+Nottingham North;Graham Allen;8;Nottinghamshire;63240;8508;16646;5849;0;0;3282
+Nottingham South;Lilian Greenwood;8;Nottinghamshire;67441;13437;15209;9406;0;0;2737
+Nuneaton;Marcus Jones;7;Warwickshire;67837;18536;16467;6846;0;0;2797
+Old Bexley and Sidcup;James Brokenshire;11;Bexley;65665;24625;8768;6996;0;0;5103
+Oldham East and Saddleworth;Phil Woolas;4;Eastern Manchester;72765;11773;14186;14083;0;0;4478
+Oldham West and Royton;Michael Meacher;4;Eastern Manchester;72651;10151;19503;8193;0;0;5063
+Orpington;Joseph Johnson;11;Bromley;67732;29200;4400;12000;0;0;3311
+Oxford East;Andrew Smith;12;Oxfordshire;81886;9727;21938;17357;0;0;2629
+Oxford West and Abingdon;Nicola Blackwood;12;Oxfordshire;86458;23906;5999;23730;0;0;2845
+Pendle;Andrew Stephenson;4;Lancashire;66417;17512;13927;9095;0;0;4511
+Penistone and Stocksbridge;Angela Smith;5;South Yorkshire;68501;14516;17565;9800;0;0;4635
+Penrith and The Border;Rory Stewart;4;Cumbria;64548;24071;5834;12830;0;0;2352
+Peterborough;Stewart Jackson;9;Cambridgeshire;70316;18133;13272;8816;0;0;4706
+Plymouth Moor View;Alison Seabeck;10;Devon;67261;13845;15433;7016;0;0;5232
+Plymouth Sutton and Devonport;Oliver Colvile;10;Devon;71035;15050;13901;10829;0;0;4114
+Poole;Robert Syms;10;Dorset;64661;22532;6041;14991;0;0;3872
+Poplar and Limehouse;Jim Fitzpatrick;11;Tower Hamlets;74956;12649;18679;5209;0;8160;2003
+Portsmouth North;Penny Mordaunt;12;Hampshire;70329;19533;12244;8874;0;0;3467
+Portsmouth South;Mike Hancock;12;Hampshire;70242;13721;5640;18921;0;0;2982
+Preston;Mark Hendrick;4;Lancashire;62460;7060;15668;7935;0;0;1842
+Pudsey;Stuart Andrew;5;West Yorkshire;69257;18874;17215;10224;0;0;2770
+Putney;Justine Greening;11;Wandsworth;63370;21223;11170;6907;0;0;1485
+Rayleigh and Wickford;Mark Francois;9;Essex;75905;30257;7577;7919;0;0;6590
+Reading East;Rob Wilson;12;Berkshire;74922;21269;12729;13664;0;0;2323
+Reading West;Alok Sharma;12;Berkshire;72118;20523;14519;9546;0;0;2942
+Redcar;Ian Swales;3;Teesside;67125;5790;13741;18955;0;0;3477
+Redditch;Karen Lumley;7;Hereford and Worcestershire;68550;19138;13317;7750;0;0;3813
+Reigate;Crispin Blunt;12;Surrey;71604;26688;5672;13097;0;0;4521
+Ribble South;Lorraine Fullbrook;4;Lancashire;75822;23396;17842;7271;0;0;2949
+Ribble Valley;Nigel Evans;4;Lancashire;78068;26298;11529;10732;0;0;3728
+Richmond;William Hague;5;North Yorkshire;79478;33541;8150;10205;0;0;1516
+Richmond Park;Zac Goldsmith;11;Richmond Upon Thames;77060;29461;2979;25370;0;0;1458
+Rochdale;Simon Danczuk;4;Eastern Manchester;78952;8305;16699;15810;0;0;5093
+Rochester and Strood;Mark Reckless;12;Kent;73882;23604;13651;7800;0;0;2916
+Rochford and Southend East;James Duddridge;9;Essex;71080;19509;8459;8084;0;0;5579
+Romford;Andrew Rosindell;11;Havering;71193;26031;9077;5572;0;2438;3363
+Romsey and Southampton North;Caroline Nokes;12;Hampshire;66901;24345;3116;20189;0;0;1289
+Rossendale and Darwen;Jake Berry;4;Lancashire;73003;19691;15198;8541;0;0;3698
+Rother Valley;Kevin Barron;5;South Yorkshire;72841;13281;19147;8111;0;0;6219
+Rotherham;Denis MacShane;5;South Yorkshire;63565;6279;16741;5994;0;3906;4586
+Rugby;Mark Pawsey;7;Warwickshire;68914;20901;14901;9434;0;0;2232
+Ruislip, Northwood and Pinner;Nick Hurd;11;Hillingdon;70873;28866;9806;8345;0;0;3188
+Runnymede and Weybridge;Philip Hammond;12;Surrey;72566;26915;6446;10406;0;0;4383
+Rushcliffe;Kenneth Clarke;8;Nottinghamshire;72955;27470;11128;11659;0;0;3430
+Rutland and Melton;Alan Duncan;8;Leicestershire;77185;28228;7893;14228;0;0;4871
+Saffron Walden;Sir Alan Haselhurst;9;Essex;76035;30155;5288;14913;0;0;4013
+Salford and Eccles;Hazel Blears;4;Central Manchester;75482;8497;16655;10930;0;0;5451
+Salisbury;John Glen;10;Wiltshire;67429;23859;3690;17893;0;0;3039
+Scarborough and Whitby;Robert Goodwill;5;North Yorkshire;75443;21108;12978;11093;0;0;4103
+Scunthorpe;Nic Dakin;5;Humber area;63089;12091;14640;6774;0;0;3529
+Sedgefield;Phil Wilson;3;Durham;64727;9445;18141;8033;0;0;4603
+Sefton Central;Bill Esterson;4;Merseyside;67512;16445;20307;9656;0;0;2055
+Selby and Ainsty;Nigel Adams;5;North Yorkshire;72789;25562;13297;9180;0;0;3689
+Sevenoaks;Michael Fallon;12;Kent;69591;28076;6541;10561;0;0;4230
+Sheffield Brightside and Hillsborough;David Blunkett;5;South Yorkshire;68186;4468;21400;7768;0;3026;2252
+Sheffield Central;Paul Blomfield;5;South Yorkshire;69519;4206;17138;16973;0;0;3151
+Sheffield Hallam;Nick Clegg;5;South Yorkshire;69378;12040;8228;27324;0;0;3543
+Sheffield Heeley;Meg Munn;5;South Yorkshire;65869;7081;17409;11602;0;0;4779
+Sheffield South East;Clive Betts;5;South Yorkshire;67284;7202;20169;9664;0;0;4373
+Sherwood;Mark Spencer;8;Nottinghamshire;71043;19211;18997;7283;0;0;3463
+Shipley;Philip Davies;5;West Yorkshire;67689;24002;14058;9890;0;0;1477
+Shrewsbury and Atcham;Daniel Kawczynski;7;Shropshire;75438;23313;10915;15369;0;0;3448
+Shropshire North;Owen Paterson;7;Shropshire;78926;26692;9406;10864;0;0;4907
+Sittingbourne and Sheppey;Gordon Henderson;12;Kent;75354;24313;11930;7943;0;0;4392
+Skipton and Ripon;Julian Smith;5;North Yorkshire;77381;27685;5498;17735;0;0;3806
+Sleaford and North Hykeham;Stephen Phillips;8;Lincolnshire;85550;30719;10051;10814;0;3806;4140
+Slough;Fiona Mactaggart;12;Berkshire;77068;16361;21884;6943;0;0;2554
+Solihull;Lorely Burt;7;Coventry and Solihull;77863;23460;4891;23635;0;0;3143
+Somerset North;Liam Fox;10;Bristol area;77304;28549;6448;20687;0;0;2257
+Somerset North East;Jacob Rees-Mogg;10;Bristol area;67412;21130;16216;11433;0;0;2424
+Somerton and Frome;David Heath;10;Somerset;81548;26976;2675;28793;0;0;2168
+South Holland and The Deepings;John Hayes;8;Lincolnshire;76243;29639;7024;7759;0;0;5766
+South Shields;David Miliband;3;Newcastle area;63294;7886;18995;5189;0;0;4448
+Southampton Itchen;John Denham;12;Hampshire;74532;16134;16326;9256;0;0;2696
+Southampton Test;Alan Whitehead;12;Hampshire;71931;14588;17001;9865;0;0;2733
+Southend West;David Amess;9;Essex;66527;20086;5850;12816;0;0;4854
+Southport;John Pugh;4;Merseyside;67202;15683;4116;21707;0;0;2251
+Spelthorne;Kwasi Kwarteng;12;Surrey;70479;22261;7789;12242;0;0;5012
+St Albans;Anne Main;9;Hertfordshire;70058;21533;9288;19228;0;0;2786
+St Austell and Newquay;Stephen Gilbert;10;Cornwall;76346;18877;3386;20189;0;2007;2779
+St Helens North;Dave Watts;4;Merseyside;74985;9940;23041;8992;0;0;2583
+St Helens South and Whiston;Shaun Woodward;4;Merseyside;77975;8209;24364;10242;0;0;3266
+St Ives;Andrew George;10;Cornwall;66930;17900;3751;19619;0;2560;2091
+Stafford;Jeremy Lefroy;7;Staffordshire;70587;22047;16587;8211;0;0;3394
+Staffordshire Moorlands;Karen Bradley;7;Staffordshire;62071;19793;13104;7338;0;0;3580
+Staffordshire South;Gavin Williamson;7;Staffordshire;73390;26834;10244;8427;0;0;4935
+Stalybridge and Hyde;Jonathan Reynolds;4;Eastern Manchester;69037;13445;16189;6965;0;0;4280
+Stevenage;Stephen McPartland;9;Hertfordshire;68937;18491;14913;7432;0;0;3815
+Stockport;Ann Coffey;4;Eastern Manchester;63525;9913;16697;9778;0;0;2740
+Stockton North;Alex Cunningham;3;Teesside;67363;10247;16923;6342;0;0;5986
+Stockton South;James Wharton;3;Teesside;74552;19577;19245;7600;0;0;3862
+Stoke-on-Trent Central;Tristram Hunt;7;Staffordshire;60995;6833;12605;7039;0;0;5993
+Stoke-on-Trent North;Joan Walley;7;Staffordshire;72052;9580;17815;7120;0;0;5681
+Stoke-on-Trent South;Robert Flello;7;Staffordshire;68031;11316;15446;6323;0;3762;3005
+Stone;William Cash;7;Staffordshire;66979;23890;9770;10598;0;0;2971
+Stourbridge;Margot James;7;Black Country;69637;20153;14989;7733;0;0;4359
+Stratford-on-Avon;Nadhim Zahawi;7;Warwickshire;69516;26052;4809;14706;0;1846;3129
+Streatham;Chuka Umunna;11;Lambeth;74531;8578;20037;16778;0;0;1444
+Stretford and Urmston;Kate Green;4;Central Manchester;70091;12886;21821;7601;0;0;2602
+Stroud;Neil Carmichael;10;Gloucestershire;78305;23679;22380;8955;0;0;2959
+Suffolk Central and Ipswich North;Daniel Poulter;9;Suffolk;75848;27125;8636;13339;0;0;4320
+Suffolk Coastal;Therese Coffey;9;Suffolk;76687;25475;8812;16347;0;0;4259
+Suffolk South;Tim Yeo;9;Suffolk;72498;24550;7368;15861;0;0;3637
+Suffolk West;Matthew Hancock;9;Suffolk;74413;24312;7089;11262;0;0;5426
+Sunderland Central;Julie Elliott;3;Newcastle area;74485;12770;19495;7191;0;0;3007
+Surrey East;Sam Gyimah;12;Surrey;76855;31007;4925;14133;0;0;4575
+Surrey Heath;Michael Gove;12;Surrey;77690;31326;5552;14037;0;0;3432
+Surrey South West;Jeremy Hunt;12;Surrey;77980;33605;3419;17287;0;0;2948
+Sussex Mid;Nicholas Soames;12;West Sussex;77182;28329;3689;20927;0;0;2910
+Sutton and Cheam;Paul Burstow;11;Sutton;66658;20548;3376;22156;0;0;2428
+Sutton Coldfield;Andrew Mitchell;7;Birmingham;74489;27303;10298;9117;0;0;3871
+Swindon North;Justin Tomlinson;10;Wiltshire;78391;22408;15348;8668;0;0;3871
+Swindon South;Robert Buckland;10;Wiltshire;72622;19687;16143;8305;0;0;2984
+Tamworth;Christopher Pincher;7;Staffordshire;72693;21238;15148;7516;0;0;2488
+Tatton;George Osborne;4;Cheshire;65689;24687;7803;10200;0;0;2541
+Taunton Deane;Jeremy Browne;10;Somerset;82537;24538;2967;28531;0;0;2114
+Telford;David Wright;7;Shropshire;65061;14996;15974;6399;0;0;3941
+Tewkesbury;Laurence Robertson;10;Gloucestershire;76655;25472;6253;19162;0;0;3074
+Thanet North;Roger Gale;12;Kent;69432;22826;9298;8400;0;0;2819
+Thanet South;Laura Sandys;12;Kent;71596;22043;14426;6935;0;0;2529
+Thirsk and Malton;Anne McIntosh;5;North Yorkshire;76231;20167;5169;8886;0;0;3920
+Thornbury and Yate;Steve Webb;10;Bristol area;64092;17916;3385;25032;0;0;1893
+Thurrock;Jackie Doyle-Price;9;Essex;77758;16869;16777;4901;0;3618;3656
+Tiverton and Honiton;Neil Parish;10;Devon;76810;27614;4907;18294;0;0;4079
+Tonbridge and Malling;Sir John Stanley;12;Kent;71790;29723;6476;11545;0;0;3570
+Tooting;Sadiq Khan;11;Wandsworth;73836;19514;22038;7509;0;0;1594
+Torbay;Adrian Sanders;10;Devon;76151;19048;3231;23126;0;2628;1177
+Totnes;Sarah Wollaston;10;Devon;67937;21940;3538;17013;0;2890;2462
+Tottenham;David Lammy;11;Haringey;69933;6064;24128;7197;0;0;3298
+Truro and Falmouth;Sarah Newton;10;Cornwall;70598;20349;4697;19914;0;0;3808
+Tunbridge Wells;Greg Clark;12;Kent;72042;28302;5448;12726;0;0;3844
+Twickenham;Vincent Cable;11;Richmond Upon Thames;79861;20343;4583;32483;0;0;2312
+Tynemouth;Alan Campbell;3;Newcastle area;75680;18121;23860;7845;0;0;2842
+Tyneside North;Mary Glindon;3;Newcastle area;77690;8514;23505;10621;0;0;3765
+Uxbridge and South Ruislip;John Randall;11;Hillingdon;71168;21758;10542;8995;0;0;3781
+Vauxhall;Kate Hoey;11;Lambeth;74811;9301;21498;10847;0;0;1545
+Wakefield;Mary Creagh;5;West Yorkshire;70834;15841;17454;7256;0;0;3893
+Wallasey;Angela Eagle;4;Merseyside;65915;13071;21578;5693;0;0;1312
+Walsall North;David Winnick;7;Black Country;65183;12395;13385;4754;0;2930;2723
+Walsall South;Valerie Vaz;7;Black Country;64830;14456;16211;5880;0;0;4335
+Walthamstow;Stella Creasy;11;Waltham Forest;64625;5734;21252;11774;0;0;2234
+Wansbeck;Ian Lavery;3;Northumberland;63045;6714;17548;10517;0;0;3494
+Wantage;Ed Vaizey;12;Oxfordshire;80456;29284;7855;15737;0;0;3465
+Warley;John Spellar;7;Black Country;63106;9484;20240;5929;0;0;2617
+Warrington North;Helen Jones;4;Cheshire;71601;13364;20135;9196;0;0;1516
+Warrington South;David Mowat;4;Cheshire;80506;19641;18088;15094;0;0;2051
+Warwick and Leamington;Chris White;7;Warwickshire;67800;20876;17363;8977;0;0;1816
+Warwickshire North;Dan Byles;7;Warwickshire;70143;18993;18939;5481;0;0;3852
+Washington and Sunderland West;Sharon Hodgson;3;Newcastle area;68910;8157;19615;6382;0;0;3180
+Watford;Richard Harrington;9;Hertfordshire;80798;19291;14750;17866;0;0;3301
+Waveney;Peter Aldous;9;Suffolk;78532;20571;19802;6811;0;0;3957
+Wealden;Charles Hendry;12;East Sussex;76537;31090;5266;13911;0;0;4702
+Weaver Vale;Graham Evans;4;Cheshire;66538;16953;15962;8196;0;0;2879
+Wellingborough;Peter Bone;8;Northamptonshire;76857;24918;13131;8848;0;0;4764
+Wells;Tessa Munt;10;Somerset;79432;23760;4198;24560;0;0;3346
+Welwyn Hatfield;Grant Shapps;9;Hertfordshire;72058;27894;10471;8010;0;0;2597
+Wentworth and Dearne;John Healey;5;South Yorkshire;72586;7396;21316;6787;0;0;6607
+West Bromwich East;Tom Watson;7;Black Country;62824;10961;17657;4993;0;0;4339
+West Bromwich West;Adrian Bailey;7;Black Country;65013;10612;16263;4336;0;3394;1566
+West Ham;Lyn Brown;11;Newham;85313;6888;29422;5392;0;0;5249
+Westminster North;Karen Buck;11;City of Westminster;66739;15251;17377;5513;0;0;1457
+Westmorland and Lonsdale;Tim Farron;4;Cumbria;67881;18632;1158;30896;0;0;801
+Weston-Super-Mare;John Penrose;10;Bristol area;78487;23356;5772;20665;0;0;2923
+Wigan;Lisa Nandy;4;Western Manchester;75564;10917;21404;6797;0;0;5022
+Wiltshire North;James Gray;10;Wiltshire;66313;25114;3239;17631;0;0;2715
+Wiltshire South West;Andrew Murrison;10;Wiltshire;71645;25321;5613;14954;0;0;3130
+Wimbledon;Stephen Hammond;11;Merton;65723;23257;10550;11849;0;0;1739
+Winchester;Steve Brine;12;Hampshire;73806;27155;3051;24107;0;0;1642
+Windsor;Adam Afriyie;12;Berkshire;69511;30172;4910;11118;0;0;3388
+Wirral South;Alison McGovern;4;Merseyside;56099;15745;16276;6611;0;0;1274
+Wirral West;Esther McVey;4;Merseyside;55050;16726;14290;6630;0;0;1726
+Witham;Priti Patel;9;Essex;66750;24448;8656;9252;0;0;4479
+Witney;David Cameron;12;Oxfordshire;78766;33973;7511;11233;0;0;5052
+Woking;Jonathan Lord;12;Surrey;73838;26551;4246;19744;0;0;2245
+Wokingham;John Redwood;12;Berkshire;76219;28754;5516;15262;0;0;4996
+Wolverhampton North East;Emma Reynolds;7;Black Country;59324;11964;14448;4711;0;0;3771
+Wolverhampton South East;Pat McFadden;7;Black Country;60450;9912;16505;5277;0;0;3013
+Wolverhampton South West;Paul Uppal;7;Black Country;59160;16344;15653;6430;0;0;1733
+Worcester;Robin Walker;7;Hereford and Worcestershire;72831;19358;16376;9525;0;0;3715
+Worcestershire Mid;Peter Luff;7;Hereford and Worcestershire;72171;27770;7613;11906;0;0;3642
+Worcestershire West;Harriett Baldwin;7;Hereford and Worcestershire;73270;27213;3661;20459;0;0;2760
+Workington;Tony Cunningham;4;Cumbria;59607;13290;17865;5318;0;0;2786
+Worsley and Eccles South;Barbara Keeley;4;Central Manchester;72473;13555;17892;6883;0;0;3371
+Worthing East and Shoreham;Tim Loughton;12;West Sussex;74001;23458;8087;12353;0;0;4499
+Worthing West;Peter Bottomley;12;West Sussex;75945;25416;5800;13687;0;0;4220
+Wrekin, The;Mark Pritchard;7;Shropshire;65544;21922;12472;8019;0;0;3555
+Wycombe;Steven Baker;12;Buckinghamshire;74502;23423;8326;13863;0;0;2539
+Wyre and Preston North;Ben Wallace;4;Lancashire;71201;26877;10932;11033;0;0;2466
+Wyre Forest;Mark Garnier;7;Hereford and Worcestershire;76711;18793;7298;6040;0;16150;2618
+Wythenshawe and Sale East;Paul Goggins;4;Central Manchester;79923;10412;17987;9107;0;0;3245
+Yeovil;David Laws;10;Somerset;82314;18807;2991;31843;0;2357;1162
+York Central;Hugh Bayley;5;North Yorkshire;74908;12122;18573;11694;0;0;4094
+York Outer;Julian Sturdy;5;North Yorkshire;74965;22912;9108;19224;0;0;2056
+Yorkshire East;Greg Knight;5;Humber area;80342;24328;10401;10842;0;0;5683
+Aberavon;Hywel Francis;6;West Glamorgan;50789;4411;16073;5034;2198;1276;1966
+Aberconwy;Guto Bebb;6;Clwyd;44593;10734;7336;5786;5341;0;769
+Alyn and Deeside;Mark Tami;6;Clwyd;60931;12885;15804;7308;1549;1368;1009
+Arfon;Hywel Williams;6;Gwynedd;41198;4416;7928;3666;9383;0;685
+Blaenau Gwent;Nick Smith;6;Gwent;52438;2265;16974;3285;1333;6458;2080
+Brecon and Radnorshire;Roger Williams;6;Powys;53589;14182;4096;17929;989;876;773
+Bridgend;Madeleine Moon;6;Mid Glamorgan;58700;11668;13931;8658;2269;1020;801
+Caerphilly;Wayne David;6;Gwent;62134;6622;17377;5688;6460;1635;910
+Cardiff Central;Jenny Willott;6;South Glamorgan;61162;7799;10400;14976;1246;765;965
+Cardiff North;Jonathan Evans;6;South Glamorgan;65553;17860;17666;8724;1588;1130;662
+Cardiff South and Penarth;Alun Michael;6;South Glamorgan;73704;12553;17262;9875;1851;1145;1683
+Cardiff West;Kevin Brennan;6;South Glamorgan;62787;12143;16894;7186;2868;1117;750
+Carmarthen East and Dinefwr;Jonathan Edwards;6;Dyfed;52385;8506;10065;4609;13546;1285;0
+Carmarthen West and Pembrokeshire South;Simon Hart;6;Dyfed;57519;16649;13226;4890;4232;1146;364
+Ceredigion;Mark Williams;6;Dyfed;59043;4421;2210;19139;10815;977;696
+Clwyd South;Susan Elan Jones;6;Clwyd;53748;10477;13311;5965;3009;1100;819
+Clwyd West;David Jones;6;Clwyd;57913;15833;9414;5801;5864;864;335
+Cynon Valley;Ann Clwyd;6;Mid Glamorgan;50656;3010;15681;4120;6064;1001;0
+Delyn;David Hanson;6;Clwyd;53470;12811;15083;5747;1844;844;655
+Dwyfor Meirionnydd;Elfyn Llwyd;6;Gwynedd;45354;6447;4021;3538;12814;1310;776
+Gower;Martin Caton;6;West Glamorgan;61696;13333;16016;7947;2760;963;652
+Islwyn;Christopher Evans;6;Gwent;54826;4854;17069;3597;4518;1495;3157
+Llanelli;Nia Griffith;6;Dyfed;55637;5381;15916;3902;11215;1047;0
+Merthyr Tydfil and Rhymney;Dai Havard;6;Mid Glamorgan;54715;2412;14007;9951;1621;1845;2240
+Monmouth;David Davies;6;Gwent;62768;22466;12041;9026;1273;1126;587
+Montgomeryshire;Glyn Davies;6;Powys;48730;13976;2407;12792;2802;1128;708
+Neath;Peter Hain;6;West Glamorgan;57186;4847;17172;5535;7397;1342;829
+Newport East;Jessica Morden;6;Gwent;54437;7918;12744;11094;724;1168;800
+Newport West;Paul Flynn;6;Gwent;62111;12845;16389;6587;1122;1183;1594
+Ogmore;Huw Irranca-Davies;6;Mid Glamorgan;55527;5398;18644;5260;3326;1242;780
+Pontypridd;Owen Smith;6;Mid Glamorgan;58219;5932;14220;11435;2673;1229;1182
+Preseli Pembrokeshire;Stephen Crabb;6;Dyfed;57419;16944;12339;5759;3654;906;0
+Rhondda;Chris Bryant;6;Mid Glamorgan;51554;1993;17183;3309;5630;2599;358
+Swansea East;Sian James;6;West Glamorgan;59823;4823;16819;5981;2181;1715;1157
+Swansea West;Geraint Davies;6;West Glamorgan;61334;7407;12335;11831;1437;910;1673
+Torfaen;Paul Murphy;6;Gwent;61178;7541;16847;6264;2005;1657;3326
+Vale of Clwyd;Chris Ruane;6;Clwyd;55781;12508;15017;4472;2068;827;642
+Vale of Glamorgan;Alun Cairns;6;South Glamorgan;70262;20341;16034;7403;2667;1529;693
+Wrexham;Ian Lucas;6;Clwyd;50872;8375;12161;8503;2029;1134;774
+Ynys Mon;Albert Owen;6;Gwynedd;50075;7744;11490;2592;9029;2225;1364
+Aberdeen North;Frank Doran;2;Grampian;64808;4666;16746;7001;8385;0;903
+Aberdeen South;Anne Begg;2;Grampian;64031;8914;15722;12216;5102;0;1080
+Aberdeenshire West and Kincardine;Sir Robert Smith;2;Grampian;66110;13678;6159;17362;7086;0;910
+Airdrie and Shotts;Pamela Nash;2;Glasgow area;62364;3133;20849;2898;8441;0;528
+Angus;Michael Weir;2;Tayside;62863;11738;6535;4090;15020;0;577
+Argyll and Bute;Alan Reid;2;Argyll and Bute;67165;10861;10274;14292;8563;0;1217
+Ayr Carrick and Cumnock;Sandra Osborne;2;Ayrshire and Lanark;73320;11721;21632;4264;8276;0;0
+Ayrshire Central;Brian Donohoe;2;Ayrshire and Lanark;68352;8943;20950;5236;8364;0;422
+Ayrshire North and Arran;Katy Clark;2;Ayrshire and Lanark;74953;7212;21860;4630;11965;0;449
+Banff and Buchan;Eilidh Whiteford;2;Grampian;64300;11841;5382;4365;15868;0;1010
+Berwickshire, Roxburgh and Selkirk;Michael Moore;2;Borders;73826;16555;5003;22230;4497;0;729
+Caithness Sutherland and Easter Ross;John Thurso;2;Highland;47257;3744;7081;11907;5516;0;520
+Coatbridge, Chryston and Bellshill;Tom Clarke;2;Glasgow area;70067;3374;27728;3519;7014;0;0
+Cumbernauld, Kilsyth and Kirkintilloch East;Gregg McClymont;2;Glasgow area;64037;3407;23549;3924;9794;0;476
+Dumfries and Galloway;Russell Brown;2;Dumfries and Galloway;74581;16501;23950;4608;6419;0;695
+Dumfriesshire, Clydesdale and Tweeddale;David Mundell;2;Dumfries and Galloway;66627;17457;13263;9080;4945;0;1147
+Dunbartonshire East;Jo Swinson;2;Glasgow area;63795;7431;16367;18551;5054;0;545
+Dunbartonshire West;Gemma Doyle;2;Glasgow area;66085;3242;25905;3434;8497;0;1188
+Dundee East;Stewart Hosie;2;Tayside;65471;6177;13529;4285;15350;0;1227
+Dundee West;James McGovern;2;Tayside;63013;3461;17994;4233;10716;0;722
+Dunfermline and West Fife;Thomas Docherty;2;Fife;73769;3305;22639;17169;5201;0;633
+East Kilbride, Strathaven and Lesmahagow;Michael McCann;2;Ayrshire and Lanark;76534;6613;26241;5052;11738;0;1302
+East Lothian;Fiona O'Donnell;2;Edinburgh area;73438;9661;21919;8288;7883;0;1410
+Edinburgh East;Sheila Gilmore;2;Edinburgh area;60941;4358;17314;7751;8133;2035;274
+Edinburgh North and Leith;Mark Lazarowicz;2;Edinburgh area;69204;7079;17740;16016;4568;1062;891
+Edinburgh South;Ian Murray;2;Edinburgh area;59354;9452;15215;14899;3354;0;881
+Edinburgh South West;Alistair Darling;2;Edinburgh area;66359;11026;19473;8194;5530;0;1239
+Edinburgh West;Michael Crockart;2;Edinburgh area;65161;10767;12881;16684;6115;0;0
+Falkirk;Eric Joyce;2;Central;81869;5698;23207;5225;15364;0;1283
+Fife North East;Sir Menzies Campbell;2;Fife;62969;8715;6869;17763;5685;0;1032
+Glasgow Central;Anas Sarwar;2;Glasgow area;60062;2158;15908;5010;5357;800;1347
+Glasgow East;Margaret Curran;2;Glasgow area;61516;1453;19797;1617;7957;677;663
+Glasgow North;Ann McKechin;2;Glasgow area;51416;2089;13181;9283;3530;0;1530
+Glasgow North East;Willie Bain;2;Glasgow area;59859;1569;20100;2262;4158;798;522
+Glasgow North West;John Robertson;2;Glasgow area;60968;3537;19233;5622;5430;0;1760
+Glasgow South;Tom Harris;2;Glasgow area;65029;4592;20736;4739;8078;0;1949
+Glasgow South West;Ian Davidson;2;Glasgow area;58182;2084;19863;2870;5192;0;1772
+Glenrothes;Lindsay Roy;2;Fife;67893;2922;25247;3108;8799;0;425
+Gordon;Malcolm Bruce;2;Grampian;73420;9111;9811;17575;10827;0;1451
+Inverclyde;David Cairns;2;Glasgow area;59209;4502;20993;5007;6577;0;433
+Inverness Nairn Badenoch and Strathspey;Danny Alexander;2;Highland;72528;6278;10407;19172;8803;0;2426
+Kilmarnock and Loudoun;Cathy Jamieson;2;Ayrshire and Lanark;74131;6592;24460;3419;12082;0;0
+Kirkcaldy and Cowdenbeath;Gordon Brown;2;Fife;73665;4258;29559;4269;6550;0;1166
+Lanark and Hamilton East;Jimmy Hood;2;Ayrshire and Lanark;74773;6981;23258;5249;9780;0;1286
+Linlithgow and East Falkirk;Michael Connarty;2;Edinburgh area;80907;6146;25634;6589;13081;0;0
+Livingston;Graeme Morrice;2;Edinburgh area;75924;5158;23215;5316;12424;0;1794
+Midlothian;David Hamilton;2;Edinburgh area;61387;4661;18449;6711;8100;0;1321
+Moray;Angus Robertson;2;Grampian;65925;10683;7007;5956;16273;0;1085
+Motherwell and Wishaw;Frank Roy;2;Glasgow area;66918;3660;23910;3840;7104;0;609
+Na h-Eileanan An Iar (Western Isles);Angus MacNeil;2;Western Isles;22266;647;4838;1097;6723;1412;0
+Ochil and South Perthshire;Gordon Banks;2;Central;75115;10342;19131;5754;13944;0;1298
+Orkney and Shetland;Alistair Carmichael;2;Orkney and Shetland;33085;2032;2061;11989;2042;0;1222
+Paisley and Renfrewshire North;James Sheridan;2;Glasgow area;63704;6381;23613;4597;8333;0;783
+Paisley and Renfrewshire South;Douglas Alexander;2;Glasgow area;61197;3979;23842;3812;7228;0;1137
+Perth and North Perthshire;Peter Wishart;2;Tayside;72141;14739;7923;5954;19118;0;534
+Renfrewshire East;Jim Murphy;2;Glasgow area;66249;15567;25987;4720;4535;0;372
+Ross Skye and Lochaber;Charles Kennedy;2;Highland;51836;4260;5265;18335;5263;0;1715
+Rutherglen and Hamilton West;Tom Greatrex;2;Ayrshire and Lanark;76408;4540;28566;5636;7564;0;675
+Stirling;Anne McGuire;2;Central;66080;11254;19558;6797;8091;0;1141
+Antrim East;Sammy Wilson;1;Antrim;60204;7223;2019;13993;2064;3377;1826
+Antrim North;Ian Paisley Jr;1;Antrim;73338;4634;3738;19672;5265;7114;1974
+Antrim South;Rev William McCrea;1;Antrim;63054;10353;2955;11536;4729;2607;1829
+Belfast East;Naomi Long;1;Antrim;59007;7305;365;11306;817;12839;1856
+Belfast North;Nigel Dodds;1;Antrim;65504;2837;4544;14812;12588;1809;403
+Belfast South;Dr Alasdair McDonnell;1;Antrim;59524;5910;14026;8100;0;5114;1036
+Belfast West;Gerry Adams;1;Antrim;59522;1000;5261;2436;22840;596;0
+Down North;Lady Sylvia Hermon;1;Down;60698;6817;680;0;250;21181;4553
+Down South;Margaret Ritchie;1;Down;70784;3093;20648;3645;12236;1506;1461
+Fermanagh and South Tyrone;Michelle Gildernew;1;Fermanagh;67908;0;3574;0;21304;21300;625
+Foyle;Mark Durkan;1;Londonderry;65843;1221;16922;4489;12098;2936;223
+Lagan Valley;Jeffrey Donaldson;1;Antrim;65257;7713;1835;18199;1465;4174;3154
+Londonderry East;Gregory Campbell;1;Londonderry;63220;6218;5399;12097;6742;2572;1922
+Newry and Armagh;Conor Murphy;1;Armagh;74308;8558;10526;5764;18857;545;656
+Strangford;Jim Shannon;1;Down;60539;9050;2164;14926;1161;2828;2376
+Tyrone West;Pat Doherty;1;Tyrone;61148;5281;5212;7365;18050;859;508
+Ulster Mid;Martin McGuinness;1;Tyrone;64594;4509;5826;5876;21239;2995;397
+Upper Bann;Thomas Simpson;1;Armagh;74732;10639;5276;14000;10237;1231;0
