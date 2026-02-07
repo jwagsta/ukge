@@ -1,18 +1,19 @@
 import { create } from 'zustand';
 import type { ElectionResult, TernaryDataPoint, Region } from '@/types/election';
 
-// Module-level cache for election data
+// Module-level cache for election data - limited to control memory
 const electionDataCache = new Map<number, { electionData: ElectionResult[]; ternaryData: TernaryDataPoint[] }>();
+const MAX_ELECTION_CACHE_SIZE = 3; // Keep current year + adjacent years
 
 // Boundary version mapping - determines which boundary file to load for each year
+// Note: App scope is 1955-2024 (pre-1955 elections not included)
+// Boundary files are from parlconst.org - GB only (no Northern Ireland)
 export const BOUNDARY_VERSIONS: Record<number, string> = {
-  1918: '1918', 1922: '1918', 1923: '1918', 1924: '1918',
-  1929: '1918', 1931: '1918', 1935: '1918', 1945: '1918',
-  1950: '1950', 1951: '1950', 1955: '1950', 1959: '1950',
-  1964: '1950', 1966: '1950', 1970: '1950',
+  1955: '1955', 1959: '1955', 1964: '1955', 1966: '1955', 1970: '1955',
   197402: '1974', 197410: '1974', 1979: '1974',
   1983: '1983', 1987: '1983', 1992: '1983',
-  1997: '1997', 2001: '1997', 2005: '1997',
+  1997: '1997', 2001: '1997',
+  2005: '2005',  // Hybrid: 1997 England/Wales + 2005 Scotland (reduced 72→59 seats)
   2010: '2010', 2015: '2010', 2017: '2010', 2019: '2010',
   2024: '2024',
 };
@@ -87,9 +88,9 @@ export const useElectionStore = create<ElectionState>((set, get) => ({
   ternaryData: [],
   // Full list of available years including both 1974 elections
   // Years are sorted chronologically, with 197402 (Feb) and 197410 (Oct) for 1974
+  // Note: App scope is 1955-2024 (pre-1955 elections not included due to data quality)
   availableYears: [
-    1918, 1922, 1923, 1924, 1929, 1931, 1935, 1945,
-    1950, 1951, 1955, 1959, 1964, 1966, 1970,
+    1955, 1959, 1964, 1966, 1970,
     197402, 197410, 1979,
     1983, 1987, 1992,
     1997, 2001, 2005,
@@ -127,7 +128,7 @@ export const useElectionStore = create<ElectionState>((set, get) => ({
     set({ isLoading: true, error: null });
 
     try {
-      const response = await fetch(`/data/elections/${year}.json`);
+      const response = await fetch(`${import.meta.env.BASE_URL}data/elections/${year}.json`);
       if (!response.ok) {
         throw new Error(`Failed to load election data for ${year}`);
       }
@@ -136,7 +137,11 @@ export const useElectionStore = create<ElectionState>((set, get) => ({
       const electionData: ElectionResult[] = data.constituencies || [];
       const ternaryData = transformToTernaryData(electionData);
 
-      // Cache the result
+      // Cache the result with size limit
+      if (electionDataCache.size >= MAX_ELECTION_CACHE_SIZE) {
+        const firstKey = electionDataCache.keys().next().value;
+        if (firstKey !== undefined) electionDataCache.delete(firstKey);
+      }
       electionDataCache.set(year, { electionData, ternaryData });
 
       set({
@@ -169,11 +174,16 @@ export const useElectionStore = create<ElectionState>((set, get) => ({
     // Fetch in the background (don't await)
     yearsToFetch.forEach((y) => {
       if (!electionDataCache.has(y)) {
-        fetch(`/data/elections/${y}.json`)
+        fetch(`${import.meta.env.BASE_URL}data/elections/${y}.json`)
           .then((res) => res.json())
           .then((data) => {
             const electionData: ElectionResult[] = data.constituencies || [];
             const ternaryData = transformToTernaryData(electionData);
+            // Respect cache size limit
+            if (electionDataCache.size >= MAX_ELECTION_CACHE_SIZE) {
+              const firstKey = electionDataCache.keys().next().value;
+              if (firstKey !== undefined) electionDataCache.delete(firstKey);
+            }
             electionDataCache.set(y, { electionData, ternaryData });
           })
           .catch(() => {

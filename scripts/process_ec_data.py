@@ -33,13 +33,14 @@ FILE_MAPPINGS = {
 }
 
 # Area code to region mapping
+# Electoral Calculus: 1=NI, 2=Scotland, 3=NE, 4=NW, 5=Yorks, 6=Wales, 7=WMids, 8=EMids, 9=East, 10=SW, 11=London, 12=SE
 AREA_TO_REGION = {
-    '1': 'scotland',
-    '2': 'wales',
-    '3': 'northern_ireland',
+    '1': 'northern_ireland',
+    '2': 'scotland',
+    '3': 'north_east',
     '4': 'north_west',
     '5': 'yorkshire',
-    '6': 'north_east',
+    '6': 'wales',
     '7': 'west_midlands',
     '8': 'east_midlands',
     '9': 'east',
@@ -48,11 +49,11 @@ AREA_TO_REGION = {
     '12': 'south_east',
 }
 
-# Area code to country mapping
+# Area code to country mapping (for non-England areas)
 AREA_TO_COUNTRY = {
-    '1': 'scotland',
-    '2': 'wales',
-    '3': 'northern_ireland',
+    '1': 'northern_ireland',
+    '2': 'scotland',
+    '6': 'wales',
 }
 
 # Party column mappings
@@ -114,12 +115,13 @@ def parse_file(filepath, metadata):
                 party_name = party['name']
 
                 if col == 'NAT':
-                    if area == '1':  # Scotland
+                    if area == '2':  # Scotland
                         party_id = 'snp'
                         party_name = 'SNP'
-                    elif area == '2':  # Wales
+                    elif area == '6':  # Wales
                         party_id = 'pc'
                         party_name = 'Plaid Cymru'
+                    # Note: Area 1 (Northern Ireland) doesn't use NAT column - NI parties are in MIN/OTH
 
                 results.append({
                     'partyId': party_id,

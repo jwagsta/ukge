@@ -107,8 +107,9 @@ interface ConstituencyPanelProps {
   height: number;
 }
 
-// Cache for historical data
+// Cache for historical data - limited to control memory
 const historicalDataCache = new Map<string, HistoricalResult[]>();
+const MAX_HISTORICAL_CACHE = 5;
 
 export function ConstituencyPanel({ height }: ConstituencyPanelProps) {
   const {
@@ -152,7 +153,7 @@ export function ConstituencyPanel({ height }: ConstituencyPanelProps) {
 
       for (const year of availableYears) {
         try {
-          const response = await fetch(`/data/elections/${year}.json`);
+          const response = await fetch(`${import.meta.env.BASE_URL}data/elections/${year}.json`);
           if (!response.ok) continue;
 
           const data = await response.json();
@@ -190,7 +191,11 @@ export function ConstituencyPanel({ height }: ConstituencyPanelProps) {
       // Sort by year
       results.sort((a, b) => a.year - b.year);
 
-      // Cache the result
+      // Cache the result with size limit
+      if (historicalDataCache.size >= MAX_HISTORICAL_CACHE) {
+        const firstKey = historicalDataCache.keys().next().value;
+        if (firstKey) historicalDataCache.delete(firstKey);
+      }
       historicalDataCache.set(selectedConstituencyId, results);
 
       setHistoricalData(results);
@@ -267,12 +272,20 @@ export function ConstituencyPanel({ height }: ConstituencyPanelProps) {
   const plotWidth = chartWidth - chartPadding.left - chartPadding.right;
   const plotHeight = chartHeight - chartPadding.top - chartPadding.bottom;
 
+  // Normalize year for scale (handle 197402/197410 as 1974.2/1974.8)
+  const normalizeYear = (year: number) => {
+    if (year === 197402) return 1974.2;
+    if (year === 197410) return 1974.8;
+    return year;
+  };
+
   // Scale functions for mini chart
   const xScale = (year: number) => {
     if (historicalData.length <= 1) return plotWidth / 2;
-    const minYear = Math.min(...historicalData.map((d) => d.year));
-    const maxYear = Math.max(...historicalData.map((d) => d.year));
-    return ((year - minYear) / (maxYear - minYear)) * plotWidth;
+    const normalizedYears = historicalData.map((d) => normalizeYear(d.year));
+    const minYear = Math.min(...normalizedYears);
+    const maxYear = Math.max(...normalizedYears);
+    return ((normalizeYear(year) - minYear) / (maxYear - minYear)) * plotWidth;
   };
 
   const yScale = (share: number) => {

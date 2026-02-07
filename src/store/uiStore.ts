@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-export type MapType = 'choropleth' | 'dots' | 'hex';
+export type MapType = 'choropleth' | 'dots' | 'hex' | 'small-multiples';
 
 export interface ZoomTransform {
   k: number; // scale

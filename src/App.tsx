@@ -8,6 +8,7 @@ import { TernaryPlot } from '@/components/charts/TernaryPlot/TernaryPlot';
 import { DotDensityMap } from '@/components/charts/DotDensityMap/DotDensityMap';
 import { ChoroplethMap } from '@/components/charts/ChoroplethMap/ChoroplethMap';
 import { HexMap } from '@/components/charts/HexMap/HexMap';
+import { SmallMultiplesMap } from '@/components/charts/SmallMultiplesMap/SmallMultiplesMap';
 import { SeatsChart } from '@/components/charts/SeatsChart/SeatsChart';
 import { ConstituencyPanel } from '@/components/panels/ConstituencyPanel';
 
@@ -26,8 +27,9 @@ type BoundaryData = FeatureCollection<Polygon | MultiPolygon, ConstituencyProper
 const SEATS_CHART_HEIGHT = 120;
 const BOTTOM_PANEL_HEIGHT = 200;
 
-// Cache for boundary files
+// Cache for boundary files - limited to 2 entries to control memory
 const boundaryCache = new Map<string, BoundaryData>();
+const MAX_BOUNDARY_CACHE = 2;
 
 function App() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -75,8 +77,8 @@ function App() {
 
     // Try to load era-specific boundary file first, then fall back to default
     const boundaryFiles = [
-      `/data/boundaries/${newBoundaryVersion}.json`,
-      '/data/boundaries/constituencies.json', // Fallback
+      `${import.meta.env.BASE_URL}data/boundaries/${newBoundaryVersion}.json`,
+      `${import.meta.env.BASE_URL}data/boundaries/constituencies.json`, // Fallback
     ];
 
     const tryLoadBoundary = async () => {
@@ -85,6 +87,11 @@ function App() {
           const res = await fetch(file);
           if (res.ok) {
             const data = await res.json();
+            // Limit cache size to control memory
+            if (boundaryCache.size >= MAX_BOUNDARY_CACHE) {
+              const firstKey = boundaryCache.keys().next().value;
+              if (firstKey) boundaryCache.delete(firstKey);
+            }
             boundaryCache.set(newBoundaryVersion, data);
             setBoundaries(data);
             return;
@@ -136,11 +143,11 @@ function App() {
           </div>
         )}
 
-        {!isLoading && !error && width > 0 && height > 0 && (
+        {!error && width > 0 && height > 0 && (
           <>
             {/* Main split view: Ternary on left, Map on right */}
             <div className="flex flex-1" style={{ height: mainHeight }}>
-              {/* Ternary Plot */}
+              {/* Ternary Plot - always rendered to preserve animation state */}
               <div className="border-r border-gray-200" style={{ width: ternaryWidth, height: mainHeight }}>
                 <TernaryPlot
                   data={ternaryData}
@@ -192,6 +199,18 @@ function App() {
                     onConstituencyHover={setHoveredConstituency}
                   />
                 )}
+                {mapType === 'small-multiples' && (
+                  <SmallMultiplesMap
+                    electionData={electionData}
+                    boundaries={boundaries}
+                    width={mapWidth}
+                    height={mainHeight}
+                    selectedConstituencyId={selectedConstituencyId}
+                    hoveredConstituencyId={hoveredConstituencyId}
+                    onConstituencySelect={setSelectedConstituency}
+                    onConstituencyHover={setHoveredConstituency}
+                  />
+                )}
                 {/* Map type toggle overlay */}
                 <div className="absolute top-2 left-2 z-10">
                   <div className="flex rounded-md border border-gray-300 overflow-hidden shadow-sm bg-white">
@@ -224,6 +243,16 @@ function App() {
                       }`}
                     >
                       Hex
+                    </button>
+                    <button
+                      onClick={() => useUIStore.getState().setMapType('small-multiples')}
+                      className={`px-2 py-1 text-xs transition-colors ${
+                        mapType === 'small-multiples'
+                          ? 'bg-blue-600 text-white'
+                          : 'bg-white text-gray-700 hover:bg-gray-50'
+                      }`}
+                    >
+                      4-Way
                     </button>
                   </div>
                 </div>

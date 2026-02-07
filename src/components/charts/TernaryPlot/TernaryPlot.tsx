@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo, useRef, useEffect } from 'react';
+import React, { useState, useCallback, useMemo, useRef, useEffect, memo } from 'react';
 import * as d3 from 'd3';
 import type { TernaryDataPoint, ElectionResult } from '@/types/election';
 import { getPartyColor } from '@/types/party';
@@ -43,10 +43,78 @@ interface TrajectoryPoint {
   y: number;
 }
 
-const ANIMATION_DURATION = 800; // ms
+const ANIMATION_DURATION = 600; // ms - slightly faster for snappier feel
 
-// Cache for trajectory data
+// Cache for trajectory data - limited to control memory
 const trajectoryCache = new Map<string, TrajectoryPoint[]>();
+const MAX_TRAJECTORY_CACHE = 5;
+
+// Module-level position cache - persists across component remounts
+// Limited since each constituency has 2 numbers (~16 bytes) but could grow large
+const positionCache = new Map<string, { x: number; y: number }>();
+const MAX_POSITION_CACHE = 700; // ~1 election worth of constituencies
+
+// Memoized axis labels and ticks - only recomputes when radius changes
+const AxisDecorations = memo(function AxisDecorations({ radius }: { radius: number }) {
+  const top = { x: 0, y: -radius };
+  const bottomRight = { x: radius * Math.cos(Math.PI / 6), y: radius * Math.sin(Math.PI / 6) };
+  const bottomLeft = { x: -radius * Math.cos(Math.PI / 6), y: radius * Math.sin(Math.PI / 6) };
+  const ticks = [0, 0.25, 0.5, 0.75, 1];
+  const tickLength = 6;
+
+  return (
+    <>
+      {/* Left edge ticks */}
+      {ticks.map((t, i) => {
+        const x = bottomLeft.x + (top.x - bottomLeft.x) * t;
+        const y = bottomLeft.y + (top.y - bottomLeft.y) * t;
+        const angle = Math.atan2(top.y - bottomLeft.y, top.x - bottomLeft.x) - Math.PI / 2;
+        return (
+          <g key={`left-${i}`}>
+            <line x1={x} y1={y} x2={x + Math.cos(angle) * tickLength} y2={y + Math.sin(angle) * tickLength} stroke="#666" strokeWidth={1} />
+            {t > 0 && <text x={x + Math.cos(angle) * (tickLength + 10)} y={y + Math.sin(angle) * (tickLength + 10)} textAnchor="middle" alignmentBaseline="middle" className="text-[10px] fill-gray-400">{Math.round(t * 100)}</text>}
+          </g>
+        );
+      })}
+      {/* Right edge ticks */}
+      {ticks.map((t, i) => {
+        const x = top.x + (bottomRight.x - top.x) * t;
+        const y = top.y + (bottomRight.y - top.y) * t;
+        const angle = Math.atan2(bottomRight.y - top.y, bottomRight.x - top.x) - Math.PI / 2;
+        return (
+          <g key={`right-${i}`}>
+            <line x1={x} y1={y} x2={x + Math.cos(angle) * tickLength} y2={y + Math.sin(angle) * tickLength} stroke="#666" strokeWidth={1} />
+            {t > 0 && <text x={x + Math.cos(angle) * (tickLength + 10)} y={y + Math.sin(angle) * (tickLength + 10)} textAnchor="middle" alignmentBaseline="middle" className="text-[10px] fill-gray-400">{Math.round(t * 100)}</text>}
+          </g>
+        );
+      })}
+      {/* Bottom edge ticks */}
+      {ticks.map((t, i) => {
+        const x = bottomRight.x + (bottomLeft.x - bottomRight.x) * t;
+        const y = bottomRight.y;
+        return (
+          <g key={`bottom-${i}`}>
+            <line x1={x} y1={y} x2={x} y2={y + tickLength} stroke="#666" strokeWidth={1} />
+            {t > 0 && <text x={x} y={y + tickLength + 10} textAnchor="middle" className="text-[10px] fill-gray-400">{Math.round(t * 100)}</text>}
+          </g>
+        );
+      })}
+      {/* Edge labels */}
+      <g transform={`translate(${(bottomLeft.x + top.x) / 2 - 35}, ${(bottomLeft.y + top.y) / 2}) rotate(-60)`}>
+        <text x={0} y={0} textAnchor="middle" className="text-[12px] font-semibold" fill="#DC241f">Labour %</text>
+        <path d="M 30 0 L 40 0 M 37 -3 L 40 0 L 37 3" stroke="#DC241f" strokeWidth={1.5} fill="none" />
+      </g>
+      <g transform={`translate(${(top.x + bottomRight.x) / 2 + 35}, ${(top.y + bottomRight.y) / 2}) rotate(60)`}>
+        <text x={0} y={0} textAnchor="middle" className="text-[12px] font-semibold" fill="#0087DC">Conservative %</text>
+        <path d="M 50 0 L 60 0 M 57 -3 L 60 0 L 57 3" stroke="#0087DC" strokeWidth={1.5} fill="none" />
+      </g>
+      <g transform={`translate(${(bottomRight.x + bottomLeft.x) / 2}, ${bottomRight.y + 35})`}>
+        <text x={0} y={0} textAnchor="middle" className="text-[12px] font-semibold" fill="#666">Other %</text>
+        <path d="M -40 0 L -30 0 M -37 -3 L -40 0 L -37 3" stroke="#666" strokeWidth={1.5} fill="none" />
+      </g>
+    </>
+  );
+});
 
 export function TernaryPlot({
   data,
@@ -60,9 +128,9 @@ export function TernaryPlot({
   const [tooltip, setTooltip] = useState<TooltipData | null>(null);
   const [animatedPoints, setAnimatedPoints] = useState<AnimatedPoint[]>([]);
   const [trajectoryData, setTrajectoryData] = useState<TrajectoryPoint[]>([]);
-  const previousPositionsRef = useRef<Map<string, { x: number; y: number }>>(new Map());
   const animationRef = useRef<number | null>(null);
   const svgRef = useRef<SVGSVGElement>(null);
+  const dataIdRef = useRef<string>(''); // Track data identity to detect real changes
   const { availableYears, currentYear } = useElectionStore();
   const { ternaryZoom, setTernaryZoom, resetTernaryZoom } = useUIStore();
 
@@ -96,6 +164,12 @@ export function TernaryPlot({
     [data, config, radius, centerX, centerY]
   );
 
+  // Create a stable data identity based on year (not array reference)
+  const dataId = useMemo(() => {
+    if (data.length === 0) return '';
+    return `${data[0]?.year || 'unknown'}-${data.length}`;
+  }, [data]);
+
   // Animate points when data changes
   useEffect(() => {
     if (targetPoints.length === 0) {
@@ -106,42 +180,56 @@ export function TernaryPlot({
     // Cancel any running animation
     if (animationRef.current) {
       cancelAnimationFrame(animationRef.current);
+      animationRef.current = null;
     }
 
+    // Check if this is actually new data (not just a re-render)
+    const isNewData = dataIdRef.current !== dataId;
+
+    // Capture start positions from module-level cache BEFORE updating dataIdRef
+    const startPositions = new Map<string, { x: number; y: number }>();
+    if (isNewData) {
+      targetPoints.forEach(point => {
+        const cached = positionCache.get(point.constituencyId);
+        if (cached) {
+          startPositions.set(point.constituencyId, cached);
+        }
+      });
+    }
+
+    dataIdRef.current = dataId;
     const startTime = performance.now();
-    const previousPositions = previousPositionsRef.current;
-
-    // Initialize animated points with starting positions
-    const initialPoints: AnimatedPoint[] = targetPoints.map(point => {
-      const prev = previousPositions.get(point.constituencyId);
-      return {
-        ...point,
-        x: prev?.x ?? point.x,
-        y: prev?.y ?? point.y,
-        targetX: point.x,
-        targetY: point.y,
-      };
-    });
-
-    setAnimatedPoints(initialPoints);
 
     // Animation loop
     const animate = (currentTime: number) => {
       const elapsed = currentTime - startTime;
       const progress = Math.min(elapsed / ANIMATION_DURATION, 1);
 
-      // Ease-out function for smoother animation
+      // Ease-out cubic for smooth deceleration
       const eased = 1 - Math.pow(1 - progress, 3);
 
-      const updatedPoints: AnimatedPoint[] = initialPoints.map(point => {
-        const startX = previousPositions.get(point.constituencyId)?.x ?? point.targetX;
-        const startY = previousPositions.get(point.constituencyId)?.y ?? point.targetY;
+      const updatedPoints: AnimatedPoint[] = targetPoints.map(point => {
+        const start = startPositions.get(point.constituencyId);
+        // If we have a starting position and this is new data, interpolate
+        const x = (isNewData && start) ? start.x + (point.x - start.x) * eased : point.x;
+        const y = (isNewData && start) ? start.y + (point.y - start.y) * eased : point.y;
 
         return {
           ...point,
-          x: startX + (point.targetX - startX) * eased,
-          y: startY + (point.targetY - startY) * eased,
+          x,
+          y,
+          targetX: point.x,
+          targetY: point.y,
         };
+      });
+
+      // Update module-level position cache on every frame (with limit)
+      updatedPoints.forEach(p => {
+        if (!positionCache.has(p.constituencyId) && positionCache.size >= MAX_POSITION_CACHE) {
+          const firstKey = positionCache.keys().next().value;
+          if (firstKey) positionCache.delete(firstKey);
+        }
+        positionCache.set(p.constituencyId, { x: p.x, y: p.y });
       });
 
       setAnimatedPoints(updatedPoints);
@@ -149,12 +237,7 @@ export function TernaryPlot({
       if (progress < 1) {
         animationRef.current = requestAnimationFrame(animate);
       } else {
-        // Animation complete - save final positions
-        const newPositions = new Map<string, { x: number; y: number }>();
-        updatedPoints.forEach(p => {
-          newPositions.set(p.constituencyId, { x: p.targetX, y: p.targetY });
-        });
-        previousPositionsRef.current = newPositions;
+        animationRef.current = null;
       }
     };
 
@@ -163,9 +246,10 @@ export function TernaryPlot({
     return () => {
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
+        animationRef.current = null;
       }
     };
-  }, [targetPoints]);
+  }, [targetPoints, dataId]);
 
   // Fetch trajectory data for selected constituency
   useEffect(() => {
@@ -195,7 +279,7 @@ export function TernaryPlot({
 
       for (const year of availableYears) {
         try {
-          const response = await fetch(`/data/elections/${year}.json`);
+          const response = await fetch(`${import.meta.env.BASE_URL}data/elections/${year}.json`);
           if (!response.ok) continue;
 
           const electionData = await response.json();
@@ -246,6 +330,10 @@ export function TernaryPlot({
       points.sort((a, b) => a.year - b.year);
 
       // Cache without coordinates (we'll recalculate on retrieval)
+      if (trajectoryCache.size >= MAX_TRAJECTORY_CACHE) {
+        const firstKey = trajectoryCache.keys().next().value;
+        if (firstKey) trajectoryCache.delete(firstKey);
+      }
       trajectoryCache.set(selectedConstituencyId, points.map(p => ({
         ...p,
         x: 0, y: 0 // Will be recalculated
@@ -425,169 +513,8 @@ export function TernaryPlot({
             strokeWidth={2}
           />
 
-          {/* Triangle vertices */}
-          {(() => {
-            const top = { x: 0, y: -radius }; // Labour (top)
-            const bottomRight = { x: radius * Math.cos(Math.PI / 6), y: radius * Math.sin(Math.PI / 6) }; // Conservative
-            const bottomLeft = { x: -radius * Math.cos(Math.PI / 6), y: radius * Math.sin(Math.PI / 6) }; // Other
-
-            // Tick marks along each edge (0%, 25%, 50%, 75%, 100%)
-            const ticks = [0, 0.25, 0.5, 0.75, 1];
-            const tickLength = 6;
-
-            return (
-              <>
-                {/* Left edge: Other to Labour (Labour % increases going up) - ticks point left (outward) */}
-                {ticks.map((t, i) => {
-                  const x = bottomLeft.x + (top.x - bottomLeft.x) * t;
-                  const y = bottomLeft.y + (top.y - bottomLeft.y) * t;
-                  // Perpendicular outward (to the left)
-                  const angle = Math.atan2(top.y - bottomLeft.y, top.x - bottomLeft.x) - Math.PI / 2;
-                  return (
-                    <g key={`left-${i}`}>
-                      <line
-                        x1={x}
-                        y1={y}
-                        x2={x + Math.cos(angle) * tickLength}
-                        y2={y + Math.sin(angle) * tickLength}
-                        stroke="#666"
-                        strokeWidth={1}
-                      />
-                      {t > 0 && (
-                        <text
-                          x={x + Math.cos(angle) * (tickLength + 10)}
-                          y={y + Math.sin(angle) * (tickLength + 10)}
-                          textAnchor="middle"
-                          alignmentBaseline="middle"
-                          className="text-[10px] fill-gray-400"
-                        >
-                          {Math.round(t * 100)}
-                        </text>
-                      )}
-                    </g>
-                  );
-                })}
-
-                {/* Right edge: Labour to Conservative (Conservative % increases going down-right) - ticks point right (outward) */}
-                {ticks.map((t, i) => {
-                  const x = top.x + (bottomRight.x - top.x) * t;
-                  const y = top.y + (bottomRight.y - top.y) * t;
-                  // Perpendicular outward (to the right): use opposite rotation from left edge
-                  const edgeAngle = Math.atan2(bottomRight.y - top.y, bottomRight.x - top.x);
-                  const angle = edgeAngle - Math.PI / 2;
-                  return (
-                    <g key={`right-${i}`}>
-                      <line
-                        x1={x}
-                        y1={y}
-                        x2={x + Math.cos(angle) * tickLength}
-                        y2={y + Math.sin(angle) * tickLength}
-                        stroke="#666"
-                        strokeWidth={1}
-                      />
-                      {t > 0 && (
-                        <text
-                          x={x + Math.cos(angle) * (tickLength + 10)}
-                          y={y + Math.sin(angle) * (tickLength + 10)}
-                          textAnchor="middle"
-                          alignmentBaseline="middle"
-                          className="text-[10px] fill-gray-400"
-                        >
-                          {Math.round(t * 100)}
-                        </text>
-                      )}
-                    </g>
-                  );
-                })}
-
-                {/* Bottom edge: Conservative to Other (Other % increases going left) - ticks point down (outward) */}
-                {ticks.map((t, i) => {
-                  const x = bottomRight.x + (bottomLeft.x - bottomRight.x) * t;
-                  const y = bottomRight.y;
-                  return (
-                    <g key={`bottom-${i}`}>
-                      <line
-                        x1={x}
-                        y1={y}
-                        x2={x}
-                        y2={y + tickLength}
-                        stroke="#666"
-                        strokeWidth={1}
-                      />
-                      {t > 0 && (
-                        <text
-                          x={x}
-                          y={y + tickLength + 10}
-                          textAnchor="middle"
-                          className="text-[10px] fill-gray-400"
-                        >
-                          {Math.round(t * 100)}
-                        </text>
-                      )}
-                    </g>
-                  );
-                })}
-
-                {/* Edge labels with arrows - centered on edges, offset to avoid tick marks */}
-                {/* Left edge label: Labour */}
-                <g transform={`translate(${(bottomLeft.x + top.x) / 2 - 35}, ${(bottomLeft.y + top.y) / 2}) rotate(-60)`}>
-                  <text
-                    x={0}
-                    y={0}
-                    textAnchor="middle"
-                    className="text-[12px] font-semibold"
-                    fill="#DC241f"
-                  >
-                    Labour %
-                  </text>
-                  <path
-                    d="M 30 0 L 40 0 M 37 -3 L 40 0 L 37 3"
-                    stroke="#DC241f"
-                    strokeWidth={1.5}
-                    fill="none"
-                  />
-                </g>
-
-                {/* Right edge label: Conservative */}
-                <g transform={`translate(${(top.x + bottomRight.x) / 2 + 35}, ${(top.y + bottomRight.y) / 2}) rotate(60)`}>
-                  <text
-                    x={0}
-                    y={0}
-                    textAnchor="middle"
-                    className="text-[12px] font-semibold"
-                    fill="#0087DC"
-                  >
-                    Conservative %
-                  </text>
-                  <path
-                    d="M 50 0 L 60 0 M 57 -3 L 60 0 L 57 3"
-                    stroke="#0087DC"
-                    strokeWidth={1.5}
-                    fill="none"
-                  />
-                </g>
-
-                {/* Bottom edge label: Other */}
-                <g transform={`translate(${(bottomRight.x + bottomLeft.x) / 2}, ${bottomRight.y + 35})`}>
-                  <text
-                    x={0}
-                    y={0}
-                    textAnchor="middle"
-                    className="text-[12px] font-semibold"
-                    fill="#666"
-                  >
-                    Other %
-                  </text>
-                  <path
-                    d="M -40 0 L -30 0 M -37 -3 L -40 0 L -37 3"
-                    stroke="#666"
-                    strokeWidth={1.5}
-                    fill="none"
-                  />
-                </g>
-              </>
-            );
-          })()}
+          {/* Axis labels and tick marks */}
+          <AxisDecorations radius={radius} />
         </g>
 
         {/* Trajectory for selected constituency */}

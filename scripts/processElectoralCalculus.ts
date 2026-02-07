@@ -5,14 +5,15 @@
  * Handles all elections from 1955-2024.
  *
  * Usage:
- *   npx ts-node scripts/processElectoralCalculus.ts
- *
- * Or with Node.js directly (no TypeScript):
- *   node scripts/processElectoralCalculus.js
+ *   npx tsx scripts/processElectoralCalculus.ts
  */
 
-const fs = require('fs');
-const path = require('path');
+import * as fs from 'fs';
+import * as path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // File mappings: filename -> { year, boundaryVersion }
 const FILE_MAPPINGS = {
@@ -38,13 +39,14 @@ const FILE_MAPPINGS = {
 };
 
 // Area code to region mapping
+// Electoral Calculus: 1=NI, 2=Scotland, 3=NE, 4=NW, 5=Yorks, 6=Wales, 7=WMids, 8=EMids, 9=East, 10=SW, 11=London, 12=SE
 const AREA_TO_REGION = {
-  '1': 'scotland',
-  '2': 'wales',
-  '3': 'northern_ireland',
+  '1': 'northern_ireland',
+  '2': 'scotland',
+  '3': 'north_east',
   '4': 'north_west',
   '5': 'yorkshire',
-  '6': 'north_east',
+  '6': 'wales',
   '7': 'west_midlands',
   '8': 'east_midlands',
   '9': 'east',
@@ -53,11 +55,11 @@ const AREA_TO_REGION = {
   '12': 'south_east',
 };
 
-// Area code to country mapping
+// Area code to country mapping (for non-England areas)
 const AREA_TO_COUNTRY = {
-  '1': 'scotland',
-  '2': 'wales',
-  '3': 'northern_ireland',
+  '1': 'northern_ireland',
+  '2': 'scotland',
+  '6': 'wales',
 };
 
 // Party column mappings
@@ -107,13 +109,14 @@ function parseElectoralCalculusFile(filepath, metadata) {
         let partyName = party.name;
 
         if (col === 'NAT') {
-          if (area === '1') { // Scotland
+          if (area === '2') { // Scotland
             partyId = 'snp';
             partyName = 'SNP';
-          } else if (area === '2') { // Wales
+          } else if (area === '6') { // Wales
             partyId = 'pc';
             partyName = 'Plaid Cymru';
           }
+          // Note: Area 1 (Northern Ireland) doesn't use NAT column - NI parties are in MIN/OTH
         }
 
         results.push({

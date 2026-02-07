@@ -9,21 +9,18 @@ import {
   electionResultsToVoteMap,
 } from '@/utils/d3/dotDensity';
 import { useUIStore } from '@/store/uiStore';
+import {
+  type BoundaryProperties,
+  getBoundaryDisplayName,
+  getBoundaryMatchName,
+  createElectionLookup,
+} from '@/utils/constituencyMatching';
 
-interface ConstituencyProperties {
-  PCON13CD?: string;
-  PCON13NM?: string;
-  PCON24CD?: string;
-  PCON24NM?: string;
-  id?: string;
-  name?: string;
-}
-
-type ConstituencyFeature = Feature<Polygon | MultiPolygon, ConstituencyProperties>;
+type ConstituencyFeature = Feature<Polygon | MultiPolygon, BoundaryProperties>;
 
 // Module-level cache for generated dots (persists across re-renders)
 const dotsCache = new Map<string, DotDensityPoint[]>();
-const MAX_CACHE_SIZE = 10; // Keep last 10 year/votesPerDot combinations
+const MAX_CACHE_SIZE = 2; // Limit to 2 entries to control memory
 
 function getCacheKey(electionData: ElectionResult[], votesPerDot: number): string {
   // Use first constituency's total votes as a simple fingerprint for the year
@@ -35,7 +32,7 @@ function getCacheKey(electionData: ElectionResult[], votesPerDot: number): strin
 
 interface DotDensityMapProps {
   electionData: ElectionResult[];
-  boundaries: FeatureCollection<Polygon | MultiPolygon, ConstituencyProperties> | null;
+  boundaries: FeatureCollection<Polygon | MultiPolygon, BoundaryProperties> | null;
   width: number;
   height: number;
   votesPerDot: number;
@@ -94,6 +91,11 @@ export function DotDensityMap({
     () => d3.geoPath().projection(projection),
     [projection]
   );
+
+  // Create election data lookup for matching boundaries to election results
+  const { idByName } = useMemo(() => {
+    return createElectionLookup(electionData);
+  }, [electionData]);
 
   // Initialize zoom behavior
   useEffect(() => {
@@ -226,20 +228,20 @@ export function DotDensityMap({
       const constituency = features.find((f) => d3.geoContains(f, point));
 
       if (constituency) {
+        const matchName = getBoundaryMatchName(constituency.properties);
+        const electionId = idByName.get(matchName) || null;
         setTooltip({
-          constituencyName: constituency.properties?.PCON13NM || constituency.properties?.PCON24NM || constituency.properties?.name || '',
+          constituencyName: getBoundaryDisplayName(constituency.properties),
           x: e.clientX,
           y: e.clientY,
         });
-        onConstituencyHover?.(
-          constituency.properties?.PCON13CD || constituency.properties?.PCON24CD || constituency.properties?.id || null
-        );
+        onConstituencyHover?.(electionId);
       } else {
         setTooltip(null);
         onConstituencyHover?.(null);
       }
     },
-    [features, projection, onConstituencyHover, transform]
+    [features, projection, onConstituencyHover, transform, idByName]
   );
 
   const handleMouseLeave = useCallback(() => {
@@ -265,10 +267,11 @@ export function DotDensityMap({
       if (!point) return;
 
       const constituency = features.find((f) => d3.geoContains(f, point));
-      const id = constituency?.properties?.PCON13CD || constituency?.properties?.PCON24CD || constituency?.properties?.id;
+      const matchName = constituency ? getBoundaryMatchName(constituency.properties) : '';
+      const electionId = matchName ? idByName.get(matchName) : undefined;
 
       // If clicking on a new constituency, zoom to it
-      if (constituency && id && selectedConstituencyId !== id && svgRef.current && zoomRef.current) {
+      if (constituency && electionId && selectedConstituencyId !== electionId && svgRef.current && zoomRef.current) {
         // Get the bounding box of the constituency in pixel coordinates
         const bounds = pathGenerator.bounds(constituency);
         const [[x0, y0], [x1, y1]] = bounds;
@@ -296,10 +299,10 @@ export function DotDensityMap({
       }
 
       onConstituencySelect?.(
-        selectedConstituencyId === id ? null : id || null
+        selectedConstituencyId === electionId ? null : electionId || null
       );
     },
-    [features, projection, selectedConstituencyId, onConstituencySelect, transform, pathGenerator, width, height]
+    [features, projection, selectedConstituencyId, onConstituencySelect, transform, pathGenerator, width, height, idByName]
   );
 
   if (width === 0 || height === 0) {
@@ -339,14 +342,15 @@ export function DotDensityMap({
           className="boundaries"
           transform={`translate(${transform.x}, ${transform.y}) scale(${transform.k})`}
         >
-          {features.map((feat) => {
-            const id = feat.properties?.PCON13CD || feat.properties?.PCON24CD || feat.properties?.id;
+          {features.map((feat, idx) => {
+            const matchName = getBoundaryMatchName(feat.properties);
+            const electionId = idByName.get(matchName);
             const isHighlighted =
-              hoveredConstituencyId === id || selectedConstituencyId === id;
+              hoveredConstituencyId === electionId || selectedConstituencyId === electionId;
 
             return (
               <path
-                key={id}
+                key={electionId || idx}
                 d={pathGenerator(feat) ?? ''}
                 fill="transparent"
                 stroke={isHighlighted ? '#000' : '#9ca3af'}

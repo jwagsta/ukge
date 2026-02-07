@@ -5,21 +5,18 @@ import type { ElectionResult } from '@/types/election';
 import { getPartyColor } from '@/types/party';
 import { createUKProjection } from '@/utils/d3/dotDensity';
 import { useUIStore } from '@/store/uiStore';
+import {
+  type BoundaryProperties,
+  getBoundaryDisplayName,
+  getBoundaryMatchName,
+  createElectionLookup,
+} from '@/utils/constituencyMatching';
 
-interface ConstituencyProperties {
-  PCON13CD?: string;
-  PCON13NM?: string;
-  PCON24CD?: string;
-  PCON24NM?: string;
-  id?: string;
-  name?: string;
-}
-
-type ConstituencyFeature = Feature<Polygon | MultiPolygon, ConstituencyProperties>;
+type ConstituencyFeature = Feature<Polygon | MultiPolygon, BoundaryProperties>;
 
 interface ChoroplethMapProps {
   electionData: ElectionResult[];
-  boundaries: FeatureCollection<Polygon | MultiPolygon, ConstituencyProperties> | null;
+  boundaries: FeatureCollection<Polygon | MultiPolygon, BoundaryProperties> | null;
   width: number;
   height: number;
   selectedConstituencyId?: string | null;
@@ -75,22 +72,11 @@ export function ChoroplethMap({
     [projection]
   );
 
-  // Create a map of constituency ID to winner
-  const winnerMap = useMemo(() => {
-    const map = new Map<string, string>();
-    for (const result of electionData) {
-      map.set(result.constituencyId, result.winner);
-    }
-    return map;
-  }, [electionData]);
-
-  // Create a map of constituency ID to name
-  const nameMap = useMemo(() => {
-    const map = new Map<string, string>();
-    for (const result of electionData) {
-      map.set(result.constituencyId, result.constituencyName);
-    }
-    return map;
+  // Create maps for looking up election data by constituency name (normalized)
+  // Uses shared utility for consistent name normalization between boundary files
+  // (parlconst.org format) and election data (Electoral Calculus format)
+  const { winnerByName, idByName } = useMemo(() => {
+    return createElectionLookup(electionData);
   }, [electionData]);
 
   // Initialize zoom behavior
@@ -136,23 +122,24 @@ export function ChoroplethMap({
       const constituency = features.find((f) => d3.geoContains(f, point));
 
       if (constituency) {
-        const id = constituency.properties?.PCON13CD || constituency.properties?.PCON24CD || constituency.properties?.id || '';
-        const name = nameMap.get(id) || constituency.properties?.PCON13NM || constituency.properties?.PCON24NM || constituency.properties?.name || '';
-        const winner = winnerMap.get(id) || '';
+        const matchName = getBoundaryMatchName(constituency.properties);
+        const displayName = getBoundaryDisplayName(constituency.properties);
+        const electionId = idByName.get(matchName) || '';
+        const winner = winnerByName.get(matchName) || '';
 
         setTooltip({
-          constituencyName: name,
+          constituencyName: displayName,
           winner,
           x: e.clientX,
           y: e.clientY,
         });
-        onConstituencyHover?.(id || null);
+        onConstituencyHover?.(electionId || null);
       } else {
         setTooltip(null);
         onConstituencyHover?.(null);
       }
     },
-    [features, projection, onConstituencyHover, transform, winnerMap, nameMap]
+    [features, projection, onConstituencyHover, transform, winnerByName, idByName]
   );
 
   const handleMouseLeave = useCallback(() => {
@@ -174,10 +161,11 @@ export function ChoroplethMap({
       if (!point) return;
 
       const constituency = features.find((f) => d3.geoContains(f, point));
-      const id = constituency?.properties?.PCON13CD || constituency?.properties?.PCON24CD || constituency?.properties?.id;
+      const matchName = constituency ? getBoundaryMatchName(constituency.properties) : '';
+      const electionId = matchName ? idByName.get(matchName) : undefined;
 
       // If clicking on a new constituency, zoom to it
-      if (constituency && id && selectedConstituencyId !== id && svgRef.current && zoomRef.current) {
+      if (constituency && electionId && selectedConstituencyId !== electionId && svgRef.current && zoomRef.current) {
         // Get the bounding box of the constituency in pixel coordinates
         const bounds = pathGenerator.bounds(constituency);
         const [[x0, y0], [x1, y1]] = bounds;
@@ -205,10 +193,10 @@ export function ChoroplethMap({
       }
 
       onConstituencySelect?.(
-        selectedConstituencyId === id ? null : id || null
+        selectedConstituencyId === electionId ? null : electionId || null
       );
     },
-    [features, projection, selectedConstituencyId, onConstituencySelect, transform, pathGenerator, width, height]
+    [features, projection, selectedConstituencyId, onConstituencySelect, transform, pathGenerator, width, height, idByName]
   );
 
   if (width === 0 || height === 0) {
@@ -235,15 +223,16 @@ export function ChoroplethMap({
           ref={gRef}
           transform={`translate(${transform.x}, ${transform.y}) scale(${transform.k})`}
         >
-          {features.map((feat) => {
-            const id = feat.properties?.PCON13CD || feat.properties?.PCON24CD || feat.properties?.id;
-            const winner = id ? winnerMap.get(id) : undefined;
+          {features.map((feat, idx) => {
+            const matchName = getBoundaryMatchName(feat.properties);
+            const electionId = idByName.get(matchName);
+            const winner = winnerByName.get(matchName);
             const isHighlighted =
-              hoveredConstituencyId === id || selectedConstituencyId === id;
+              hoveredConstituencyId === electionId || selectedConstituencyId === electionId;
 
             return (
               <path
-                key={id}
+                key={electionId || idx}
                 d={pathGenerator(feat) ?? ''}
                 fill={winner ? getPartyColor(winner) : '#ddd'}
                 fillOpacity={winner ? (isHighlighted ? 1 : 0.85) : 0.5}

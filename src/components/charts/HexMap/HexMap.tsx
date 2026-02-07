@@ -4,18 +4,14 @@ import type { FeatureCollection, Polygon, MultiPolygon } from 'geojson';
 import type { ElectionResult } from '@/types/election';
 import { getPartyColor } from '@/types/party';
 import { useUIStore } from '@/store/uiStore';
+import {
+  type BoundaryProperties,
+  getBoundaryDisplayName,
+  getBoundaryMatchName,
+  normalizeConstituencyName,
+} from '@/utils/constituencyMatching';
 
-interface ConstituencyProperties {
-  PCON13CD?: string;
-  PCON13NM?: string;
-  PCON24CD?: string;
-  PCON24NM?: string;
-  id?: string;
-  name?: string;
-  [key: string]: unknown;
-}
-
-type BoundaryData = FeatureCollection<Polygon | MultiPolygon, ConstituencyProperties> | null;
+type BoundaryData = FeatureCollection<Polygon | MultiPolygon, BoundaryProperties> | null;
 
 interface HexMapProps {
   electionData: ElectionResult[];
@@ -52,29 +48,16 @@ function generateGeographicHexPositions(
     return [];
   }
 
-  // Create a map of boundary features by various ID formats
+  // Create a map of boundary features by normalized name
   const boundaryMap = new Map<string, { centroid: [number, number]; name: string }>();
 
   boundaries.features.forEach(feature => {
-    const props = feature.properties;
     const centroid = calculateCentroid(feature.geometry);
-    const name = props.PCON24NM || props.PCON13NM || props.name || '';
+    const displayName = getBoundaryDisplayName(feature.properties);
+    const matchName = getBoundaryMatchName(feature.properties);
 
-    // Store by various ID formats
-    const ids = [
-      props.PCON24CD,
-      props.PCON13CD,
-      props.id,
-      name.toLowerCase().replace(/[^a-z0-9]/g, ''),
-    ].filter(Boolean);
-
-    ids.forEach(id => {
-      if (id) boundaryMap.set(id.toLowerCase(), { centroid, name });
-    });
-
-    // Also store by name
-    if (name) {
-      boundaryMap.set(name.toLowerCase(), { centroid, name });
+    if (matchName) {
+      boundaryMap.set(matchName, { centroid, name: displayName });
     }
   });
 
@@ -87,43 +70,17 @@ function generateGeographicHexPositions(
   }> = [];
 
   constituencies.forEach(c => {
-    // Try to find matching boundary
-    const searchKeys = [
-      c.constituencyId.toLowerCase(),
-      c.constituencyName.toLowerCase(),
-      c.constituencyName.toLowerCase().replace(/[^a-z0-9]/g, ''),
-    ];
+    // Try to find matching boundary using normalized name
+    const normalizedName = normalizeConstituencyName(c.constituencyName);
+    const boundary = boundaryMap.get(normalizedName);
 
-    let found = false;
-    for (const key of searchKeys) {
-      const boundary = boundaryMap.get(key);
-      if (boundary) {
-        positionsWithGeo.push({
-          constituencyId: c.constituencyId,
-          constituencyName: c.constituencyName,
-          lon: boundary.centroid[0],
-          lat: boundary.centroid[1],
-        });
-        found = true;
-        break;
-      }
-    }
-
-    // If no match found, try fuzzy matching
-    if (!found) {
-      const nameLower = c.constituencyName.toLowerCase();
-      for (const [key, value] of boundaryMap.entries()) {
-        if (key.includes(nameLower.slice(0, 10)) || nameLower.includes(key.slice(0, 10))) {
-          positionsWithGeo.push({
-            constituencyId: c.constituencyId,
-            constituencyName: c.constituencyName,
-            lon: value.centroid[0],
-            lat: value.centroid[1],
-          });
-          found = true;
-          break;
-        }
-      }
+    if (boundary) {
+      positionsWithGeo.push({
+        constituencyId: c.constituencyId,
+        constituencyName: c.constituencyName,
+        lon: boundary.centroid[0],
+        lat: boundary.centroid[1],
+      });
     }
   });
 
