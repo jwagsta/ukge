@@ -188,8 +188,9 @@ export function ConstituencyPanel({ height }: ConstituencyPanelProps) {
         }
       }
 
-      // Sort by year
-      results.sort((a, b) => a.year - b.year);
+      // Sort by year (normalize 197402/197410 to 1974.x for correct ordering)
+      const sortYear = (y: number) => y === 197402 ? 1974.2 : y === 197410 ? 1974.8 : y;
+      results.sort((a, b) => sortYear(a.year) - sortYear(b.year));
 
       // Cache the result with size limit
       if (historicalDataCache.size >= MAX_HISTORICAL_CACHE) {

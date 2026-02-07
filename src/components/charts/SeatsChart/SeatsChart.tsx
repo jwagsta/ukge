@@ -1,5 +1,5 @@
 import { useMemo, useEffect, useState, useRef } from 'react';
-import { useElectionStore } from '@/store/electionStore';
+import { useElectionStore, getYearLabel } from '@/store/electionStore';
 import { getPartyColor } from '@/types/party';
 
 interface YearSeats {
@@ -18,6 +18,8 @@ const NATIONAL_SEATS: YearSeats[] = [
   { year: 1964, con: 304, lab: 317, ld: 9, other: 0, total: 630 },
   { year: 1966, con: 253, lab: 363, ld: 12, other: 2, total: 630 },
   { year: 1970, con: 330, lab: 287, ld: 6, other: 7, total: 630 },
+  { year: 197402, con: 297, lab: 301, ld: 14, other: 11, total: 623 },
+  { year: 197410, con: 277, lab: 319, ld: 13, other: 14, total: 623 },
   { year: 1979, con: 339, lab: 269, ld: 11, other: 16, total: 635 },
   { year: 1983, con: 397, lab: 209, ld: 23, other: 21, total: 650 },
   { year: 1987, con: 376, lab: 229, ld: 22, other: 23, total: 650 },
@@ -64,12 +66,14 @@ export function SeatsChart({ height = 120 }: SeatsChartProps) {
     return Math.max(...data.map(d => Math.max(d.con, d.lab)));
   }, [data]);
 
+  const normalizeYear = (y: number) => y === 197402 ? 1974.2 : y === 197410 ? 1974.8 : y;
+
   const xScale = useMemo(() => {
-    const years = data.map(d => d.year);
+    const years = data.map(d => normalizeYear(d.year));
     const minYear = Math.min(...years);
     const maxYear = Math.max(...years);
     return (year: number) => {
-      return ((year - minYear) / (maxYear - minYear)) * chartWidth;
+      return ((normalizeYear(year) - minYear) / (maxYear - minYear)) * chartWidth;
     };
   }, [data, chartWidth]);
 
@@ -208,7 +212,7 @@ export function SeatsChart({ height = 120 }: SeatsChartProps) {
                   transform={`rotate(-45, ${x}, ${chartHeight + 10})`}
                   className={`text-[11px] ${isActive ? 'fill-black font-bold' : isHovered ? 'fill-gray-700' : 'fill-gray-500'}`}
                 >
-                  {d.year}
+                  {getYearLabel(d.year)}
                 </text>
               </g>
             );
