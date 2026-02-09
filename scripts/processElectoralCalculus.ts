@@ -70,7 +70,7 @@ const PARTY_COLUMNS = {
   'Reform': { id: 'reform', name: 'Reform UK' },
   'Green': { id: 'grn', name: 'Green' },
   'NAT': { id: 'nat', name: 'Nationalist' }, // SNP or Plaid
-  'MIN': { id: 'min', name: 'Minor' },
+  'MIN': { id: 'other', name: 'Other' },
   'OTH': { id: 'other', name: 'Other' },
 };
 
@@ -129,20 +129,32 @@ function parseElectoralCalculusFile(filepath, metadata) {
       }
     }
 
+    // Merge duplicate partyId entries (e.g. MIN + OTH both mapped to 'other')
+    const merged = new Map();
+    for (const r of results) {
+      const existing = merged.get(r.partyId);
+      if (existing) {
+        existing.votes += r.votes;
+      } else {
+        merged.set(r.partyId, { ...r });
+      }
+    }
+    const mergedResults = Array.from(merged.values());
+
     // Calculate vote shares
     if (totalVotes > 0) {
-      results.forEach(r => {
+      mergedResults.forEach(r => {
         r.voteShare = (r.votes / totalVotes) * 100;
       });
     }
 
     // Sort by votes descending
-    results.sort((a, b) => b.votes - a.votes);
+    mergedResults.sort((a, b) => b.votes - a.votes);
 
-    const winner = results[0]?.partyId || 'unknown';
-    const majority = results.length >= 2
-      ? results[0].votes - results[1].votes
-      : results[0]?.votes || 0;
+    const winner = mergedResults[0]?.partyId || 'unknown';
+    const majority = mergedResults.length >= 2
+      ? mergedResults[0].votes - mergedResults[1].votes
+      : mergedResults[0]?.votes || 0;
 
     // Calculate turnout (Electoral Calculus doesn't provide this directly)
     const turnout = electorate > 0 ? (totalVotes / electorate) * 100 : 0;
@@ -165,7 +177,7 @@ function parseElectoralCalculusFile(filepath, metadata) {
       validVotes: totalVotes,
       winner,
       majority,
-      results,
+      results: mergedResults,
     });
   }
 

@@ -18815,15 +18815,15 @@
       "electorate": 63822,
       "turnout": 76.5,
       "validVotes": 48792,
-      "winner": "min",
-      "majority": 11077,
+      "winner": "other",
+      "majority": 12238,
       "results": [
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 29354,
-          "voteShare": 60.16150188555501
+          "votes": 30515,
+          "voteShare": 62.540990326282994
         },
         {
           "partyId": "con",
@@ -18831,13 +18831,6 @@
           "candidate": "M. Bell",
           "votes": 18277,
           "voteShare": 37.459009673717006
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 1161,
-          "voteShare": 2.379488440727988
         }
       ]
     },

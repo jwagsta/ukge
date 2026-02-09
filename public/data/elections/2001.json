@@ -2891,7 +2891,7 @@
       "turnout": 67.3,
       "validVotes": 43542,
       "winner": "con",
-      "majority": 2821,
+      "majority": 1851,
       "results": [
         {
           "partyId": "con",
@@ -2901,11 +2901,11 @@
           "voteShare": 38.02765146295531
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 13737,
-          "voteShare": 31.548849386798956
+          "votes": 14707,
+          "voteShare": 33.77658352854715
         },
         {
           "partyId": "ld",
@@ -2920,13 +2920,6 @@
           "candidate": "Eric Pickles",
           "votes": 5505,
           "voteShare": 12.642965412704973
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 970,
-          "voteShare": 2.227734141748197
         }
       ]
     },
@@ -6811,7 +6804,7 @@
       "turnout": 55.4,
       "validVotes": 45614,
       "winner": "lab",
-      "majority": 13683,
+      "majority": 12100,
       "results": [
         {
           "partyId": "lab",
@@ -6821,6 +6814,13 @@
           "voteShare": 48.75476827289867
         },
         {
+          "partyId": "other",
+          "partyName": "Other",
+          "candidate": "",
+          "votes": 10139,
+          "voteShare": 22.227824790634454
+        },
+        {
           "partyId": "con",
           "partyName": "Conservative",
           "candidate": "Piara Khabra",
@@ -6828,25 +6828,11 @@
           "voteShare": 18.75739904415311
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 5764,
-          "voteShare": 12.636471258824045
-        },
-        {
           "partyId": "ld",
           "partyName": "Liberal Democrat",
           "candidate": "Piara Khabra",
           "votes": 4680,
           "voteShare": 10.260007892313764
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 4375,
-          "voteShare": 9.591353531810409
         }
       ]
     },
@@ -12015,8 +12001,8 @@
           "voteShare": 66.17918270941858
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 4601,
           "voteShare": 14.886595269680008
@@ -14094,18 +14080,11 @@
           "voteShare": 16.081021576398065
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 5091,
-          "voteShare": 11.208718626155878
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 677,
-          "voteShare": 1.4905328049317481
+          "votes": 5768,
+          "voteShare": 12.699251431087626
         }
       ]
     },
@@ -14119,7 +14098,7 @@
       "turnout": 57.6,
       "validVotes": 39962,
       "winner": "lab",
-      "majority": 13365,
+      "majority": 12971,
       "results": [
         {
           "partyId": "lab",
@@ -14129,6 +14108,13 @@
           "voteShare": 51.151093538861915
         },
         {
+          "partyId": "other",
+          "partyName": "Other",
+          "candidate": "",
+          "votes": 7470,
+          "voteShare": 18.692758120214204
+        },
+        {
           "partyId": "con",
           "partyName": "Conservative",
           "candidate": "Michael Meacher",
@@ -14136,25 +14122,11 @@
           "voteShare": 17.706821480406386
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 6552,
-          "voteShare": 16.395575797007155
-        },
-        {
           "partyId": "ld",
           "partyName": "Liberal Democrat",
           "candidate": "Michael Meacher",
           "votes": 4975,
           "voteShare": 12.449326860517491
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 918,
-          "voteShare": 2.2971823232070467
         }
       ]
     },
@@ -15977,18 +15949,11 @@
           "voteShare": 13.829724292983078
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 2325,
-          "voteShare": 6.877884274050408
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 2191,
-          "voteShare": 6.481481481481481
+          "votes": 4516,
+          "voteShare": 13.35936575553189
         }
       ]
     },
@@ -20597,25 +20562,18 @@
           "voteShare": 25.116206030150757
         },
         {
+          "partyId": "other",
+          "partyName": "Other",
+          "candidate": "",
+          "votes": 2323,
+          "voteShare": 7.295854271356784
+        },
+        {
           "partyId": "ld",
           "partyName": "Liberal Democrat",
           "candidate": "Adrian Bailey",
           "votes": 2168,
           "voteShare": 6.809045226130653
-        },
-        {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 1428,
-          "voteShare": 4.484924623115578
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 895,
-          "voteShare": 2.8109296482412063
         }
       ]
     },
@@ -21748,15 +21706,15 @@
       "electorate": 72152,
       "turnout": 68,
       "validVotes": 49062,
-      "winner": "min",
-      "majority": 17630,
+      "winner": "other",
+      "majority": 17998,
       "results": [
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 28487,
-          "voteShare": 58.06326688679629
+          "votes": 28855,
+          "voteShare": 58.81333822510293
         },
         {
           "partyId": "lab",
@@ -21771,13 +21729,6 @@
           "candidate": "Richard Taylor",
           "votes": 9350,
           "voteShare": 19.057519057519055
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 368,
-          "voteShare": 0.7500713383066324
         }
       ]
     },
@@ -21976,6 +21927,13 @@
           "voteShare": 9.788009274594236
         },
         {
+          "partyId": "other",
+          "partyName": "Other",
+          "candidate": "",
+          "votes": 2943,
+          "voteShare": 9.748261013580656
+        },
+        {
           "partyId": "ld",
           "partyName": "Liberal Democrat",
           "candidate": "Hywel Francis",
@@ -21988,20 +21946,6 @@
           "candidate": "Hywel Francis",
           "votes": 2296,
           "voteShare": 7.605167273931765
-        },
-        {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 1960,
-          "voteShare": 6.492215965551507
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 983,
-          "voteShare": 3.2560450480291485
         }
       ]
     },
@@ -22039,25 +21983,18 @@
           "voteShare": 12.944298579938454
         },
         {
+          "partyId": "other",
+          "partyName": "Other",
+          "candidate": "",
+          "votes": 1826,
+          "voteShare": 5.155133960080178
+        },
+        {
           "partyId": "pc",
           "partyName": "Plaid Cymru",
           "candidate": "",
           "votes": 1182,
           "voteShare": 3.337003472516304
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 945,
-          "voteShare": 2.667908867620903
-        },
-        {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 881,
-          "voteShare": 2.4872250924592754
         }
       ]
     },
@@ -22144,18 +22081,11 @@
           "voteShare": 3.4678537157479474
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 762,
-          "voteShare": 2.0311333830898817
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 532,
-          "voteShare": 1.41806162703913
+          "votes": 1294,
+          "voteShare": 3.4491950101290114
         }
       ]
     },
@@ -23082,6 +23012,13 @@
           "voteShare": 14.679333417497793
         },
         {
+          "partyId": "other",
+          "partyName": "Other",
+          "candidate": "",
+          "votes": 2802,
+          "voteShare": 8.843580356015654
+        },
+        {
           "partyId": "ld",
           "partyName": "Liberal Democrat",
           "candidate": "Dai Havard",
@@ -23094,20 +23031,6 @@
           "candidate": "Dai Havard",
           "votes": 2272,
           "voteShare": 7.170811766191138
-        },
-        {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 1936,
-          "voteShare": 6.110339603585406
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 866,
-          "voteShare": 2.7332407524302487
         }
       ]
     },
@@ -24111,6 +24034,13 @@
           "voteShare": 19.340811696496093
         },
         {
+          "partyId": "other",
+          "partyName": "Other",
+          "candidate": "",
+          "votes": 2784,
+          "voteShare": 8.772372069573986
+        },
+        {
           "partyId": "ld",
           "partyName": "Liberal Democrat",
           "candidate": "Helen Liddell",
@@ -24123,20 +24053,6 @@
           "candidate": "Helen Liddell",
           "votes": 1960,
           "voteShare": 6.175951600705823
-        },
-        {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 1439,
-          "voteShare": 4.534282833375347
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 1345,
-          "voteShare": 4.238089236198639
         }
       ]
     },
@@ -24615,25 +24531,18 @@
           "voteShare": 6.512003771170746
         },
         {
+          "partyId": "other",
+          "partyName": "Other",
+          "candidate": "",
+          "votes": 1537,
+          "voteShare": 5.175258426209637
+        },
+        {
           "partyId": "con",
           "partyName": "Conservative",
           "candidate": "Rosemary McKenna",
           "votes": 1460,
           "voteShare": 4.915990437388464
-        },
-        {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 1287,
-          "voteShare": 4.3334792417253105
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 250,
-          "voteShare": 0.8417791844843261
         }
       ]
     },
@@ -25546,6 +25455,13 @@
           "voteShare": 24.246544300929074
         },
         {
+          "partyId": "other",
+          "partyName": "Other",
+          "candidate": "",
+          "votes": 2855,
+          "voteShare": 9.24217409601502
+        },
+        {
           "partyId": "con",
           "partyName": "Conservative",
           "candidate": "Eric Joyce",
@@ -25558,20 +25474,6 @@
           "candidate": "Eric Joyce",
           "votes": 2203,
           "voteShare": 7.131526981968858
-        },
-        {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 1464,
-          "voteShare": 4.739244440128193
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 1391,
-          "voteShare": 4.502929655886828
         }
       ]
     },
@@ -25952,25 +25854,18 @@
           "voteShare": 16.838295649578388
         },
         {
+          "partyId": "other",
+          "partyName": "Other",
+          "candidate": "",
+          "votes": 3133,
+          "voteShare": 11.6894261622267
+        },
+        {
           "partyId": "con",
           "partyName": "Conservative",
           "candidate": "George Galloway",
           "votes": 2388,
           "voteShare": 8.909782852025968
-        },
-        {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 1847,
-          "voteShare": 6.89127677039027
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 1286,
-          "voteShare": 4.79814939183643
         }
       ]
     },
@@ -26148,11 +26043,11 @@
           "voteShare": 16.69679941363303
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 1396,
-          "voteShare": 6.821402394331785
+          "votes": 1626,
+          "voteShare": 7.945272416320548
         },
         {
           "partyId": "ld",
@@ -26167,13 +26062,6 @@
           "candidate": "David Marshall",
           "votes": 1082,
           "voteShare": 5.287075494747129
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 230,
-          "voteShare": 1.1238700219887612
         }
       ]
     },
@@ -26204,18 +26092,11 @@
           "voteShare": 19.395121141719216
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 1879,
-          "voteShare": 7.795386657816131
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 1497,
-          "voteShare": 6.210587454364421
+          "votes": 3376,
+          "voteShare": 14.00597411218055
         }
       ]
     },

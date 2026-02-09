@@ -5082,7 +5082,7 @@
       "turnout": 74.9,
       "validVotes": 36535,
       "winner": "lab",
-      "majority": 1311,
+      "majority": 1178,
       "results": [
         {
           "partyId": "lab",
@@ -5092,6 +5092,13 @@
           "voteShare": 32.576980977145205
         },
         {
+          "partyId": "other",
+          "partyName": "Other",
+          "candidate": "",
+          "votes": 10724,
+          "voteShare": 29.35267551662789
+        },
+        {
           "partyId": "con",
           "partyName": "Conservative",
           "candidate": "J Cunningham",
@@ -5099,25 +5106,11 @@
           "voteShare": 28.98864102915013
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 10551,
-          "voteShare": 28.87915697276584
-        },
-        {
           "partyId": "ld",
           "partyName": "Liberal Democrat",
           "candidate": "J Cunningham",
           "votes": 3318,
           "voteShare": 9.081702477076774
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 173,
-          "voteShare": 0.4735185438620501
         }
       ]
     },
@@ -6604,11 +6597,11 @@
           "voteShare": 33.55216644783356
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 4665,
-          "voteShare": 9.423290576709423
+          "votes": 5629,
+          "voteShare": 11.370568629431371
         },
         {
           "partyId": "ld",
@@ -6616,13 +6609,6 @@
           "candidate": "P C Khabra",
           "votes": 3790,
           "voteShare": 7.655792344207655
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 964,
-          "voteShare": 1.947278052721947
         }
       ]
     },
@@ -8162,7 +8148,7 @@
       "turnout": 74.6,
       "validVotes": 35666,
       "winner": "lab",
-      "majority": 1357,
+      "majority": 554,
       "results": [
         {
           "partyId": "lab",
@@ -8172,11 +8158,11 @@
           "voteShare": 41.019458307631915
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 13273,
-          "voteShare": 37.214714293725116
+          "votes": 14076,
+          "voteShare": 39.46615824594852
         },
         {
           "partyId": "con",
@@ -8184,13 +8170,6 @@
           "candidate": "W R N Raynsford",
           "votes": 6960,
           "voteShare": 19.514383446419558
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 803,
-          "voteShare": 2.251443952223406
         }
       ]
     },
@@ -11070,25 +11049,18 @@
           "voteShare": 26.154007333682554
         },
         {
+          "partyId": "other",
+          "partyName": "Other",
+          "candidate": "",
+          "votes": 4681,
+          "voteShare": 9.808276584599266
+        },
+        {
           "partyId": "ld",
           "partyName": "Liberal Democrat",
           "candidate": "J D Battle",
           "votes": 4252,
           "voteShare": 8.909376636982714
-        },
-        {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 3980,
-          "voteShare": 8.339444735463593
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 701,
-          "voteShare": 1.468831849135673
         }
       ]
     },
@@ -11651,11 +11623,11 @@
           "voteShare": 26.39068254651552
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 5952,
-          "voteShare": 14.234466924953365
+          "votes": 7312,
+          "voteShare": 17.48696608791314
         },
         {
           "partyId": "con",
@@ -11663,13 +11635,6 @@
           "candidate": "Mrs J Kennedy",
           "votes": 5405,
           "voteShare": 12.926292629262925
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 1360,
-          "voteShare": 3.2524991629597744
         }
       ]
     },
@@ -14276,18 +14241,11 @@
           "voteShare": 12.330131208997189
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 2152,
-          "voteShare": 4.2018119337706965
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 255,
-          "voteShare": 0.4978912839737582
+          "votes": 2407,
+          "voteShare": 4.699703217744455
         }
       ]
     },
@@ -20359,8 +20317,8 @@
           "voteShare": 7.4368165524751575
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 3095,
           "voteShare": 4.681095633498193
@@ -20797,7 +20755,7 @@
       "turnout": 70.9,
       "validVotes": 39695,
       "winner": "lab",
-      "majority": 2225,
+      "majority": 2005,
       "results": [
         {
           "partyId": "lab",
@@ -20807,11 +20765,11 @@
           "voteShare": 44.21463660410631
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 15326,
-          "voteShare": 38.60939664945207
+          "votes": 15546,
+          "voteShare": 39.16362262249653
         },
         {
           "partyId": "con",
@@ -20819,13 +20777,6 @@
           "candidate": "J E Austin-Walker",
           "votes": 6598,
           "voteShare": 16.621740773397153
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 220,
-          "voteShare": 0.5542259730444641
         }
       ]
     },

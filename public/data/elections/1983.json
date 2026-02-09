@@ -66,8 +66,8 @@
           "voteShare": 24.918611245300458
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 11599,
           "voteShare": 24.36201718090357
@@ -245,7 +245,7 @@
       "turnout": 73.2,
       "validVotes": 47936,
       "winner": "con",
-      "majority": 13911,
+      "majority": 12691,
       "results": [
         {
           "partyId": "con",
@@ -255,11 +255,11 @@
           "voteShare": 56.804906542056074
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 13319,
-          "voteShare": 27.78496328437917
+          "votes": 14539,
+          "voteShare": 30.33002336448598
         },
         {
           "partyId": "lab",
@@ -267,13 +267,6 @@
           "candidate": "K Speed",
           "votes": 6167,
           "voteShare": 12.865070093457945
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 1220,
-          "voteShare": 2.545060080106809
         }
       ]
     },
@@ -304,18 +297,11 @@
           "voteShare": 31.489160052126525
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 7521,
-          "voteShare": 17.82016348773842
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 407,
-          "voteShare": 0.9643407179244166
+          "votes": 7928,
+          "voteShare": 18.784504205662834
         }
       ]
     },
@@ -329,7 +315,7 @@
       "turnout": 71.5,
       "validVotes": 52070,
       "winner": "con",
-      "majority": 14920,
+      "majority": 14754,
       "results": [
         {
           "partyId": "con",
@@ -339,11 +325,11 @@
           "voteShare": 58.056462454388324
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 15310,
-          "voteShare": 29.40272709813712
+          "votes": 15476,
+          "voteShare": 29.721528711350103
         },
         {
           "partyId": "lab",
@@ -351,13 +337,6 @@
           "candidate": "TH Raison",
           "votes": 6364,
           "voteShare": 12.22200883426157
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 166,
-          "voteShare": 0.31880161321298256
         }
       ]
     },
@@ -371,7 +350,7 @@
       "turnout": 75.2,
       "validVotes": 49151,
       "winner": "con",
-      "majority": 13025,
+      "majority": 12642,
       "results": [
         {
           "partyId": "con",
@@ -381,11 +360,11 @@
           "voteShare": 53.35598461882769
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 13200,
-          "voteShare": 26.856015137026713
+          "votes": 13583,
+          "voteShare": 27.635246485320746
         },
         {
           "partyId": "lab",
@@ -393,13 +372,6 @@
           "candidate": "A Baldry",
           "votes": 9343,
           "voteShare": 19.00876889585156
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 383,
-          "voteShare": 0.7792313482940327
         }
       ]
     },
@@ -542,8 +514,8 @@
           "voteShare": 27.516778523489933
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 9624,
           "voteShare": 21.674699337867665
@@ -577,8 +549,8 @@
           "voteShare": 34.67201879772861
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 11079,
           "voteShare": 21.693753671431367
@@ -612,8 +584,8 @@
           "voteShare": 35.632742288073835
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 11634,
           "voteShare": 25.689491465541987
@@ -630,7 +602,7 @@
       "turnout": 76.8,
       "validVotes": 55302,
       "winner": "con",
-      "majority": 12450,
+      "majority": 12106,
       "results": [
         {
           "partyId": "con",
@@ -640,11 +612,11 @@
           "voteShare": 51.32002459223898
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 15931,
-          "voteShare": 28.80727640953311
+          "votes": 16275,
+          "voteShare": 29.4293153954649
         },
         {
           "partyId": "lab",
@@ -652,13 +624,6 @@
           "candidate": "A Hunter",
           "votes": 10646,
           "voteShare": 19.25066001229612
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 344,
-          "voteShare": 0.6220389859317927
         }
       ]
     },
@@ -689,8 +654,8 @@
           "voteShare": 37.73971900317916
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 8124,
           "voteShare": 16.66290636857758
@@ -707,7 +672,7 @@
       "turnout": 74.4,
       "validVotes": 47870,
       "winner": "con",
-      "majority": 5304,
+      "majority": 4477,
       "results": [
         {
           "partyId": "con",
@@ -717,11 +682,11 @@
           "voteShare": 47.09421349488197
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 17240,
-          "voteShare": 36.0142051389179
+          "votes": 18067,
+          "voteShare": 37.741800710256946
         },
         {
           "partyId": "lab",
@@ -729,13 +694,6 @@
           "candidate": "CF Patten",
           "votes": 7259,
           "voteShare": 15.163985794861082
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 827,
-          "voteShare": 1.7275955713390432
         }
       ]
     },
@@ -766,18 +724,11 @@
           "voteShare": 37.96222792475123
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 11678,
-          "voteShare": 21.559251943064968
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 493,
-          "voteShare": 0.9101482452415677
+          "votes": 12171,
+          "voteShare": 22.469400188306533
         }
       ]
     },
@@ -808,18 +759,11 @@
           "voteShare": 36.366948245634006
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 7675,
-          "voteShare": 17.475352353195657
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 1024,
-          "voteShare": 2.3315649263416742
+          "votes": 8699,
+          "voteShare": 19.80691727953733
         }
       ]
     },
@@ -997,8 +941,8 @@
           "voteShare": 55.05355100343142
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 16036,
           "voteShare": 27.791064434508332
@@ -1032,8 +976,8 @@
           "voteShare": 56.81240382685488
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 17868,
           "voteShare": 29.88559577172677
@@ -1323,7 +1267,7 @@
       "turnout": 66.2,
       "validVotes": 36474,
       "winner": "con",
-      "majority": 11418,
+      "majority": 10343,
       "results": [
         {
           "partyId": "con",
@@ -1333,11 +1277,11 @@
           "voteShare": 53.6957832976915
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 8167,
-          "voteShare": 22.39129242748259
+          "votes": 9242,
+          "voteShare": 25.338597357021442
         },
         {
           "partyId": "lab",
@@ -1345,13 +1289,6 @@
           "candidate": "JCJ Knight",
           "votes": 7647,
           "voteShare": 20.965619345287053
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 1075,
-          "voteShare": 2.94730492953885
         }
       ]
     },
@@ -1382,8 +1319,8 @@
           "voteShare": 39.15139569571702
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 7915,
           "voteShare": 21.08193053483912
@@ -1613,8 +1550,8 @@
           "voteShare": 34.37628091269299
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 10613,
           "voteShare": 20.71516405441805
@@ -1648,8 +1585,8 @@
           "voteShare": 21.044784361367274
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 5722,
           "voteShare": 15.798774090231376
@@ -1683,18 +1620,11 @@
           "voteShare": 27.933147294346032
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 3416,
-          "voteShare": 10.361562727493327
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 586,
-          "voteShare": 1.7774811938849795
+          "votes": 4002,
+          "voteShare": 12.139043921378306
         }
       ]
     },
@@ -1725,18 +1655,11 @@
           "voteShare": 36.32149119646417
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 8109,
-          "voteShare": 19.47827340203214
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 415,
-          "voteShare": 0.9968533064303043
+          "votes": 8524,
+          "voteShare": 20.475126708462444
         }
       ]
     },
@@ -1844,18 +1767,11 @@
           "voteShare": 39.351566489970594
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 8174,
-          "voteShare": 14.395153479034217
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 864,
-          "voteShare": 1.521582163675748
+          "votes": 9038,
+          "voteShare": 15.916735642709966
         }
       ]
     },
@@ -1928,18 +1844,11 @@
           "voteShare": 24.751567038679102
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 9417,
-          "voteShare": 23.994802018040055
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 263,
-          "voteShare": 0.6701319879732967
+          "votes": 9680,
+          "voteShare": 24.66493400601335
         }
       ]
     },
@@ -1970,8 +1879,8 @@
           "voteShare": 29.325409237827127
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 12607,
           "voteShare": 26.289229485976435
@@ -1988,7 +1897,7 @@
       "turnout": 72.8,
       "validVotes": 41986,
       "winner": "lab",
-      "majority": 3243,
+      "majority": 2837,
       "results": [
         {
           "partyId": "lab",
@@ -1998,11 +1907,11 @@
           "voteShare": 39.49649883294432
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 13340,
-          "voteShare": 31.77249559376935
+          "votes": 13746,
+          "voteShare": 32.73948459010146
         },
         {
           "partyId": "con",
@@ -2010,13 +1919,6 @@
           "candidate": "J Ryman",
           "votes": 11657,
           "voteShare": 27.76401657695422
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 406,
-          "voteShare": 0.9669889963321108
         }
       ]
     },
@@ -2047,8 +1949,8 @@
           "voteShare": 26.91114605022734
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 7886,
           "voteShare": 16.755194832788
@@ -2082,18 +1984,11 @@
           "voteShare": 37.84289551318744
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 8311,
-          "voteShare": 18.29730086742107
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 290,
-          "voteShare": 0.6384571353088812
+          "votes": 8601,
+          "voteShare": 18.935758002729955
         }
       ]
     },
@@ -2166,8 +2061,8 @@
           "voteShare": 31.500446504911555
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 12321,
           "voteShare": 23.410157511732628
@@ -2236,8 +2131,8 @@
           "voteShare": 23.58184607616569
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 12068,
           "voteShare": 23.436195210999553
@@ -2264,8 +2159,8 @@
           "voteShare": 55.40138577827548
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 14369,
           "voteShare": 25.14172732362822
@@ -2414,9 +2309,16 @@
       "electorate": 66439,
       "turnout": 70.7,
       "validVotes": 46953,
-      "winner": "con",
-      "majority": 1602,
+      "winner": "other",
+      "majority": 273,
       "results": [
+        {
+          "partyId": "other",
+          "partyName": "Other",
+          "candidate": "",
+          "votes": 16367,
+          "voteShare": 34.858262517836984
+        },
         {
           "partyId": "con",
           "partyName": "Conservative",
@@ -2430,20 +2332,6 @@
           "candidate": "G Lawler",
           "votes": 14492,
           "voteShare": 30.86490746065214
-        },
-        {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 11962,
-          "voteShare": 25.47654037015739
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 4405,
-          "voteShare": 9.381722147679595
         }
       ]
     },
@@ -2474,18 +2362,11 @@
           "voteShare": 37.29286798179059
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 12143,
-          "voteShare": 24.568538189175516
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 308,
-          "voteShare": 0.6231664137582196
+          "votes": 12451,
+          "voteShare": 25.19170460293374
         }
       ]
     },
@@ -2516,18 +2397,11 @@
           "voteShare": 32.915826561577155
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 13301,
-          "voteShare": 27.089061322579987
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 139,
-          "voteShare": 0.28308995743467547
+          "votes": 13440,
+          "voteShare": 27.372151280014663
         }
       ]
     },
@@ -2551,8 +2425,8 @@
           "voteShare": 52.5787914480494
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 16021,
           "voteShare": 28.59156940429025
@@ -2593,18 +2467,11 @@
           "voteShare": 34.61076006037504
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 6598,
-          "voteShare": 16.87942899536954
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 599,
-          "voteShare": 1.5324004195553738
+          "votes": 7197,
+          "voteShare": 18.411829414924917
         }
       ]
     },
@@ -2635,8 +2502,8 @@
           "voteShare": 23.10098605916355
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 9082,
           "voteShare": 20.587101892780233
@@ -2712,18 +2579,11 @@
           "voteShare": 29.268481436337957
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 11438,
-          "voteShare": 22.12935554394722
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 606,
-          "voteShare": 1.1724418132218934
+          "votes": 12044,
+          "voteShare": 23.301797357169114
         }
       ]
     },
@@ -2782,8 +2642,8 @@
           "voteShare": 52.26160987489853
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 14410,
           "voteShare": 29.995212422722258
@@ -2807,7 +2667,7 @@
       "turnout": 70.6,
       "validVotes": 54132,
       "winner": "con",
-      "majority": 16609,
+      "majority": 15806,
       "results": [
         {
           "partyId": "con",
@@ -2817,11 +2677,11 @@
           "voteShare": 57.79206384393704
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 14675,
-          "voteShare": 27.10965787334663
+          "votes": 15478,
+          "voteShare": 28.593068794797897
         },
         {
           "partyId": "lab",
@@ -2829,13 +2689,6 @@
           "candidate": "J Townend",
           "votes": 7370,
           "voteShare": 13.614867361265057
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 803,
-          "voteShare": 1.4834109214512674
         }
       ]
     },
@@ -2901,18 +2754,11 @@
           "voteShare": 29.598070739549836
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 8098,
-          "voteShare": 18.5989894350023
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 290,
-          "voteShare": 0.6660542030316949
+          "votes": 8388,
+          "voteShare": 19.26504363803399
         }
       ]
     },
@@ -2936,8 +2782,8 @@
           "voteShare": 51.51354093687338
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 10191,
           "voteShare": 24.62010484864591
@@ -3020,8 +2866,8 @@
           "voteShare": 32.58216798788634
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 13228,
           "voteShare": 23.564621002939344
@@ -3055,18 +2901,11 @@
           "voteShare": 35.09638651395387
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 9674,
-          "voteShare": 19.50717857718987
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 689,
-          "voteShare": 1.3893369898370704
+          "votes": 10363,
+          "voteShare": 20.896515567026942
         }
       ]
     },
@@ -3122,7 +2961,7 @@
       "turnout": 75.1,
       "validVotes": 49643,
       "winner": "con",
-      "majority": 17175,
+      "majority": 16459,
       "results": [
         {
           "partyId": "con",
@@ -3132,11 +2971,11 @@
           "voteShare": 56.22343532824367
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 10736,
-          "voteShare": 21.62641258586306
+          "votes": 11452,
+          "voteShare": 23.06871059363858
         },
         {
           "partyId": "lab",
@@ -3144,13 +2983,6 @@
           "candidate": "HD Miller",
           "votes": 10280,
           "voteShare": 20.70785407811776
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 716,
-          "voteShare": 1.4422980077755172
         }
       ]
     },
@@ -3398,8 +3230,8 @@
           "voteShare": 36.474546044098574
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 9628,
           "voteShare": 19.511997405966277
@@ -3426,8 +3258,8 @@
           "voteShare": 58.97051569081319
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 14959,
           "voteShare": 28.381967897393086
@@ -3486,7 +3318,7 @@
       "turnout": 75.2,
       "validVotes": 50420,
       "winner": "con",
-      "majority": 5968,
+      "majority": 5682,
       "results": [
         {
           "partyId": "con",
@@ -3496,11 +3328,11 @@
           "voteShare": 41.51328837762793
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 14963,
-          "voteShare": 29.676715589051966
+          "votes": 15249,
+          "voteShare": 30.24395081316938
         },
         {
           "partyId": "lab",
@@ -3508,13 +3340,6 @@
           "candidate": "RV Rhodes James",
           "votes": 14240,
           "voteShare": 28.2427608092027
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 286,
-          "voteShare": 0.5672352241174138
         }
       ]
     },
@@ -3573,8 +3398,8 @@
           "voteShare": 57.56244078456669
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 14791,
           "voteShare": 29.81635656258189
@@ -3650,8 +3475,8 @@
           "voteShare": 36.94358253810277
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 11336,
           "voteShare": 22.122045937981774
@@ -3727,8 +3552,8 @@
           "voteShare": 37.34028244788164
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 10471,
           "voteShare": 25.14890959746373
@@ -3745,7 +3570,7 @@
       "turnout": 72,
       "validVotes": 49476,
       "winner": "con",
-      "majority": 10755,
+      "majority": 9971,
       "results": [
         {
           "partyId": "con",
@@ -3755,11 +3580,11 @@
           "voteShare": 51.32993774759479
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 14641,
-          "voteShare": 29.592125474977767
+          "votes": 15425,
+          "voteShare": 31.176732152963055
         },
         {
           "partyId": "lab",
@@ -3767,13 +3592,6 @@
           "candidate": "FN Forman",
           "votes": 8655,
           "voteShare": 17.493330099442154
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 784,
-          "voteShare": 1.5846066779852859
         }
       ]
     },
@@ -3797,8 +3615,8 @@
           "voteShare": 58.53626489138052
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 11313,
           "voteShare": 24.774439383321653
@@ -3983,7 +3801,7 @@
       "turnout": 72.5,
       "validVotes": 50879,
       "winner": "con",
-      "majority": 15699,
+      "majority": 15381,
       "results": [
         {
           "partyId": "con",
@@ -3993,11 +3811,11 @@
           "voteShare": 58.332514396902454
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 13980,
-          "voteShare": 27.47695512883508
+          "votes": 14298,
+          "voteShare": 28.10196741288154
         },
         {
           "partyId": "lab",
@@ -4005,13 +3823,6 @@
           "candidate": "GE Pattie",
           "votes": 6902,
           "voteShare": 13.565518190216002
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 318,
-          "voteShare": 0.6250122840464631
         }
       ]
     },
@@ -4130,7 +3941,7 @@
       "turnout": 72.1,
       "validVotes": 55680,
       "winner": "con",
-      "majority": 20117,
+      "majority": 19279,
       "results": [
         {
           "partyId": "con",
@@ -4140,11 +3951,11 @@
           "voteShare": 63.724856321839084
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 15365,
-          "voteShare": 27.595186781609193
+          "votes": 16203,
+          "voteShare": 29.10021551724138
         },
         {
           "partyId": "lab",
@@ -4152,13 +3963,6 @@
           "candidate": "RA Nelson",
           "votes": 3995,
           "voteShare": 7.17492816091954
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 838,
-          "voteShare": 1.5050287356321839
         }
       ]
     },
@@ -4315,18 +4119,11 @@
           "voteShare": 30.476751642029008
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 11691,
-          "voteShare": 20.26064502712164
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 565,
-          "voteShare": 0.9791518638545657
+          "votes": 12256,
+          "voteShare": 21.239796890976205
         }
       ]
     },
@@ -4350,8 +4147,8 @@
           "voteShare": 67.07121109607577
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 11984,
           "voteShare": 25.3382949932341
@@ -4504,8 +4301,8 @@
           "voteShare": 53.62668997069861
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 19131,
           "voteShare": 32.781576106513135
@@ -4623,8 +4420,8 @@
           "voteShare": 39.906125433403304
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 6722,
           "voteShare": 15.854895393541996
@@ -4784,18 +4581,11 @@
           "voteShare": 28.917246879782716
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 10251,
-          "voteShare": 22.0969584617706
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 535,
-          "voteShare": 1.1532409303528701
+          "votes": 10786,
+          "voteShare": 23.25019939212347
         }
       ]
     },
@@ -4896,18 +4686,11 @@
           "voteShare": 31.943628890193775
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 11174,
-          "voteShare": 22.625387247656263
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 214,
-          "voteShare": 0.4333124101484196
+          "votes": 11388,
+          "voteShare": 23.058699657804684
         }
       ]
     },
@@ -4938,8 +4721,8 @@
           "voteShare": 26.196030511738133
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 13900,
           "voteShare": 25.735021846996965
@@ -4973,8 +4756,8 @@
           "voteShare": 40.56762203313927
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 9820,
           "voteShare": 18.32363039259591
@@ -4991,7 +4774,7 @@
       "turnout": 77.9,
       "validVotes": 64833,
       "winner": "con",
-      "majority": 3401,
+      "majority": 2986,
       "results": [
         {
           "partyId": "con",
@@ -5001,11 +4784,11 @@
           "voteShare": 47.20435580645659
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 27203,
-          "voteShare": 41.95857048108216
+          "votes": 27618,
+          "voteShare": 42.598676599879695
         },
         {
           "partyId": "lab",
@@ -5013,13 +4796,6 @@
           "candidate": "GM Thornton",
           "votes": 6611,
           "voteShare": 10.196967593663722
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 415,
-          "voteShare": 0.640106118797526
         }
       ]
     },
@@ -5050,8 +4826,8 @@
           "voteShare": 23.32688588007737
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 8864,
           "voteShare": 22.860090264345583
@@ -5078,8 +4854,8 @@
           "voteShare": 52.50117757889778
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 10665,
           "voteShare": 25.117757889778613
@@ -5197,18 +4973,11 @@
           "voteShare": 31.75892498997192
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 10769,
-          "voteShare": 26.998094665062172
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 786,
-          "voteShare": 1.9705174488567991
+          "votes": 11555,
+          "voteShare": 28.968612113918972
         }
       ]
     },
@@ -5239,18 +5008,11 @@
           "voteShare": 37.78418697165589
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 8737,
-          "voteShare": 17.37841869716559
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 108,
-          "voteShare": 0.21481849825957236
+          "votes": 8845,
+          "voteShare": 17.593237195425164
         }
       ]
     },
@@ -5316,8 +5078,8 @@
           "voteShare": 53.3348172730584
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 13221,
           "voteShare": 26.753409688777367
@@ -5393,8 +5155,8 @@
           "voteShare": 34.00280056011202
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 10869,
           "voteShare": 21.74234846969394
@@ -5463,18 +5225,11 @@
           "voteShare": 38.42390127733275
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 9976,
-          "voteShare": 21.59774843039619
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 297,
-          "voteShare": 0.6429963195496861
+          "votes": 10273,
+          "voteShare": 22.240744749945875
         }
       ]
     },
@@ -5505,8 +5260,8 @@
           "voteShare": 36.937843486337954
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 11494,
           "voteShare": 22.242433624893568
@@ -5540,8 +5295,8 @@
           "voteShare": 29.23399364478399
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 15959,
           "voteShare": 26.97417348387533
@@ -5593,7 +5348,7 @@
       "turnout": 74.9,
       "validVotes": 62366,
       "winner": "con",
-      "majority": 15624,
+      "majority": 15390,
       "results": [
         {
           "partyId": "con",
@@ -5603,11 +5358,11 @@
           "voteShare": 53.946060353397684
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 18020,
-          "voteShare": 28.89394862585383
+          "votes": 18254,
+          "voteShare": 29.26915306416958
         },
         {
           "partyId": "lab",
@@ -5615,13 +5370,6 @@
           "candidate": "A Morrison",
           "votes": 10468,
           "voteShare": 16.784786582432737
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 234,
-          "voteShare": 0.37520443831574896
         }
       ]
     },
@@ -5694,8 +5442,8 @@
           "voteShare": 35.31111240377717
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 13065,
           "voteShare": 25.333023093479145
@@ -5764,8 +5512,8 @@
           "voteShare": 37.051903664255626
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 10524,
           "voteShare": 20.91248708369764
@@ -5799,8 +5547,8 @@
           "voteShare": 27.577937649880095
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 9916,
           "voteShare": 19.65237727173633
@@ -5859,7 +5607,7 @@
       "turnout": 72.7,
       "validVotes": 50146,
       "winner": "con",
-      "majority": 15098,
+      "majority": 14947,
       "results": [
         {
           "partyId": "con",
@@ -5869,11 +5617,11 @@
           "voteShare": 57.09528177721055
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 13533,
-          "voteShare": 26.98719738363977
+          "votes": 13684,
+          "voteShare": 27.288318111115544
         },
         {
           "partyId": "lab",
@@ -5881,13 +5629,6 @@
           "candidate": "Viscount Cranbourne",
           "votes": 7831,
           "voteShare": 15.616400111673912
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 151,
-          "voteShare": 0.30112072747577073
         }
       ]
     },
@@ -5953,18 +5694,11 @@
           "voteShare": 30.808646309756515
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 10601,
-          "voteShare": 20.11842180175735
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 404,
-          "voteShare": 0.766705254967453
+          "votes": 11005,
+          "voteShare": 20.8851270567248
         }
       ]
     },
@@ -5995,8 +5729,8 @@
           "voteShare": 34.91881960328471
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 10272,
           "voteShare": 19.258314897446475
@@ -6065,18 +5799,11 @@
           "voteShare": 35.66076921054707
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 8376,
-          "voteShare": 22.019506296169723
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 674,
-          "voteShare": 1.7718657167643734
+          "votes": 9050,
+          "voteShare": 23.791372012934094
         }
       ]
     },
@@ -6170,8 +5897,8 @@
           "voteShare": 36.47848004659476
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 16190,
           "voteShare": 32.5159165311
@@ -6212,18 +5939,11 @@
           "voteShare": 26.69717602410983
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 10593,
-          "voteShare": 23.647728541131823
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 192,
-          "voteShare": 0.42861926554302937
+          "votes": 10785,
+          "voteShare": 24.076347806674853
         }
       ]
     },
@@ -6597,8 +6317,8 @@
           "voteShare": 32.56953342880832
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 11413,
           "voteShare": 21.506369186703854
@@ -6632,8 +6352,8 @@
           "voteShare": 31.756048347213707
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 10589,
           "voteShare": 20.947162271765148
@@ -6709,18 +6429,11 @@
           "voteShare": 27.906409943943455
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 9452,
-          "voteShare": 19.19733528312617
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 588,
-          "voteShare": 1.1942481111381915
+          "votes": 10040,
+          "voteShare": 20.39158339426436
         }
       ]
     },
@@ -6776,7 +6489,7 @@
       "turnout": 72.8,
       "validVotes": 48439,
       "winner": "con",
-      "majority": 15378,
+      "majority": 14596,
       "results": [
         {
           "partyId": "con",
@@ -6786,11 +6499,11 @@
           "voteShare": 56.51025000516113
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 11995,
-          "voteShare": 24.763104110324324
+          "votes": 12777,
+          "voteShare": 26.37750572885485
         },
         {
           "partyId": "lab",
@@ -6798,13 +6511,6 @@
           "candidate": "J Biggs-Davison",
           "votes": 8289,
           "voteShare": 17.11224426598402
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 782,
-          "voteShare": 1.614401618530523
         }
       ]
     },
@@ -6853,7 +6559,7 @@
       "turnout": 75.7,
       "validVotes": 55504,
       "winner": "con",
-      "majority": 11319,
+      "majority": 8678,
       "results": [
         {
           "partyId": "con",
@@ -6863,25 +6569,18 @@
           "voteShare": 45.342678005188816
         },
         {
+          "partyId": "other",
+          "partyName": "Other",
+          "candidate": "",
+          "votes": 16489,
+          "voteShare": 29.707768809455175
+        },
+        {
           "partyId": "lab",
           "partyName": "Labour",
           "candidate": "PL Rost",
           "votes": 13848,
           "voteShare": 24.94955318535601
-        },
-        {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 12331,
-          "voteShare": 22.216416834822716
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 4158,
-          "voteShare": 7.491351974632458
         }
       ]
     },
@@ -6895,7 +6594,7 @@
       "turnout": 73.5,
       "validVotes": 41190,
       "winner": "con",
-      "majority": 920,
+      "majority": 648,
       "results": [
         {
           "partyId": "con",
@@ -6905,11 +6604,11 @@
           "voteShare": 37.11823258072348
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 14369,
-          "voteShare": 34.88468074775431
+          "votes": 14641,
+          "voteShare": 35.545035202719106
         },
         {
           "partyId": "lab",
@@ -6917,13 +6616,6 @@
           "candidate": "D Evennett",
           "votes": 11260,
           "voteShare": 27.33673221655742
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 272,
-          "voteShare": 0.6603544549647973
         }
       ]
     },
@@ -6979,7 +6671,7 @@
       "turnout": 78,
       "validVotes": 57307,
       "winner": "con",
-      "majority": 9880,
+      "majority": 9101,
       "results": [
         {
           "partyId": "con",
@@ -6989,11 +6681,11 @@
           "voteShare": 46.52136737222329
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 16780,
-          "voteShare": 29.280890641631913
+          "votes": 17559,
+          "voteShare": 30.64023592231316
         },
         {
           "partyId": "lab",
@@ -7001,13 +6693,6 @@
           "candidate": "J Hannam",
           "votes": 13088,
           "voteShare": 22.838396705463555
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 779,
-          "voteShare": 1.3593452806812432
         }
       ]
     },
@@ -7021,7 +6706,7 @@
       "turnout": 75,
       "validVotes": 49231,
       "winner": "con",
-      "majority": 11025,
+      "majority": 10443,
       "results": [
         {
           "partyId": "con",
@@ -7031,11 +6716,11 @@
           "voteShare": 49.996953139282155
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 13589,
-          "voteShare": 27.60252686315533
+          "votes": 14171,
+          "voteShare": 28.784708821677395
         },
         {
           "partyId": "lab",
@@ -7043,13 +6728,6 @@
           "candidate": "WD Mudd",
           "votes": 10446,
           "voteShare": 21.21833803904044
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 582,
-          "voteShare": 1.1821819585220694
         }
       ]
     },
@@ -7108,8 +6786,8 @@
           "voteShare": 53.08281908555779
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 15252,
           "voteShare": 27.123828493179918
@@ -7402,8 +7080,8 @@
           "voteShare": 26.616904962153072
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 11920,
           "voteShare": 25.063078216989066
@@ -7420,7 +7098,7 @@
       "turnout": 75.4,
       "validVotes": 50266,
       "winner": "con",
-      "majority": 14664,
+      "majority": 14478,
       "results": [
         {
           "partyId": "con",
@@ -7430,11 +7108,11 @@
           "voteShare": 54.126049417101015
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 12543,
-          "voteShare": 24.953248716826483
+          "votes": 12729,
+          "voteShare": 25.323280149604106
         },
         {
           "partyId": "lab",
@@ -7442,13 +7120,6 @@
           "candidate": "P Holland",
           "votes": 10330,
           "voteShare": 20.550670433294872
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 186,
-          "voteShare": 0.370031432777623
         }
       ]
     },
@@ -7514,8 +7185,8 @@
           "voteShare": 37.28022081899648
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 12819,
           "voteShare": 24.235262978787762
@@ -7549,18 +7220,11 @@
           "voteShare": 26.166527211550445
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 13499,
-          "voteShare": 24.031973794306673
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 739,
-          "voteShare": 1.3156255007032098
+          "votes": 14238,
+          "voteShare": 25.347599295009882
         }
       ]
     },
@@ -7584,8 +7248,8 @@
           "voteShare": 45.83784515430428
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 17440,
           "voteShare": 29.507309149972926
@@ -7703,18 +7367,11 @@
           "voteShare": 31.93061179818321
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 10826,
-          "voteShare": 19.7475466053774
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 523,
-          "voteShare": 0.9539965707197839
+          "votes": 11349,
+          "voteShare": 20.701543176097186
         }
       ]
     },
@@ -7745,8 +7402,8 @@
           "voteShare": 34.862621580396585
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 14552,
           "voteShare": 28.826687268477247
@@ -7815,18 +7472,11 @@
           "voteShare": 34.769917582417584
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 8783,
-          "voteShare": 25.13450091575092
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 650,
-          "voteShare": 1.8601190476190477
+          "votes": 9433,
+          "voteShare": 26.994619963369964
         }
       ]
     },
@@ -7840,7 +7490,7 @@
       "turnout": 72.5,
       "validVotes": 54486,
       "winner": "con",
-      "majority": 11824,
+      "majority": 11399,
       "results": [
         {
           "partyId": "con",
@@ -7850,11 +7500,11 @@
           "voteShare": 55.08938075835994
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 18192,
-          "voteShare": 33.38839334875014
+          "votes": 18617,
+          "voteShare": 34.16841023382153
         },
         {
           "partyId": "lab",
@@ -7862,13 +7512,6 @@
           "candidate": "DA Howell",
           "votes": 5853,
           "voteShare": 10.742209007818522
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 425,
-          "voteShare": 0.7800168850713946
         }
       ]
     },
@@ -7924,7 +7567,7 @@
       "turnout": 53.8,
       "validVotes": 38358,
       "winner": "lab",
-      "majority": 7691,
+      "majority": 3814,
       "results": [
         {
           "partyId": "lab",
@@ -7934,25 +7577,18 @@
           "voteShare": 43.33124771885917
         },
         {
+          "partyId": "other",
+          "partyName": "Other",
+          "candidate": "",
+          "votes": 12807,
+          "voteShare": 33.38808071328015
+        },
+        {
           "partyId": "con",
           "partyName": "Conservative",
           "candidate": "B Sedgemore",
           "votes": 8930,
           "voteShare": 23.28067156786068
-        },
-        {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 7025,
-          "voteShare": 18.314302101256583
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 5782,
-          "voteShare": 15.073778612023567
         }
       ]
     },
@@ -7966,7 +7602,7 @@
       "turnout": 76.4,
       "validVotes": 58377,
       "winner": "con",
-      "majority": 13316,
+      "majority": 12734,
       "results": [
         {
           "partyId": "con",
@@ -7976,11 +7612,11 @@
           "voteShare": 48.39234630076914
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 14934,
-          "voteShare": 25.581992908165883
+          "votes": 15516,
+          "voteShare": 26.578960892132176
         },
         {
           "partyId": "lab",
@@ -7988,13 +7624,6 @@
           "candidate": "JH Stokes",
           "votes": 14611,
           "voteShare": 25.028692807098686
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 582,
-          "voteShare": 0.9969679839662882
         }
       ]
     },
@@ -8025,8 +7654,8 @@
           "voteShare": 37.42976885488918
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 11868,
           "voteShare": 21.719953880785493
@@ -8060,8 +7689,8 @@
           "voteShare": 33.611507013727405
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 10649,
           "voteShare": 19.970369814717575
@@ -8095,18 +7724,11 @@
           "voteShare": 35.53279435900553
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 4925,
-          "voteShare": 14.968694912163393
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 2641,
-          "voteShare": 8.026867667618989
+          "votes": 7566,
+          "voteShare": 22.995562579782383
         }
       ]
     },
@@ -8207,18 +7829,11 @@
           "voteShare": 33.662566220705756
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 11030,
-          "voteShare": 24.759809643530573
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 156,
-          "voteShare": 0.35018407111430366
+          "votes": 11186,
+          "voteShare": 25.10999371464488
         }
       ]
     },
@@ -8316,7 +7931,7 @@
       "turnout": 69,
       "validVotes": 50257,
       "winner": "con",
-      "majority": 15888,
+      "majority": 15409,
       "results": [
         {
           "partyId": "con",
@@ -8326,11 +7941,11 @@
           "voteShare": 60.22842589092067
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 14381,
-          "voteShare": 28.614919314722325
+          "votes": 14860,
+          "voteShare": 29.56802037527111
         },
         {
           "partyId": "lab",
@@ -8338,13 +7953,6 @@
           "candidate": "RG Banks",
           "votes": 5128,
           "voteShare": 10.203553733808226
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 479,
-          "voteShare": 0.9531010605487793
         }
       ]
     },
@@ -8403,8 +8011,8 @@
           "voteShare": 53.03391176137008
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 17035,
           "voteShare": 32.20105099996219
@@ -8445,8 +8053,8 @@
           "voteShare": 39.14677459321054
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 7422,
           "voteShare": 15.325844552738085
@@ -8550,8 +8158,8 @@
           "voteShare": 55.33554817275748
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 17192,
           "voteShare": 32.63787375415282
@@ -8592,18 +8200,11 @@
           "voteShare": 29.91869520497625
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 11842,
-          "voteShare": 29.00034285154528
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 324,
-          "voteShare": 0.7934564333643532
+          "votes": 12166,
+          "voteShare": 29.793799284909632
         }
       ]
     },
@@ -8687,7 +8288,7 @@
       "turnout": 68,
       "validVotes": 37069,
       "winner": "con",
-      "majority": 9025,
+      "majority": 8715,
       "results": [
         {
           "partyId": "con",
@@ -8697,11 +8298,11 @@
           "voteShare": 49.90423264722544
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 9474,
-          "voteShare": 25.557743667215192
+          "votes": 9784,
+          "voteShare": 26.39402195904934
         },
         {
           "partyId": "lab",
@@ -8709,13 +8310,6 @@
           "candidate": "JM Gorst",
           "votes": 8786,
           "voteShare": 23.701745393725215
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 310,
-          "voteShare": 0.8362782918341471
         }
       ]
     },
@@ -8848,7 +8442,7 @@
       "turnout": 75.6,
       "validVotes": 51877,
       "winner": "con",
-      "majority": 12929,
+      "majority": 12404,
       "results": [
         {
           "partyId": "con",
@@ -8858,11 +8452,11 @@
           "voteShare": 55.97663704531873
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 16110,
-          "voteShare": 31.054224415444224
+          "votes": 16635,
+          "voteShare": 32.06623359099408
         },
         {
           "partyId": "lab",
@@ -8870,13 +8464,6 @@
           "candidate": "PB Wells",
           "votes": 6203,
           "voteShare": 11.957129363687184
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 525,
-          "voteShare": 1.0120091755498584
         }
       ]
     },
@@ -8977,8 +8564,8 @@
           "voteShare": 46.709045812184826
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 18860,
           "voteShare": 30.9794838942821
@@ -9096,18 +8683,11 @@
           "voteShare": 33.79955051881605
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 9262,
-          "voteShare": 22.144120881748194
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 316,
-          "voteShare": 0.7555109262181418
+          "votes": 9578,
+          "voteShare": 22.899631807966337
         }
       ]
     },
@@ -9131,8 +8711,8 @@
           "voteShare": 46.392980731047786
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 14594,
           "voteShare": 27.596770228617896
@@ -9243,8 +8823,8 @@
           "voteShare": 60.58499962833569
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 17833,
           "voteShare": 33.13944845015981
@@ -9285,18 +8865,11 @@
           "voteShare": 26.84830892378062
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 11251,
-          "voteShare": 24.741610590667197
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 621,
-          "voteShare": 1.3656155165589128
+          "votes": 11872,
+          "voteShare": 26.107226107226104
         }
       ]
     },
@@ -9327,18 +8900,11 @@
           "voteShare": 35.02927979314016
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 10995,
-          "voteShare": 20.904631530914898
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 854,
-          "voteShare": 1.6236976195908435
+          "votes": 11849,
+          "voteShare": 22.52832915050574
         }
       ]
     },
@@ -9352,7 +8918,7 @@
       "turnout": 74.5,
       "validVotes": 59933,
       "winner": "con",
-      "majority": 21785,
+      "majority": 20860,
       "results": [
         {
           "partyId": "con",
@@ -9362,11 +8928,11 @@
           "voteShare": 63.23227604157976
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 16112,
-          "voteShare": 26.883353077603324
+          "votes": 17037,
+          "voteShare": 28.426743196569504
         },
         {
           "partyId": "lab",
@@ -9374,13 +8940,6 @@
           "candidate": "P Hordern",
           "votes": 4999,
           "voteShare": 8.340980761850734
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 925,
-          "voteShare": 1.543390118966179
         }
       ]
     },
@@ -9404,8 +8963,8 @@
           "voteShare": 51.6960034769553
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 12347,
           "voteShare": 24.392026709338392
@@ -9565,18 +9124,11 @@
           "voteShare": 30.488023059338037
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 13381,
-          "voteShare": 26.599741576384055
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 222,
-          "voteShare": 0.4413080210714641
+          "votes": 13603,
+          "voteShare": 27.04104959745552
         }
       ]
     },
@@ -9607,8 +9159,8 @@
           "voteShare": 31.948803318505583
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 9575,
           "voteShare": 26.130502415195263
@@ -9684,18 +9236,11 @@
           "voteShare": 42.19416630387462
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 6716,
-          "voteShare": 14.619068350021768
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 435,
-          "voteShare": 0.9468872442316064
+          "votes": 7151,
+          "voteShare": 15.565955594253374
         }
       ]
     },
@@ -9726,8 +9271,8 @@
           "voteShare": 25.249796203563523
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 10052,
           "voteShare": 23.412134622103178
@@ -9870,7 +9415,7 @@
       "turnout": 61.6,
       "validVotes": 36964,
       "winner": "lab",
-      "majority": 5607,
+      "majority": 2282,
       "results": [
         {
           "partyId": "lab",
@@ -9880,25 +9425,18 @@
           "voteShare": 40.44746239584461
         },
         {
+          "partyId": "other",
+          "partyName": "Other",
+          "candidate": "",
+          "votes": 12669,
+          "voteShare": 34.27388810734769
+        },
+        {
           "partyId": "con",
           "partyName": "Conservative",
           "candidate": "J Corbyn",
           "votes": 9344,
           "voteShare": 25.278649496807702
-        },
-        {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 8268,
-          "voteShare": 22.36770912238935
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 4401,
-          "voteShare": 11.906178984958338
         }
       ]
     },
@@ -9911,9 +9449,16 @@
       "electorate": 59795,
       "turnout": 62,
       "validVotes": 37073,
-      "winner": "lab",
-      "majority": 363,
+      "winner": "other",
+      "majority": 259,
       "results": [
+        {
+          "partyId": "other",
+          "partyName": "Other",
+          "candidate": "",
+          "votes": 13719,
+          "voteShare": 37.005367787877965
+        },
         {
           "partyId": "lab",
           "partyName": "Labour",
@@ -9922,25 +9467,11 @@
           "voteShare": 36.306746149488845
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 13097,
-          "voteShare": 35.32759690340679
-        },
-        {
           "partyId": "con",
           "partyName": "Conservative",
           "candidate": "C Smith",
           "votes": 9894,
           "voteShare": 26.687886062633183
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 622,
-          "voteShare": 1.6777708844711785
         }
       ]
     },
@@ -10048,18 +9579,11 @@
           "voteShare": 29.537916599581386
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 6873,
-          "voteShare": 22.131701819352763
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 735,
-          "voteShare": 2.3667686362904523
+          "votes": 7608,
+          "voteShare": 24.498470455643215
         }
       ]
     },
@@ -10125,8 +9649,8 @@
           "voteShare": 48.40242606140187
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 14637,
           "voteShare": 30.507096854874007
@@ -10209,8 +9733,8 @@
           "voteShare": 37.139792634966035
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 12591,
           "voteShare": 22.50804433321416
@@ -10244,18 +9768,11 @@
           "voteShare": 20.063101272369916
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 5715,
-          "voteShare": 14.779662770249303
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 246,
-          "voteShare": 0.63618495913934
+          "votes": 5961,
+          "voteShare": 15.415847729388643
         }
       ]
     },
@@ -10321,8 +9838,8 @@
           "voteShare": 33.79299067967515
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 10983,
           "voteShare": 19.954215948111408
@@ -10500,7 +10017,7 @@
       "turnout": 70.7,
       "validVotes": 46087,
       "winner": "con",
-      "majority": 8995,
+      "majority": 8744,
       "results": [
         {
           "partyId": "con",
@@ -10510,11 +10027,11 @@
           "voteShare": 47.6056154664005
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 12945,
-          "voteShare": 28.0881810488858
+          "votes": 13196,
+          "voteShare": 28.63280317660078
         },
         {
           "partyId": "lab",
@@ -10522,13 +10039,6 @@
           "candidate": "K Joseph",
           "votes": 10951,
           "voteShare": 23.76158135699872
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 251,
-          "voteShare": 0.5446221277149739
         }
       ]
     },
@@ -10542,7 +10052,7 @@
       "turnout": 71.3,
       "validVotes": 48488,
       "winner": "con",
-      "majority": 8537,
+      "majority": 7427,
       "results": [
         {
           "partyId": "con",
@@ -10552,11 +10062,11 @@
           "voteShare": 46.56616069955453
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 14042,
-          "voteShare": 28.959742616729912
+          "votes": 15152,
+          "voteShare": 31.248968817026896
         },
         {
           "partyId": "lab",
@@ -10564,13 +10074,6 @@
           "candidate": "K Hampson",
           "votes": 10757,
           "voteShare": 22.184870483418578
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 1110,
-          "voteShare": 2.289226200296981
         }
       ]
     },
@@ -10643,18 +10146,11 @@
           "voteShare": 37.04065835574024
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 10362,
-          "voteShare": 21.107308726472745
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 1429,
-          "voteShare": 2.91086124012059
+          "votes": 11791,
+          "voteShare": 24.018169966593337
         }
       ]
     },
@@ -10727,18 +10223,11 @@
           "voteShare": 41.09191697821323
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 5935,
-          "voteShare": 12.751922994284731
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 645,
-          "voteShare": 1.385845043186799
+          "votes": 6580,
+          "voteShare": 14.137768037471531
         }
       ]
     },
@@ -10811,8 +10300,8 @@
           "voteShare": 26.804186690559582
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 10468,
           "voteShare": 21.316282479433085
@@ -10930,18 +10419,11 @@
           "voteShare": 31.54377366896859
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 6734,
-          "voteShare": 18.751392292269994
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 490,
-          "voteShare": 1.3644464245934507
+          "votes": 7224,
+          "voteShare": 20.115838716863443
         }
       ]
     },
@@ -10972,18 +10454,11 @@
           "voteShare": 35.86808330590945
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 9351,
-          "voteShare": 21.98063090592826
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 764,
-          "voteShare": 1.795872314418692
+          "votes": 10115,
+          "voteShare": 23.77650322034695
         }
       ]
     },
@@ -11056,8 +10531,8 @@
           "voteShare": 31.597258829731157
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 9448,
           "voteShare": 24.902477596204534
@@ -11091,18 +10566,11 @@
           "voteShare": 27.51858120538671
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 13631,
-          "voteShare": 25.07726837883582
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 523,
-          "voteShare": 0.962175288836559
+          "votes": 14154,
+          "voteShare": 26.03944366767238
         }
       ]
     },
@@ -11178,15 +10646,8 @@
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 7021,
-          "voteShare": 15.265034569726485
-        },
-        {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 5169,
-          "voteShare": 11.23842240292212
+          "votes": 12190,
+          "voteShare": 26.50345697264861
         }
       ]
     },
@@ -11294,18 +10755,11 @@
           "voteShare": 19.763873719248974
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 5381,
-          "voteShare": 13.993342695168254
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 495,
-          "voteShare": 1.2872523014510844
+          "votes": 5876,
+          "voteShare": 15.280594996619337
         }
       ]
     },
@@ -11378,8 +10832,8 @@
           "voteShare": 27.51494137506273
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 7871,
           "voteShare": 17.954742460878688
@@ -11396,7 +10850,7 @@
       "turnout": 77.7,
       "validVotes": 54940,
       "winner": "con",
-      "majority": 16180,
+      "majority": 16048,
       "results": [
         {
           "partyId": "con",
@@ -11406,25 +10860,18 @@
           "voteShare": 52.88678558427375
         },
         {
+          "partyId": "other",
+          "partyName": "Other",
+          "candidate": "",
+          "votes": 13008,
+          "voteShare": 23.67673825991991
+        },
+        {
           "partyId": "lab",
           "partyName": "Labour",
           "candidate": "S Dorell",
           "votes": 12876,
           "voteShare": 23.436476155806336
-        },
-        {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 12189,
-          "voteShare": 22.186021113942484
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 819,
-          "voteShare": 1.4907171459774298
         }
       ]
     },
@@ -11448,8 +10895,8 @@
           "voteShare": 55.67136985720944
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 14975,
           "voteShare": 31.72535062073641
@@ -11490,8 +10937,8 @@
           "voteShare": 26.165352289977417
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 13769,
           "voteShare": 25.48965159761561
@@ -11707,18 +11154,11 @@
           "voteShare": 21.161647496778503
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 4956,
-          "voteShare": 11.826468763422898
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 729,
-          "voteShare": 1.7396076934090583
+          "votes": 5685,
+          "voteShare": 13.566076456831958
         }
       ]
     },
@@ -11791,18 +11231,11 @@
           "voteShare": 34.16702355460385
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 12231,
-          "voteShare": 26.190578158458244
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 184,
-          "voteShare": 0.39400428265524623
+          "votes": 12415,
+          "voteShare": 26.58458244111349
         }
       ]
     },
@@ -11868,8 +11301,8 @@
           "voteShare": 35.64558058925476
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 11036,
           "voteShare": 23.908145580589256
@@ -11903,8 +11336,8 @@
           "voteShare": 30.100399860917943
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 9658,
           "voteShare": 20.988351877607787
@@ -11938,18 +11371,11 @@
           "voteShare": 25.358058193879092
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 10674,
-          "voteShare": 20.115332428765264
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 460,
-          "voteShare": 0.8668777325493744
+          "votes": 11134,
+          "voteShare": 20.982210161314637
         }
       ]
     },
@@ -12005,7 +11431,7 @@
       "turnout": 74,
       "validVotes": 58669,
       "winner": "con",
-      "majority": 11522,
+      "majority": 10738,
       "results": [
         {
           "partyId": "con",
@@ -12015,11 +11441,11 @@
           "voteShare": 48.03388501593687
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 16659,
-          "voteShare": 28.39489338492219
+          "votes": 17443,
+          "voteShare": 29.731203872573246
         },
         {
           "partyId": "lab",
@@ -12027,13 +11453,6 @@
           "candidate": "W Benyon",
           "votes": 13045,
           "voteShare": 22.234911111489883
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 784,
-          "voteShare": 1.3363104876510594
         }
       ]
     },
@@ -12064,18 +11483,11 @@
           "voteShare": 28.789117988894148
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 12720,
-          "voteShare": 27.377211484654122
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 539,
-          "voteShare": 1.1600878136972148
+          "votes": 13259,
+          "voteShare": 28.537299298351343
         }
       ]
     },
@@ -12124,7 +11536,7 @@
       "turnout": 72.9,
       "validVotes": 38832,
       "winner": "con",
-      "majority": 12194,
+      "majority": 11986,
       "results": [
         {
           "partyId": "con",
@@ -12134,11 +11546,11 @@
           "voteShare": 56.57189946435929
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 9774,
-          "voteShare": 25.169962917181703
+          "votes": 9982,
+          "voteShare": 25.70560362587557
         },
         {
           "partyId": "lab",
@@ -12146,13 +11558,6 @@
           "candidate": "M Lennox-Boyd",
           "votes": 6882,
           "voteShare": 17.72249690976514
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 208,
-          "voteShare": 0.5356407086938607
         }
       ]
     },
@@ -12183,8 +11588,8 @@
           "voteShare": 31.77839040433353
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 9216,
           "voteShare": 22.28670922809054
@@ -12253,18 +11658,11 @@
           "voteShare": 24.632082413539365
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 10076,
-          "voteShare": 20.595208895429646
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 463,
-          "voteShare": 0.9463657918404055
+          "votes": 10539,
+          "voteShare": 21.541574687270053
         }
       ]
     },
@@ -12330,18 +11728,11 @@
           "voteShare": 35.80851781099
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 9923,
-          "voteShare": 22.301382177772783
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 478,
-          "voteShare": 1.0742780087650297
+          "votes": 10401,
+          "voteShare": 23.375660186537814
         }
       ]
     },
@@ -12372,8 +11763,8 @@
           "voteShare": 27.792883319541318
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 11293,
           "voteShare": 26.700555621231825
@@ -12502,7 +11893,7 @@
       "turnout": 56.1,
       "validVotes": 27969,
       "winner": "lab",
-      "majority": 6918,
+      "majority": 4239,
       "results": [
         {
           "partyId": "lab",
@@ -12512,25 +11903,18 @@
           "voteShare": 46.63019771890307
         },
         {
+          "partyId": "other",
+          "partyName": "Other",
+          "candidate": "",
+          "votes": 8803,
+          "voteShare": 31.474132074797094
+        },
+        {
           "partyId": "con",
           "partyName": "Conservative",
           "candidate": "T Banks",
           "votes": 6124,
           "voteShare": 21.895670206299833
-        },
-        {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 5204,
-          "voteShare": 18.606314133504952
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 3599,
-          "voteShare": 12.867817941292145
         }
       ]
     },
@@ -12544,7 +11928,7 @@
       "turnout": 53.6,
       "validVotes": 27016,
       "winner": "lab",
-      "majority": 7311,
+      "majority": 6318,
       "results": [
         {
           "partyId": "lab",
@@ -12554,11 +11938,11 @@
           "voteShare": 50.19618004145692
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 6250,
-          "voteShare": 23.13443885105123
+          "votes": 7243,
+          "voteShare": 26.810038495706245
         },
         {
           "partyId": "con",
@@ -12566,13 +11950,6 @@
           "candidate": "N Spearing",
           "votes": 6212,
           "voteShare": 22.993781462836836
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 993,
-          "voteShare": 3.675599644655019
         }
       ]
     },
@@ -12586,7 +11963,7 @@
       "turnout": 75.3,
       "validVotes": 51904,
       "winner": "con",
-      "majority": 15515,
+      "majority": 15110,
       "results": [
         {
           "partyId": "con",
@@ -12596,11 +11973,11 @@
           "voteShare": 55.93403205918619
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 13517,
-          "voteShare": 26.042308877928484
+          "votes": 13922,
+          "voteShare": 26.822595561035754
         },
         {
           "partyId": "lab",
@@ -12608,13 +11985,6 @@
           "candidate": "R Ryder",
           "votes": 8950,
           "voteShare": 17.24337237977805
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 405,
-          "voteShare": 0.780286683107275
         }
       ]
     },
@@ -12638,8 +12008,8 @@
           "voteShare": 54.02232565803023
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 13007,
           "voteShare": 26.788730073732342
@@ -12673,8 +12043,8 @@
           "voteShare": 43.49072763834066
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 20211,
           "voteShare": 37.631265360840096
@@ -12785,8 +12155,8 @@
           "voteShare": 33.855108761189186
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 9741,
           "voteShare": 22.58939752330597
@@ -12848,8 +12218,8 @@
           "voteShare": 53.58905204275297
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 11698,
           "voteShare": 23.370292678054142
@@ -12974,18 +12344,11 @@
           "voteShare": 35.309257292262444
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 11968,
-          "voteShare": 24.446441702753493
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 704,
-          "voteShare": 1.4380259825149113
+          "votes": 12672,
+          "voteShare": 25.884467685268405
         }
       ]
     },
@@ -13016,18 +12379,11 @@
           "voteShare": 36.690036698252726
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 6371,
-          "voteShare": 17.44810209782549
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 466,
-          "voteShare": 1.2762228186449034
+          "votes": 6837,
+          "voteShare": 18.724324916470394
         }
       ]
     },
@@ -13058,18 +12414,11 @@
           "voteShare": 37.08279845956354
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 8385,
-          "voteShare": 19.221070970108197
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 1421,
-          "voteShare": 3.2573812580231065
+          "votes": 9806,
+          "voteShare": 22.478452228131303
         }
       ]
     },
@@ -13100,18 +12449,11 @@
           "voteShare": 38.68413293458573
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 9200,
-          "voteShare": 19.375763447201045
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 1184,
-          "voteShare": 2.493576513205004
+          "votes": 10384,
+          "voteShare": 21.869339960406048
         }
       ]
     },
@@ -13177,18 +12519,11 @@
           "voteShare": 30.5746585944082
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 14264,
-          "voteShare": 27.947256019906348
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 504,
-          "voteShare": 0.9874801622288838
+          "votes": 14768,
+          "voteShare": 28.93473618213523
         }
       ]
     },
@@ -13254,8 +12589,8 @@
           "voteShare": 34.049229947476185
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 11022,
           "voteShare": 24.530401495593342
@@ -13391,7 +12726,7 @@
       "turnout": 74,
       "validVotes": 49863,
       "winner": "con",
-      "majority": 7151,
+      "majority": 6133,
       "results": [
         {
           "partyId": "con",
@@ -13401,11 +12736,11 @@
           "voteShare": 47.68666145237952
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 16627,
-          "voteShare": 33.345366303672066
+          "votes": 17645,
+          "voteShare": 35.38696027114293
         },
         {
           "partyId": "lab",
@@ -13413,13 +12748,6 @@
           "candidate": "J Patten",
           "votes": 8440,
           "voteShare": 16.92637827647755
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 1018,
-          "voteShare": 2.0415939674708703
         }
       ]
     },
@@ -13433,7 +12761,7 @@
       "turnout": 54.5,
       "validVotes": 32214,
       "winner": "lab",
-      "majority": 8824,
+      "majority": 8810,
       "results": [
         {
           "partyId": "lab",
@@ -13443,25 +12771,18 @@
           "voteShare": 51.580058359719374
         },
         {
+          "partyId": "other",
+          "partyName": "Other",
+          "candidate": "",
+          "votes": 7806,
+          "voteShare": 24.231700502886945
+        },
+        {
           "partyId": "con",
           "partyName": "Conservative",
           "candidate": "H Harman",
           "votes": 7792,
           "voteShare": 24.18824113739368
-        },
-        {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 7006,
-          "voteShare": 21.748308188986154
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 800,
-          "voteShare": 2.4833923139007887
         }
       ]
     },
@@ -13562,18 +12883,11 @@
           "voteShare": 29.064566820356074
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 13142,
-          "voteShare": 22.69422714949317
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 666,
-          "voteShare": 1.1500802983992124
+          "votes": 13808,
+          "voteShare": 23.844307447892383
         }
       ]
     },
@@ -13586,15 +12900,15 @@
       "electorate": 61813,
       "turnout": 76,
       "validVotes": 46980,
-      "winner": "min",
-      "majority": 4936,
+      "winner": "other",
+      "majority": 5321,
       "results": [
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 20843,
-          "voteShare": 44.36568752660707
+          "votes": 21228,
+          "voteShare": 45.18518518518518
         },
         {
           "partyId": "con",
@@ -13609,13 +12923,6 @@
           "candidate": "DA Owen",
           "votes": 9845,
           "voteShare": 20.955725840783312
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 385,
-          "voteShare": 0.8194976585781184
         }
       ]
     },
@@ -13629,7 +12936,7 @@
       "turnout": 74.3,
       "validVotes": 38935,
       "winner": "con",
-      "majority": 8585,
+      "majority": 8422,
       "results": [
         {
           "partyId": "con",
@@ -13639,11 +12946,11 @@
           "voteShare": 50.64337999229485
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 11133,
-          "voteShare": 28.593810196481318
+          "votes": 11296,
+          "voteShare": 29.012456658533452
         },
         {
           "partyId": "lab",
@@ -13651,13 +12958,6 @@
           "candidate": "J Fookes",
           "votes": 7921,
           "voteShare": 20.344163349171694
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 163,
-          "voteShare": 0.4186464620521382
         }
       ]
     },
@@ -13800,8 +13100,8 @@
           "voteShare": 55.26565798733286
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 13414,
           "voteShare": 23.599577762139337
@@ -13825,7 +13125,7 @@
       "turnout": 67.5,
       "validVotes": 50196,
       "winner": "con",
-      "majority": 12335,
+      "majority": 11330,
       "results": [
         {
           "partyId": "con",
@@ -13835,11 +13135,11 @@
           "voteShare": 50.005976571838396
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 12766,
-          "voteShare": 25.432305362977132
+          "votes": 13771,
+          "voteShare": 27.43445692883895
         },
         {
           "partyId": "lab",
@@ -13847,13 +13147,6 @@
           "candidate": "B Pink",
           "votes": 11324,
           "voteShare": 22.559566499322656
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 1005,
-          "voteShare": 2.0021515658618214
         }
       ]
     },
@@ -13884,8 +13177,8 @@
           "voteShare": 31.773098262676463
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 10039,
           "voteShare": 21.505537584884642
@@ -13986,7 +13279,7 @@
       "turnout": 73.2,
       "validVotes": 43053,
       "winner": "con",
-      "majority": 15512,
+      "majority": 15270,
       "results": [
         {
           "partyId": "con",
@@ -13996,11 +13289,11 @@
           "voteShare": 63.04554850997608
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 11631,
-          "voteShare": 27.015538986830183
+          "votes": 11873,
+          "voteShare": 27.577636866188186
         },
         {
           "partyId": "lab",
@@ -14008,13 +13301,6 @@
           "candidate": "JL Hunt",
           "votes": 4037,
           "voteShare": 9.376814623835736
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 242,
-          "voteShare": 0.5620978793580006
         }
       ]
     },
@@ -14028,7 +13314,7 @@
       "turnout": 70.4,
       "validVotes": 47521,
       "winner": "con",
-      "majority": 11508,
+      "majority": 10729,
       "results": [
         {
           "partyId": "con",
@@ -14038,11 +13324,11 @@
           "voteShare": 51.58982344647629
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 13008,
-          "voteShare": 27.373161339197406
+          "votes": 13787,
+          "voteShare": 29.012436606973758
         },
         {
           "partyId": "lab",
@@ -14050,13 +13336,6 @@
           "candidate": "G Vaughan",
           "votes": 9218,
           "voteShare": 19.397739946549947
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 779,
-          "voteShare": 1.6392752677763516
         }
       ]
     },
@@ -14129,8 +13408,8 @@
           "voteShare": 33.721187452992964
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 11614,
           "voteShare": 25.69127991859488
@@ -14147,7 +13426,7 @@
       "turnout": 72.1,
       "validVotes": 50700,
       "winner": "con",
-      "majority": 16307,
+      "majority": 15278,
       "results": [
         {
           "partyId": "con",
@@ -14157,11 +13436,11 @@
           "voteShare": 59.03747534516766
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 13625,
-          "voteShare": 26.873767258382642
+          "votes": 14654,
+          "voteShare": 28.90335305719921
         },
         {
           "partyId": "lab",
@@ -14169,13 +13448,6 @@
           "candidate": "G Gardiner",
           "votes": 6114,
           "voteShare": 12.059171597633137
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 1029,
-          "voteShare": 2.029585798816568
         }
       ]
     },
@@ -14234,8 +13506,8 @@
           "voteShare": 63.43311120276107
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 10632,
           "voteShare": 23.07842583950162
@@ -14458,8 +13730,8 @@
           "voteShare": 56.605638004325456
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 16671,
           "voteShare": 31.08173614736371
@@ -14535,8 +13807,8 @@
           "voteShare": 28.087105038428696
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 11903,
           "voteShare": 25.41204099060632
@@ -14777,7 +14049,7 @@
       "turnout": 76.9,
       "validVotes": 53364,
       "winner": "con",
-      "majority": 15249,
+      "majority": 14452,
       "results": [
         {
           "partyId": "con",
@@ -14787,11 +14059,11 @@
           "voteShare": 57.846113484746276
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 15620,
-          "voteShare": 29.270669365115058
+          "votes": 16417,
+          "voteShare": 30.76418559328386
         },
         {
           "partyId": "lab",
@@ -14799,13 +14071,6 @@
           "candidate": "A Haselhurst",
           "votes": 6078,
           "voteShare": 11.389700921969867
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 797,
-          "voteShare": 1.4935162281688028
         }
       ]
     },
@@ -14836,18 +14101,11 @@
           "voteShare": 29.719682507786597
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 6190,
-          "voteShare": 15.54807595699789
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 417,
-          "voteShare": 1.0474228875715865
+          "votes": 6607,
+          "voteShare": 16.595498844569477
         }
       ]
     },
@@ -14913,8 +14171,8 @@
           "voteShare": 54.250533255768865
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 14048,
           "voteShare": 27.2406437851464
@@ -14955,18 +14213,11 @@
           "voteShare": 29.154259810675082
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 10183,
-          "voteShare": 22.62788320519088
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 298,
-          "voteShare": 0.6621927914314919
+          "votes": 10481,
+          "voteShare": 23.290075996622374
         }
       ]
     },
@@ -15074,8 +14325,8 @@
           "voteShare": 25.59033130040435
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 10241,
           "voteShare": 22.878269999776602
@@ -15134,7 +14385,7 @@
       "turnout": 61.6,
       "validVotes": 41154,
       "winner": "lab",
-      "majority": 16790,
+      "majority": 16272,
       "results": [
         {
           "partyId": "lab",
@@ -15144,11 +14395,11 @@
           "voteShare": 60.1618311707246
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 7969,
-          "voteShare": 19.363852845409923
+          "votes": 8487,
+          "voteShare": 20.622539728823444
         },
         {
           "partyId": "con",
@@ -15156,13 +14407,6 @@
           "candidate": "R Caborn",
           "votes": 7908,
           "voteShare": 19.215629100451963
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 518,
-          "voteShare": 1.2586868834135199
         }
       ]
     },
@@ -15235,8 +14479,8 @@
           "voteShare": 29.89158296466478
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 12813,
           "voteShare": 24.328327035904838
@@ -15305,8 +14549,8 @@
           "voteShare": 39.72563752276867
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 10172,
           "voteShare": 19.300242865816635
@@ -15529,18 +14773,11 @@
           "voteShare": 36.88757442503016
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 9519,
-          "voteShare": 18.52161730941355
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 853,
-          "voteShare": 1.6597268163598862
+          "votes": 10372,
+          "voteShare": 20.181344125773435
         }
       ]
     },
@@ -15599,8 +14836,8 @@
           "voteShare": 54.393743953563366
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 17761,
           "voteShare": 35.79692034827475
@@ -15683,8 +14920,8 @@
           "voteShare": 30.863986730412723
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 9288,
           "voteShare": 22.655868865255147
@@ -15711,8 +14948,8 @@
           "voteShare": 41.46253874650336
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 16647,
           "voteShare": 31.46405080517124
@@ -15753,8 +14990,8 @@
           "voteShare": 28.062683284457478
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 14592,
           "voteShare": 26.744868035190617
@@ -15781,8 +15018,8 @@
           "voteShare": 55.775594489905856
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 11052,
           "voteShare": 28.35081958802555
@@ -15925,7 +15162,7 @@
       "turnout": 71,
       "validVotes": 51287,
       "winner": "con",
-      "majority": 13506,
+      "majority": 10365,
       "results": [
         {
           "partyId": "con",
@@ -15935,11 +15172,11 @@
           "voteShare": 52.37779554273012
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 13357,
-          "voteShare": 26.043636789049856
+          "votes": 16498,
+          "voteShare": 32.167995788406415
         },
         {
           "partyId": "lab",
@@ -15947,13 +15184,6 @@
           "candidate": "H Atkins",
           "votes": 7926,
           "voteShare": 15.454208668863453
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 3141,
-          "voteShare": 6.124358999356562
         }
       ]
     },
@@ -16054,18 +15284,11 @@
           "voteShare": 27.10102518979312
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 10939,
-          "voteShare": 22.384333626634472
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 1780,
-          "voteShare": 3.6423908817450736
+          "votes": 12719,
+          "voteShare": 26.026724508379544
         }
       ]
     },
@@ -16079,7 +15302,7 @@
       "turnout": 73.8,
       "validVotes": 47272,
       "winner": "con",
-      "majority": 7859,
+      "majority": 6632,
       "results": [
         {
           "partyId": "con",
@@ -16089,11 +15312,11 @@
           "voteShare": 51.398290742934506
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 16438,
-          "voteShare": 34.7732272804197
+          "votes": 17665,
+          "voteShare": 37.368844136063636
         },
         {
           "partyId": "lab",
@@ -16101,13 +15324,6 @@
           "candidate": "D Harris",
           "votes": 5310,
           "voteShare": 11.232865121001861
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 1227,
-          "voteShare": 2.595616855643933
         }
       ]
     },
@@ -16121,7 +15337,7 @@
       "turnout": 76.5,
       "validVotes": 54002,
       "winner": "con",
-      "majority": 14277,
+      "majority": 14065,
       "results": [
         {
           "partyId": "con",
@@ -16131,11 +15347,11 @@
           "voteShare": 51.18143772452872
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 13362,
-          "voteShare": 24.743528017480834
+          "votes": 13574,
+          "voteShare": 25.136106070145548
         },
         {
           "partyId": "lab",
@@ -16143,13 +15359,6 @@
           "candidate": "H Fraser",
           "votes": 12789,
           "voteShare": 23.682456205325728
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 212,
-          "voteShare": 0.3925780526647161
         }
       ]
     },
@@ -16215,8 +15424,8 @@
           "voteShare": 24.146742432364817
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 12370,
           "voteShare": 22.10428505057003
@@ -16285,8 +15494,8 @@
           "voteShare": 28.199198909856708
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 10220,
           "voteShare": 21.100879547425365
@@ -16355,8 +15564,8 @@
           "voteShare": 56.52546173604599
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 15972,
           "voteShare": 32.560035878827414
@@ -16380,7 +15589,7 @@
       "turnout": 77.9,
       "validVotes": 52728,
       "winner": "con",
-      "majority": 1755,
+      "majority": 1519,
       "results": [
         {
           "partyId": "con",
@@ -16390,11 +15599,11 @@
           "voteShare": 39.42307692307692
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 19032,
-          "voteShare": 36.09467455621302
+          "votes": 19268,
+          "voteShare": 36.54225458959186
         },
         {
           "partyId": "lab",
@@ -16402,13 +15611,6 @@
           "candidate": "T Wood",
           "votes": 12673,
           "voteShare": 24.03466848733121
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 236,
-          "voteShare": 0.44758003337885
         }
       ]
     },
@@ -16439,18 +15641,11 @@
           "voteShare": 28.973600364132906
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 12129,
-          "voteShare": 27.603550295857985
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 563,
-          "voteShare": 1.2812926718252162
+          "votes": 12692,
+          "voteShare": 28.884842967683205
         }
       ]
     },
@@ -16481,8 +15676,8 @@
           "voteShare": 33.31243173267527
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 14630,
           "voteShare": 29.592621060722525
@@ -16498,15 +15693,15 @@
       "electorate": 73790,
       "turnout": 72.1,
       "validVotes": 53201,
-      "winner": "min",
-      "majority": 102,
+      "winner": "other",
+      "majority": 307,
       "results": [
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 19550,
-          "voteShare": 36.74742955959475
+          "votes": 19755,
+          "voteShare": 37.132760662393565
         },
         {
           "partyId": "con",
@@ -16521,13 +15716,6 @@
           "candidate": "I Wrigglesworth",
           "votes": 13998,
           "voteShare": 26.311535497453054
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 205,
-          "voteShare": 0.3853311027988196
         }
       ]
     },
@@ -16558,18 +15746,11 @@
           "voteShare": 29.351473922902493
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 9458,
-          "voteShare": 21.44671201814059
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 504,
-          "voteShare": 1.1428571428571428
+          "votes": 9962,
+          "voteShare": 22.589569160997733
         }
       ]
     },
@@ -16600,8 +15781,8 @@
           "voteShare": 30.91810949929808
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 12186,
           "voteShare": 22.809546092653253
@@ -16747,18 +15928,11 @@
           "voteShare": 34.05239979099798
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 8141,
-          "voteShare": 20.25577865691324
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 336,
-          "voteShare": 0.8360080615063074
+          "votes": 8477,
+          "voteShare": 21.09178671841955
         }
       ]
     },
@@ -16852,8 +16026,8 @@
           "voteShare": 58.24229091315858
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 15618,
           "voteShare": 29.117416756776908
@@ -16964,8 +16138,8 @@
           "voteShare": 34.60393567076216
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 9865,
           "voteShare": 19.708320847068226
@@ -16982,7 +16156,7 @@
       "turnout": 71.3,
       "validVotes": 33465,
       "winner": "con",
-      "majority": 8749,
+      "majority": 8198,
       "results": [
         {
           "partyId": "con",
@@ -16992,11 +16166,11 @@
           "voteShare": 54.51964739279844
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 9496,
-          "voteShare": 28.375915135215894
+          "votes": 10047,
+          "voteShare": 30.02241147467503
         },
         {
           "partyId": "lab",
@@ -17004,13 +16178,6 @@
           "candidate": "R Tracey",
           "votes": 5173,
           "voteShare": 15.457941132526521
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 551,
-          "voteShare": 1.6464963394591365
         }
       ]
     },
@@ -17258,8 +16425,8 @@
           "voteShare": 36.713593596405
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 13743,
           "voteShare": 24.124069653138605
@@ -17286,8 +16453,8 @@
           "voteShare": 54.565562058368734
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 13917,
           "voteShare": 27.24069760613831
@@ -17321,8 +16488,8 @@
           "voteShare": 52.886840372495534
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 15545,
           "voteShare": 29.244661838020882
@@ -17388,7 +16555,7 @@
       "turnout": 68.8,
       "validVotes": 45863,
       "winner": "con",
-      "majority": 14545,
+      "majority": 14221,
       "results": [
         {
           "partyId": "con",
@@ -17398,11 +16565,11 @@
           "voteShare": 58.43708435994156
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 12256,
-          "voteShare": 26.72306652421342
+          "votes": 12580,
+          "voteShare": 27.42951834812376
         },
         {
           "partyId": "lab",
@@ -17410,13 +16577,6 @@
           "candidate": "R Gale",
           "votes": 6482,
           "voteShare": 14.133397291934674
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 324,
-          "voteShare": 0.7064518239103417
         }
       ]
     },
@@ -17482,18 +16642,11 @@
           "voteShare": 35.35515475395235
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 9761,
-          "voteShare": 21.73458027165442
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 1671,
-          "voteShare": 3.7207748830995326
+          "votes": 11432,
+          "voteShare": 25.45535515475395
         }
       ]
     },
@@ -17552,8 +16705,8 @@
           "voteShare": 56.10957387935805
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 16897,
           "voteShare": 31.16952591772736
@@ -17594,18 +16747,11 @@
           "voteShare": 36.957799203430035
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 8317,
-          "voteShare": 18.10129061745054
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 1009,
-          "voteShare": 2.196008444512155
+          "votes": 9326,
+          "voteShare": 20.297299061962697
         }
       ]
     },
@@ -17934,7 +17080,7 @@
       "turnout": 72.1,
       "validVotes": 47887,
       "winner": "con",
-      "majority": 12814,
+      "majority": 12248,
       "results": [
         {
           "partyId": "con",
@@ -17944,11 +17090,11 @@
           "voteShare": 52.525737674107795
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 12339,
-          "voteShare": 25.766909599682585
+          "votes": 12905,
+          "voteShare": 26.948858771691693
         },
         {
           "partyId": "lab",
@@ -17956,13 +17102,6 @@
           "candidate": "N Bonsor",
           "votes": 9829,
           "voteShare": 20.525403554200512
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 566,
-          "voteShare": 1.1819491720091047
         }
       ]
     },
@@ -17986,8 +17125,8 @@
           "voteShare": 53.62276525020214
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 11038,
           "voteShare": 24.791123888240048
@@ -18011,7 +17150,7 @@
       "turnout": 60.5,
       "validVotes": 39214,
       "winner": "lab",
-      "majority": 7780,
+      "majority": 7708,
       "results": [
         {
           "partyId": "lab",
@@ -18021,25 +17160,18 @@
           "voteShare": 46.498699444076095
         },
         {
+          "partyId": "other",
+          "partyName": "Other",
+          "candidate": "",
+          "votes": 10526,
+          "voteShare": 26.842454225531696
+        },
+        {
           "partyId": "con",
           "partyName": "Conservative",
           "candidate": "S Holland",
           "votes": 10454,
           "voteShare": 26.658846330392205
-        },
-        {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 9515,
-          "voteShare": 24.264293364614677
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 1011,
-          "voteShare": 2.5781608609170195
         }
       ]
     },
@@ -18070,18 +17202,11 @@
           "voteShare": 39.64750279341387
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 9166,
-          "voteShare": 19.324099255792383
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 295,
-          "voteShare": 0.6219298800413214
+          "votes": 9461,
+          "voteShare": 19.9460291358337
         }
       ]
     },
@@ -18112,8 +17237,8 @@
           "voteShare": 32.47581310215821
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 10717,
           "voteShare": 21.55600699961784
@@ -18147,8 +17272,8 @@
           "voteShare": 25.998377521295033
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 13522,
           "voteShare": 24.93086028245879
@@ -18217,18 +17342,11 @@
           "voteShare": 42.07778177889809
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 6586,
-          "voteShare": 13.175689192974033
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 632,
-          "voteShare": 1.264354019125355
+          "votes": 7218,
+          "voteShare": 14.440043212099388
         }
       ]
     },
@@ -18259,18 +17377,11 @@
           "voteShare": 35.91178505881999
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 7192,
-          "voteShare": 21.63853536721124
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 868,
-          "voteShare": 2.611547371904805
+          "votes": 8060,
+          "voteShare": 24.250082739116046
         }
       ]
     },
@@ -18403,7 +17514,7 @@
       "turnout": 76.9,
       "validVotes": 49157,
       "winner": "con",
-      "majority": 10125,
+      "majority": 9942,
       "results": [
         {
           "partyId": "con",
@@ -18413,11 +17524,11 @@
           "voteShare": 52.87548060296601
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 15867,
-          "voteShare": 32.27821063124276
+          "votes": 16050,
+          "voteShare": 32.65048721443538
         },
         {
           "partyId": "lab",
@@ -18425,13 +17536,6 @@
           "candidate": "R Jackson",
           "votes": 7115,
           "voteShare": 14.474032182598611
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 183,
-          "voteShare": 0.3722765831926277
         }
       ]
     },
@@ -18462,18 +17566,11 @@
           "voteShare": 36.986993307235764
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 6697,
-          "voteShare": 16.913751736330347
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 217,
-          "voteShare": 0.5480489960853643
+          "votes": 6914,
+          "voteShare": 17.461800732415707
         }
       ]
     },
@@ -18539,18 +17636,11 @@
           "voteShare": 30.76923076923077
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 13951,
-          "voteShare": 27.523822676425908
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 267,
-          "voteShare": 0.5267622861877799
+          "votes": 14218,
+          "voteShare": 28.05058496261369
         }
       ]
     },
@@ -18606,7 +17696,7 @@
       "turnout": 73.6,
       "validVotes": 52140,
       "winner": "con",
-      "majority": 13032,
+      "majority": 12347,
       "results": [
         {
           "partyId": "con",
@@ -18616,11 +17706,11 @@
           "voteShare": 50.847717683160724
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 13480,
-          "voteShare": 25.85347142309168
+          "votes": 14165,
+          "voteShare": 27.16724204065976
         },
         {
           "partyId": "lab",
@@ -18628,13 +17718,6 @@
           "candidate": "D Smith",
           "votes": 11463,
           "voteShare": 21.985040276179515
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 685,
-          "voteShare": 1.3137706175680859
         }
       ]
     },
@@ -18665,8 +17748,8 @@
           "voteShare": 37.116541493853454
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 11207,
           "voteShare": 20.9374883234316
@@ -18693,8 +17776,8 @@
           "voteShare": 47.95480679723292
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 14267,
           "voteShare": 26.04084910653987
@@ -18735,8 +17818,8 @@
           "voteShare": 27.391867480145883
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 12234,
           "voteShare": 20.849381369508162
@@ -18763,8 +17846,8 @@
           "voteShare": 64.20254590061737
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 14741,
           "voteShare": 29.64385545076116
@@ -18882,8 +17965,8 @@
           "voteShare": 47.699833472106576
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 15252,
           "voteShare": 26.457119067443795
@@ -18924,8 +18007,8 @@
           "voteShare": 22.2173379913472
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 8082,
           "voteShare": 18.69837817828471
@@ -18994,8 +18077,8 @@
           "voteShare": 32.9073482428115
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 6094,
           "voteShare": 16.361049212017075
@@ -19071,18 +18154,11 @@
           "voteShare": 39.36559577063847
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 6956,
-          "voteShare": 15.715512177488591
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 748,
-          "voteShare": 1.6899371921738737
+          "votes": 7704,
+          "voteShare": 17.405449369662467
         }
       ]
     },
@@ -19148,8 +18224,8 @@
           "voteShare": 53.554593185911926
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 18457,
           "voteShare": 35.367723144138274
@@ -19292,7 +18368,7 @@
       "turnout": 76.2,
       "validVotes": 55436,
       "winner": "con",
-      "majority": 13047,
+      "majority": 12892,
       "results": [
         {
           "partyId": "con",
@@ -19302,11 +18378,11 @@
           "voteShare": 57.558265387113074
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 18861,
-          "voteShare": 34.02301753373259
+          "votes": 19016,
+          "voteShare": 34.30261923659716
         },
         {
           "partyId": "lab",
@@ -19314,13 +18390,6 @@
           "candidate": "J Browne",
           "votes": 4512,
           "voteShare": 8.139115376289775
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 155,
-          "voteShare": 0.27960170286456454
         }
       ]
     },
@@ -19386,8 +18455,8 @@
           "voteShare": 53.71651664678452
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 10928,
           "voteShare": 23.702418392799046
@@ -19652,18 +18721,11 @@
           "voteShare": 27.479782473461363
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 10724,
-          "voteShare": 21.519876387133024
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 201,
-          "voteShare": 0.4033471795797965
+          "votes": 10925,
+          "voteShare": 21.92322356671282
         }
       ]
     },
@@ -19718,15 +18780,15 @@
       "electorate": 56297,
       "turnout": 68,
       "validVotes": 38259,
-      "winner": "min",
-      "majority": 2725,
+      "winner": "other",
+      "majority": 3109,
       "results": [
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 15492,
-          "voteShare": 40.49243315298361
+          "votes": 15876,
+          "voteShare": 41.49611856033874
         },
         {
           "partyId": "lab",
@@ -19741,13 +18803,6 @@
           "candidate": "J Cartwright",
           "votes": 9616,
           "voteShare": 25.133955409184765
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 384,
-          "voteShare": 1.003685407355132
         }
       ]
     },
@@ -19761,7 +18816,7 @@
       "turnout": 74.1,
       "validVotes": 49307,
       "winner": "con",
-      "majority": 10871,
+      "majority": 10663,
       "results": [
         {
           "partyId": "con",
@@ -19771,11 +18826,11 @@
           "voteShare": 49.447340134260855
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 13510,
-          "voteShare": 27.399760683067313
+          "votes": 13718,
+          "voteShare": 27.821607479668202
         },
         {
           "partyId": "lab",
@@ -19783,13 +18838,6 @@
           "candidate": "P Walker",
           "votes": 11208,
           "voteShare": 22.731052386070942
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 208,
-          "voteShare": 0.4218467966008883
         }
       ]
     },
@@ -19820,18 +18868,11 @@
           "voteShare": 25.20364851440441
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 12866,
-          "voteShare": 23.23850808272374
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 386,
-          "voteShare": 0.6971913663867064
+          "votes": 13252,
+          "voteShare": 23.935699449110448
         }
       ]
     },
@@ -19939,8 +18980,8 @@
           "voteShare": 32.621474812114
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 14545,
           "voteShare": 27.057444750353447
@@ -20016,8 +19057,8 @@
           "voteShare": 36.67255604919636
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 14208,
           "voteShare": 24.371751548107106
@@ -20034,7 +19075,7 @@
       "turnout": 71.7,
       "validVotes": 50208,
       "winner": "con",
-      "majority": 13197,
+      "majority": 12870,
       "results": [
         {
           "partyId": "con",
@@ -20044,11 +19085,11 @@
           "voteShare": 54.216459528362016
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 14024,
-          "voteShare": 27.931803696622055
+          "votes": 14351,
+          "voteShare": 28.5830943275972
         },
         {
           "partyId": "lab",
@@ -20056,13 +19097,6 @@
           "candidate": "RW Whitney",
           "votes": 8636,
           "voteShare": 17.20044614404079
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 327,
-          "voteShare": 0.6512906309751434
         }
       ]
     },
@@ -20086,8 +19120,8 @@
           "voteShare": 56.44845908607864
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 11748,
           "voteShare": 24.969181721572795
@@ -20198,18 +19232,11 @@
           "voteShare": 35.11198722088162
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 13523,
-          "voteShare": 22.98032151718044
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 352,
-          "voteShare": 0.5981714984875777
+          "votes": 13875,
+          "voteShare": 23.578493015668016
         }
       ]
     },
@@ -20282,8 +19309,8 @@
           "voteShare": 37.19677769732078
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 9535,
           "voteShare": 21.576303403330922
@@ -20415,8 +19442,8 @@
           "voteShare": 35.223413224135854
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 9630,
           "voteShare": 23.19643502348549
@@ -20576,8 +19603,8 @@
           "voteShare": 47.112587276958884
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 12585,
           "voteShare": 30.5105702094647
@@ -20674,11 +19701,11 @@
           "voteShare": 33.608126012071246
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 10388,
-          "voteShare": 25.48702095294175
+          "votes": 10740,
+          "voteShare": 26.350655086118064
         },
         {
           "partyId": "pc",
@@ -20686,13 +19713,6 @@
           "candidate": "",
           "votes": 848,
           "voteShare": 2.0805731390156534
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 352,
-          "voteShare": 0.863634133176309
         }
       ]
     },
@@ -20730,18 +19750,11 @@
           "voteShare": 27.046884591774095
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 5737,
-          "voteShare": 11.00560159607121
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 528,
-          "voteShare": 1.0128913443830572
+          "votes": 6265,
+          "voteShare": 12.018492940454266
         }
       ]
     },
@@ -20856,8 +19869,8 @@
           "voteShare": 33.807292633141586
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 13024,
           "voteShare": 30.209686398218594
@@ -20940,8 +19953,8 @@
           "voteShare": 55.97594994989573
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 7594,
           "voteShare": 20.56712618151288
@@ -21031,8 +20044,8 @@
           "voteShare": 35.32587995429391
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 10450,
           "voteShare": 23.41316962785383
@@ -21066,8 +20079,8 @@
           "voteShare": 59.335568580276934
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 8803,
           "voteShare": 22.530777302858898
@@ -21164,8 +20177,8 @@
           "voteShare": 28.533354869972538
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 4254,
           "voteShare": 17.178161847843644
@@ -21248,8 +20261,8 @@
           "voteShare": 49.16016728834634
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 12403,
           "voteShare": 28.03888323725557
@@ -21329,7 +20342,7 @@
       "turnout": 76.5,
       "validVotes": 42282,
       "winner": "lab",
-      "majority": 13604,
+      "majority": 13454,
       "results": [
         {
           "partyId": "lab",
@@ -21339,11 +20352,11 @@
           "voteShare": 53.61619601721773
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 9066,
-          "voteShare": 21.441748261671634
+          "votes": 9216,
+          "voteShare": 21.796509152830993
         },
         {
           "partyId": "con",
@@ -21358,13 +20371,6 @@
           "candidate": "",
           "votes": 3046,
           "voteShare": 7.204011163142708
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 150,
-          "voteShare": 0.3547608911593586
         }
       ]
     },
@@ -21395,8 +20401,8 @@
           "voteShare": 33.06896723186316
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 10293,
           "voteShare": 25.590472875540748
@@ -21528,11 +20534,11 @@
           "voteShare": 29.234076252969793
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 10983,
-          "voteShare": 20.709356262020588
+          "votes": 11597,
+          "voteShare": 21.867104121884072
         },
         {
           "partyId": "pc",
@@ -21540,13 +20546,6 @@
           "candidate": "",
           "votes": 1073,
           "voteShare": 2.0232303805106158
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 614,
-          "voteShare": 1.1577478598634838
         }
       ]
     },
@@ -21560,7 +20559,7 @@
       "turnout": 72.7,
       "validVotes": 44285,
       "winner": "lab",
-      "majority": 8744,
+      "majority": 8295,
       "results": [
         {
           "partyId": "lab",
@@ -21570,11 +20569,11 @@
           "voteShare": 45.586541718414814
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 11444,
-          "voteShare": 25.841707124308456
+          "votes": 11893,
+          "voteShare": 26.855594445071695
         },
         {
           "partyId": "con",
@@ -21589,13 +20588,6 @@
           "candidate": "",
           "votes": 2065,
           "voteShare": 4.662978435136051
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 449,
-          "voteShare": 1.0138873207632382
         }
       ]
     },
@@ -21609,7 +20601,7 @@
       "turnout": 76.2,
       "validVotes": 47694,
       "winner": "lab",
-      "majority": 21370,
+      "majority": 20020,
       "results": [
         {
           "partyId": "lab",
@@ -21619,11 +20611,11 @@
           "voteShare": 61.74361554912567
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 8078,
-          "voteShare": 16.93714094016019
+          "votes": 9428,
+          "voteShare": 19.767685662766805
         },
         {
           "partyId": "pc",
@@ -21638,13 +20630,6 @@
           "candidate": "A Rogers",
           "votes": 3973,
           "voteShare": 8.330188283641549
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 1350,
-          "voteShare": 2.830544722606617
         }
       ]
     },
@@ -21724,11 +20709,11 @@
           "voteShare": 36.63787065141256
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 8036,
-          "voteShare": 18.762549614756015
+          "votes": 8301,
+          "voteShare": 19.381274807378006
         },
         {
           "partyId": "pc",
@@ -21736,13 +20721,6 @@
           "candidate": "",
           "votes": 795,
           "voteShare": 1.8561755778659816
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 265,
-          "voteShare": 0.618725192621994
         }
       ]
     },
@@ -21815,8 +20793,8 @@
           "voteShare": 25.771892609971932
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 11154,
           "voteShare": 23.89920935913094
@@ -21906,8 +20884,8 @@
           "voteShare": 16.940231490720414
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 4947,
           "voteShare": 12.34035122729994
@@ -21924,7 +20902,7 @@
       "turnout": 65,
       "validVotes": 40963,
       "winner": "lab",
-      "majority": 9144,
+      "majority": 8777,
       "results": [
         {
           "partyId": "lab",
@@ -21934,11 +20912,11 @@
           "voteShare": 47.022923125747624
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 10118,
-          "voteShare": 24.700339330615435
+          "votes": 10485,
+          "voteShare": 25.596269804457684
         },
         {
           "partyId": "con",
@@ -21953,13 +20931,6 @@
           "candidate": "",
           "votes": 3790,
           "voteShare": 9.252252032321852
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 367,
-          "voteShare": 0.8959304738422479
         }
       ]
     },
@@ -21990,8 +20961,8 @@
           "voteShare": 29.865237288564135
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 10372,
           "voteShare": 26.22436853682587
@@ -22032,11 +21003,11 @@
           "voteShare": 35.96955734360314
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 4978,
-          "voteShare": 11.411411411411411
+          "votes": 5217,
+          "voteShare": 11.959287531806616
         },
         {
           "partyId": "lab",
@@ -22044,13 +21015,6 @@
           "candidate": "PL Fraser",
           "votes": 3497,
           "voteShare": 8.01641335992481
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 239,
-          "voteShare": 0.5478761203952044
         }
       ]
     },
@@ -22165,8 +21129,8 @@
           "voteShare": 37.42489058134072
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 6084,
           "voteShare": 15.044138374421998
@@ -22189,12 +21153,12 @@
       "electorate": 30871,
       "turnout": 75.4,
       "validVotes": 23288,
-      "winner": "min",
+      "winner": "other",
       "majority": 6843,
       "results": [
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 12119,
           "voteShare": 52.039677086911716
@@ -22249,8 +21213,8 @@
           "voteShare": 24.135025160715575
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 7421,
           "voteShare": 17.867719644619942
@@ -22298,8 +21262,8 @@
           "voteShare": 18.021770520937466
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 6205,
           "voteShare": 17.230367655226036
@@ -22316,7 +21280,7 @@
       "turnout": 75.9,
       "validVotes": 38587,
       "winner": "lab",
-      "majority": 7715,
+      "majority": 7407,
       "results": [
         {
           "partyId": "lab",
@@ -22326,11 +21290,11 @@
           "voteShare": 44.80265374348874
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 9573,
-          "voteShare": 24.808873454790472
+          "votes": 9881,
+          "voteShare": 25.607069738512973
         },
         {
           "partyId": "con",
@@ -22345,13 +21309,6 @@
           "candidate": "",
           "votes": 3566,
           "voteShare": 9.241454375826056
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 308,
-          "voteShare": 0.7981962837224972
         }
       ]
     },
@@ -22382,8 +21339,8 @@
           "voteShare": 28.23986625849454
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 9908,
           "voteShare": 21.51153954710263
@@ -22417,8 +21374,8 @@
           "voteShare": 49.20550377274745
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 6701,
           "voteShare": 19.828376978843025
@@ -22466,8 +21423,8 @@
           "voteShare": 34.6225593831613
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 7268,
           "voteShare": 18.07735356298968
@@ -22550,8 +21507,8 @@
           "voteShare": 31.785266675950425
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 9813,
           "voteShare": 22.77537947361092
@@ -22585,8 +21542,8 @@
           "voteShare": 44.53479801222151
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 10036,
           "voteShare": 23.862852795016288
@@ -22676,11 +21633,11 @@
           "voteShare": 21.71947640165392
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 7976,
-          "voteShare": 17.087644878634016
+          "votes": 8278,
+          "voteShare": 17.734644471581294
         },
         {
           "partyId": "snp",
@@ -22688,13 +21645,6 @@
           "candidate": "",
           "votes": 7973,
           "voteShare": 17.081217730359707
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 302,
-          "voteShare": 0.6469995929472759
         }
       ]
     },
@@ -22774,11 +21724,11 @@
           "voteShare": 29.172557172557173
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 9434,
-          "voteShare": 26.15107415107415
+          "votes": 9755,
+          "voteShare": 27.04088704088704
         },
         {
           "partyId": "snp",
@@ -22786,13 +21736,6 @@
           "candidate": "",
           "votes": 2798,
           "voteShare": 7.756063756063757
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 321,
-          "voteShare": 0.8898128898128898
         }
       ]
     },
@@ -22806,7 +21749,7 @@
       "turnout": 77,
       "validVotes": 47268,
       "winner": "lab",
-      "majority": 4336,
+      "majority": 4080,
       "results": [
         {
           "partyId": "lab",
@@ -22816,11 +21759,11 @@
           "voteShare": 37.0969789286621
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 13199,
-          "voteShare": 27.923753913852924
+          "votes": 13455,
+          "voteShare": 28.465346534653463
         },
         {
           "partyId": "con",
@@ -22835,13 +21778,6 @@
           "candidate": "",
           "votes": 4795,
           "voteShare": 10.144283659135144
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 256,
-          "voteShare": 0.5415926208005416
         }
       ]
     },
@@ -22907,8 +21843,8 @@
           "voteShare": 46.56795580110497
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 12477,
           "voteShare": 27.573480662983425
@@ -22956,11 +21892,11 @@
           "voteShare": 31.11656905346684
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 9498,
-          "voteShare": 25.63493562926777
+          "votes": 9617,
+          "voteShare": 25.956114544816604
         },
         {
           "partyId": "snp",
@@ -22968,13 +21904,6 @@
           "candidate": "",
           "votes": 1810,
           "voteShare": 4.885158295322664
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 119,
-          "voteShare": 0.3211789155488381
         }
       ]
     },
@@ -23040,8 +21969,8 @@
           "voteShare": 39.71472761642894
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 11204,
           "voteShare": 27.505953403874006
@@ -23072,7 +22001,7 @@
       "turnout": 73.4,
       "validVotes": 43512,
       "winner": "con",
-      "majority": 4309,
+      "majority": 3622,
       "results": [
         {
           "partyId": "con",
@@ -23082,11 +22011,11 @@
           "voteShare": 39.18689097260526
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 12742,
-          "voteShare": 29.283875712447138
+          "votes": 13429,
+          "voteShare": 30.86275050560765
         },
         {
           "partyId": "lab",
@@ -23101,13 +22030,6 @@
           "candidate": "",
           "votes": 2642,
           "voteShare": 6.071888214745358
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 687,
-          "voteShare": 1.5788747931605074
         }
       ]
     },
@@ -23121,7 +22043,7 @@
       "turnout": 71.7,
       "validVotes": 44845,
       "winner": "con",
-      "majority": 3655,
+      "majority": 3205,
       "results": [
         {
           "partyId": "con",
@@ -23131,11 +22053,11 @@
           "voteShare": 36.75995094213402
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 12830,
-          "voteShare": 28.609655479986625
+          "votes": 13280,
+          "voteShare": 29.613111829635415
         },
         {
           "partyId": "lab",
@@ -23150,13 +22072,6 @@
           "candidate": "",
           "votes": 2256,
           "voteShare": 5.030661166239268
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 450,
-          "voteShare": 1.0034563496487903
         }
       ]
     },
@@ -23229,11 +22144,11 @@
           "voteShare": 20.97391211944105
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 6967,
-          "voteShare": 18.508580840550447
+          "votes": 7301,
+          "voteShare": 19.39588757239254
         },
         {
           "partyId": "snp",
@@ -23241,13 +22156,6 @@
           "candidate": "",
           "votes": 4490,
           "voteShare": 11.928165347218531
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 334,
-          "voteShare": 0.8873067318420913
         }
       ]
     },
@@ -23460,8 +22368,8 @@
           "voteShare": 30.50510269990957
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 8710,
           "voteShare": 22.50355251259527
@@ -23534,7 +22442,7 @@
       "turnout": 69.1,
       "validVotes": 34948,
       "winner": "lab",
-      "majority": 13474,
+      "majority": 13256,
       "results": [
         {
           "partyId": "lab",
@@ -23544,11 +22452,11 @@
           "voteShare": 56.1834725878448
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 6161,
-          "voteShare": 17.629048872610735
+          "votes": 6379,
+          "voteShare": 18.25283278013048
         },
         {
           "partyId": "con",
@@ -23563,13 +22471,6 @@
           "candidate": "",
           "votes": 3566,
           "voteShare": 10.203731257868833
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 218,
-          "voteShare": 0.6237839075197437
         }
       ]
     },
@@ -23593,8 +22494,8 @@
           "voteShare": 54.95009441596979
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 7313,
           "voteShare": 19.727542487186405
@@ -23624,15 +22525,15 @@
       "electorate": 57016,
       "turnout": 71.9,
       "validVotes": 41016,
-      "winner": "min",
-      "majority": 1164,
+      "winner": "other",
+      "majority": 1791,
       "results": [
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 14856,
-          "voteShare": 36.22001170275015
+          "votes": 15483,
+          "voteShare": 37.748683440608545
         },
         {
           "partyId": "lab",
@@ -23654,13 +22555,6 @@
           "candidate": "",
           "votes": 2203,
           "voteShare": 5.3710747025551004
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 627,
-          "voteShare": 1.5286717378583967
         }
       ]
     },
@@ -23765,7 +22659,7 @@
       "turnout": 65.2,
       "validVotes": 31100,
       "winner": "lab",
-      "majority": 15385,
+      "majority": 15091,
       "results": [
         {
           "partyId": "lab",
@@ -23775,11 +22669,11 @@
           "voteShare": 64.43729903536978
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 4655,
-          "voteShare": 14.967845659163986
+          "votes": 4949,
+          "voteShare": 15.913183279742766
         },
         {
           "partyId": "con",
@@ -23794,13 +22688,6 @@
           "candidate": "",
           "votes": 2737,
           "voteShare": 8.80064308681672
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 294,
-          "voteShare": 0.9453376205787782
         }
       ]
     },
@@ -24146,8 +23033,8 @@
           "voteShare": 24.671407024348202
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 10545,
           "voteShare": 22.721396250808017
@@ -24230,8 +23117,8 @@
           "voteShare": 26.337308347529813
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 9274,
           "voteShare": 24.30611977460359
@@ -24279,18 +23166,11 @@
           "voteShare": 18.372859628239173
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
-          "candidate": "",
-          "votes": 7432,
-          "voteShare": 17.013094039007417
-        },
-        {
           "partyId": "other",
           "partyName": "Other",
           "candidate": "",
-          "votes": 199,
-          "voteShare": 0.45554436406922444
+          "votes": 7631,
+          "voteShare": 17.468638403076643
         }
       ]
     },
@@ -24356,8 +23236,8 @@
           "voteShare": 42.73912851918756
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 13245,
           "voteShare": 29.177864916068202
@@ -24447,8 +23327,8 @@
           "voteShare": 21.990655677463383
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 6605,
           "voteShare": 17.336868077064413
@@ -24573,8 +23453,8 @@
           "voteShare": 19.960027349708096
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 6754,
           "voteShare": 17.76153158365329
@@ -24640,7 +23520,7 @@
       "turnout": 68.6,
       "validVotes": 34624,
       "winner": "lab",
-      "majority": 7587,
+      "majority": 7148,
       "results": [
         {
           "partyId": "lab",
@@ -24650,11 +23530,11 @@
           "voteShare": 45.58109981515712
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
-          "votes": 8195,
-          "voteShare": 23.66855360443623
+          "votes": 8634,
+          "voteShare": 24.936460258780038
         },
         {
           "partyId": "con",
@@ -24669,13 +23549,6 @@
           "candidate": "",
           "votes": 2783,
           "voteShare": 8.037777264325323
-        },
-        {
-          "partyId": "other",
-          "partyName": "Other",
-          "candidate": "",
-          "votes": 439,
-          "voteShare": 1.2679066543438078
         }
       ]
     },
@@ -24790,8 +23663,8 @@
           "voteShare": 32.69469957902793
         },
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 12347,
           "voteShare": 29.532625334864143
@@ -24821,12 +23694,12 @@
       "electorate": 48401,
       "turnout": 72.6,
       "validVotes": 35116,
-      "winner": "min",
+      "winner": "other",
       "majority": 1704,
       "results": [
         {
-          "partyId": "min",
-          "partyName": "Minor",
+          "partyId": "other",
+          "partyName": "Other",
           "candidate": "",
           "votes": 13528,
           "voteShare": 38.52374985761477
