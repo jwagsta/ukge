@@ -2,7 +2,7 @@ import { useRef, useEffect, useMemo, useState, useCallback } from 'react';
 import * as d3 from 'd3';
 import type { FeatureCollection, Feature, Polygon, MultiPolygon } from 'geojson';
 import type { ElectionResult } from '@/types/election';
-import { getPartyColor } from '@/types/party';
+import { getPartyColor, getPartyById } from '@/types/party';
 import { createUKProjection } from '@/utils/d3/dotDensity';
 import { useUIStore } from '@/store/uiStore';
 import {
@@ -28,6 +28,8 @@ interface ChoroplethMapProps {
 interface TooltipData {
   constituencyName: string;
   winner: string;
+  partyVoteShare?: number;
+  partyName?: string;
   x: number;
   y: number;
 }
@@ -45,7 +47,7 @@ export function ChoroplethMap({
   const svgRef = useRef<SVGSVGElement>(null);
   const gRef = useRef<SVGGElement>(null);
   const [tooltip, setTooltip] = useState<TooltipData | null>(null);
-  const { mapZoom, setMapZoom } = useUIStore();
+  const { mapZoom, setMapZoom, mapColorMode } = useUIStore();
   const zoomRef = useRef<d3.ZoomBehavior<SVGSVGElement, unknown> | null>(null);
   const localSelectRef = useRef(false);
   const prevSelectedRef = useRef<string | null | undefined>(undefined);
@@ -77,9 +79,16 @@ export function ChoroplethMap({
   // Create maps for looking up election data by constituency name (normalized)
   // Uses shared utility for consistent name normalization between boundary files
   // (parlconst.org format) and election data (Electoral Calculus format)
-  const { winnerByName, idByName } = useMemo(() => {
+  const { winnerByName, idByName, dataByName } = useMemo(() => {
     return createElectionLookup(electionData);
   }, [electionData]);
+
+  // Color scale for party vote share mode
+  const partyColorScale = useMemo(() => {
+    if (mapColorMode === 'winner') return null;
+    const party = getPartyById(mapColorMode);
+    return d3.scaleLinear<string>().domain([0, 50]).range(['#f8f8f8', party.color]).clamp(true);
+  }, [mapColorMode]);
 
   // Reverse lookup: election ID → boundary feature (for external zoom-to-constituency)
   const featureByElectionId = useMemo(() => {
@@ -140,9 +149,20 @@ export function ChoroplethMap({
         const electionId = idByName.get(matchName) || '';
         const winner = winnerByName.get(matchName) || '';
 
+        let partyVoteShare: number | undefined;
+        let partyName: string | undefined;
+        if (mapColorMode !== 'winner') {
+          const data = dataByName.get(matchName);
+          const partyResult = data?.results.find(r => r.partyId.toLowerCase() === mapColorMode);
+          partyVoteShare = partyResult?.voteShare;
+          partyName = getPartyById(mapColorMode).shortName;
+        }
+
         setTooltip({
           constituencyName: displayName,
           winner,
+          partyVoteShare,
+          partyName,
           x: e.clientX,
           y: e.clientY,
         });
@@ -152,7 +172,7 @@ export function ChoroplethMap({
         onConstituencyHover?.(null);
       }
     },
-    [features, projection, onConstituencyHover, transform, winnerByName, idByName]
+    [features, projection, onConstituencyHover, transform, winnerByName, idByName, mapColorMode, dataByName]
   );
 
   const handleMouseLeave = useCallback(() => {
@@ -281,11 +301,20 @@ export function ChoroplethMap({
             const isHighlighted =
               hoveredConstituencyId === electionId || selectedConstituencyId === electionId;
 
+            let fill: string;
+            if (mapColorMode === 'winner' || !partyColorScale) {
+              fill = winner ? getPartyColor(winner) : '#ddd';
+            } else {
+              const data = dataByName.get(matchName);
+              const partyResult = data?.results.find(r => r.partyId.toLowerCase() === mapColorMode);
+              fill = partyResult ? partyColorScale(partyResult.voteShare) : '#f8f8f8';
+            }
+
             return (
               <path
                 key={electionId || idx}
                 d={pathGenerator(feat) ?? ''}
-                fill={winner ? getPartyColor(winner) : '#ddd'}
+                fill={fill}
                 fillOpacity={winner ? (isHighlighted ? 1 : 0.85) : 0.5}
                 stroke={isHighlighted ? '#000' : '#fff'}
                 strokeWidth={(isHighlighted ? 2 : 0.5) / transform.k}
@@ -348,28 +377,41 @@ export function ChoroplethMap({
 
       {/* Legend */}
       <div className="absolute bottom-2 left-2 bg-white/90 rounded-lg shadow p-2 text-xs">
-        <div className="flex flex-wrap gap-x-3 gap-y-1">
-          <div className="flex items-center gap-1">
-            <span className="w-2 h-2 rounded" style={{ backgroundColor: '#DC241f' }} />
-            <span>Lab</span>
+        {mapColorMode === 'winner' ? (
+          <div className="flex flex-wrap gap-x-3 gap-y-1">
+            <div className="flex items-center gap-1">
+              <span className="w-2 h-2 rounded" style={{ backgroundColor: '#DC241f' }} />
+              <span>Lab</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <span className="w-2 h-2 rounded" style={{ backgroundColor: '#0087DC' }} />
+              <span>Con</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <span className="w-2 h-2 rounded" style={{ backgroundColor: '#FDBB30' }} />
+              <span>LD</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <span className="w-2 h-2 rounded" style={{ backgroundColor: '#FDF38E' }} />
+              <span>SNP</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <span className="w-2 h-2 rounded" style={{ backgroundColor: '#808080' }} />
+              <span>Other</span>
+            </div>
           </div>
-          <div className="flex items-center gap-1">
-            <span className="w-2 h-2 rounded" style={{ backgroundColor: '#0087DC' }} />
-            <span>Con</span>
+        ) : (
+          <div className="flex items-center gap-2">
+            <span>0%</span>
+            <div
+              className="w-24 h-3 rounded"
+              style={{
+                background: `linear-gradient(to right, #f8f8f8, ${getPartyById(mapColorMode).color})`,
+              }}
+            />
+            <span>50%+</span>
           </div>
-          <div className="flex items-center gap-1">
-            <span className="w-2 h-2 rounded" style={{ backgroundColor: '#FDBB30' }} />
-            <span>LD</span>
-          </div>
-          <div className="flex items-center gap-1">
-            <span className="w-2 h-2 rounded" style={{ backgroundColor: '#FDF38E' }} />
-            <span>SNP</span>
-          </div>
-          <div className="flex items-center gap-1">
-            <span className="w-2 h-2 rounded" style={{ backgroundColor: '#808080' }} />
-            <span>Other</span>
-          </div>
-        </div>
+        )}
       </div>
 
       {/* Tooltip */}
@@ -383,7 +425,11 @@ export function ChoroplethMap({
           }}
         >
           <div className="font-medium">{tooltip.constituencyName}</div>
-          {tooltip.winner && (
+          {tooltip.partyName != null ? (
+            <div className="text-gray-600 text-xs mt-1">
+              {tooltip.partyName}: {tooltip.partyVoteShare != null ? `${tooltip.partyVoteShare.toFixed(1)}%` : 'N/A'}
+            </div>
+          ) : tooltip.winner ? (
             <div className="flex items-center gap-2 mt-1">
               <span
                 className="w-2 h-2 rounded-full"
@@ -391,7 +437,7 @@ export function ChoroplethMap({
               />
               <span className="text-gray-600 text-xs">{tooltip.winner.toUpperCase()}</span>
             </div>
-          )}
+          ) : null}
         </div>
       )}
     </div>

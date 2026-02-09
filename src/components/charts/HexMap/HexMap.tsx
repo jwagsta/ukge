@@ -2,7 +2,7 @@ import { useMemo, useState, useCallback, useRef, useEffect } from 'react';
 import * as d3 from 'd3';
 import type { FeatureCollection, Polygon, MultiPolygon } from 'geojson';
 import type { ElectionResult } from '@/types/election';
-import { getPartyColor } from '@/types/party';
+import { getPartyColor, getPartyById } from '@/types/party';
 import { useUIStore } from '@/store/uiStore';
 import type { BoundaryProperties } from '@/utils/constituencyMatching';
 import { computeHexLayout, hexToPixel, hexPath } from '@/utils/hexLayout';
@@ -32,7 +32,7 @@ export function HexMap({
 }: HexMapProps) {
   const svgRef = useRef<SVGSVGElement>(null);
   const [tooltip, setTooltip] = useState<{ x: number; y: number; data: ElectionResult } | null>(null);
-  const { mapZoom, setMapZoom } = useUIStore();
+  const { mapZoom, setMapZoom, mapColorMode } = useUIStore();
   const zoomRef = useRef<d3.ZoomBehavior<SVGSVGElement, unknown> | null>(null);
   const localSelectRef = useRef(false);
   const prevSelectedRef = useRef<string | null | undefined>(undefined);
@@ -49,6 +49,13 @@ export function HexMap({
     electionData.forEach(d => map.set(d.constituencyId, d));
     return map;
   }, [electionData]);
+
+  // Color scale for party vote share mode
+  const partyColorScale = useMemo(() => {
+    if (mapColorMode === 'winner') return null;
+    const party = getPartyById(mapColorMode);
+    return d3.scaleLinear<string>().domain([0, 50]).range(['#f8f8f8', party.color]).clamp(true);
+  }, [mapColorMode]);
 
   // Calculate hex size and bounds
   const { hexSize, offsetX, offsetY } = useMemo(() => {
@@ -290,6 +297,14 @@ export function HexMap({
               const isHovered = hoveredConstituencyId === pos.constituencyId;
               const isHighlighted = isSelected || isHovered;
 
+              let fill: string;
+              if (mapColorMode === 'winner' || !partyColorScale) {
+                fill = getPartyColor(data.winner);
+              } else {
+                const partyResult = data.results.find(r => r.partyId.toLowerCase() === mapColorMode);
+                fill = partyResult ? partyColorScale(partyResult.voteShare) : '#f8f8f8';
+              }
+
               return (
                 <g
                   key={pos.constituencyId}
@@ -301,7 +316,7 @@ export function HexMap({
                 >
                   <path
                     d={hexPathD}
-                    fill={getPartyColor(data.winner)}
+                    fill={fill}
                     fillOpacity={selectedConstituencyId && !isHighlighted ? 0.3 : 0.85}
                     stroke={isHighlighted ? '#000' : '#fff'}
                     strokeWidth={isHighlighted ? 2 : 0.5}
@@ -312,6 +327,45 @@ export function HexMap({
           </g>
         </g>
       </svg>
+
+      {/* Legend */}
+      <div className="absolute bottom-2 left-2 bg-white/90 rounded-lg shadow p-2 text-xs">
+        {mapColorMode === 'winner' ? (
+          <div className="flex flex-wrap gap-x-3 gap-y-1">
+            <div className="flex items-center gap-1">
+              <span className="w-2 h-2 rounded" style={{ backgroundColor: '#DC241f' }} />
+              <span>Lab</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <span className="w-2 h-2 rounded" style={{ backgroundColor: '#0087DC' }} />
+              <span>Con</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <span className="w-2 h-2 rounded" style={{ backgroundColor: '#FDBB30' }} />
+              <span>LD</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <span className="w-2 h-2 rounded" style={{ backgroundColor: '#FDF38E' }} />
+              <span>SNP</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <span className="w-2 h-2 rounded" style={{ backgroundColor: '#808080' }} />
+              <span>Other</span>
+            </div>
+          </div>
+        ) : (
+          <div className="flex items-center gap-2">
+            <span>0%</span>
+            <div
+              className="w-24 h-3 rounded"
+              style={{
+                background: `linear-gradient(to right, #f8f8f8, ${getPartyById(mapColorMode).color})`,
+              }}
+            />
+            <span>50%+</span>
+          </div>
+        )}
+      </div>
 
       {/* Tooltip */}
       {tooltip && (
@@ -324,11 +378,21 @@ export function HexMap({
           }}
         >
           <div className="font-semibold">{tooltip.data.constituencyName}</div>
-          <div className="text-xs text-gray-600">
-            Winner: <span style={{ color: getPartyColor(tooltip.data.winner) }}>
-              {tooltip.data.winner.toUpperCase()}
-            </span>
-          </div>
+          {mapColorMode !== 'winner' ? (
+            <div className="text-xs text-gray-600">
+              {getPartyById(mapColorMode).shortName}:{' '}
+              {(() => {
+                const pr = tooltip.data.results.find(r => r.partyId.toLowerCase() === mapColorMode);
+                return pr ? `${pr.voteShare.toFixed(1)}%` : 'N/A';
+              })()}
+            </div>
+          ) : (
+            <div className="text-xs text-gray-600">
+              Winner: <span style={{ color: getPartyColor(tooltip.data.winner) }}>
+                {tooltip.data.winner.toUpperCase()}
+              </span>
+            </div>
+          )}
         </div>
       )}
     </div>

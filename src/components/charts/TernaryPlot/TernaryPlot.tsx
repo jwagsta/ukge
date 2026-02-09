@@ -455,7 +455,8 @@ export function TernaryPlot({
         }
       }
 
-      points.sort((a, b) => a.year - b.year);
+      const normalizeYear = (y: number) => y === 197402 ? 1974.2 : y === 197410 ? 1974.8 : y;
+      points.sort((a, b) => normalizeYear(a.year) - normalizeYear(b.year));
 
       // Cache without coordinates (we'll recalculate on retrieval)
       if (trajectoryCache.size >= MAX_TRAJECTORY_CACHE) {
@@ -693,7 +694,7 @@ export function TernaryPlot({
                           className={`${isCurrent ? 'font-bold fill-black' : 'font-medium fill-gray-700'}`}
                           style={{ fontSize: `${10 / ternaryZoom.k}px` }}
                         >
-                          {p.year.toString().slice(-2)}
+                          {p.year === 197402 ? "F'74" : p.year === 197410 ? "O'74" : p.year.toString().slice(-2)}
                         </text>
                       </g>
                     );

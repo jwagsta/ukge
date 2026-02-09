@@ -46,6 +46,7 @@ export function PlayButton({ intervalMs = 2000 }: PlayButtonProps) {
     ui.resetChartXZoom();
     ui.setHoveredChartYear(null);
     ui.setMapType('choropleth');
+    ui.setMapColorMode('winner');
     useElectionStore.getState().setSelectedConstituency(null);
   };
 

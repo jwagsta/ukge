@@ -85,7 +85,7 @@ export function Header() {
                 Explore Great Britain General Election results from 1955 to 2024
                 (Northern Ireland excluded). Linked views include a ternary plot
                 of constituency vote shares, geographic maps (choropleth, dot density,
-                hex cartogram, small multiples), national seat and vote share charts,
+                hex cartogram), national seat and vote share charts,
                 and per-constituency historical trends.
               </p>
               <h4 className="text-xs font-medium text-gray-700 mb-1">Data Sources</h4>

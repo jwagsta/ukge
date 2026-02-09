@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo, useRef } from 'react';
+import { useEffect, useState, useMemo, useRef, useCallback } from 'react';
 import { useElectionStore, getYearLabel } from '@/store/electionStore';
 import { getPartyColor } from '@/types/party';
 import type { ElectionResult } from '@/types/election';
@@ -124,6 +124,17 @@ export function ConstituencyPanel({ height }: ConstituencyPanelProps) {
   const [historicalData, setHistoricalData] = useState<HistoricalResult[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [hoveredYear, setHoveredYear] = useState<number | null>(null);
+  const [chartContainerWidth, setChartContainerWidth] = useState(400);
+  const chartContainerRef = useCallback((node: HTMLDivElement | null) => {
+    if (!node) return;
+    const obs = new ResizeObserver(entries => {
+      for (const entry of entries) {
+        setChartContainerWidth(entry.contentRect.width);
+      }
+    });
+    obs.observe(node);
+    return () => obs.disconnect();
+  }, []);
 
   // Get current constituency data
   const currentConstituency = useMemo(() => {
@@ -267,9 +278,9 @@ export function ConstituencyPanel({ height }: ConstituencyPanelProps) {
   }
 
   // Calculate chart dimensions for horizontal layout
-  const chartWidth = 400;
+  const chartWidth = Math.max(200, chartContainerWidth);
   const chartHeight = height - 40;
-  const chartPadding = { top: 10, right: 20, bottom: 40, left: 35 };
+  const chartPadding = { top: 10, right: 8, bottom: 40, left: 35 };
   const plotWidth = chartWidth - chartPadding.left - chartPadding.right;
   const plotHeight = chartHeight - chartPadding.top - chartPadding.bottom;
 
@@ -348,8 +359,10 @@ export function ConstituencyPanel({ height }: ConstituencyPanelProps) {
       className="bg-white border-t border-gray-200 flex"
       style={{ height }}
     >
+      {/* Left half: constituency info + year results */}
+      <div className="w-1/2 flex">
       {/* Header and current results */}
-      <div className="w-64 border-r border-gray-100 p-4 overflow-y-auto">
+      <div className="flex-1 border-r border-gray-100 p-4 overflow-y-auto">
         <div className="flex items-start justify-between mb-3">
           <div>
             <h3 className="font-semibold text-gray-900 text-sm">
@@ -397,30 +410,51 @@ export function ConstituencyPanel({ height }: ConstituencyPanelProps) {
       </div>
 
       {/* Results for displayed year */}
-      <div className="w-56 border-r border-gray-100 p-4 overflow-y-auto">
+      <div className="flex-1 border-r border-gray-100 p-4 overflow-y-auto">
         <h4 className={`text-xs font-medium mb-2 ${hoveredYear ? 'text-blue-600' : 'text-gray-500'}`}>
           {getYearLabel(displayYear)} Results
         </h4>
         <div className="space-y-1.5">
-          {[...displayData.results]
-            .sort((a, b) => b.voteShare - a.voteShare)
-            .map((r) => (
-              <div key={r.partyId} className="flex items-center justify-between">
-                <div className="flex items-center gap-1.5">
-                  <span
-                    className="w-2 h-2 rounded"
-                    style={{ backgroundColor: getPartyColor(r.partyId) }}
-                  />
-                  <span className="text-xs">{r.partyId.toUpperCase()}</span>
-                </div>
-                <span className="text-xs font-medium">{r.voteShare.toFixed(1)}%</span>
-              </div>
-            ))}
+          {(() => {
+            const activeResults = [...displayData.results].sort((a, b) => b.voteShare - a.voteShare);
+            const activeIds = new Set(activeResults.map(r => r.partyId.toLowerCase()));
+            const inactiveParties = allParties
+              .filter(p => !activeIds.has(p))
+              .sort((a, b) => a.localeCompare(b));
+            return (
+              <>
+                {activeResults.map((r) => (
+                  <div key={r.partyId} className="flex items-center justify-between">
+                    <div className="flex items-center gap-1.5">
+                      <span
+                        className="w-2 h-2 rounded"
+                        style={{ backgroundColor: getPartyColor(r.partyId) }}
+                      />
+                      <span className="text-xs">{r.partyId.toUpperCase()}</span>
+                    </div>
+                    <span className="text-xs font-medium">{r.voteShare.toFixed(1)}%</span>
+                  </div>
+                ))}
+                {inactiveParties.map((party) => (
+                  <div key={party} className="flex items-center justify-between">
+                    <div className="flex items-center gap-1.5">
+                      <span
+                        className="w-2 h-2 rounded"
+                        style={{ backgroundColor: getPartyColor(party) }}
+                      />
+                      <span className="text-xs text-gray-400">{party.toUpperCase()}</span>
+                    </div>
+                  </div>
+                ))}
+              </>
+            );
+          })()}
         </div>
       </div>
 
-      {/* Historical chart with legend */}
-      <div className="flex-1 p-4 flex">
+      </div>
+      {/* Right half: Historical chart with legend */}
+      <div ref={chartContainerRef} className="w-1/2 pl-2 pr-4 py-4">
         <div>
           <h4 className="text-xs font-medium text-gray-500 mb-1">Vote Share</h4>
 
@@ -569,30 +603,6 @@ export function ConstituencyPanel({ height }: ConstituencyPanelProps) {
         )}
         </div>
 
-        {/* Legend - show parties that appear in this constituency */}
-        <div className="pl-2 flex flex-col justify-start gap-1 overflow-y-auto">
-        {allParties
-          .sort((a, b) => {
-            // Sort main parties first, then alphabetically
-            const mainOrder = ['lab', 'con', 'ld', 'lib'];
-            const aIdx = mainOrder.findIndex(p => a.startsWith(p));
-            const bIdx = mainOrder.findIndex(p => b.startsWith(p));
-            if (aIdx !== -1 && bIdx !== -1) return aIdx - bIdx;
-            if (aIdx !== -1) return -1;
-            if (bIdx !== -1) return 1;
-            return a.localeCompare(b);
-          })
-          .slice(0, 10)
-          .map((party) => (
-            <div key={party} className="flex items-center gap-1.5">
-              <span
-                className="w-3 h-0.5 flex-shrink-0"
-                style={{ backgroundColor: getPartyColor(party) }}
-              />
-              <span className="text-[10px] text-gray-600 truncate">{party.toUpperCase()}</span>
-            </div>
-          ))}
-        </div>
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-export type MapType = 'choropleth' | 'dots' | 'hex' | 'small-multiples';
+export type MapType = 'choropleth' | 'dots' | 'hex';
 
 export interface ZoomTransform {
   k: number; // scale
@@ -15,6 +15,7 @@ export interface ChartXZoom {
 
 interface UIState {
   mapType: MapType;
+  mapColorMode: string;
   votesPerDot: number;
   sidebarOpen: boolean;
   isMobile: boolean;
@@ -24,6 +25,7 @@ interface UIState {
   hoveredChartYear: number | null;
 
   setMapType: (type: MapType) => void;
+  setMapColorMode: (mode: string) => void;
   setVotesPerDot: (value: number) => void;
   toggleSidebar: () => void;
   setIsMobile: (value: boolean) => void;
@@ -41,6 +43,7 @@ const DEFAULT_CHART_X_ZOOM: ChartXZoom = { k: 1, x: 0 };
 
 export const useUIStore = create<UIState>((set) => ({
   mapType: 'choropleth',
+  mapColorMode: 'winner',
   votesPerDot: 10000,
   sidebarOpen: true,
   isMobile: false,
@@ -49,7 +52,11 @@ export const useUIStore = create<UIState>((set) => ({
   chartXZoom: DEFAULT_CHART_X_ZOOM,
   hoveredChartYear: null,
 
-  setMapType: (type) => set({ mapType: type }),
+  setMapType: (type) => set((state) => ({
+    mapType: type,
+    mapColorMode: type === 'dots' ? 'winner' : state.mapColorMode,
+  })),
+  setMapColorMode: (mode) => set({ mapColorMode: mode }),
   setVotesPerDot: (value) => set({ votesPerDot: value }),
   toggleSidebar: () => set((state) => ({ sidebarOpen: !state.sidebarOpen })),
   setIsMobile: (value) => set({ isMobile: value, sidebarOpen: !value }),

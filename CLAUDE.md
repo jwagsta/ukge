@@ -34,17 +34,18 @@ Boundary processing pipeline order: `processParlconstBoundaries.ts` → `clip_to
 
 **State Management**: Two Zustand stores in `src/store/`:
 - `electionStore.ts` - Election data loading/caching, year selection, constituency selection/hover
-- `uiStore.ts` - Map type, zoom transforms, dot density settings
+- `uiStore.ts` - Map type, `mapColorMode` (winner or party ID for vote share gradient), zoom transforms, dot density settings, `hoveredChartYear` (shared chart hover state)
 
 **Data Flow**: Election data cached in `electionDataCache` Map, boundaries cached in `boundaryCache` Map. Adjacent years are prefetched in background.
 
 **Visualizations** (in `src/components/charts/`):
 - TernaryPlot - Vote share distribution in triangular coordinates
 - DotDensityMap - Geographic map where each dot = N votes
-- ChoroplethMap - Constituencies colored by winning party
-- HexMap - Hexagonal cartogram (LAPJV optimal assignment, see below)
-- SmallMultiplesMap - Side-by-side maps for Lab/Con/LD/Other vote share
-- SeatsChart - National seat distribution line chart (top bar)
+- ChoroplethMap - Constituencies colored by winning party or party vote share gradient (via `mapColorMode`)
+- HexMap - Hexagonal cartogram (LAPJV optimal assignment, see below); supports same color modes as ChoroplethMap
+- SeatsChart - National seat distribution line chart (no x-axis; shares x-axis with VoteShareChart below)
+- VoteShareChart - National vote share stream graph (stacked area chart, 0-100%, stack order: Other/LD/Con/Lab)
+- SeatsBarChart / VoteShareBarChart - Bar charts showing current or hovered year's data
 
 **Linked Views**: Hover/select in one visualization highlights in others via store state.
 
@@ -92,7 +93,7 @@ useElectionStore.getState().setYear(2019);
 
 D3 visualization components receive `width`, `height`, `data`, and selection/hover callbacks as props.
 
-**1974 year encoding**: Feb/Oct 1974 elections use `197402`/`197410` as numeric year identifiers. These sort *after* 2024 numerically, so any code that sorts or scales by year must normalize them first (e.g., `197402 → 1974.2`). Use `getYearLabel()` from `electionStore` for display strings.
+**1974 year encoding**: Feb/Oct 1974 elections use `197402`/`197410` as numeric year identifiers. These sort *after* 2024 numerically, so any code that sorts or scales by year must normalize them first (e.g., `197402 → 1974.2`). Use `getYearLabel()` from `electionStore` for display strings ("Feb 1974"/"Oct 1974"). Chart x-axes use shorter labels ("Feb'74"/"Oct'74") with hardcoded x-offsets (-8/+8 px) to prevent overlap, plus angled tick lines connecting the offset labels back to the data points.
 
 **Hex map layout** (`src/utils/hexLayout.ts`): Uses LAPJV (Jonker-Volgenant) linear assignment (`src/utils/lapjv.ts`) to optimally place constituencies on a pointy-top hex grid. Pipeline: project centroids with UK Albers → expand dense regions (London 2.2x, others 1.0x — expansion-only to avoid disconnecting Scotland) → push peripheral regions outward (Scotland north, Wales west, SW southwest) → generate GB-shaped grid mask → LAPJV assignment. Layout is cached per boundary era keyed by boundary feature names (not just counts — the 2010 and 2024 eras both have 632 seats).
 
@@ -107,6 +108,13 @@ Data validation tests in `tests/data/` (720 tests):
 - `cross-matching.test.ts` - Election IDs match boundary IDs (known exception: 1992 Milton Keynes)
 - `boundary-schema.test.ts` - GeoJSON structure, required properties
 - `boundary-geometry.test.ts` - Coordinate ranges, ring closure, winding (known exceptions for island constituencies)
+
+## Documentation
+
+When making major functionality changes (adding/removing visualizations, changing UI controls, altering data flow), update all three documentation surfaces:
+- `CLAUDE.md` — Architecture and visualization list (this file)
+- `README.md` — Features list, project structure tree
+- `src/components/layout/Header.tsx` — About panel text shown to users
 
 ## Deployment
 

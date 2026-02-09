@@ -1,14 +1,13 @@
 # UK General Election Results Visualization
 
-An interactive web app for exploring UK General Election results across Great Britain from 1955 to 2024. Six synchronized visualizations let you compare constituency-level voting patterns, geographic distributions, and national trends across 19 elections.
+An interactive web app for exploring UK General Election results across Great Britain from 1955 to 2024. Five synchronized visualizations let you compare constituency-level voting patterns, geographic distributions, and national trends across 19 elections.
 
 ## Features
 
 - **Ternary Plot** — Constituencies plotted in a triangle showing Labour / Conservative / Other vote shares, with animated transitions between elections
-- **Choropleth Map** — Constituencies colored by winning party on a geographic map of Great Britain
+- **Choropleth Map** — Constituencies colored by winning party, or by per-party vote share gradient via a dropdown selector
 - **Dot Density Map** — Each dot represents a configurable number of votes, distributed geographically by constituency
-- **Hexagonal Cartogram** — Each constituency shown as an equal-sized hexagon, removing geographic distortion
-- **Small Multiples** — Four side-by-side maps showing vote share for Labour, Conservative, Lib Dem, and Other
+- **Hexagonal Cartogram** — Each constituency shown as an equal-sized hexagon, removing geographic distortion; supports the same color modes as the choropleth
 - **Seats Chart** — Line chart of national seat counts across all elections (top bar)
 - **Linked Views** — Hover or select a constituency in any visualization to highlight it in all others
 - **Timeline Playback** — Animate through elections with play/pause/step controls
@@ -84,7 +83,7 @@ ukge/
 ├── src/
 │   ├── components/
 │   │   ├── charts/         # TernaryPlot, ChoroplethMap, DotDensityMap,
-│   │   │                   # HexMap, SmallMultiplesMap, SeatsChart
+│   │   │                   # HexMap, SeatsChart, VoteShareChart
 │   │   ├── controls/       # PlayButton (timeline playback)
 │   │   ├── layout/         # Header
 │   │   └── panels/         # ConstituencyPanel (search + details)
