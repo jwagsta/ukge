@@ -34,6 +34,8 @@ export function HexMap({
   const [tooltip, setTooltip] = useState<{ x: number; y: number; data: ElectionResult } | null>(null);
   const { mapZoom, setMapZoom } = useUIStore();
   const zoomRef = useRef<d3.ZoomBehavior<SVGSVGElement, unknown> | null>(null);
+  const localSelectRef = useRef(false);
+  const prevSelectedRef = useRef<string | null | undefined>(undefined);
 
   // Generate hex positions from constituency data and boundaries
   const hexPositions = useMemo(() => {
@@ -90,7 +92,7 @@ export function HexMap({
     const svg = d3.select(svgRef.current);
 
     const zoomBehavior = d3.zoom<SVGSVGElement, unknown>()
-      .scaleExtent([0.5, 8])
+      .scaleExtent([0.5, 20])
       .on('zoom', (event) => {
         const { k, x, y } = event.transform;
         setMapZoom({ k, x, y });
@@ -156,10 +158,45 @@ export function HexMap({
       }
     }
 
+    localSelectRef.current = true;
     onConstituencySelect?.(
       selectedConstituencyId === constituencyId ? null : constituencyId
     );
   }, [selectedConstituencyId, onConstituencySelect, hexPositions, hexSize, offsetX, offsetY, width, height]);
+
+  // Zoom to constituency when selected externally (e.g. from ternary plot)
+  useEffect(() => {
+    if (selectedConstituencyId === prevSelectedRef.current) return;
+    prevSelectedRef.current = selectedConstituencyId;
+
+    if (localSelectRef.current) {
+      localSelectRef.current = false;
+      return;
+    }
+
+    if (!selectedConstituencyId || !svgRef.current || !zoomRef.current) return;
+
+    const hexPos = hexPositions.find(p => p.constituencyId === selectedConstituencyId);
+    if (!hexPos) return;
+
+    const { x, y } = hexToPixel(hexPos.q, hexPos.r, hexSize);
+    const hexCenterX = x + offsetX;
+    const hexCenterY = y + offsetY;
+
+    const targetSize = width * 0.25;
+    const scale = Math.min(targetSize / (hexSize * 4), 8);
+
+    const translateX = width / 2 - hexCenterX * scale;
+    const translateY = height / 2 - hexCenterY * scale;
+
+    d3.select(svgRef.current)
+      .transition()
+      .duration(500)
+      .call(
+        zoomRef.current.transform,
+        d3.zoomIdentity.translate(translateX, translateY).scale(scale)
+      );
+  }, [selectedConstituencyId, hexPositions, hexSize, offsetX, offsetY, width, height]);
 
   const handleResetZoom = useCallback(() => {
     if (svgRef.current && zoomRef.current) {

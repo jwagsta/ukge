@@ -273,6 +273,20 @@ export function ConstituencyPanel({ height }: ConstituencyPanelProps) {
   const plotWidth = chartWidth - chartPadding.left - chartPadding.right;
   const plotHeight = chartHeight - chartPadding.top - chartPadding.bottom;
 
+  // Short x-axis labels to avoid 1974 overlap
+  const getShortYearLabel = (year: number): string => {
+    if (year === 197402) return "Feb'74";
+    if (year === 197410) return "Oct'74";
+    return year.toString();
+  };
+
+  // Nudge 1974 labels apart so they don't overlap
+  const getLabelXOffset = (year: number): number => {
+    if (year === 197402) return -8;
+    if (year === 197410) return 8;
+    return 0;
+  };
+
   // Normalize year for scale (handle 197402/197410 as 1974.2/1974.8)
   const normalizeYear = (year: number) => {
     if (year === 197402) return 1974.2;
@@ -294,25 +308,33 @@ export function ConstituencyPanel({ height }: ConstituencyPanelProps) {
     return plotHeight - (share / 100) * plotHeight;
   };
 
-  // Generate path for party vote share over time
+  // Generate path for party vote share over time, breaking the line
+  // when the party didn't contest intermediate elections
   const generatePath = (partyId: string) => {
-    const points = historicalData
-      .map((d) => {
-        const result = d.results.find(
-          (r) =>
-            r.partyId.toLowerCase() === partyId.toLowerCase() ||
-            r.partyId.toLowerCase().startsWith(partyId.toLowerCase())
-        );
-        if (!result) return null;
-        return { year: d.year, share: result.voteShare };
-      })
-      .filter((p): p is { year: number; share: number } => p !== null);
+    // Map each historical election to a point or null (party absent)
+    const mapped = historicalData.map((d) => {
+      const result = d.results.find(
+        (r) =>
+          r.partyId.toLowerCase() === partyId.toLowerCase() ||
+          r.partyId.toLowerCase().startsWith(partyId.toLowerCase())
+      );
+      if (!result) return null;
+      return { year: d.year, share: result.voteShare };
+    });
 
-    if (points.length === 0) return '';
-
-    return points
-      .map((p, i) => `${i === 0 ? 'M' : 'L'} ${xScale(p.year)} ${yScale(p.share)}`)
-      .join(' ');
+    // Build path with breaks: start a new sub-path after any null gap
+    let path = '';
+    let needsMove = true;
+    for (let i = 0; i < mapped.length; i++) {
+      const p = mapped[i];
+      if (p === null) {
+        needsMove = true;
+        continue;
+      }
+      path += `${needsMove ? 'M' : 'L'} ${xScale(p.year)} ${yScale(p.share)} `;
+      needsMove = false;
+    }
+    return path;
   };
 
   // Determine if constituency has boundary changes
@@ -369,7 +391,7 @@ export function ConstituencyPanel({ height }: ConstituencyPanelProps) {
         {/* Boundary notice */}
         {(isNew || hasGaps) && (
           <div className="text-[10px] text-amber-600 bg-amber-50 rounded px-2 py-1">
-            {isNew ? `Created ${firstYear}` : 'Boundary changes'}
+            {isNew ? `Created: ${getYearLabel(firstYear!)}` : 'Boundary changes'}
           </div>
         )}
       </div>
@@ -503,23 +525,39 @@ export function ConstituencyPanel({ height }: ConstituencyPanelProps) {
                     onMouseLeave={() => setHoveredYear(null)}
                     onClick={() => setYear(d.year)}
                   />
-                  {/* Year label */}
-                  <text
-                    x={xScale(d.year)}
-                    y={plotHeight + 12}
-                    textAnchor="end"
-                    transform={`rotate(-45, ${xScale(d.year)}, ${plotHeight + 12})`}
-                    className={`text-[9px] ${
-                      d.year === currentYear
-                        ? 'fill-black font-semibold'
-                        : d.year === hoveredYear
-                        ? 'fill-blue-600 font-medium'
-                        : 'fill-gray-500'
-                    }`}
-                    style={{ pointerEvents: 'none' }}
-                  >
-                    {getYearLabel(d.year)}
-                  </text>
+                  {/* Tick and year label */}
+                  {(() => {
+                    const labelX = xScale(d.year) + getLabelXOffset(d.year);
+                    const isActive = d.year === currentYear;
+                    const isHovered = d.year === hoveredYear;
+                    return (
+                      <>
+                        <line
+                          x1={xScale(d.year)} y1={plotHeight}
+                          x2={labelX} y2={plotHeight + 5}
+                          stroke={isActive ? '#000' : isHovered ? '#3b82f6' : '#999'}
+                          strokeWidth={1}
+                          style={{ pointerEvents: 'none' }}
+                        />
+                        <text
+                          x={labelX}
+                          y={plotHeight + 10}
+                          textAnchor="end"
+                          transform={`rotate(-45, ${labelX}, ${plotHeight + 10})`}
+                          className={`text-[9px] ${
+                            isActive
+                              ? 'fill-black font-semibold'
+                              : isHovered
+                              ? 'fill-blue-600 font-medium'
+                              : 'fill-gray-500'
+                          }`}
+                          style={{ pointerEvents: 'none' }}
+                        >
+                          {getShortYearLabel(d.year)}
+                        </text>
+                      </>
+                    );
+                  })()}
                 </g>
               ))}
             </g>

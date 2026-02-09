@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useElectionStore } from '@/store/electionStore';
+import { useUIStore } from '@/store/uiStore';
 
 interface PlayButtonProps {
   intervalMs?: number;
@@ -37,7 +38,15 @@ export function PlayButton({ intervalMs = 2000 }: PlayButtonProps) {
 
   const handleReset = () => {
     setIsPlaying(false);
-    setYear(availableYears[0]);
+    setYear(availableYears[availableYears.length - 1]);
+    // Reset all zoom/selection state
+    const ui = useUIStore.getState();
+    ui.resetTernaryZoom();
+    ui.resetMapZoom();
+    ui.resetChartXZoom();
+    ui.setHoveredChartYear(null);
+    ui.setMapType('choropleth');
+    useElectionStore.getState().setSelectedConstituency(null);
   };
 
   const handleStepBack = () => {

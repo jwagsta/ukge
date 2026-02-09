@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { useElectionStore, getYearLabel } from '@/store/electionStore';
+import { useUIStore } from '@/store/uiStore';
 import { getPartyColor } from '@/types/party';
 import { NATIONAL_SEATS } from '@/data/nationalSeats';
 
@@ -17,10 +18,12 @@ const PARTY_LABELS: Record<string, string> = {
 
 export function SeatsBarChart({ height = 120, width = 200 }: SeatsBarChartProps) {
   const { currentYear } = useElectionStore();
+  const { hoveredChartYear } = useUIStore();
+  const displayYear = hoveredChartYear ?? currentYear;
 
   const yearData = useMemo(() => {
-    return NATIONAL_SEATS.find(d => d.year === currentYear);
-  }, [currentYear]);
+    return NATIONAL_SEATS.find(d => d.year === displayYear);
+  }, [displayYear]);
 
   const bars = useMemo(() => {
     if (!yearData) return [];
@@ -35,13 +38,13 @@ export function SeatsBarChart({ height = 120, width = 200 }: SeatsBarChartProps)
 
   if (!yearData) return null;
 
-  const padding = { top: 20, right: 8, bottom: 10, left: 30 };
+  const padding = { top: 20, right: 8, bottom: 4, left: 30 };
   const chartWidth = width - padding.left - padding.right;
   const chartHeight = height - padding.top - padding.bottom;
-  const barHeight = Math.min(18, (chartHeight - (bars.length - 1) * 3) / bars.length);
-  const barGap = 3;
+  const barGap = 2;
+  const barHeight = Math.min(16, (chartHeight - (bars.length - 1) * barGap) / bars.length);
   const totalBarsHeight = bars.length * barHeight + (bars.length - 1) * barGap;
-  const barsYOffset = (chartHeight - totalBarsHeight) / 2;
+  const barsYOffset = Math.max(0, (chartHeight - totalBarsHeight) / 2);
 
   const majority = Math.ceil(yearData.total / 2);
   const xScale = (seats: number) => (seats / yearData.total) * chartWidth;
@@ -55,9 +58,9 @@ export function SeatsBarChart({ height = 120, width = 200 }: SeatsBarChartProps)
             x={chartWidth / 2}
             y={-6}
             textAnchor="middle"
-            className="text-[11px] fill-gray-500 font-medium"
+            className={`text-[11px] font-medium ${hoveredChartYear != null ? 'fill-blue-500' : 'fill-gray-500'}`}
           >
-            {getYearLabel(currentYear)}
+            {getYearLabel(displayYear)}
           </text>
 
           {/* Bars */}
@@ -106,9 +109,10 @@ export function SeatsBarChart({ height = 120, width = 200 }: SeatsBarChartProps)
             strokeDasharray="3,2"
           />
           <text
-            x={xScale(majority)}
-            y={barsYOffset + totalBarsHeight + 14}
-            textAnchor="middle"
+            x={xScale(majority) + 4}
+            y={barsYOffset + (bars.length - 1) * (barHeight + barGap) + barHeight / 2}
+            textAnchor="start"
+            alignmentBaseline="central"
             className="text-[9px] fill-gray-400"
           >
             {majority}

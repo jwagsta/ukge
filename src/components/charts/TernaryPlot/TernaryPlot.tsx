@@ -229,15 +229,15 @@ const AxisDecorations = memo(function AxisDecorations({
       {/* Edge labels */}
       <g transform={`translate(${(bottomLeft.x + top.x) / 2 - 35}, ${(bottomLeft.y + top.y) / 2}) rotate(-60)`}>
         <text x={0} y={0} textAnchor="middle" className="text-[12px] font-semibold" fill="#DC241f">Labour %</text>
-        <path d="M 30 0 L 40 0 M 37 -3 L 40 0 L 37 3" stroke="#DC241f" strokeWidth={1.5} fill="none" />
+        <path d="M 30 0 L 40 0 M 37 -3 L 40 0 L 37 3" stroke="#DC241f" strokeWidth={1.5} fill="none" transform="translate(0, -6) rotate(-30, 35, 0)" />
       </g>
       <g transform={`translate(${(top.x + bottomRight.x) / 2 + 35}, ${(top.y + bottomRight.y) / 2}) rotate(60)`}>
         <text x={0} y={0} textAnchor="middle" className="text-[12px] font-semibold" fill="#0087DC">Conservative %</text>
-        <path d="M 50 0 L 60 0 M 57 -3 L 60 0 L 57 3" stroke="#0087DC" strokeWidth={1.5} fill="none" />
+        <path d="M 50 0 L 60 0 M 57 -3 L 60 0 L 57 3" stroke="#0087DC" strokeWidth={1.5} fill="none" transform="translate(0, -6) rotate(-30, 55, 0)" />
       </g>
       <g transform={`translate(${(bottomRight.x + bottomLeft.x) / 2}, ${bottomRight.y + 35})`}>
         <text x={0} y={0} textAnchor="middle" className="text-[12px] font-semibold" fill="#666">Other %</text>
-        <path d="M -40 0 L -30 0 M -37 -3 L -40 0 L -37 3" stroke="#666" strokeWidth={1.5} fill="none" />
+        <path d="M -40 0 L -30 0 M -37 -3 L -40 0 L -37 3" stroke="#666" strokeWidth={1.5} fill="none" transform="translate(0, -6) rotate(-30, -35, 0)" />
       </g>
     </>
   );

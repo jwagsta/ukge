@@ -47,6 +47,8 @@ export function ChoroplethMap({
   const [tooltip, setTooltip] = useState<TooltipData | null>(null);
   const { mapZoom, setMapZoom } = useUIStore();
   const zoomRef = useRef<d3.ZoomBehavior<SVGSVGElement, unknown> | null>(null);
+  const localSelectRef = useRef(false);
+  const prevSelectedRef = useRef<string | null | undefined>(undefined);
 
   // Create d3 transform from store state
   const transform = useMemo(() =>
@@ -79,12 +81,23 @@ export function ChoroplethMap({
     return createElectionLookup(electionData);
   }, [electionData]);
 
+  // Reverse lookup: election ID → boundary feature (for external zoom-to-constituency)
+  const featureByElectionId = useMemo(() => {
+    const map = new Map<string, ConstituencyFeature>();
+    features.forEach(f => {
+      const matchName = getBoundaryMatchName(f.properties);
+      const id = idByName.get(matchName);
+      if (id) map.set(id, f);
+    });
+    return map;
+  }, [features, idByName]);
+
   // Initialize zoom behavior
   useEffect(() => {
     if (!svgRef.current) return;
 
     const zoom = d3.zoom<SVGSVGElement, unknown>()
-      .scaleExtent([1, 8])
+      .scaleExtent([1, 20])
       .on('zoom', (event) => {
         const { k, x, y } = event.transform;
         setMapZoom({ k, x, y });
@@ -192,12 +205,50 @@ export function ChoroplethMap({
           );
       }
 
+      localSelectRef.current = true;
       onConstituencySelect?.(
         selectedConstituencyId === electionId ? null : electionId || null
       );
     },
     [features, projection, selectedConstituencyId, onConstituencySelect, transform, pathGenerator, width, height, idByName]
   );
+
+  // Zoom to constituency when selected externally (e.g. from ternary plot)
+  useEffect(() => {
+    if (selectedConstituencyId === prevSelectedRef.current) return;
+    prevSelectedRef.current = selectedConstituencyId;
+
+    if (localSelectRef.current) {
+      localSelectRef.current = false;
+      return;
+    }
+
+    if (!selectedConstituencyId || !svgRef.current || !zoomRef.current) return;
+
+    const feature = featureByElectionId.get(selectedConstituencyId);
+    if (!feature) return;
+
+    const bounds = pathGenerator.bounds(feature);
+    const [[x0, y0], [x1, y1]] = bounds;
+    const bboxWidth = x1 - x0;
+    const bboxHeight = y1 - y0;
+    const bboxCenterX = (x0 + x1) / 2;
+    const bboxCenterY = (y0 + y1) / 2;
+
+    const targetWidth = width * 0.25;
+    const scale = Math.min(targetWidth / bboxWidth, (height * 0.5) / bboxHeight, 8);
+
+    const translateX = width / 2 - bboxCenterX * scale;
+    const translateY = height / 2 - bboxCenterY * scale;
+
+    d3.select(svgRef.current)
+      .transition()
+      .duration(500)
+      .call(
+        zoomRef.current.transform,
+        d3.zoomIdentity.translate(translateX, translateY).scale(scale)
+      );
+  }, [selectedConstituencyId, featureByElectionId, pathGenerator, width, height]);
 
   if (width === 0 || height === 0) {
     return null;

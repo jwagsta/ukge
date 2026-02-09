@@ -1,8 +1,9 @@
 import { useMemo, useEffect, useState, useRef, useCallback } from 'react';
-import { useElectionStore, getYearLabel } from '@/store/electionStore';
+import { useElectionStore } from '@/store/electionStore';
 import { useUIStore } from '@/store/uiStore';
 import { getPartyColor } from '@/types/party';
 import { NATIONAL_VOTES } from '@/data/nationalSeats';
+import { curveMonotoneX, line as d3Line } from 'd3';
 
 interface VoteShareChartProps {
   height?: number;
@@ -11,11 +12,19 @@ interface VoteShareChartProps {
 const MIN_ZOOM = 1;
 const MAX_ZOOM = 5;
 
+// Stack order bottom→top: Other, LD, Con, Lab
+const STACK_PARTIES = ['other', 'ld', 'con', 'lab'] as const;
+const PARTY_COLORS: Record<string, string> = {
+  con: getPartyColor('con'),
+  lab: getPartyColor('lab'),
+  ld: getPartyColor('ld'),
+  other: '#808080',
+};
+
 export function VoteShareChart({ height = 100 }: VoteShareChartProps) {
   const { currentYear, availableYears, setYear } = useElectionStore();
-  const { chartXZoom, setChartXZoom, resetChartXZoom } = useUIStore();
+  const { chartXZoom, setChartXZoom, resetChartXZoom, hoveredChartYear, setHoveredChartYear } = useUIStore();
   const [dimensions, setDimensions] = useState({ width: 0 });
-  const [hoveredYear, setHoveredYear] = useState<number | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const dragRef = useRef<{ startMouseX: number; startZoomX: number } | null>(null);
@@ -31,7 +40,7 @@ export function VoteShareChart({ height = 100 }: VoteShareChartProps) {
   }, []);
 
   const { width } = dimensions;
-  const padding = { top: 20, right: 20, bottom: 45, left: 40 };
+  const padding = { top: 10, right: 20, bottom: 45, left: 40 };
   const chartWidth = width - padding.left - padding.right;
   const chartHeight = height - padding.top - padding.bottom;
 
@@ -47,6 +56,19 @@ export function VoteShareChart({ height = 100 }: VoteShareChartProps) {
 
   const normalizeYear = (y: number) => y === 197402 ? 1974.2 : y === 197410 ? 1974.8 : y;
 
+  const getShortYearLabel = (year: number): string => {
+    if (year === 197402) return "Feb'74";
+    if (year === 197410) return "Oct'74";
+    return year.toString();
+  };
+
+  // Nudge 1974 labels apart so they don't overlap
+  const getLabelXOffset = (year: number): number => {
+    if (year === 197402) return -8;
+    if (year === 197410) return 8;
+    return 0;
+  };
+
   const xScaleBase = useMemo(() => {
     const years = data.map(d => normalizeYear(d.year));
     const minYear = Math.min(...years);
@@ -60,8 +82,7 @@ export function VoteShareChart({ height = 100 }: VoteShareChartProps) {
     return xScaleBase(year) * chartXZoom.k + chartXZoom.x;
   }, [xScaleBase, chartXZoom]);
 
-  const maxPct = 50;
-  const yScale = (pct: number) => chartHeight - (pct / maxPct) * chartHeight;
+  const yScale = (pct: number) => chartHeight - (pct / 100) * chartHeight;
 
   const clampX = useCallback((x: number, k: number) => {
     return Math.min(0, Math.max(chartWidth - chartWidth * k, x));
@@ -113,14 +134,57 @@ export function VoteShareChart({ height = 100 }: VoteShareChartProps) {
     };
   }, [isDragging, chartXZoom.k, setChartXZoom, clampX]);
 
-  const generatePath = (key: 'conPct' | 'labPct' | 'ldPct' | 'otherPct') => {
-    if (data.length === 0) return '';
-    return data.map((d, i) => {
-      const x = xScale(d.year);
-      const y = yScale(d[key]);
-      return `${i === 0 ? 'M' : 'L'} ${x} ${y}`;
-    }).join(' ');
-  };
+  // Compute cumulative stack positions for each year
+  const stackedData = useMemo(() => {
+    const pctKeys: Record<typeof STACK_PARTIES[number], 'otherPct' | 'ldPct' | 'conPct' | 'labPct'> = {
+      other: 'otherPct',
+      ld: 'ldPct',
+      con: 'conPct',
+      lab: 'labPct',
+    };
+
+    return data.map(d => {
+      let cumulative = 0;
+      const bands: Record<string, { y0: number; y1: number }> = {};
+      for (const party of STACK_PARTIES) {
+        const val = d[pctKeys[party]];
+        bands[party] = { y0: cumulative, y1: cumulative + val };
+        cumulative += val;
+      }
+      return { year: d.year, bands };
+    });
+  }, [data]);
+
+  // Generate area path for a party band using D3 curveMonotoneX
+  const generateAreaPath = useCallback((party: typeof STACK_PARTIES[number]) => {
+    if (stackedData.length === 0) return '';
+
+    const points = stackedData.map(d => ({
+      x: xScale(d.year),
+      y0: yScale(d.bands[party].y0),
+      y1: yScale(d.bands[party].y1),
+    }));
+
+    // Top edge (left to right)
+    const topLine = d3Line<{ x: number; y1: number }>()
+      .x(d => d.x)
+      .y(d => d.y1)
+      .curve(curveMonotoneX);
+
+    // Bottom edge (right to left)
+    const bottomLine = d3Line<{ x: number; y0: number }>()
+      .x(d => d.x)
+      .y(d => d.y0)
+      .curve(curveMonotoneX);
+
+    const topPath = topLine(points);
+    const bottomPath = bottomLine([...points].reverse());
+
+    if (!topPath || !bottomPath) return '';
+
+    // Combine: top edge forward, then bottom edge backward
+    return topPath + 'L' + bottomPath.slice(1) + 'Z';
+  }, [stackedData, xScale, yScale]);
 
   if (width === 0) {
     return <div ref={containerRef} className="w-full" style={{ height }} />;
@@ -135,12 +199,12 @@ export function VoteShareChart({ height = 100 }: VoteShareChartProps) {
       <svg width={width} height={height} onWheel={handleWheel} onMouseDown={handleMouseDown} style={{ cursor }}>
         <defs>
           <clipPath id={clipId}>
-            <rect x={0} y={-padding.top} width={chartWidth} height={height} />
+            <rect x={-padding.left} y={-padding.top} width={chartWidth + padding.left} height={height} />
           </clipPath>
         </defs>
         <g transform={`translate(${padding.left}, ${padding.top})`}>
           {/* Y-axis labels (outside clip) */}
-          {[0, 10, 20, 30, 40, 50].map(pct => (
+          {[0, 50, 100].map(pct => (
             <text
               key={pct}
               x={-5}
@@ -156,7 +220,7 @@ export function VoteShareChart({ height = 100 }: VoteShareChartProps) {
           {/* Clipped chart content */}
           <g clipPath={`url(#${clipId})`}>
             {/* Grid lines */}
-            {[0, 10, 20, 30, 40, 50].map(pct => (
+            {[0, 25, 50, 75, 100].map(pct => (
               <line
                 key={pct}
                 x1={0}
@@ -165,6 +229,16 @@ export function VoteShareChart({ height = 100 }: VoteShareChartProps) {
                 y2={yScale(pct)}
                 stroke="#e5e7eb"
                 strokeWidth={1}
+              />
+            ))}
+
+            {/* Stacked area bands */}
+            {STACK_PARTIES.map(party => (
+              <path
+                key={party}
+                d={generateAreaPath(party)}
+                fill={PARTY_COLORS[party]}
+                opacity={0.85}
               />
             ))}
 
@@ -178,49 +252,45 @@ export function VoteShareChart({ height = 100 }: VoteShareChartProps) {
               strokeWidth={2}
             />
 
-            {/* Party lines */}
-            <path d={generatePath('conPct')} fill="none" stroke={getPartyColor('con')} strokeWidth={2.5} />
-            <path d={generatePath('labPct')} fill="none" stroke={getPartyColor('lab')} strokeWidth={2.5} />
-            <path d={generatePath('ldPct')} fill="none" stroke={getPartyColor('ld')} strokeWidth={1.5} opacity={0.7} />
-            <path d={generatePath('otherPct')} fill="none" stroke="#808080" strokeWidth={1.5} opacity={0.6} />
+            {/* Blue hover vertical line */}
+            {hoveredChartYear != null && hoveredChartYear !== currentYear && (() => {
+              const hx = xScale(hoveredChartYear);
+              return (
+                <line
+                  x1={hx} y1={0} x2={hx} y2={chartHeight}
+                  stroke="#3b82f6" strokeWidth={2}
+                />
+              );
+            })()}
 
             {/* Clickable hit areas for each year */}
             {data.map(d => {
               const isActive = d.year === currentYear;
-              const isHovered = d.year === hoveredYear;
+              const isHovered = d.year === hoveredChartYear;
               const x = xScale(d.year);
-              const winner = d.conPct > d.labPct ? 'con' : 'lab';
-              const winnerPct = winner === 'con' ? d.conPct : d.labPct;
+              const labelX = x + getLabelXOffset(d.year);
 
               return (
                 <g
                   key={d.year}
                   style={{ cursor: 'pointer' }}
                   onClick={() => setYear(d.year)}
-                  onMouseEnter={() => setHoveredYear(d.year)}
-                  onMouseLeave={() => setHoveredYear(null)}
+                  onMouseEnter={() => setHoveredChartYear(d.year)}
+                  onMouseLeave={() => setHoveredChartYear(null)}
                 >
                   <rect x={x - 15} y={0} width={30} height={chartHeight + 20} fill="transparent" />
-                  <circle
-                    cx={x}
-                    cy={yScale(winnerPct)}
-                    r={isActive || isHovered ? 5 : 3}
-                    fill={getPartyColor(winner)}
-                    stroke={isActive ? '#000' : isHovered ? '#666' : 'none'}
-                    strokeWidth={2}
-                  />
                   <line
-                    x1={x} y1={chartHeight} x2={x} y2={chartHeight + 5}
-                    stroke={isActive ? '#000' : '#999'} strokeWidth={1}
+                    x1={x} y1={chartHeight} x2={labelX} y2={chartHeight + 5}
+                    stroke={isActive ? '#000' : isHovered ? '#3b82f6' : '#999'} strokeWidth={1}
                   />
                   <text
-                    x={x}
+                    x={labelX}
                     y={chartHeight + 10}
                     textAnchor="end"
-                    transform={`rotate(-45, ${x}, ${chartHeight + 10})`}
-                    className={`text-[11px] ${isActive ? 'fill-black font-bold' : isHovered ? 'fill-gray-700' : 'fill-gray-500'}`}
+                    transform={`rotate(-45, ${labelX}, ${chartHeight + 10})`}
+                    className={`text-[11px] ${isActive ? 'fill-black font-bold' : isHovered ? 'fill-blue-500 font-medium' : 'fill-gray-500'}`}
                   >
-                    {getYearLabel(d.year)}
+                    {getShortYearLabel(d.year)}
                   </text>
                 </g>
               );

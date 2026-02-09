@@ -165,7 +165,7 @@ export function SmallMultiplesMap({
     if (!svgRef.current) return;
 
     const zoom = d3.zoom<SVGSVGElement, unknown>()
-      .scaleExtent([1, 8])
+      .scaleExtent([1, 20])
       .on('zoom', (event) => {
         const { k, x, y } = event.transform;
         setMapZoom({ k, x, y });

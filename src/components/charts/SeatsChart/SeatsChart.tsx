@@ -1,5 +1,5 @@
-import { useMemo, useEffect, useState, useRef, useCallback } from 'react';
-import { useElectionStore, getYearLabel } from '@/store/electionStore';
+import { useMemo, useEffect, useRef, useCallback, useState } from 'react';
+import { useElectionStore } from '@/store/electionStore';
 import { useUIStore } from '@/store/uiStore';
 import { getPartyColor } from '@/types/party';
 import { NATIONAL_SEATS } from '@/data/nationalSeats';
@@ -13,9 +13,8 @@ const MAX_ZOOM = 5;
 
 export function SeatsChart({ height = 120 }: SeatsChartProps) {
   const { currentYear, availableYears, setYear } = useElectionStore();
-  const { chartXZoom, setChartXZoom, resetChartXZoom } = useUIStore();
+  const { chartXZoom, setChartXZoom, resetChartXZoom, hoveredChartYear, setHoveredChartYear } = useUIStore();
   const [dimensions, setDimensions] = useState({ width: 0 });
-  const [hoveredYear, setHoveredYear] = useState<number | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const dragRef = useRef<{ startMouseX: number; startZoomX: number } | null>(null);
@@ -31,7 +30,7 @@ export function SeatsChart({ height = 120 }: SeatsChartProps) {
   }, []);
 
   const { width } = dimensions;
-  const padding = { top: 20, right: 20, bottom: 45, left: 40 };
+  const padding = { top: 20, right: 20, bottom: 5, left: 40 };
   const chartWidth = width - padding.left - padding.right;
   const chartHeight = height - padding.top - padding.bottom;
 
@@ -185,10 +184,21 @@ export function SeatsChart({ height = 120 }: SeatsChartProps) {
             <path d={generatePath('ld')} fill="none" stroke={getPartyColor('ld')} strokeWidth={1.5} opacity={0.7} />
             <path d={generatePath('other')} fill="none" stroke="#808080" strokeWidth={1.5} opacity={0.6} />
 
+            {/* Blue hover vertical line */}
+            {hoveredChartYear != null && hoveredChartYear !== currentYear && (() => {
+              const hx = xScale(hoveredChartYear);
+              return (
+                <line
+                  x1={hx} y1={0} x2={hx} y2={chartHeight}
+                  stroke="#3b82f6" strokeWidth={2}
+                />
+              );
+            })()}
+
             {/* Clickable hit areas for each year */}
             {data.map(d => {
               const isActive = d.year === currentYear;
-              const isHovered = d.year === hoveredYear;
+              const isHovered = d.year === hoveredChartYear;
               const x = xScale(d.year);
               const winner = d.con > d.lab ? 'con' : 'lab';
 
@@ -197,10 +207,10 @@ export function SeatsChart({ height = 120 }: SeatsChartProps) {
                   key={d.year}
                   style={{ cursor: 'pointer' }}
                   onClick={() => setYear(d.year)}
-                  onMouseEnter={() => setHoveredYear(d.year)}
-                  onMouseLeave={() => setHoveredYear(null)}
+                  onMouseEnter={() => setHoveredChartYear(d.year)}
+                  onMouseLeave={() => setHoveredChartYear(null)}
                 >
-                  <rect x={x - 15} y={0} width={30} height={chartHeight + 20} fill="transparent" />
+                  <rect x={x - 15} y={0} width={30} height={chartHeight} fill="transparent" />
                   <circle
                     cx={x}
                     cy={yScale(winner === 'con' ? d.con : d.lab)}
@@ -209,19 +219,6 @@ export function SeatsChart({ height = 120 }: SeatsChartProps) {
                     stroke={isActive ? '#000' : isHovered ? '#666' : 'none'}
                     strokeWidth={2}
                   />
-                  <line
-                    x1={x} y1={chartHeight} x2={x} y2={chartHeight + 5}
-                    stroke={isActive ? '#000' : '#999'} strokeWidth={1}
-                  />
-                  <text
-                    x={x}
-                    y={chartHeight + 10}
-                    textAnchor="end"
-                    transform={`rotate(-45, ${x}, ${chartHeight + 10})`}
-                    className={`text-[11px] ${isActive ? 'fill-black font-bold' : isHovered ? 'fill-gray-700' : 'fill-gray-500'}`}
-                  >
-                    {getYearLabel(d.year)}
-                  </text>
                 </g>
               );
             })}

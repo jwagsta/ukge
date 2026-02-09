@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
-import { useElectionStore, getYearLabel } from '@/store/electionStore';
+import { useElectionStore } from '@/store/electionStore';
+import { useUIStore } from '@/store/uiStore';
 import { getPartyColor } from '@/types/party';
 import { NATIONAL_VOTES } from '@/data/nationalSeats';
 
@@ -17,10 +18,12 @@ const PARTY_LABELS: Record<string, string> = {
 
 export function VoteShareBarChart({ height = 100, width = 200 }: VoteShareBarChartProps) {
   const { currentYear } = useElectionStore();
+  const { hoveredChartYear } = useUIStore();
+  const displayYear = hoveredChartYear ?? currentYear;
 
   const yearData = useMemo(() => {
-    return NATIONAL_VOTES.find(d => d.year === currentYear);
-  }, [currentYear]);
+    return NATIONAL_VOTES.find(d => d.year === displayYear);
+  }, [displayYear]);
 
   const bars = useMemo(() => {
     if (!yearData) return [];
@@ -35,13 +38,13 @@ export function VoteShareBarChart({ height = 100, width = 200 }: VoteShareBarCha
 
   if (!yearData) return null;
 
-  const padding = { top: 20, right: 8, bottom: 10, left: 30 };
+  const padding = { top: 8, right: 8, bottom: 4, left: 30 };
   const chartWidth = width - padding.left - padding.right;
   const chartHeight = height - padding.top - padding.bottom;
-  const barHeight = Math.min(18, (chartHeight - (bars.length - 1) * 3) / bars.length);
-  const barGap = 3;
+  const barGap = 2;
+  const barHeight = Math.min(16, (chartHeight - (bars.length - 1) * barGap) / bars.length);
   const totalBarsHeight = bars.length * barHeight + (bars.length - 1) * barGap;
-  const barsYOffset = (chartHeight - totalBarsHeight) / 2;
+  const barsYOffset = Math.max(0, (chartHeight - totalBarsHeight) / 2);
 
   const xScale = (pct: number) => (pct / 100) * chartWidth;
 
@@ -49,16 +52,6 @@ export function VoteShareBarChart({ height = 100, width = 200 }: VoteShareBarCha
     <div className="bg-white border-b border-gray-200" style={{ width, height }}>
       <svg width={width} height={height}>
         <g transform={`translate(${padding.left}, ${padding.top})`}>
-          {/* Year label */}
-          <text
-            x={chartWidth / 2}
-            y={-6}
-            textAnchor="middle"
-            className="text-[11px] fill-gray-500 font-medium"
-          >
-            {getYearLabel(currentYear)}
-          </text>
-
           {/* Bars */}
           {bars.map((bar, i) => {
             const y = barsYOffset + i * (barHeight + barGap);

@@ -21,6 +21,7 @@ interface UIState {
   ternaryZoom: ZoomTransform;
   mapZoom: ZoomTransform;
   chartXZoom: ChartXZoom;
+  hoveredChartYear: number | null;
 
   setMapType: (type: MapType) => void;
   setVotesPerDot: (value: number) => void;
@@ -32,6 +33,7 @@ interface UIState {
   resetMapZoom: () => void;
   setChartXZoom: (zoom: ChartXZoom) => void;
   resetChartXZoom: () => void;
+  setHoveredChartYear: (year: number | null) => void;
 }
 
 const DEFAULT_ZOOM: ZoomTransform = { k: 1, x: 0, y: 0 };
@@ -45,6 +47,7 @@ export const useUIStore = create<UIState>((set) => ({
   ternaryZoom: DEFAULT_ZOOM,
   mapZoom: DEFAULT_ZOOM,
   chartXZoom: DEFAULT_CHART_X_ZOOM,
+  hoveredChartYear: null,
 
   setMapType: (type) => set({ mapType: type }),
   setVotesPerDot: (value) => set({ votesPerDot: value }),
@@ -56,4 +59,5 @@ export const useUIStore = create<UIState>((set) => ({
   resetMapZoom: () => set({ mapZoom: DEFAULT_ZOOM }),
   setChartXZoom: (zoom) => set({ chartXZoom: zoom }),
   resetChartXZoom: () => set({ chartXZoom: DEFAULT_CHART_X_ZOOM }),
+  setHoveredChartYear: (year) => set({ hoveredChartYear: year }),
 }));
