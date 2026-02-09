@@ -8,6 +8,11 @@ export interface ZoomTransform {
   y: number; // translate y
 }
 
+export interface ChartXZoom {
+  k: number;  // x-axis scale factor (1 = no zoom)
+  x: number;  // x-axis translate in pixels
+}
+
 interface UIState {
   mapType: MapType;
   votesPerDot: number;
@@ -15,6 +20,7 @@ interface UIState {
   isMobile: boolean;
   ternaryZoom: ZoomTransform;
   mapZoom: ZoomTransform;
+  chartXZoom: ChartXZoom;
 
   setMapType: (type: MapType) => void;
   setVotesPerDot: (value: number) => void;
@@ -24,9 +30,12 @@ interface UIState {
   resetTernaryZoom: () => void;
   setMapZoom: (transform: ZoomTransform) => void;
   resetMapZoom: () => void;
+  setChartXZoom: (zoom: ChartXZoom) => void;
+  resetChartXZoom: () => void;
 }
 
 const DEFAULT_ZOOM: ZoomTransform = { k: 1, x: 0, y: 0 };
+const DEFAULT_CHART_X_ZOOM: ChartXZoom = { k: 1, x: 0 };
 
 export const useUIStore = create<UIState>((set) => ({
   mapType: 'choropleth',
@@ -35,6 +44,7 @@ export const useUIStore = create<UIState>((set) => ({
   isMobile: false,
   ternaryZoom: DEFAULT_ZOOM,
   mapZoom: DEFAULT_ZOOM,
+  chartXZoom: DEFAULT_CHART_X_ZOOM,
 
   setMapType: (type) => set({ mapType: type }),
   setVotesPerDot: (value) => set({ votesPerDot: value }),
@@ -44,4 +54,6 @@ export const useUIStore = create<UIState>((set) => ({
   resetTernaryZoom: () => set({ ternaryZoom: DEFAULT_ZOOM }),
   setMapZoom: (transform) => set({ mapZoom: transform }),
   resetMapZoom: () => set({ mapZoom: DEFAULT_ZOOM }),
+  setChartXZoom: (zoom) => set({ chartXZoom: zoom }),
+  resetChartXZoom: () => set({ chartXZoom: DEFAULT_CHART_X_ZOOM }),
 }));

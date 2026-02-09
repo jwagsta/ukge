@@ -1,64 +1,77 @@
 # UK General Election Results Visualization
 
-An interactive web app for visualizing UK General Election results from 1945 to present.
+An interactive web app for exploring UK General Election results across Great Britain from 1955 to 2024. Six synchronized visualizations let you compare constituency-level voting patterns, geographic distributions, and national trends across 19 elections.
 
 ## Features
 
-- **Ternary Plot**: Visualize constituencies as points in a triangle showing Labour/Conservative/Other vote shares
-- **Dot Density Map**: Geographic visualization where each dot represents votes (e.g., 1 dot = 10,000 votes)
-- **Interactive**: Hover and click to explore individual constituencies
-- **Year Selection**: Browse election results from 1945 to 2024
-- **Linked Views**: Hover over a constituency in one view to highlight it in the other
+- **Ternary Plot** — Constituencies plotted in a triangle showing Labour / Conservative / Other vote shares, with animated transitions between elections
+- **Choropleth Map** — Constituencies colored by winning party on a geographic map of Great Britain
+- **Dot Density Map** — Each dot represents a configurable number of votes, distributed geographically by constituency
+- **Hexagonal Cartogram** — Each constituency shown as an equal-sized hexagon, removing geographic distortion
+- **Small Multiples** — Four side-by-side maps showing vote share for Labour, Conservative, Lib Dem, and Other
+- **Seats Chart** — Line chart of national seat counts across all elections (top bar)
+- **Linked Views** — Hover or select a constituency in any visualization to highlight it in all others
+- **Timeline Playback** — Animate through elections with play/pause/step controls
+- **Constituency Search** — Find and select constituencies by name
 
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js 18+ and npm
+- Node.js 18+
 
 ### Installation
 
 ```bash
-# Install dependencies
 npm install
-
-# Download boundary data
-chmod +x scripts/downloadBoundaries.sh
-./scripts/downloadBoundaries.sh
-
-# Start development server
 npm run dev
 ```
 
-### Data Setup
+Election and boundary data files are included in `public/data/` — no additional data setup is required.
 
-The app requires two types of data:
+## Data
 
-#### 1. Election Results
+**Scope**: Great Britain only (England, Scotland, Wales). Northern Ireland is excluded.
 
-Election data should be placed in `public/data/elections/` as JSON files named by year (e.g., `2024.json`).
+**Elections**: 19 elections from 1955 to 2024, including both February and October 1974. Results are sourced from [Electoral Calculus](https://www.electoralcalculus.co.uk/) and stored as JSON in `public/data/elections/`.
 
-**Sources:**
-- [House of Commons Library - Historical Results (1918-2019)](https://commonslibrary.parliament.uk/research-briefings/cbp-8647/)
-- [House of Commons Library - 2024 Results](https://commonslibrary.parliament.uk/research-briefings/cbp-10009/)
+**Boundaries**: Era-specific GeoJSON files sourced from [parlconst.org](https://www.parlconst.org/) in `public/data/boundaries/`. Seven boundary sets cover redistricting changes across the period:
 
-A sample `2024.json` is included. To convert CSV data to JSON:
+| Boundary file | Elections covered |
+|---|---|
+| `1955.json` | 1955–1970 |
+| `1974.json` | Feb 1974–1979 |
+| `1983.json` | 1983–1992 |
+| `1997.json` | 1997–2001 |
+| `2005.json` | 2005 (hybrid: 1997 England/Wales + 2005 Scotland) |
+| `2010.json` | 2010–2019 |
+| `2024.json` | 2024 |
 
-```bash
-npx ts-node scripts/prepareElectionData.ts input.csv 2019
-```
+### Election Data Schema
 
-#### 2. Constituency Boundaries
-
-Boundary data (GeoJSON or TopoJSON) should be placed in `public/data/boundaries/constituencies.json`.
-
-**Sources:**
-- [UK-GeoJSON (GitHub)](https://github.com/martinjc/UK-GeoJSON)
-- [ONS Open Geography Portal](https://geoportal.statistics.gov.uk/)
-
-Run the download script:
-```bash
-./scripts/downloadBoundaries.sh
+```json
+{
+  "year": 2024,
+  "date": "2024-07-04",
+  "totalSeats": 632,
+  "boundaryVersion": "2024",
+  "constituencies": [
+    {
+      "constituencyId": "EC_ALDERSHOT",
+      "constituencyName": "Aldershot",
+      "region": "south_east",
+      "country": "england",
+      "electorate": 78569,
+      "turnout": 61.8,
+      "validVotes": 48544,
+      "winner": "lab",
+      "majority": 5683,
+      "results": [
+        { "partyId": "lab", "partyName": "Labour", "votes": 19764, "voteShare": 40.71 }
+      ]
+    }
+  ]
+}
 ```
 
 ## Project Structure
@@ -66,72 +79,56 @@ Run the download script:
 ```
 ukge/
 ├── public/data/
-│   ├── elections/       # Election JSON files by year
-│   └── boundaries/      # GeoJSON/TopoJSON boundary files
+│   ├── elections/          # 19 election JSON files (1955–2024)
+│   └── boundaries/         # 7 era-specific boundary GeoJSON files
 ├── src/
 │   ├── components/
-│   │   ├── charts/      # TernaryPlot and DotDensityMap
-│   │   ├── controls/    # Year selector, filters
-│   │   └── layout/      # Header, Sidebar
-│   ├── store/           # Zustand state management
-│   ├── types/           # TypeScript interfaces
-│   └── utils/           # D3 helpers
-└── scripts/             # Data preparation scripts
+│   │   ├── charts/         # TernaryPlot, ChoroplethMap, DotDensityMap,
+│   │   │                   # HexMap, SmallMultiplesMap, SeatsChart
+│   │   ├── controls/       # PlayButton (timeline playback)
+│   │   ├── layout/         # Header
+│   │   └── panels/         # ConstituencyPanel (search + details)
+│   ├── store/              # Zustand stores (election data, UI state)
+│   ├── types/              # TypeScript interfaces (election, party, geography)
+│   ├── utils/              # D3 helpers, constituency name matching
+│   └── hooks/              # useWindowSize
+├── scripts/                # Data processing and validation scripts
+├── tests/data/             # 720 data validation tests
+└── .github/                # CI/CD (GitHub Actions → GitHub Pages)
 ```
 
 ## Technology Stack
 
 - **React 18** with TypeScript
-- **Vite** for fast development
-- **D3.js** for visualizations
+- **Vite** for bundling and HMR
+- **D3.js 7** for all visualizations
 - **Zustand** for state management
 - **Tailwind CSS** for styling
+- **Vitest** for testing
 
 ## Development
 
 ```bash
-# Start dev server
-npm run dev
-
-# Build for production
-npm run build
-
-# Preview production build
-npm run preview
+npm run dev          # Start dev server with hot reload
+npm run build        # TypeScript check + production build
+npm run lint         # ESLint
+npm run preview      # Preview production build
+npm run test:data    # Run 720 data validation tests
 ```
 
-## Data Format
+## Data Processing
 
-### Election Data Schema
+Scripts for preparing data from upstream sources (not needed for normal development):
 
-```json
-{
-  "year": 2024,
-  "constituencies": [
-    {
-      "constituencyId": "E14000530",
-      "constituencyName": "Holborn and St Pancras",
-      "region": "london",
-      "country": "england",
-      "year": 2024,
-      "electorate": 87543,
-      "turnout": 62.3,
-      "validVotes": 54540,
-      "winner": "lab",
-      "majority": 14839,
-      "results": [
-        {
-          "partyId": "lab",
-          "partyName": "Labour",
-          "candidate": "Keir Starmer",
-          "votes": 25678,
-          "voteShare": 47.1
-        }
-      ]
-    }
-  ]
-}
-```
+- `scripts/processElectoralCalculus.ts` — Convert Electoral Calculus flat files to JSON
+- `scripts/processParlconstBoundaries.ts` — Combine parlconst.org boundary files into era-specific GeoJSON
+- `scripts/removeNorthernIreland.ts` — Filter Northern Ireland constituencies from election data
+- `scripts/validateBoundaryMatching.ts` — Validate constituency name matching between boundaries and elections
+- `scripts/fix_data.py` — Fix boundary IDs, polygon winding order, and election metadata (idempotent)
+
+## Deployment
+
+GitHub Actions deploys to GitHub Pages on push to `main`. The app is served at `/ukge/`.
 
 ## License
 

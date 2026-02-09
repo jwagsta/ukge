@@ -4,12 +4,8 @@ import type { FeatureCollection, Polygon, MultiPolygon } from 'geojson';
 import type { ElectionResult } from '@/types/election';
 import { getPartyColor } from '@/types/party';
 import { useUIStore } from '@/store/uiStore';
-import {
-  type BoundaryProperties,
-  getBoundaryDisplayName,
-  getBoundaryMatchName,
-  normalizeConstituencyName,
-} from '@/utils/constituencyMatching';
+import type { BoundaryProperties } from '@/utils/constituencyMatching';
+import { computeHexLayout, hexToPixel, hexPath } from '@/utils/hexLayout';
 
 type BoundaryData = FeatureCollection<Polygon | MultiPolygon, BoundaryProperties> | null;
 
@@ -22,166 +18,6 @@ interface HexMapProps {
   hoveredConstituencyId?: string | null;
   onConstituencySelect?: (id: string | null) => void;
   onConstituencyHover?: (id: string | null) => void;
-}
-
-interface HexPosition {
-  q: number; // axial coordinate
-  r: number; // axial coordinate
-  x: number; // pixel x (for direct positioning)
-  y: number; // pixel y
-  constituencyId: string;
-  constituencyName: string;
-}
-
-// Calculate centroid of a GeoJSON geometry
-function calculateCentroid(geometry: Polygon | MultiPolygon): [number, number] {
-  // Use d3.geoCentroid for accurate geographic centroid
-  return d3.geoCentroid(geometry);
-}
-
-// Convert geographic coordinates to hex grid positions
-function generateGeographicHexPositions(
-  constituencies: ElectionResult[],
-  boundaries: BoundaryData
-): HexPosition[] {
-  if (!boundaries || boundaries.features.length === 0) {
-    return [];
-  }
-
-  // Create a map of boundary features by normalized name
-  const boundaryMap = new Map<string, { centroid: [number, number]; name: string }>();
-
-  boundaries.features.forEach(feature => {
-    const centroid = calculateCentroid(feature.geometry);
-    const displayName = getBoundaryDisplayName(feature.properties);
-    const matchName = getBoundaryMatchName(feature.properties);
-
-    if (matchName) {
-      boundaryMap.set(matchName, { centroid, name: displayName });
-    }
-  });
-
-  // Match constituencies to their geographic positions
-  const positionsWithGeo: Array<{
-    constituencyId: string;
-    constituencyName: string;
-    lon: number;
-    lat: number;
-  }> = [];
-
-  constituencies.forEach(c => {
-    // Try to find matching boundary using normalized name
-    const normalizedName = normalizeConstituencyName(c.constituencyName);
-    const boundary = boundaryMap.get(normalizedName);
-
-    if (boundary) {
-      positionsWithGeo.push({
-        constituencyId: c.constituencyId,
-        constituencyName: c.constituencyName,
-        lon: boundary.centroid[0],
-        lat: boundary.centroid[1],
-      });
-    }
-  });
-
-  if (positionsWithGeo.length === 0) {
-    return [];
-  }
-
-  // Find bounds of the geographic data
-  const lons = positionsWithGeo.map(p => p.lon);
-  const lats = positionsWithGeo.map(p => p.lat);
-  const minLon = Math.min(...lons);
-  const maxLon = Math.max(...lons);
-  const minLat = Math.min(...lats);
-  const maxLat = Math.max(...lats);
-
-  // Normalize to 0-1 range and create hex grid
-  // Use more columns than rows since UK is taller than wide
-  const gridHeight = Math.ceil(Math.sqrt(positionsWithGeo.length * 2));
-  const gridWidth = Math.ceil(positionsWithGeo.length / gridHeight);
-
-  // Convert to hex grid positions
-  const hexPositions: HexPosition[] = positionsWithGeo.map(p => {
-    // Normalize coordinates (flip lat because SVG y increases downward)
-    const normX = (p.lon - minLon) / (maxLon - minLon || 1);
-    const normY = 1 - (p.lat - minLat) / (maxLat - minLat || 1);
-
-    // Convert to hex grid coordinates
-    // Scale to grid size
-    const gridX = normX * gridWidth;
-    const gridY = normY * gridHeight;
-
-    // Convert to axial hex coordinates
-    const r = Math.round(gridY);
-    const q = Math.round(gridX - r / 2);
-
-    return {
-      q,
-      r,
-      x: 0, // Will be calculated later
-      y: 0,
-      constituencyId: p.constituencyId,
-      constituencyName: p.constituencyName,
-    };
-  });
-
-  // Resolve collisions - if two hexes have the same q,r, shift one
-  const occupiedPositions = new Map<string, HexPosition>();
-
-  hexPositions.forEach(pos => {
-    let q = pos.q;
-    let r = pos.r;
-    let key = `${q},${r}`;
-
-    // Spiral outward to find empty spot if occupied
-    let radius = 0;
-    while (occupiedPositions.has(key) && radius < 20) {
-      radius++;
-      // Check neighbors in expanding rings
-      let found = false;
-      for (let dq = -radius; dq <= radius && !found; dq++) {
-        for (let dr = -radius; dr <= radius && !found; dr++) {
-          if (Math.abs(dq) === radius || Math.abs(dr) === radius) {
-            const newQ = pos.q + dq;
-            const newR = pos.r + dr;
-            const newKey = `${newQ},${newR}`;
-            if (!occupiedPositions.has(newKey)) {
-              q = newQ;
-              r = newR;
-              key = newKey;
-              found = true;
-            }
-          }
-        }
-      }
-    }
-
-    pos.q = q;
-    pos.r = r;
-    occupiedPositions.set(key, pos);
-  });
-
-  return hexPositions;
-}
-
-// Convert axial coordinates to pixel position
-function hexToPixel(q: number, r: number, size: number): { x: number; y: number } {
-  const x = size * (3/2 * q);
-  const y = size * (Math.sqrt(3)/2 * q + Math.sqrt(3) * r);
-  return { x, y };
-}
-
-// Generate hexagon path
-function hexPath(size: number): string {
-  const points: string[] = [];
-  for (let i = 0; i < 6; i++) {
-    const angle = (Math.PI / 3) * i - Math.PI / 6;
-    const x = size * Math.cos(angle);
-    const y = size * Math.sin(angle);
-    points.push(`${x},${y}`);
-  }
-  return `M${points.join('L')}Z`;
 }
 
 export function HexMap({
@@ -202,7 +38,7 @@ export function HexMap({
   // Generate hex positions from constituency data and boundaries
   const hexPositions = useMemo(() => {
     if (electionData.length === 0) return [];
-    return generateGeographicHexPositions(electionData, boundaries);
+    return computeHexLayout(electionData, boundaries);
   }, [electionData, boundaries]);
 
   // Create lookup map for election data
@@ -367,7 +203,7 @@ export function HexMap({
     );
   }
 
-  const hexPathD = hexPath(hexSize * 0.92); // Slightly smaller for gap
+  const hexPathD = hexPath(hexSize);
 
   return (
     <div className="relative" style={{ width, height }}>

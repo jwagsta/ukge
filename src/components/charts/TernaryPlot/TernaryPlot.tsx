@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo, useRef, useEffect, memo } from 'react';
+import React, { useState, useCallback, useMemo, useRef, useEffect, useId, memo } from 'react';
 import * as d3 from 'd3';
 import type { TernaryDataPoint, ElectionResult } from '@/types/election';
 import { getPartyColor } from '@/types/party';
@@ -54,51 +54,178 @@ const MAX_TRAJECTORY_CACHE = 5;
 const positionCache = new Map<string, { x: number; y: number }>();
 const MAX_POSITION_CACHE = 700; // ~1 election worth of constituencies
 
-// Memoized axis labels and ticks - only recomputes when radius changes
-const AxisDecorations = memo(function AxisDecorations({ radius }: { radius: number }) {
+// Compute dynamic tick positions for a triangle edge by mapping fixed screen-space
+// positions back through the inverse zoom transform to find what data-space
+// percentage values are visible, then placing ticks at nice round intervals.
+function computeEdgeTicks(
+  p0: { x: number; y: number }, // edge start (0% end) in center-relative coords
+  p1: { x: number; y: number }, // edge end (100% end) in center-relative coords
+  zoom: { x: number; y: number; k: number }
+): { value: number; x: number; y: number; major: boolean }[] {
+  const edge = { x: p1.x - p0.x, y: p1.y - p0.y };
+  const edgeLenSq = edge.x * edge.x + edge.y * edge.y;
+
+  // Map fixed screen endpoints back to data space via inverse zoom
+  const d0 = { x: (p0.x - zoom.x) / zoom.k, y: (p0.y - zoom.y) / zoom.k };
+  const d1 = { x: (p1.x - zoom.x) / zoom.k, y: (p1.y - zoom.y) / zoom.k };
+
+  // Project data-space positions onto the edge to get percentage parameters
+  const t0 = ((d0.x - p0.x) * edge.x + (d0.y - p0.y) * edge.y) / edgeLenSq;
+  const t1 = ((d1.x - p0.x) * edge.x + (d1.y - p0.y) * edge.y) / edgeLenSq;
+
+  // Visible data range clamped to [0, 1]
+  const visMin = Math.max(0, Math.min(t0, t1));
+  const visMax = Math.min(1, Math.max(t0, t1));
+  const range = visMax - visMin;
+  if (range <= 0) return [];
+
+  // Pick the coarsest nice step that gives at least 3 intervals.
+  // Searched coarse-to-fine so we always pick the simplest sufficient step.
+  const niceSteps = [0.25, 0.1, 0.05, 0.02, 0.01];
+  const step = niceSteps.find(s => range / s >= 3) || 0.01;
+
+  // Major ticks (labeled) at coarser intervals to avoid label clutter
+  const majorStep = step <= 0.02 ? 0.1 : step <= 0.05 ? 0.25 : step <= 0.1 ? 0.25 : 0.25;
+
+  const ticks: { value: number; x: number; y: number; major: boolean }[] = [];
+  const first = Math.ceil((visMin - 1e-9) / step) * step;
+
+  for (let t = first; t <= visMax + step * 0.01; t += step) {
+    const val = Math.round(t * 100) / 100;
+    if (val < 0 || val > 1) continue;
+
+    // Convert data parameter back to screen position on the fixed edge
+    const s = (val - t0) / (t1 - t0);
+    if (s < -0.001 || s > 1.001) continue;
+    const sc = Math.max(0, Math.min(1, s));
+
+    const isMajor =
+      Math.abs(val % majorStep) < 0.001 ||
+      Math.abs(val % majorStep - majorStep) < 0.001;
+
+    ticks.push({
+      value: val,
+      x: p0.x + sc * edge.x,
+      y: p0.y + sc * edge.y,
+      major: isMajor,
+    });
+  }
+
+  return ticks;
+}
+
+// Outward normal for a triangle edge (clockwise winding in screen coords)
+function edgeOutwardNormal(start: { x: number; y: number }, end: { x: number; y: number }) {
+  const dx = end.x - start.x;
+  const dy = end.y - start.y;
+  const len = Math.sqrt(dx * dx + dy * dy);
+  return { nx: dy / len, ny: -dx / len };
+}
+
+// Clamp center-relative zoom offset (zx, zy) so the fixed triangle window
+// always shows data within [0,1] on all three axes. The feasible region for
+// (zx, zy) at scale k is itself a triangle defined by three half-plane constraints
+// derived from requiring each fixed-frame vertex's inverse-zoom to stay inside
+// the data triangle.
+function clampZoomToTriangle(zx: number, zy: number, k: number, R: number): { x: number; y: number } {
+  const a = R * (1 - k) / 2;   // lower bound: zy >= a
+  const b = R * (k - 1);       // upper bound: ±√3·zx + zy <= b
+  const sqrt3 = Math.sqrt(3);
+
+  const v1 = zy < a;                     // below bottom edge
+  const v2 = sqrt3 * zx + zy > b;        // past left data edge
+  const v3 = -sqrt3 * zx + zy > b;       // past right data edge
+
+  if (!v1 && !v2 && !v3) return { x: zx, y: zy };
+
+  // Two constraints violated → snap to corner of feasible triangle
+  if (v1 && v2) return { x: (b - a) / sqrt3, y: a };
+  if (v1 && v3) return { x: -(b - a) / sqrt3, y: a };
+  if (v2 && v3) return { x: 0, y: b };
+
+  // Single constraint violated → project onto the violated edge
+  if (v1) {
+    const xMin = -(b - a) / sqrt3;
+    const xMax = (b - a) / sqrt3;
+    return { x: Math.max(xMin, Math.min(xMax, zx)), y: a };
+  }
+  if (v2) {
+    // Project onto √3·x + y = b. Normal = (√3, 1), length² = 4.
+    const excess = (sqrt3 * zx + zy - b) / 4;
+    const px = zx - sqrt3 * excess;
+    const py = zy - excess;
+    // Clamp to edge segment (between top corner and bottom-right corner)
+    if (py < a) return { x: (b - a) / sqrt3, y: a };
+    if (py > b) return { x: 0, y: b };
+    return { x: px, y: py };
+  }
+  // v3
+  const excess = (-sqrt3 * zx + zy - b) / 4;
+  const px = zx + sqrt3 * excess;
+  const py = zy - excess;
+  if (py < a) return { x: -(b - a) / sqrt3, y: a };
+  if (py > b) return { x: 0, y: b };
+  return { x: px, y: py };
+}
+
+// Memoized axis labels and ticks - recomputes when radius or zoom changes
+const AxisDecorations = memo(function AxisDecorations({
+  radius,
+  zoomX,
+  zoomY,
+  zoomK,
+}: {
+  radius: number;
+  zoomX: number;
+  zoomY: number;
+  zoomK: number;
+}) {
   const top = { x: 0, y: -radius };
   const bottomRight = { x: radius * Math.cos(Math.PI / 6), y: radius * Math.sin(Math.PI / 6) };
   const bottomLeft = { x: -radius * Math.cos(Math.PI / 6), y: radius * Math.sin(Math.PI / 6) };
-  const ticks = [0, 0.25, 0.5, 0.75, 1];
-  const tickLength = 6;
+
+  const zoom = { x: zoomX, y: zoomY, k: zoomK };
+  const leftTicks = computeEdgeTicks(bottomLeft, top, zoom);
+  const rightTicks = computeEdgeTicks(top, bottomRight, zoom);
+  const bottomTicks = computeEdgeTicks(bottomRight, bottomLeft, zoom);
+
+  const leftNorm = edgeOutwardNormal(bottomLeft, top);
+  const rightNorm = edgeOutwardNormal(top, bottomRight);
+  const bottomNorm = edgeOutwardNormal(bottomRight, bottomLeft);
+
+  const tickLen = 6;
+
+  function renderTicks(
+    ticks: ReturnType<typeof computeEdgeTicks>,
+    norm: { nx: number; ny: number },
+    keyPrefix: string
+  ) {
+    return ticks.map(({ value, x, y }) => (
+      <g key={`${keyPrefix}-${value}`}>
+        <line
+          x1={x} y1={y}
+          x2={x + norm.nx * tickLen} y2={y + norm.ny * tickLen}
+          stroke="#666"
+          strokeWidth={1}
+        />
+        <text
+          x={x + norm.nx * (tickLen + 10)}
+          y={y + norm.ny * (tickLen + 10)}
+          textAnchor="middle"
+          alignmentBaseline="middle"
+          className="text-[10px] fill-gray-400"
+        >
+          {Math.round(value * 100)}
+        </text>
+      </g>
+    ));
+  }
 
   return (
     <>
-      {/* Left edge ticks */}
-      {ticks.map((t, i) => {
-        const x = bottomLeft.x + (top.x - bottomLeft.x) * t;
-        const y = bottomLeft.y + (top.y - bottomLeft.y) * t;
-        const angle = Math.atan2(top.y - bottomLeft.y, top.x - bottomLeft.x) - Math.PI / 2;
-        return (
-          <g key={`left-${i}`}>
-            <line x1={x} y1={y} x2={x + Math.cos(angle) * tickLength} y2={y + Math.sin(angle) * tickLength} stroke="#666" strokeWidth={1} />
-            {t > 0 && <text x={x + Math.cos(angle) * (tickLength + 10)} y={y + Math.sin(angle) * (tickLength + 10)} textAnchor="middle" alignmentBaseline="middle" className="text-[10px] fill-gray-400">{Math.round(t * 100)}</text>}
-          </g>
-        );
-      })}
-      {/* Right edge ticks */}
-      {ticks.map((t, i) => {
-        const x = top.x + (bottomRight.x - top.x) * t;
-        const y = top.y + (bottomRight.y - top.y) * t;
-        const angle = Math.atan2(bottomRight.y - top.y, bottomRight.x - top.x) - Math.PI / 2;
-        return (
-          <g key={`right-${i}`}>
-            <line x1={x} y1={y} x2={x + Math.cos(angle) * tickLength} y2={y + Math.sin(angle) * tickLength} stroke="#666" strokeWidth={1} />
-            {t > 0 && <text x={x + Math.cos(angle) * (tickLength + 10)} y={y + Math.sin(angle) * (tickLength + 10)} textAnchor="middle" alignmentBaseline="middle" className="text-[10px] fill-gray-400">{Math.round(t * 100)}</text>}
-          </g>
-        );
-      })}
-      {/* Bottom edge ticks */}
-      {ticks.map((t, i) => {
-        const x = bottomRight.x + (bottomLeft.x - bottomRight.x) * t;
-        const y = bottomRight.y;
-        return (
-          <g key={`bottom-${i}`}>
-            <line x1={x} y1={y} x2={x} y2={y + tickLength} stroke="#666" strokeWidth={1} />
-            {t > 0 && <text x={x} y={y + tickLength + 10} textAnchor="middle" className="text-[10px] fill-gray-400">{Math.round(t * 100)}</text>}
-          </g>
-        );
-      })}
+      {renderTicks(leftTicks, leftNorm, 'left')}
+      {renderTicks(rightTicks, rightNorm, 'right')}
+      {renderTicks(bottomTicks, bottomNorm, 'bottom')}
       {/* Edge labels */}
       <g transform={`translate(${(bottomLeft.x + top.x) / 2 - 35}, ${(bottomLeft.y + top.y) / 2}) rotate(-60)`}>
         <text x={0} y={0} textAnchor="middle" className="text-[12px] font-semibold" fill="#DC241f">Labour %</text>
@@ -133,6 +260,7 @@ export function TernaryPlot({
   const dataIdRef = useRef<string>(''); // Track data identity to detect real changes
   const { availableYears, currentYear } = useElectionStore();
   const { ternaryZoom, setTernaryZoom, resetTernaryZoom } = useUIStore();
+  const clipId = useId();
 
   // Margins for labels: top needs less, bottom/sides need more for labels
   const marginTop = 25;
@@ -354,27 +482,46 @@ export function TernaryPlot({
     const svg = d3.select(svgRef.current);
 
     const zoom = d3.zoom<SVGSVGElement, unknown>()
-      .scaleExtent([0.5, 8])
+      .scaleExtent([1, 10])
+      .constrain((transform) => {
+        const k = transform.k;
+        // Convert SVG-space to center-relative
+        const zx = k * centerX + transform.x - centerX;
+        const zy = k * centerY + transform.y - centerY;
+        // Clamp to keep visible data within the triangle
+        const clamped = clampZoomToTriangle(zx, zy, k, radius);
+        // Convert back to SVG-space
+        const tx = clamped.x + centerX * (1 - k);
+        const ty = clamped.y + centerY * (1 - k);
+        return d3.zoomIdentity.translate(tx, ty).scale(k);
+      })
       .on('zoom', (event) => {
-        const { k, x, y } = event.transform;
-        setTernaryZoom({ k, x, y });
+        const t = event.transform;
+        // Convert SVG-space transform to center-relative coordinates
+        setTernaryZoom({
+          k: t.k,
+          x: t.k * centerX + t.x - centerX,
+          y: t.k * centerY + t.y - centerY,
+        });
       });
 
     zoomRef.current = zoom;
     svg.call(zoom);
 
-    // Apply stored transform on mount
+    // Apply stored transform on mount (reverse the center-relative conversion)
     if (ternaryZoom.k !== 1 || ternaryZoom.x !== 0 || ternaryZoom.y !== 0) {
+      const svgX = ternaryZoom.x + centerX * (1 - ternaryZoom.k);
+      const svgY = ternaryZoom.y + centerY * (1 - ternaryZoom.k);
       svg.call(
         zoom.transform,
-        d3.zoomIdentity.translate(ternaryZoom.x, ternaryZoom.y).scale(ternaryZoom.k)
+        d3.zoomIdentity.translate(svgX, svgY).scale(ternaryZoom.k)
       );
     }
 
     return () => {
       svg.on('.zoom', null);
     };
-  }, [width, height, setTernaryZoom]); // Don't include ternaryZoom to avoid infinite loop
+  }, [width, height, centerX, centerY, radius, setTernaryZoom]); // Don't include ternaryZoom to avoid infinite loop
 
   // Handle zoom reset
   const handleResetZoom = useCallback(() => {
@@ -402,9 +549,11 @@ export function TernaryPlot({
     [radius]
   );
 
+  const gridDivisions = ternaryZoom.k >= 4 ? 50 : ternaryZoom.k >= 2 ? 20 : 10;
+
   const gridLines = useMemo(
-    () => generateGridLines(radius, 10),
-    [radius]
+    () => generateGridLines(radius, gridDivisions),
+    [radius, gridDivisions]
   );
 
   const handlePointMouseEnter = useCallback(
@@ -487,24 +636,105 @@ export function TernaryPlot({
           for {data.length} constituencies
         </desc>
 
-        {/* Zoom container */}
-        <g transform={`translate(${ternaryZoom.x}, ${ternaryZoom.y}) scale(${ternaryZoom.k})`}>
-        <g transform={`translate(${centerX}, ${centerY})`}>
-          {/* Grid lines */}
-          <g className="grid-lines" opacity={0.15}>
-            {gridLines.map((line, i) => (
-              <line
-                key={i}
-                x1={line.x1}
-                y1={line.y1}
-                x2={line.x2}
-                y2={line.y2}
-                stroke="#999"
-                strokeWidth={0.5}
-              />
-            ))}
-          </g>
+        {/* Clip path for triangle boundary */}
+        <defs>
+          <clipPath id={clipId}>
+            <path d={trianglePath} transform={`translate(${centerX}, ${centerY})`} />
+          </clipPath>
+        </defs>
 
+        {/* Layer 1: Clipped zoomable content */}
+        <g clipPath={`url(#${clipId})`}>
+          <g transform={`translate(${centerX}, ${centerY})`}>
+            <g transform={`translate(${ternaryZoom.x}, ${ternaryZoom.y}) scale(${ternaryZoom.k})`}>
+              {/* Grid lines */}
+              <g className="grid-lines" opacity={0.15}>
+                {gridLines.map((line, i) => (
+                  <line
+                    key={i}
+                    x1={line.x1}
+                    y1={line.y1}
+                    x2={line.x2}
+                    y2={line.y2}
+                    stroke="#999"
+                    strokeWidth={0.5 / ternaryZoom.k}
+                  />
+                ))}
+              </g>
+
+              {/* Trajectory for selected constituency */}
+              {selectedConstituencyId && trajectoryData.length > 1 && (
+                <g className="trajectory">
+                  {/* Path connecting points */}
+                  <path
+                    d={trajectoryData.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x - centerX} ${p.y - centerY}`).join(' ')}
+                    fill="none"
+                    stroke="#333"
+                    strokeWidth={2 / ternaryZoom.k}
+                    opacity={0.8}
+                  />
+                  {/* Points with year labels */}
+                  {trajectoryData.map((p) => {
+                    const isCurrent = p.year === currentYear;
+                    return (
+                      <g key={p.year}>
+                        <circle
+                          cx={p.x - centerX}
+                          cy={p.y - centerY}
+                          r={(isCurrent ? 5 : 3) / ternaryZoom.k}
+                          fill={getPartyColor(p.winner)}
+                          stroke={isCurrent ? '#000' : '#fff'}
+                          strokeWidth={(isCurrent ? 2 : 1) / ternaryZoom.k}
+                        />
+                        <text
+                          x={p.x - centerX}
+                          y={p.y - centerY - 8 / ternaryZoom.k}
+                          textAnchor="middle"
+                          className={`${isCurrent ? 'font-bold fill-black' : 'font-medium fill-gray-700'}`}
+                          style={{ fontSize: `${10 / ternaryZoom.k}px` }}
+                        >
+                          {p.year.toString().slice(-2)}
+                        </text>
+                      </g>
+                    );
+                  })}
+                </g>
+              )}
+
+              {/* Data points */}
+              <g className="data-points">
+                {animatedPoints.map((point) => {
+                  const isSelected = selectedConstituencyId === point.constituencyId;
+                  const isHovered = hoveredConstituencyId === point.constituencyId;
+                  const isHighlighted = isSelected || isHovered;
+                  const hasSelection = selectedConstituencyId !== null;
+
+                  return (
+                    <circle
+                      key={point.constituencyId}
+                      cx={point.x - centerX}
+                      cy={point.y - centerY}
+                      r={(isHighlighted ? 6 : 4) / ternaryZoom.k}
+                      fill={getPartyColor(point.winner)}
+                      fillOpacity={hasSelection && !isHighlighted ? 0.2 : 0.7}
+                      stroke={isHighlighted ? '#000' : 'none'}
+                      strokeWidth={isHighlighted ? 2 / ternaryZoom.k : 0}
+                      style={{ cursor: 'pointer' }}
+                      onMouseEnter={(e) => handlePointMouseEnter(point, e)}
+                      onMouseLeave={handlePointMouseLeave}
+                      onClick={() => handlePointClick(point)}
+                      role="graphics-symbol"
+                      aria-label={`${point.constituencyName}: Labour ${(point.labour * 100).toFixed(1)}%, Conservative ${(point.conservative * 100).toFixed(1)}%, Other ${(point.other * 100).toFixed(1)}%`}
+                    />
+                  );
+                })}
+              </g>
+            </g>
+          </g>
+        </g>
+
+        {/* Layer 2: Fixed frame (triangle border + axis decorations) */}
+        <g transform={`translate(${centerX}, ${centerY})`} pointerEvents="none">
           {/* Triangle boundary */}
           <path
             d={trianglePath}
@@ -514,76 +744,8 @@ export function TernaryPlot({
           />
 
           {/* Axis labels and tick marks */}
-          <AxisDecorations radius={radius} />
+          <AxisDecorations radius={radius} zoomX={ternaryZoom.x} zoomY={ternaryZoom.y} zoomK={ternaryZoom.k} />
         </g>
-
-        {/* Trajectory for selected constituency */}
-        {selectedConstituencyId && trajectoryData.length > 1 && (
-          <g className="trajectory">
-            {/* Path connecting points */}
-            <path
-              d={trajectoryData.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x} ${p.y}`).join(' ')}
-              fill="none"
-              stroke="#333"
-              strokeWidth={2}
-              opacity={0.8}
-            />
-            {/* Points with year labels */}
-            {trajectoryData.map((p) => {
-              const isCurrent = p.year === currentYear;
-              return (
-                <g key={p.year}>
-                  <circle
-                    cx={p.x}
-                    cy={p.y}
-                    r={isCurrent ? 5 : 3}
-                    fill={getPartyColor(p.winner)}
-                    stroke={isCurrent ? '#000' : '#fff'}
-                    strokeWidth={isCurrent ? 2 : 1}
-                  />
-                  <text
-                    x={p.x}
-                    y={p.y - 8}
-                    textAnchor="middle"
-                    className={`text-[10px] ${isCurrent ? 'font-bold fill-black' : 'font-medium fill-gray-700'}`}
-                  >
-                    {p.year.toString().slice(-2)}
-                  </text>
-                </g>
-              );
-            })}
-          </g>
-        )}
-
-        {/* Data points */}
-        <g className="data-points">
-          {animatedPoints.map((point) => {
-            const isSelected = selectedConstituencyId === point.constituencyId;
-            const isHovered = hoveredConstituencyId === point.constituencyId;
-            const isHighlighted = isSelected || isHovered;
-            const hasSelection = selectedConstituencyId !== null;
-
-            return (
-              <circle
-                key={point.constituencyId}
-                cx={point.x}
-                cy={point.y}
-                r={isHighlighted ? 6 : 4}
-                fill={getPartyColor(point.winner)}
-                fillOpacity={hasSelection && !isHighlighted ? 0.2 : 0.7}
-                stroke={isHighlighted ? '#000' : 'none'}
-                strokeWidth={isHighlighted ? 2 : 0}
-                style={{ cursor: 'pointer' }}
-                onMouseEnter={(e) => handlePointMouseEnter(point, e)}
-                onMouseLeave={handlePointMouseLeave}
-                onClick={() => handlePointClick(point)}
-                role="graphics-symbol"
-                aria-label={`${point.constituencyName}: Labour ${(point.labour * 100).toFixed(1)}%, Conservative ${(point.conservative * 100).toFixed(1)}%, Other ${(point.other * 100).toFixed(1)}%`}
-              />
-            );
-          })}
-        </g>
-        </g>{/* Close zoom container */}
       </svg>
 
       {/* Tooltip */}

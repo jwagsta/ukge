@@ -5,21 +5,28 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Build Commands
 
 ```bash
-npm run dev      # Start Vite dev server with HMR
-npm run build    # TypeScript check + production build
-npm run lint     # ESLint validation
-npm run preview  # Preview production build
+npm run dev        # Start Vite dev server with HMR
+npm run build      # TypeScript check + production build
+npm run lint       # ESLint validation
+npm run preview    # Preview production build
+npm run test:data  # Run data validation tests (720 tests)
 ```
 
 ## Data Setup
 
-Boundary files are sourced from parlconst.org and stored in `parlconst_boundaries/`.
+Boundary files are sourced from parlconst.org and stored in `parlconst_boundaries/`. **Do not delete `parlconst_boundaries/`** — it contains manually downloaded GeoJSON source files that are difficult to re-obtain. It is not used at runtime but is the input for `scripts/processParlconstBoundaries.ts`.
 
-Data processing scripts (run with `npx ts-node`):
+GB coastline data is stored in `reference_data/gb_coastline.geojson` (ONS Countries Dec 2024 BSC, 200m). **Do not delete `reference_data/`** — it is the input for coastline clipping.
+
+Data processing scripts (run with `npx ts-node` or `python3`):
 - `scripts/processElectoralCalculus.ts` - Convert Electoral Calculus .txt files to JSON
 - `scripts/processParlconstBoundaries.ts` - Combine parlconst.org boundary files into era-specific files
+- `scripts/clip_to_coastline.py` - Clip boundary polygons to GB coastline (requires `shapely`)
 - `scripts/removeNorthernIreland.ts` - Filter NI constituencies from election data
 - `scripts/validateBoundaryMatching.ts` - Validate constituency name matching between boundaries and election data
+- `scripts/fix_data.py` - Fix boundary IDs, winding order, election metadata; idempotent, safe to re-run
+
+Boundary processing pipeline order: `processParlconstBoundaries.ts` → `clip_to_coastline.py` → `fix_data.py`
 
 ## Architecture
 
@@ -35,8 +42,9 @@ Data processing scripts (run with `npx ts-node`):
 - TernaryPlot - Vote share distribution in triangular coordinates
 - DotDensityMap - Geographic map where each dot = N votes
 - ChoroplethMap - Constituencies colored by winning party
-- HexMap - Hexagonal cartogram
-- SeatsChart - National seat distribution bar chart
+- HexMap - Hexagonal cartogram (LAPJV optimal assignment, see below)
+- SmallMultiplesMap - Side-by-side maps for Lab/Con/LD/Other vote share
+- SeatsChart - National seat distribution line chart (top bar)
 
 **Linked Views**: Hover/select in one visualization highlights in others via store state.
 
@@ -83,6 +91,22 @@ useElectionStore.getState().setYear(2019);
 ```
 
 D3 visualization components receive `width`, `height`, `data`, and selection/hover callbacks as props.
+
+**1974 year encoding**: Feb/Oct 1974 elections use `197402`/`197410` as numeric year identifiers. These sort *after* 2024 numerically, so any code that sorts or scales by year must normalize them first (e.g., `197402 → 1974.2`). Use `getYearLabel()` from `electionStore` for display strings.
+
+**Hex map layout** (`src/utils/hexLayout.ts`): Uses LAPJV (Jonker-Volgenant) linear assignment (`src/utils/lapjv.ts`) to optimally place constituencies on a pointy-top hex grid. Pipeline: project centroids with UK Albers → expand dense regions (London 2.2x, others 1.0x — expansion-only to avoid disconnecting Scotland) → push peripheral regions outward (Scotland north, Wales west, SW southwest) → generate GB-shaped grid mask → LAPJV assignment. Layout is cached per boundary era keyed by boundary feature names (not just counts — the 2010 and 2024 eras both have 632 seats).
+
+**Boundary winding order**: D3 with a projection expects exterior polygon rings to be **clockwise** in geographic coordinates (lon/lat). Counterclockwise outer rings render as globe-minus-polygon, flooding the map. The `scripts/fix_data.py` script corrects winding. If adding new boundary files, verify winding with the test suite.
+
+## Testing
+
+Data validation tests in `tests/data/` (720 tests):
+- `election-schema.test.ts` - Required fields, types, valid regions/countries
+- `election-arithmetic.test.ts` - Vote totals, share sums, turnout consistency
+- `election-constraints.test.ts` - No NI parties, Scotland/Wales party constraints
+- `cross-matching.test.ts` - Election IDs match boundary IDs (known exception: 1992 Milton Keynes)
+- `boundary-schema.test.ts` - GeoJSON structure, required properties
+- `boundary-geometry.test.ts` - Coordinate ranges, ring closure, winding (known exceptions for island constituencies)
 
 ## Deployment
 

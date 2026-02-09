@@ -38,7 +38,36 @@
       "Bash(/usr/bin/env node:*)",
       "Bash(/usr/bin/python3:*)",
       "Bash(gh auth status:*)",
-      "Bash(git init:*)"
+      "Bash(git init:*)",
+      "Bash(wc:*)",
+      "Bash(grep:*)",
+      "Bash(awk:*)",
+      "Bash(npm run dev:*)",
+      "Bash(python3:*)",
+      "Bash(npx ts-node:*)",
+      "Bash(npx tsx:*)",
+      "Bash(for year in 1918 1950 1955 1974 1983 1997 2005 2010 2024)",
+      "Bash(do)",
+      "Bash(echo:*)",
+      "Bash(done)",
+      "WebFetch(domain:registry.npmjs.org)",
+      "Bash(npm install:*)",
+      "Bash(npx vitest run:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "WebFetch(domain:www.redblobgames.com)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:sabrinadchan.github.io)",
+      "WebFetch(domain:open-innovations.org)",
+      "Bash(npm view:*)",
+      "WebFetch(domain:services1.arcgis.com)",
+      "Bash(npm run test:data:*)",
+      "Bash(/tmp/claude/debug_key.mjs:*)",
+      "Bash(node /tmp/claude/debug_key.mjs:*)"
     ]
+  },
+  "sandbox": {
+    "enabled": true,
+    "autoAllowBashIfSandboxed": true
   }
 }

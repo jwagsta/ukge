@@ -10,6 +10,9 @@ import { ChoroplethMap } from '@/components/charts/ChoroplethMap/ChoroplethMap';
 import { HexMap } from '@/components/charts/HexMap/HexMap';
 import { SmallMultiplesMap } from '@/components/charts/SmallMultiplesMap/SmallMultiplesMap';
 import { SeatsChart } from '@/components/charts/SeatsChart/SeatsChart';
+import { SeatsBarChart } from '@/components/charts/SeatsBarChart/SeatsBarChart';
+import { VoteShareChart } from '@/components/charts/VoteShareChart/VoteShareChart';
+import { VoteShareBarChart } from '@/components/charts/VoteShareBarChart/VoteShareBarChart';
 import { ConstituencyPanel } from '@/components/panels/ConstituencyPanel';
 
 interface ConstituencyProperties {
@@ -24,7 +27,7 @@ interface ConstituencyProperties {
 
 type BoundaryData = FeatureCollection<Polygon | MultiPolygon, ConstituencyProperties> | null;
 
-const SEATS_CHART_HEIGHT = 120;
+const CHART_ROW_HEIGHT = 100;
 const BOTTOM_PANEL_HEIGHT = 200;
 
 // Cache for boundary files - limited to 2 entries to control memory
@@ -116,7 +119,20 @@ function App() {
       <Header />
 
       {/* National seats chart */}
-      <SeatsChart height={SEATS_CHART_HEIGHT} />
+      <div className="flex">
+        <div className="flex-1 min-w-0">
+          <SeatsChart height={CHART_ROW_HEIGHT} />
+        </div>
+        <SeatsBarChart height={CHART_ROW_HEIGHT} width={200} />
+      </div>
+
+      {/* National vote share chart */}
+      <div className="flex">
+        <div className="flex-1 min-w-0">
+          <VoteShareChart height={CHART_ROW_HEIGHT} />
+        </div>
+        <VoteShareBarChart height={CHART_ROW_HEIGHT} width={200} />
+      </div>
 
       <main
         ref={containerRef}
