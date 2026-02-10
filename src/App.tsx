@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, useMemo } from 'react';
 import type { FeatureCollection, Polygon, MultiPolygon } from 'geojson';
 import { useElectionStore, getBoundaryVersion } from '@/store/electionStore';
 import { useUIStore } from '@/store/uiStore';
-import { useContainerDimensions } from '@/hooks/useWindowSize';
+import { useContainerDimensions, useWindowSize } from '@/hooks/useWindowSize';
 import { Header } from '@/components/layout/Header';
 import { TernaryPlot } from '@/components/charts/TernaryPlot/TernaryPlot';
 import { DotDensityMap } from '@/components/charts/DotDensityMap/DotDensityMap';
@@ -29,6 +29,7 @@ type BoundaryData = FeatureCollection<Polygon | MultiPolygon, ConstituencyProper
 
 const CHART_ROW_HEIGHT = 100;
 const BOTTOM_PANEL_HEIGHT = 200;
+const WIDE_BREAKPOINT = 1000;
 
 // Cache for boundary files - limited to 2 entries to control memory
 const boundaryCache = new Map<string, BoundaryData>();
@@ -37,6 +38,8 @@ const MAX_BOUNDARY_CACHE = 2;
 function App() {
   const containerRef = useRef<HTMLDivElement>(null);
   const { width, height } = useContainerDimensions(containerRef);
+  const { width: windowWidth } = useWindowSize();
+  const isWide = windowWidth >= WIDE_BREAKPOINT;
   const [boundaries, setBoundaries] = useState<BoundaryData>(null);
   const [boundaryVersion, setBoundaryVersion] = useState<string>('');
 
@@ -128,184 +131,242 @@ function App() {
     tryLoadBoundary();
   }, [currentYear, boundaryVersion, boundaries]);
 
-  // Calculate view heights - always reserve space for bottom panel
-  const mainHeight = height - BOTTOM_PANEL_HEIGHT;
-  const ternaryWidth = Math.floor(width / 2);
-  const mapWidth = width - ternaryWidth;
+  // Calculate layout dimensions based on wide/narrow mode
+  const contentHeight = height;
+  const leftWidth = isWide ? Math.floor(width / 2) : width;
+  const rightWidth = isWide ? width - leftWidth : width;
+  const barChartWidth = isWide ? Math.min(200, Math.floor(leftWidth * 0.3)) : 200;
+
+  // Wide: ternary fills remaining height in left column; map gets full content height
+  // Narrow: ternary and map split width, sharing height below chart rows
+  // Note: contentHeight is the full container height (below Header), so in narrow mode
+  // we subtract chart rows since they're rendered inside the container
+  const ternaryHeight = isWide
+    ? contentHeight - 2 * CHART_ROW_HEIGHT - BOTTOM_PANEL_HEIGHT
+    : contentHeight - 2 * CHART_ROW_HEIGHT - BOTTOM_PANEL_HEIGHT;
+  const ternaryWidth = isWide ? leftWidth : Math.floor(width / 2);
+  const mapWidth = isWide ? rightWidth : width - ternaryWidth;
+  const mapHeight = isWide
+    ? contentHeight - BOTTOM_PANEL_HEIGHT
+    : contentHeight - 2 * CHART_ROW_HEIGHT - BOTTOM_PANEL_HEIGHT;
+
+  // Shared map overlay JSX
+  const mapToggleOverlay = (
+    <div className="absolute top-2 left-2 z-10 flex flex-col gap-1">
+      <div className="flex rounded-md border border-gray-300 overflow-hidden shadow-sm bg-white">
+        <button
+          onClick={() => useUIStore.getState().setMapType('choropleth')}
+          className={`px-2 py-1 text-xs transition-colors ${
+            mapType === 'choropleth'
+              ? 'bg-blue-600 text-white'
+              : 'bg-white text-gray-700 hover:bg-gray-50'
+          }`}
+        >
+          Map
+        </button>
+        <button
+          onClick={() => useUIStore.getState().setMapType('hex')}
+          className={`px-2 py-1 text-xs transition-colors ${
+            mapType === 'hex'
+              ? 'bg-blue-600 text-white'
+              : 'bg-white text-gray-700 hover:bg-gray-50'
+          }`}
+        >
+          Hex
+        </button>
+        <button
+          onClick={() => useUIStore.getState().setMapType('dots')}
+          className={`px-2 py-1 text-xs transition-colors ${
+            mapType === 'dots'
+              ? 'bg-blue-600 text-white'
+              : 'bg-white text-gray-700 hover:bg-gray-50'
+          }`}
+        >
+          Dots
+        </button>
+      </div>
+      {(mapType === 'choropleth' || mapType === 'hex') && (
+        <select
+          value={mapColorMode}
+          onChange={(e) => useUIStore.getState().setMapColorMode(e.target.value)}
+          className="px-2 py-1 text-xs bg-white border border-gray-300 rounded shadow-sm"
+        >
+          <option value="winner">Winner</option>
+          {topParties.map((p) => (
+            <option key={p.id} value={p.id}>{p.shortName}</option>
+          ))}
+        </select>
+      )}
+    </div>
+  );
+
+  // Shared map content JSX
+  const mapContent = (
+    <div className="relative" style={{ width: mapWidth, height: mapHeight }}>
+      {mapType === 'choropleth' && (
+        <ChoroplethMap
+          electionData={electionData}
+          boundaries={boundaries}
+          width={mapWidth}
+          height={mapHeight}
+          selectedConstituencyId={selectedConstituencyId}
+          hoveredConstituencyId={hoveredConstituencyId}
+          onConstituencySelect={setSelectedConstituency}
+          onConstituencyHover={setHoveredConstituency}
+        />
+      )}
+      {mapType === 'dots' && (
+        <DotDensityMap
+          electionData={electionData}
+          boundaries={boundaries}
+          width={mapWidth}
+          height={mapHeight}
+          votesPerDot={votesPerDot}
+          selectedConstituencyId={selectedConstituencyId}
+          hoveredConstituencyId={hoveredConstituencyId}
+          onConstituencySelect={setSelectedConstituency}
+          onConstituencyHover={setHoveredConstituency}
+        />
+      )}
+      {mapType === 'hex' && (
+        <HexMap
+          electionData={electionData}
+          boundaries={boundaries}
+          width={mapWidth}
+          height={mapHeight}
+          selectedConstituencyId={selectedConstituencyId}
+          hoveredConstituencyId={hoveredConstituencyId}
+          onConstituencySelect={setSelectedConstituency}
+          onConstituencyHover={setHoveredConstituency}
+        />
+      )}
+      {mapToggleOverlay}
+    </div>
+  );
+
+  // Loading/error overlays
+  const loadingOverlay = isLoading && (
+    <div className="absolute inset-0 flex items-center justify-center bg-white/80 z-10">
+      <div className="flex items-center gap-3 bg-white rounded-lg shadow-lg px-6 py-4">
+        <div className="w-5 h-5 border-2 border-blue-600 border-t-transparent rounded-full animate-spin" />
+        <span className="text-gray-700">Loading {currentYear} election data...</span>
+      </div>
+    </div>
+  );
+
+  const errorOverlay = error && (
+    <div className="absolute inset-0 flex items-center justify-center bg-white/80 z-10">
+      <div className="bg-red-50 border border-red-200 rounded-lg px-6 py-4 max-w-md">
+        <h3 className="text-red-800 font-semibold mb-1">Error loading data</h3>
+        <p className="text-red-600 text-sm">{error}</p>
+        <p className="text-gray-500 text-xs mt-2">
+          Make sure the election data files are in public/data/elections/
+        </p>
+      </div>
+    </div>
+  );
+
+  const emptyState = !isLoading && !error && electionData.length === 0 && (
+    <div className="flex-1 flex items-center justify-center">
+      <div className="text-center max-w-md p-6">
+        <h2 className="text-xl font-semibold text-gray-900 mb-2">
+          No Data Available
+        </h2>
+        <p className="text-gray-600 mb-4">
+          Election data for {currentYear} hasn't been loaded yet.
+        </p>
+        <p className="text-sm text-gray-500">
+          Place election data JSON files in{' '}
+          <code className="bg-gray-100 px-1 rounded">public/data/elections/</code>
+        </p>
+      </div>
+    </div>
+  );
 
   return (
     <div className="h-screen flex flex-col bg-gray-50">
       <Header />
 
-      {/* National seats chart */}
-      <div className="flex">
-        <div className="flex-1 min-w-0">
-          <SeatsChart height={CHART_ROW_HEIGHT} />
-        </div>
-        <SeatsBarChart height={CHART_ROW_HEIGHT} width={200} />
-      </div>
-
-      {/* National vote share chart */}
-      <div className="flex">
-        <div className="flex-1 min-w-0">
-          <VoteShareChart height={CHART_ROW_HEIGHT} />
-        </div>
-        <VoteShareBarChart height={CHART_ROW_HEIGHT} width={200} />
-      </div>
-
-      <main
-        ref={containerRef}
-        className="flex-1 flex flex-col overflow-hidden"
-      >
-        {isLoading && (
-          <div className="absolute inset-0 flex items-center justify-center bg-white/80 z-10">
-            <div className="flex items-center gap-3 bg-white rounded-lg shadow-lg px-6 py-4">
-              <div className="w-5 h-5 border-2 border-blue-600 border-t-transparent rounded-full animate-spin" />
-              <span className="text-gray-700">Loading {currentYear} election data...</span>
-            </div>
-          </div>
-        )}
-
-        {error && (
-          <div className="absolute inset-0 flex items-center justify-center bg-white/80 z-10">
-            <div className="bg-red-50 border border-red-200 rounded-lg px-6 py-4 max-w-md">
-              <h3 className="text-red-800 font-semibold mb-1">Error loading data</h3>
-              <p className="text-red-600 text-sm">{error}</p>
-              <p className="text-gray-500 text-xs mt-2">
-                Make sure the election data files are in public/data/elections/
-              </p>
-            </div>
-          </div>
-        )}
+      <div ref={containerRef} className="flex-1 flex flex-col overflow-hidden">
+        {loadingOverlay}
+        {errorOverlay}
 
         {!error && width > 0 && height > 0 && (
-          <>
-            {/* Main split view: Ternary on left, Map on right */}
-            <div className="flex flex-1" style={{ height: mainHeight }}>
-              {/* Ternary Plot - always rendered to preserve animation state */}
-              <div className="border-r border-gray-200" style={{ width: ternaryWidth, height: mainHeight }}>
-                <TernaryPlot
-                  data={ternaryData}
-                  width={ternaryWidth}
-                  height={mainHeight}
-                  selectedConstituencyId={selectedConstituencyId}
-                  hoveredConstituencyId={hoveredConstituencyId}
-                  onConstituencySelect={setSelectedConstituency}
-                  onConstituencyHover={setHoveredConstituency}
-                />
-              </div>
-
-              {/* Map (Choropleth, Dot Density, or Hex) */}
-              <div className="relative" style={{ width: mapWidth, height: mainHeight }}>
-                {mapType === 'choropleth' && (
-                  <ChoroplethMap
-                    electionData={electionData}
-                    boundaries={boundaries}
-                    width={mapWidth}
-                    height={mainHeight}
-                    selectedConstituencyId={selectedConstituencyId}
-                    hoveredConstituencyId={hoveredConstituencyId}
-                    onConstituencySelect={setSelectedConstituency}
-                    onConstituencyHover={setHoveredConstituency}
-                  />
-                )}
-                {mapType === 'dots' && (
-                  <DotDensityMap
-                    electionData={electionData}
-                    boundaries={boundaries}
-                    width={mapWidth}
-                    height={mainHeight}
-                    votesPerDot={votesPerDot}
-                    selectedConstituencyId={selectedConstituencyId}
-                    hoveredConstituencyId={hoveredConstituencyId}
-                    onConstituencySelect={setSelectedConstituency}
-                    onConstituencyHover={setHoveredConstituency}
-                  />
-                )}
-                {mapType === 'hex' && (
-                  <HexMap
-                    electionData={electionData}
-                    boundaries={boundaries}
-                    width={mapWidth}
-                    height={mainHeight}
-                    selectedConstituencyId={selectedConstituencyId}
-                    hoveredConstituencyId={hoveredConstituencyId}
-                    onConstituencySelect={setSelectedConstituency}
-                    onConstituencyHover={setHoveredConstituency}
-                  />
-                )}
-                {/* Map type toggle overlay */}
-                <div className="absolute top-2 left-2 z-10 flex flex-col gap-1">
-                  <div className="flex rounded-md border border-gray-300 overflow-hidden shadow-sm bg-white">
-                    <button
-                      onClick={() => useUIStore.getState().setMapType('choropleth')}
-                      className={`px-2 py-1 text-xs transition-colors ${
-                        mapType === 'choropleth'
-                          ? 'bg-blue-600 text-white'
-                          : 'bg-white text-gray-700 hover:bg-gray-50'
-                      }`}
-                    >
-                      Map
-                    </button>
-                    <button
-                      onClick={() => useUIStore.getState().setMapType('hex')}
-                      className={`px-2 py-1 text-xs transition-colors ${
-                        mapType === 'hex'
-                          ? 'bg-blue-600 text-white'
-                          : 'bg-white text-gray-700 hover:bg-gray-50'
-                      }`}
-                    >
-                      Hex
-                    </button>
-                    <button
-                      onClick={() => useUIStore.getState().setMapType('dots')}
-                      className={`px-2 py-1 text-xs transition-colors ${
-                        mapType === 'dots'
-                          ? 'bg-blue-600 text-white'
-                          : 'bg-white text-gray-700 hover:bg-gray-50'
-                      }`}
-                    >
-                      Dots
-                    </button>
+          isWide ? (
+            <>
+              {/* Wide layout: left column (charts + ternary) | right column (map) */}
+              <div className="flex flex-1" style={{ height: contentHeight - BOTTOM_PANEL_HEIGHT }}>
+                {/* Left column: charts stacked above ternary */}
+                <div className="border-r border-gray-200 flex flex-col" style={{ width: leftWidth }}>
+                  <div className="flex">
+                    <div className="flex-1 min-w-0">
+                      <SeatsChart height={CHART_ROW_HEIGHT} />
+                    </div>
+                    <SeatsBarChart height={CHART_ROW_HEIGHT} width={barChartWidth} />
                   </div>
-                  {(mapType === 'choropleth' || mapType === 'hex') && (
-                    <select
-                      value={mapColorMode}
-                      onChange={(e) => useUIStore.getState().setMapColorMode(e.target.value)}
-                      className="px-2 py-1 text-xs bg-white border border-gray-300 rounded shadow-sm"
-                    >
-                      <option value="winner">Winner</option>
-                      {topParties.map((p) => (
-                        <option key={p.id} value={p.id}>{p.shortName}</option>
-                      ))}
-                    </select>
-                  )}
+                  <div className="flex">
+                    <div className="flex-1 min-w-0">
+                      <VoteShareChart height={CHART_ROW_HEIGHT} />
+                    </div>
+                    <VoteShareBarChart height={CHART_ROW_HEIGHT} width={barChartWidth} />
+                  </div>
+                  <div style={{ width: leftWidth, height: ternaryHeight }}>
+                    <TernaryPlot
+                      data={ternaryData}
+                      width={leftWidth}
+                      height={ternaryHeight}
+                      selectedConstituencyId={selectedConstituencyId}
+                      hoveredConstituencyId={hoveredConstituencyId}
+                      onConstituencySelect={setSelectedConstituency}
+                      onConstituencyHover={setHoveredConstituency}
+                    />
+                  </div>
                 </div>
+
+                {/* Right column: map full height */}
+                {mapContent}
               </div>
-            </div>
 
-            {/* Bottom constituency panel - always visible */}
-            <ConstituencyPanel height={BOTTOM_PANEL_HEIGHT} />
-          </>
+              <ConstituencyPanel height={BOTTOM_PANEL_HEIGHT} />
+            </>
+          ) : (
+            <>
+              {/* Narrow layout: charts on top, then ternary + map side by side */}
+              <div className="flex">
+                <div className="flex-1 min-w-0">
+                  <SeatsChart height={CHART_ROW_HEIGHT} />
+                </div>
+                <SeatsBarChart height={CHART_ROW_HEIGHT} width={barChartWidth} />
+              </div>
+              <div className="flex">
+                <div className="flex-1 min-w-0">
+                  <VoteShareChart height={CHART_ROW_HEIGHT} />
+                </div>
+                <VoteShareBarChart height={CHART_ROW_HEIGHT} width={barChartWidth} />
+              </div>
+
+              <div className="flex flex-1" style={{ height: mapHeight }}>
+                <div className="border-r border-gray-200" style={{ width: ternaryWidth, height: ternaryHeight }}>
+                  <TernaryPlot
+                    data={ternaryData}
+                    width={ternaryWidth}
+                    height={ternaryHeight}
+                    selectedConstituencyId={selectedConstituencyId}
+                    hoveredConstituencyId={hoveredConstituencyId}
+                    onConstituencySelect={setSelectedConstituency}
+                    onConstituencyHover={setHoveredConstituency}
+                  />
+                </div>
+                {mapContent}
+              </div>
+
+              <ConstituencyPanel height={BOTTOM_PANEL_HEIGHT} />
+            </>
+          )
         )}
 
-        {!isLoading && !error && electionData.length === 0 && (
-          <div className="flex-1 flex items-center justify-center">
-            <div className="text-center max-w-md p-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-2">
-                No Data Available
-              </h2>
-              <p className="text-gray-600 mb-4">
-                Election data for {currentYear} hasn't been loaded yet.
-              </p>
-              <p className="text-sm text-gray-500">
-                Place election data JSON files in{' '}
-                <code className="bg-gray-100 px-1 rounded">public/data/elections/</code>
-              </p>
-            </div>
-          </div>
-        )}
-      </main>
+        {emptyState}
+      </div>
     </div>
   );
 }
