@@ -139,6 +139,9 @@ export function SeatsChart({ height = 120 }: SeatsChartProps) {
           </clipPath>
         </defs>
         <g transform={`translate(${padding.left}, ${padding.top})`}>
+          {/* Chart label */}
+          <text x={2} y={-8} className="text-[11px] fill-gray-400 font-medium">Seats</text>
+
           {/* Y-axis labels (outside clip) */}
           {[0, 100, 200, 300, 400].map(seats => (
             <text

@@ -40,7 +40,7 @@ export function VoteShareChart({ height = 100 }: VoteShareChartProps) {
   }, []);
 
   const { width } = dimensions;
-  const padding = { top: 10, right: 20, bottom: 45, left: 40 };
+  const padding = { top: 20, right: 20, bottom: 45, left: 40 };
   const chartWidth = width - padding.left - padding.right;
   const chartHeight = height - padding.top - padding.bottom;
 
@@ -203,6 +203,9 @@ export function VoteShareChart({ height = 100 }: VoteShareChartProps) {
           </clipPath>
         </defs>
         <g transform={`translate(${padding.left}, ${padding.top})`}>
+          {/* Chart label */}
+          <text x={2} y={-8} className="text-[11px] fill-gray-400 font-medium">Vote Share</text>
+
           {/* Y-axis labels (outside clip) */}
           {[0, 50, 100].map(pct => (
             <text

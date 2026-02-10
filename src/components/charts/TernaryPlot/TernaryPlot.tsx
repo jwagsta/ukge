@@ -253,6 +253,8 @@ export function TernaryPlot({
   onConstituencyHover,
 }: TernaryPlotProps) {
   const [tooltip, setTooltip] = useState<TooltipData | null>(null);
+  const [showInfo, setShowInfo] = useState(false);
+  const infoRef = useRef<HTMLDivElement>(null);
   const [animatedPoints, setAnimatedPoints] = useState<AnimatedPoint[]>([]);
   const [trajectoryData, setTrajectoryData] = useState<TrajectoryPoint[]>([]);
   const animationRef = useRef<number | null>(null);
@@ -524,6 +526,18 @@ export function TernaryPlot({
     };
   }, [width, height, centerX, centerY, radius, setTernaryZoom]); // Don't include ternaryZoom to avoid infinite loop
 
+  // Close info panel on click outside
+  useEffect(() => {
+    if (!showInfo) return;
+    const handleClickOutside = (e: MouseEvent) => {
+      if (infoRef.current && !infoRef.current.contains(e.target as Node)) {
+        setShowInfo(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [showInfo]);
+
   // Handle zoom reset
   const handleResetZoom = useCallback(() => {
     if (svgRef.current && zoomRef.current) {
@@ -591,7 +605,7 @@ export function TernaryPlot({
 
   return (
     <div className="relative" style={{ width, height }}>
-      {/* Zoom controls */}
+      {/* Zoom controls and info button */}
       <div className="absolute top-2 left-2 z-10 flex flex-col gap-1">
         <div className="flex rounded-md border border-gray-300 overflow-hidden shadow-sm bg-white">
           <button
@@ -622,6 +636,27 @@ export function TernaryPlot({
             Reset
           </button>
         )}
+        <div className="relative" ref={infoRef}>
+          <button
+            onClick={() => setShowInfo(prev => !prev)}
+            className={`w-5 h-5 rounded-full border flex items-center justify-center transition-colors ${
+              showInfo
+                ? 'border-blue-400 text-blue-600 bg-blue-50'
+                : 'border-gray-300 text-gray-400 hover:text-gray-600 hover:border-gray-400'
+            }`}
+            aria-label="How to read this chart"
+          >
+            <span className="text-xs font-medium">i</span>
+          </button>
+          {showInfo && (
+            <div className="absolute left-7 top-0 w-64 bg-white rounded-lg shadow-lg border border-gray-200 p-3 text-xs text-gray-700 leading-relaxed z-50">
+              <div className="font-semibold text-gray-900 mb-1">Ternary Plot</div>
+              <p className="mb-1.5">Each dot is a constituency. Its position shows the three-way vote split between Labour, Conservative, and all other parties.</p>
+              <p className="mb-1.5">A dot near a corner means that party dominated. A dot near an edge means the "other" vote was low. Dots in the centre had an even three-way split.</p>
+              <p>Click a constituency to see how its vote share has changed over time.</p>
+            </div>
+          )}
+        </div>
       </div>
       <svg
         ref={svgRef}
