@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 
 export type MapType = 'choropleth' | 'dots' | 'hex';
+export type MobileTab = 'map' | 'charts' | 'ternary';
 
 export interface ZoomTransform {
   k: number; // scale
@@ -13,12 +14,15 @@ export interface ChartXZoom {
   x: number;  // x-axis translate in pixels
 }
 
+export const MOBILE_BREAKPOINT = 640;
+
 interface UIState {
   mapType: MapType;
   mapColorMode: string;
   votesPerDot: number;
   sidebarOpen: boolean;
   isMobile: boolean;
+  mobileTab: MobileTab;
   ternaryZoom: ZoomTransform;
   mapZoom: ZoomTransform;
   chartXZoom: ChartXZoom;
@@ -29,6 +33,7 @@ interface UIState {
   setVotesPerDot: (value: number) => void;
   toggleSidebar: () => void;
   setIsMobile: (value: boolean) => void;
+  setMobileTab: (tab: MobileTab) => void;
   setTernaryZoom: (transform: ZoomTransform) => void;
   resetTernaryZoom: () => void;
   setMapZoom: (transform: ZoomTransform) => void;
@@ -47,6 +52,7 @@ export const useUIStore = create<UIState>((set) => ({
   votesPerDot: 10000,
   sidebarOpen: true,
   isMobile: false,
+  mobileTab: 'map',
   ternaryZoom: DEFAULT_ZOOM,
   mapZoom: DEFAULT_ZOOM,
   chartXZoom: DEFAULT_CHART_X_ZOOM,
@@ -60,6 +66,7 @@ export const useUIStore = create<UIState>((set) => ({
   setVotesPerDot: (value) => set({ votesPerDot: value }),
   toggleSidebar: () => set((state) => ({ sidebarOpen: !state.sidebarOpen })),
   setIsMobile: (value) => set({ isMobile: value, sidebarOpen: !value }),
+  setMobileTab: (tab) => set({ mobileTab: tab }),
   setTernaryZoom: (transform) => set({ ternaryZoom: transform }),
   resetTernaryZoom: () => set({ ternaryZoom: DEFAULT_ZOOM }),
   setMapZoom: (transform) => set({ mapZoom: transform }),

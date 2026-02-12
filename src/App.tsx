@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState, useMemo } from 'react';
 import type { FeatureCollection, Polygon, MultiPolygon } from 'geojson';
 import { useElectionStore, getBoundaryVersion } from '@/store/electionStore';
-import { useUIStore } from '@/store/uiStore';
+import { useUIStore, MOBILE_BREAKPOINT } from '@/store/uiStore';
 import { useContainerDimensions, useWindowSize } from '@/hooks/useWindowSize';
 import { Header } from '@/components/layout/Header';
+import { MobileTabBar } from '@/components/layout/MobileTabBar';
 import { TernaryPlot } from '@/components/charts/TernaryPlot/TernaryPlot';
 import { DotDensityMap } from '@/components/charts/DotDensityMap/DotDensityMap';
 import { ChoroplethMap } from '@/components/charts/ChoroplethMap/ChoroplethMap';
@@ -13,6 +14,7 @@ import { SeatsBarChart } from '@/components/charts/SeatsBarChart/SeatsBarChart';
 import { VoteShareChart } from '@/components/charts/VoteShareChart/VoteShareChart';
 import { VoteShareBarChart } from '@/components/charts/VoteShareBarChart/VoteShareBarChart';
 import { ConstituencyPanel } from '@/components/panels/ConstituencyPanel';
+import { MobileBottomSheet } from '@/components/panels/MobileBottomSheet';
 import { getPartyById } from '@/types/party';
 
 interface ConstituencyProperties {
@@ -56,7 +58,12 @@ function App() {
     setHoveredConstituency,
   } = useElectionStore();
 
-  const { mapType, mapColorMode, votesPerDot } = useUIStore();
+  const { mapType, mapColorMode, votesPerDot, mobileTab, setIsMobile, isMobile } = useUIStore();
+
+  // Track mobile state
+  useEffect(() => {
+    setIsMobile(windowWidth < MOBILE_BREAKPOINT);
+  }, [windowWidth, setIsMobile]);
 
   // Compute top parties for the current election (for the party color mode dropdown)
   const topParties = useMemo(() => {
@@ -131,65 +138,59 @@ function App() {
     tryLoadBoundary();
   }, [currentYear, boundaryVersion, boundaries]);
 
-  // Calculate layout dimensions based on wide/narrow mode
+  // Calculate layout dimensions based on wide/narrow/mobile mode
+  const MOBILE_TAB_HEIGHT = 52;
   const contentHeight = height;
   const leftWidth = isWide ? Math.floor(width / 2) : width;
   const rightWidth = isWide ? width - leftWidth : width;
   const barChartWidth = isWide ? Math.min(200, Math.floor(leftWidth * 0.3)) : 200;
 
+  // Mobile: full viewport for each tab (minus tab bar)
   // Wide: ternary fills remaining height in left column; map gets full content height
   // Narrow: ternary and map split width, sharing height below chart rows
-  // Note: contentHeight is the full container height (below Header), so in narrow mode
-  // we subtract chart rows since they're rendered inside the container
-  const ternaryHeight = isWide
-    ? contentHeight - 2 * CHART_ROW_HEIGHT - BOTTOM_PANEL_HEIGHT
-    : contentHeight - 2 * CHART_ROW_HEIGHT - BOTTOM_PANEL_HEIGHT;
-  const ternaryWidth = isWide ? leftWidth : Math.floor(width / 2);
-  const mapWidth = isWide ? rightWidth : width - ternaryWidth;
-  const mapHeight = isWide
-    ? contentHeight - BOTTOM_PANEL_HEIGHT
-    : contentHeight - 2 * CHART_ROW_HEIGHT - BOTTOM_PANEL_HEIGHT;
+  const mobileContentHeight = contentHeight - MOBILE_TAB_HEIGHT;
+  const ternaryHeight = isMobile
+    ? mobileContentHeight
+    : isWide
+      ? contentHeight - 2 * CHART_ROW_HEIGHT - BOTTOM_PANEL_HEIGHT
+      : contentHeight - 2 * CHART_ROW_HEIGHT - BOTTOM_PANEL_HEIGHT;
+  const ternaryWidth = isMobile ? width : isWide ? leftWidth : Math.floor(width / 2);
+  const mapWidth = isMobile ? width : isWide ? rightWidth : width - ternaryWidth;
+  const mapHeight = isMobile
+    ? mobileContentHeight
+    : isWide
+      ? contentHeight - BOTTOM_PANEL_HEIGHT
+      : contentHeight - 2 * CHART_ROW_HEIGHT - BOTTOM_PANEL_HEIGHT;
 
   // Shared map overlay JSX
   const mapToggleOverlay = (
-    <div className="absolute top-2 left-2 z-10 flex flex-col gap-1">
+    <div className="absolute top-2 left-2 z-10 flex flex-col gap-1" style={{ touchAction: 'manipulation' }}>
       <div className="flex rounded-md border border-gray-300 overflow-hidden shadow-sm bg-white">
-        <button
-          onClick={() => useUIStore.getState().setMapType('choropleth')}
-          className={`px-2 py-1 text-xs transition-colors ${
-            mapType === 'choropleth'
-              ? 'bg-blue-600 text-white'
-              : 'bg-white text-gray-700 hover:bg-gray-50'
-          }`}
-        >
-          Map
-        </button>
-        <button
-          onClick={() => useUIStore.getState().setMapType('hex')}
-          className={`px-2 py-1 text-xs transition-colors ${
-            mapType === 'hex'
-              ? 'bg-blue-600 text-white'
-              : 'bg-white text-gray-700 hover:bg-gray-50'
-          }`}
-        >
-          Hex
-        </button>
-        <button
-          onClick={() => useUIStore.getState().setMapType('dots')}
-          className={`px-2 py-1 text-xs transition-colors ${
-            mapType === 'dots'
-              ? 'bg-blue-600 text-white'
-              : 'bg-white text-gray-700 hover:bg-gray-50'
-          }`}
-        >
-          Dots
-        </button>
+        {(['choropleth', 'hex', 'dots'] as const).map((type) => (
+          <button
+            key={type}
+            onClick={() => useUIStore.getState().setMapType(type)}
+            className={`transition-colors ${
+              isMobile ? 'px-3 py-2 text-sm' : 'px-2 py-1 text-xs'
+            } ${
+              mapType === type
+                ? 'bg-blue-600 text-white'
+                : 'bg-white text-gray-700 hover:bg-gray-50'
+            }`}
+            style={isMobile ? { minHeight: 44 } : undefined}
+          >
+            {type === 'choropleth' ? 'Map' : type === 'hex' ? 'Hex' : 'Dots'}
+          </button>
+        ))}
       </div>
       {(mapType === 'choropleth' || mapType === 'hex') && (
         <select
           value={mapColorMode}
           onChange={(e) => useUIStore.getState().setMapColorMode(e.target.value)}
-          className="px-2 py-1 text-xs bg-white border border-gray-300 rounded shadow-sm"
+          className={`bg-white border border-gray-300 rounded shadow-sm ${
+            isMobile ? 'px-3 py-2 text-sm' : 'px-2 py-1 text-xs'
+          }`}
+          style={isMobile ? { minHeight: 44 } : undefined}
         >
           <option value="winner">Winner</option>
           {topParties.map((p) => (
@@ -283,6 +284,9 @@ function App() {
     </div>
   );
 
+  // Mobile chart height: split available height between two charts
+  const mobileChartHeight = Math.floor(mobileContentHeight / 2);
+
   return (
     <div className="h-screen flex flex-col bg-gray-50">
       <Header />
@@ -292,7 +296,33 @@ function App() {
         {errorOverlay}
 
         {!error && width > 0 && height > 0 && (
-          isWide ? (
+          isMobile ? (
+            <>
+              {/* Mobile layout: single view based on active tab */}
+              <div className="flex-1 overflow-hidden" style={{ height: mobileContentHeight }}>
+                {mobileTab === 'map' && mapContent}
+                {mobileTab === 'charts' && (
+                  <div className="flex flex-col" style={{ height: mobileContentHeight }}>
+                    <SeatsChart height={mobileChartHeight} />
+                    <VoteShareChart height={mobileChartHeight} />
+                  </div>
+                )}
+                {mobileTab === 'ternary' && (
+                  <TernaryPlot
+                    data={ternaryData}
+                    width={ternaryWidth}
+                    height={ternaryHeight}
+                    selectedConstituencyId={selectedConstituencyId}
+                    hoveredConstituencyId={hoveredConstituencyId}
+                    onConstituencySelect={setSelectedConstituency}
+                    onConstituencyHover={setHoveredConstituency}
+                  />
+                )}
+              </div>
+              <MobileTabBar />
+              <MobileBottomSheet />
+            </>
+          ) : isWide ? (
             <>
               {/* Wide layout: left column (charts + ternary) | right column (map) */}
               <div className="flex flex-1" style={{ height: contentHeight - BOTTOM_PANEL_HEIGHT }}>
