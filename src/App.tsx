@@ -39,7 +39,9 @@ const MAX_BOUNDARY_CACHE = 2;
 
 function App() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const mobileContentRef = useRef<HTMLDivElement>(null);
   const { width, height } = useContainerDimensions(containerRef);
+  const { height: mobileContentHeight } = useContainerDimensions(mobileContentRef);
   const { width: windowWidth } = useWindowSize();
   const isWide = windowWidth >= WIDE_BREAKPOINT;
   const [boundaries, setBoundaries] = useState<BoundaryData>(null);
@@ -139,16 +141,10 @@ function App() {
   }, [currentYear, boundaryVersion, boundaries]);
 
   // Calculate layout dimensions based on wide/narrow/mobile mode
-  const MOBILE_TAB_HEIGHT = 52;
   const contentHeight = height;
   const leftWidth = isWide ? Math.floor(width / 2) : width;
   const rightWidth = isWide ? width - leftWidth : width;
   const barChartWidth = isWide ? Math.min(200, Math.floor(leftWidth * 0.3)) : 200;
-
-  // Mobile: full viewport for each tab (minus tab bar)
-  // Wide: ternary fills remaining height in left column; map gets full content height
-  // Narrow: ternary and map split width, sharing height below chart rows
-  const mobileContentHeight = contentHeight - MOBILE_TAB_HEIGHT;
   const ternaryHeight = isMobile
     ? mobileContentHeight
     : isWide
@@ -288,7 +284,7 @@ function App() {
   const mobileChartHeight = Math.floor(mobileContentHeight / 2);
 
   return (
-    <div className="h-screen flex flex-col bg-gray-50">
+    <div className="flex flex-col bg-gray-50" style={{ height: '100dvh' }}>
       <Header />
 
       <div ref={containerRef} className="flex-1 flex flex-col overflow-hidden">
@@ -299,7 +295,7 @@ function App() {
           isMobile ? (
             <>
               {/* Mobile layout: single view based on active tab */}
-              <div className="flex-1 overflow-hidden" style={{ height: mobileContentHeight }}>
+              <div ref={mobileContentRef} className="flex-1 overflow-hidden">
                 {mobileTab === 'map' && mapContent}
                 {mobileTab === 'charts' && (
                   <div className="flex flex-col" style={{ height: mobileContentHeight }}>

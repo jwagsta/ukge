@@ -38,7 +38,7 @@ export function MobileTabBar() {
   const { mobileTab, setMobileTab } = useUIStore();
 
   return (
-    <nav className="flex border-t border-gray-200 bg-white" style={{ height: 52, touchAction: 'manipulation' }}>
+    <nav className="flex border-t border-gray-200 bg-white" style={{ height: 52, paddingBottom: 'env(safe-area-inset-bottom, 0px)', touchAction: 'manipulation' }}>
       {tabs.map((tab) => {
         const isActive = mobileTab === tab.id;
         return (
