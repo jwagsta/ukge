@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useElectionStore, getYearLabel } from '@/store/electionStore';
+import { useUIStore } from '@/store/uiStore';
 import { PlayButton } from '@/components/controls/PlayButton';
 import { getPartyColor } from '@/types/party';
 
@@ -43,6 +44,7 @@ export function Header() {
   const [showInfo, setShowInfo] = useState(false);
   const infoRef = useRef<HTMLDivElement>(null);
   const { currentYear } = useElectionStore();
+  const { isMobile } = useUIStore();
   const winner = ELECTION_WINNERS[currentYear];
 
   // Close on click outside
@@ -58,17 +60,21 @@ export function Header() {
   }, [showInfo]);
 
   return (
-    <header className="h-12 bg-white border-b border-gray-200 relative flex items-center px-4">
-      <div className="flex items-center gap-3">
-        <h1 className="text-lg font-semibold text-gray-900">
-          UK General Election Results
-        </h1>
+    <header className={`bg-white border-b border-gray-200 relative flex items-center ${isMobile ? 'h-11 px-2' : 'h-12 px-4'}`}>
+      <div className="flex items-center gap-2">
+        {!isMobile && (
+          <h1 className="text-lg font-semibold text-gray-900">
+            UK General Election Results
+          </h1>
+        )}
 
         {/* Info icon with click-to-toggle panel */}
         <div className="relative" ref={infoRef}>
           <button
             onClick={() => setShowInfo(prev => !prev)}
-            className={`w-5 h-5 rounded-full border flex items-center justify-center transition-colors ${
+            className={`rounded-full border flex items-center justify-center transition-colors ${
+              isMobile ? 'w-7 h-7' : 'w-5 h-5'
+            } ${
               showInfo
                 ? 'border-blue-400 text-blue-600 bg-blue-50'
                 : 'border-gray-300 text-gray-400 hover:text-gray-600 hover:border-gray-400'
@@ -79,7 +85,9 @@ export function Header() {
           </button>
 
           {showInfo && (
-            <div className="absolute left-0 top-7 w-80 bg-white rounded-lg shadow-lg border border-gray-200 p-4 z-50">
+            <div className={`absolute top-7 bg-white rounded-lg shadow-lg border border-gray-200 p-4 z-50 ${
+              isMobile ? 'left-0 right-0 fixed mx-3 top-12' : 'left-0 w-80'
+            }`}>
               <h3 className="text-sm font-medium text-gray-900 mb-2">About</h3>
               <p className="text-xs text-gray-600 mb-3">
                 Explore Great Britain General Election results from 1955 to 2024
@@ -136,16 +144,16 @@ export function Header() {
 
       {/* Right: Year and election result */}
       <div className="ml-auto flex items-center gap-2">
-        <span className="text-xl font-bold text-gray-900">{getYearLabel(currentYear)}</span>
+        <span className={`font-bold text-gray-900 ${isMobile ? 'text-lg' : 'text-xl'}`}>{getYearLabel(currentYear)}</span>
         {winner && (
           <span
-            className="text-sm font-medium px-2 py-0.5 rounded"
+            className={`font-medium px-2 py-0.5 rounded ${isMobile ? 'text-xs' : 'text-sm'}`}
             style={{
               backgroundColor: getPartyColor(winner.party),
               color: 'white',
             }}
           >
-            {winner.name} win
+            {isMobile ? winner.name : `${winner.name} win`}
           </span>
         )}
       </div>

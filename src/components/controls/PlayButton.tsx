@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useElectionStore } from '@/store/electionStore';
-import { useUIStore } from '@/store/uiStore';
+import { useUIStore, MOBILE_BREAKPOINT } from '@/store/uiStore';
+import { useWindowSize } from '@/hooks/useWindowSize';
 
 interface PlayButtonProps {
   intervalMs?: number;
@@ -10,6 +11,8 @@ export function PlayButton({ intervalMs = 2000 }: PlayButtonProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const { currentYear, availableYears, setYear } = useElectionStore();
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const { width: windowWidth } = useWindowSize();
+  const isMobile = windowWidth < MOBILE_BREAKPOINT;
 
   useEffect(() => {
     if (isPlaying) {
@@ -64,16 +67,21 @@ export function PlayButton({ intervalMs = 2000 }: PlayButtonProps) {
     setYear(availableYears[nextIndex]);
   };
 
+  const btnClass = `flex items-center justify-center rounded transition-colors ${
+    isMobile ? 'w-9 h-9' : 'w-7 h-7'
+  }`;
+  const iconSize = isMobile ? 14 : 12;
+
   return (
-    <div className="flex items-center gap-1">
+    <div className="flex items-center gap-1" style={{ touchAction: 'manipulation' }}>
       {/* Reset button - circular arrow */}
       <button
         onClick={handleReset}
-        className="flex items-center justify-center w-7 h-7 rounded bg-gray-100 hover:bg-gray-200 transition-colors"
+        className={`${btnClass} bg-gray-100 hover:bg-gray-200`}
         aria-label="Reset to first year"
         title="Reset"
       >
-        <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor" className="text-gray-500">
+        <svg width={iconSize} height={iconSize} viewBox="0 0 16 16" fill="currentColor" className="text-gray-500">
           <path d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z" />
           <path d="M8 1v3.5l2.5-1.75L8 1z" />
         </svg>
@@ -81,35 +89,31 @@ export function PlayButton({ intervalMs = 2000 }: PlayButtonProps) {
       {/* Step back button */}
       <button
         onClick={handleStepBack}
-        className="flex items-center justify-center w-7 h-7 rounded bg-gray-100 hover:bg-gray-200 transition-colors"
+        className={`${btnClass} bg-gray-100 hover:bg-gray-200`}
         aria-label="Step to previous year"
         title="Previous"
       >
-        <svg width="12" height="12" viewBox="0 0 14 14" fill="currentColor" className="text-gray-500">
+        <svg width={iconSize} height={iconSize} viewBox="0 0 14 14" fill="currentColor" className="text-gray-500">
           <path d="M12 2v10l-6-5 6-5zM6 2H4v10h2V2z" />
         </svg>
       </button>
       {/* Play/Pause button */}
       <button
         onClick={handlePlayPause}
-        className={`
-          flex items-center justify-center w-7 h-7 rounded
-          transition-colors
-          ${isPlaying
-            ? 'bg-red-500 hover:bg-red-600 text-white'
-            : 'bg-blue-500 hover:bg-blue-600 text-white'
-          }
-        `}
+        className={`${btnClass} ${isPlaying
+          ? 'bg-red-500 hover:bg-red-600 text-white'
+          : 'bg-blue-500 hover:bg-blue-600 text-white'
+        }`}
         aria-label={isPlaying ? 'Pause' : 'Play'}
         title={isPlaying ? 'Pause' : 'Play'}
       >
         {isPlaying ? (
-          <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor">
+          <svg width={iconSize} height={iconSize} viewBox="0 0 16 16" fill="currentColor">
             <rect x="3" y="2" width="4" height="12" rx="1" />
             <rect x="9" y="2" width="4" height="12" rx="1" />
           </svg>
         ) : (
-          <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor">
+          <svg width={iconSize} height={iconSize} viewBox="0 0 16 16" fill="currentColor">
             <path d="M4 2.5v11l9-5.5z" />
           </svg>
         )}
@@ -117,11 +121,11 @@ export function PlayButton({ intervalMs = 2000 }: PlayButtonProps) {
       {/* Step forward button */}
       <button
         onClick={handleStepForward}
-        className="flex items-center justify-center w-7 h-7 rounded bg-gray-100 hover:bg-gray-200 transition-colors"
+        className={`${btnClass} bg-gray-100 hover:bg-gray-200`}
         aria-label="Step to next year"
         title="Next"
       >
-        <svg width="12" height="12" viewBox="0 0 14 14" fill="currentColor" className="text-gray-500">
+        <svg width={iconSize} height={iconSize} viewBox="0 0 14 14" fill="currentColor" className="text-gray-500">
           <path d="M2 2l6 5-6 5V2zm6 0h2v10H8V2z" />
         </svg>
       </button>
