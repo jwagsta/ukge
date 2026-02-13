@@ -255,15 +255,19 @@ export function MobileBottomSheet() {
           </h4>
           <div className="grid grid-cols-2 gap-x-4 gap-y-1">
             {sortedResults.map((r) => (
-              <div key={r.partyId} className="flex items-center justify-between">
-                <div className="flex items-center gap-1.5">
-                  <span
-                    className="w-2 h-2 rounded"
-                    style={{ backgroundColor: getPartyColor(r.partyId) }}
+              <div key={r.partyId} className="flex items-center gap-1.5">
+                <span
+                  className="w-2 h-2 rounded shrink-0"
+                  style={{ backgroundColor: getPartyColor(r.partyId) }}
+                />
+                <span className="text-xs shrink-0 w-12 truncate">{r.partyId.toUpperCase()}</span>
+                <div className="flex-1 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                  <div
+                    className="h-full rounded-full"
+                    style={{ width: `${r.voteShare}%`, backgroundColor: getPartyColor(r.partyId) }}
                   />
-                  <span className="text-xs">{r.partyId.toUpperCase()}</span>
                 </div>
-                <span className="text-xs font-medium">{r.voteShare.toFixed(1)}%</span>
+                <span className="text-xs font-medium w-10 text-right shrink-0">{r.voteShare.toFixed(1)}%</span>
               </div>
             ))}
           </div>

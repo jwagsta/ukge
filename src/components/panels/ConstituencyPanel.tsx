@@ -424,26 +424,30 @@ export function ConstituencyPanel({ height }: ConstituencyPanelProps) {
             return (
               <>
                 {activeResults.map((r) => (
-                  <div key={r.partyId} className="flex items-center justify-between">
-                    <div className="flex items-center gap-1.5">
-                      <span
-                        className="w-2 h-2 rounded"
-                        style={{ backgroundColor: getPartyColor(r.partyId) }}
+                  <div key={r.partyId} className="flex items-center gap-1.5">
+                    <span
+                      className="w-2 h-2 rounded shrink-0"
+                      style={{ backgroundColor: getPartyColor(r.partyId) }}
+                    />
+                    <span className="text-xs shrink-0 w-12 truncate">{r.partyId.toUpperCase()}</span>
+                    <div className="flex-1 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                      <div
+                        className="h-full rounded-full"
+                        style={{ width: `${r.voteShare}%`, backgroundColor: getPartyColor(r.partyId) }}
                       />
-                      <span className="text-xs">{r.partyId.toUpperCase()}</span>
                     </div>
-                    <span className="text-xs font-medium">{r.voteShare.toFixed(1)}%</span>
+                    <span className="text-xs font-medium w-10 text-right shrink-0">{r.voteShare.toFixed(1)}%</span>
                   </div>
                 ))}
                 {inactiveParties.map((party) => (
-                  <div key={party} className="flex items-center justify-between">
-                    <div className="flex items-center gap-1.5">
-                      <span
-                        className="w-2 h-2 rounded"
-                        style={{ backgroundColor: getPartyColor(party) }}
-                      />
-                      <span className="text-xs text-gray-400">{party.toUpperCase()}</span>
-                    </div>
+                  <div key={party} className="flex items-center gap-1.5">
+                    <span
+                      className="w-2 h-2 rounded shrink-0"
+                      style={{ backgroundColor: getPartyColor(party) }}
+                    />
+                    <span className="text-xs text-gray-400 shrink-0 w-12 truncate">{party.toUpperCase()}</span>
+                    <div className="flex-1 h-1.5 bg-gray-100 rounded-full overflow-hidden" />
+                    <span className="w-10 shrink-0" />
                   </div>
                 ))}
               </>
