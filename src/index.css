@@ -21,6 +21,13 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  min-height: 100dvh;
+}
+
+/* Dynamic viewport height: uses dvh where supported, falls back to vh */
+.h-dvh {
+  height: 100vh;
+  height: 100dvh;
 }
 
 /* Custom party colors for text */

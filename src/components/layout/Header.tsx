@@ -60,7 +60,7 @@ export function Header() {
   }, [showInfo]);
 
   return (
-    <header className={`bg-white border-b border-gray-200 relative flex items-center ${isMobile ? 'h-11 px-2' : 'h-12 px-4'}`}>
+    <header className={`bg-white border-b border-gray-200 relative flex items-center ${isMobile ? 'h-11 px-2' : 'h-12 px-4'}`} style={{ paddingTop: 'env(safe-area-inset-top)' }}>
       <div className="flex items-center gap-2">
         {isMobile && <PlayButton intervalMs={1500} />}
 
