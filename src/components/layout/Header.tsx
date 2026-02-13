@@ -62,6 +62,8 @@ export function Header() {
   return (
     <header className={`bg-white border-b border-gray-200 relative flex items-center ${isMobile ? 'h-11 px-2' : 'h-12 px-4'}`}>
       <div className="flex items-center gap-2">
+        {isMobile && <PlayButton intervalMs={1500} />}
+
         {!isMobile && (
           <h1 className="text-lg font-semibold text-gray-900">
             UK General Election Results
@@ -137,10 +139,12 @@ export function Header() {
         </div>
       </div>
 
-      {/* Center: Playback controls (absolutely centered) */}
-      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-        <PlayButton intervalMs={1500} />
-      </div>
+      {/* Center: Playback controls (absolutely centered) - desktop only */}
+      {!isMobile && (
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+          <PlayButton intervalMs={1500} />
+        </div>
+      )}
 
       {/* Right: Year and election result */}
       <div className="ml-auto flex items-center gap-2">

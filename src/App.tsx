@@ -284,8 +284,9 @@ function App() {
     </div>
   );
 
-  // Mobile chart height: split available height between two charts
-  const mobileChartHeight = Math.floor(mobileContentHeight / 2);
+  // Mobile chart heights: line charts get remaining space after bar charts
+  const MOBILE_BAR_CHART_HEIGHT = 80;
+  const mobileLineChartHeight = Math.floor((mobileContentHeight - MOBILE_BAR_CHART_HEIGHT * 2) / 2);
 
   return (
     <div className="h-screen flex flex-col bg-gray-50">
@@ -303,8 +304,12 @@ function App() {
                 {mobileTab === 'map' && mapContent}
                 {mobileTab === 'charts' && (
                   <div className="flex flex-col" style={{ height: mobileContentHeight }}>
-                    <SeatsChart height={mobileChartHeight} />
-                    <VoteShareChart height={mobileChartHeight} />
+                    <SeatsChart height={mobileLineChartHeight} />
+                    <VoteShareChart height={mobileLineChartHeight} />
+                    <div className="flex border-t border-gray-200">
+                      <SeatsBarChart height={MOBILE_BAR_CHART_HEIGHT * 2} width={Math.floor(width / 2)} />
+                      <VoteShareBarChart height={MOBILE_BAR_CHART_HEIGHT * 2} width={Math.floor(width / 2)} />
+                    </div>
                   </div>
                 )}
                 {mobileTab === 'ternary' && (
