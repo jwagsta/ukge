@@ -194,7 +194,7 @@ export function MobileBottomSheet() {
       className={`fixed inset-x-0 bottom-0 z-40 transition-transform duration-300 ease-out ${
         expanded ? 'translate-y-0' : 'translate-y-full'
       }`}
-      style={{ maxHeight: '65vh' }}
+      style={{ maxHeight: '65dvh' }}
     >
       {/* Backdrop */}
       {expanded && (
@@ -207,7 +207,7 @@ export function MobileBottomSheet() {
       <div
         ref={sheetRef}
         className="bg-white rounded-t-2xl shadow-[0_-4px_20px_rgba(0,0,0,0.15)] overflow-y-auto"
-        style={{ maxHeight: '65vh', touchAction: 'pan-y' }}
+        style={{ maxHeight: '65dvh', paddingBottom: 'env(safe-area-inset-bottom, 0px)', touchAction: 'pan-y' }}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
