@@ -62,7 +62,7 @@ const AREA_TO_COUNTRY = {
   '6': 'wales',
 };
 
-// Party column mappings
+// Party column mappings (GB constituencies)
 const PARTY_COLUMNS = {
   'CON': { id: 'con', name: 'Conservative' },
   'LAB': { id: 'lab', name: 'Labour' },
@@ -72,6 +72,25 @@ const PARTY_COLUMNS = {
   'NAT': { id: 'nat', name: 'Nationalist' }, // SNP or Plaid
   'MIN': { id: 'other', name: 'Other' },
   'OTH': { id: 'other', name: 'Other' },
+};
+
+// Northern Ireland party column mappings per era.
+// Electoral Calculus encodes NI party votes into the same positional columns
+// but with different party meanings. The mapping varies by era because the
+// NI party landscape changed over time.
+const NI_PARTY_COLUMNS: Record<string, Record<string, { id: string; name: string }>> = {
+  // 2024 era (columns: CON;LAB;LIB;Reform;Green;NAT;MIN;OTH)
+  // Verified against known 2024 NI election results
+  '2024': {
+    'CON': { id: 'uup', name: 'Ulster Unionist Party' },
+    'LAB': { id: 'sdlp', name: 'SDLP' },
+    'LIB': { id: 'dup', name: 'DUP' },
+    'Reform': { id: 'alliance', name: 'Alliance' },
+    'Green': { id: 'tuv', name: 'TUV' },
+    'NAT': { id: 'sf', name: 'Sinn Féin' },
+    'MIN': { id: 'other', name: 'Other' },
+    'OTH': { id: 'other', name: 'Other' },
+  },
 };
 
 function parseElectoralCalculusFile(filepath, metadata) {
@@ -95,20 +114,30 @@ function parseElectoralCalculusFile(filepath, metadata) {
     const area = row['Area'] || '';
     const electorate = parseInt(row['Electorate'] || '0', 10);
 
+    // Choose party column mapping: use NI-specific mapping for area 1
+    const isNI = area === '1';
+    const yearStr = String(metadata.year);
+    const niMapping = NI_PARTY_COLUMNS[yearStr];
+
+    // Skip NI constituencies for years without verified NI party mappings
+    if (isNI && !niMapping) continue;
+
+    const partyColumns = (isNI && niMapping) ? niMapping : PARTY_COLUMNS;
+
     // Build party results
     const results = [];
     let totalVotes = 0;
 
-    for (const [col, party] of Object.entries(PARTY_COLUMNS)) {
+    for (const [col, party] of Object.entries(partyColumns)) {
       const votes = parseInt(row[col] || '0', 10);
       if (votes > 0) {
         totalVotes += votes;
 
-        // Handle nationalist parties (SNP vs Plaid)
+        // Handle nationalist parties (SNP vs Plaid) for GB constituencies
         let partyId = party.id;
         let partyName = party.name;
 
-        if (col === 'NAT') {
+        if (!isNI && col === 'NAT') {
           if (area === '2') { // Scotland
             partyId = 'snp';
             partyName = 'SNP';
@@ -116,13 +145,12 @@ function parseElectoralCalculusFile(filepath, metadata) {
             partyId = 'pc';
             partyName = 'Plaid Cymru';
           }
-          // Note: Area 1 (Northern Ireland) doesn't use NAT column - NI parties are in MIN/OTH
         }
 
         results.push({
           partyId,
           partyName,
-          candidate: col === 'CON' || col === 'LAB' || col === 'LIB' ? row['MP'] || '' : '',
+          candidate: '',  // Will set winner's candidate after determining winner
           votes,
           voteShare: 0, // Will calculate after
         });
@@ -150,6 +178,12 @@ function parseElectoralCalculusFile(filepath, metadata) {
 
     // Sort by votes descending
     mergedResults.sort((a, b) => b.votes - a.votes);
+
+    // Set the MP name only on the winning candidate
+    const mpName = row['MP'] || '';
+    if (mergedResults.length > 0 && mpName) {
+      mergedResults[0].candidate = mpName;
+    }
 
     const winner = mergedResults[0]?.partyId || 'unknown';
     const majority = mergedResults.length >= 2

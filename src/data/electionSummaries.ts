@@ -1,0 +1,22 @@
+/** Hand-crafted one-line election summaries — much punchier than Wikipedia's opening sentences. */
+export const electionSummaries: Record<number, string> = {
+  1955: "Anthony Eden's Conservatives increase their majority to 60 seats, consolidating power after succeeding Churchill.",
+  1959: "Harold Macmillan's \"you've never had it so good\" election delivers a third consecutive Conservative victory with a 100-seat majority.",
+  1964: "Harold Wilson's Labour narrowly wins with a majority of 4, ending 13 years of Conservative rule.",
+  1966: "Wilson calls a snap election and wins a commanding 98-seat majority, securing Labour's mandate to govern.",
+  1970: "Edward Heath's Conservatives upset the polls with a surprise 30-seat majority, defeating Wilson's Labour.",
+  197402: "A hung parliament after Heath's \"Who Governs Britain?\" election; Wilson's Labour forms a minority government.",
+  197410: "Wilson wins a slim overall majority of 3, ending months of minority government uncertainty.",
+  1979: "Margaret Thatcher becomes Britain's first female PM as Conservatives win a 43-seat majority after the Winter of Discontent.",
+  1983: "Thatcher wins a landslide 144-seat majority as the SDP\u2013Liberal Alliance splits the opposition vote during the Falklands afterglow.",
+  1987: "Thatcher wins a third consecutive term with a 102-seat majority despite Labour's modernisation under Kinnock.",
+  1992: "John Major defies the polls to win a 21-seat majority — the Conservatives' fourth consecutive victory.",
+  1997: "Tony Blair's New Labour wins a historic 179-seat landslide, ending 18 years of Conservative government.",
+  2001: "Blair wins a second landslide with a 167-seat majority on the lowest turnout (59%) since 1918.",
+  2005: "Blair wins a reduced 66-seat majority as Iraq War opposition and tactical voting cut Labour's lead.",
+  2010: "A hung parliament leads to the first coalition since WWII: Cameron's Conservatives and Clegg's Liberal Democrats.",
+  2015: "Cameron wins an unexpected majority of 12, defying polls that predicted another hung parliament; UKIP wins 12.6% but only one seat.",
+  2017: "Theresa May's snap election backfires — she loses her majority and relies on the DUP to govern.",
+  2019: "Boris Johnson wins an 80-seat majority on a \"Get Brexit Done\" platform, taking traditional Labour heartlands.",
+  2024: "Keir Starmer's Labour wins a 174-seat majority in a historic swing, ending 14 years of Conservative government.",
+};

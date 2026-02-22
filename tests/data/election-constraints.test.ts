@@ -6,6 +6,7 @@ import {
   SNP_PARTY_IDS,
   PLAID_PARTY_IDS,
   NI_PARTY_IDS,
+  YEARS_WITH_NI,
 } from '../helpers/constants';
 
 describe('Election Constraints', () => {
@@ -83,8 +84,9 @@ describe('Election Constraints', () => {
         expect(errors, `Plaid Cymru outside Wales:\n${errors.join('\n')}`).toHaveLength(0);
       });
 
-      it('no Northern Ireland constituencies', () => {
+      it('NI constituencies only in years with NI data', () => {
         const data = loadElection(year);
+        const hasNI = (YEARS_WITH_NI as readonly number[]).includes(year);
         const niConstituencies: string[] = [];
 
         for (const c of data.constituencies) {
@@ -93,27 +95,36 @@ describe('Election Constraints', () => {
           }
         }
 
-        expect(
-          niConstituencies,
-          `NI constituencies found:\n${niConstituencies.join('\n')}`
-        ).toHaveLength(0);
+        if (hasNI) {
+          expect(
+            niConstituencies.length,
+            `Expected NI constituencies for ${year} but found none`
+          ).toBeGreaterThan(0);
+        } else {
+          expect(
+            niConstituencies,
+            `NI constituencies found in non-NI year:\n${niConstituencies.join('\n')}`
+          ).toHaveLength(0);
+        }
       });
 
-      it('no Northern Ireland parties', () => {
+      it('NI parties only appear in NI constituencies', () => {
         const data = loadElection(year);
         const errors: string[] = [];
 
         for (const c of data.constituencies) {
           for (const r of c.results) {
             if (NI_PARTY_IDS.includes(r.partyId.toLowerCase() as typeof NI_PARTY_IDS[number])) {
-              errors.push(
-                `${c.constituencyId}/${r.partyId}: NI party "${r.partyName}" found`
-              );
+              if (c.country !== 'northern_ireland') {
+                errors.push(
+                  `${c.constituencyId}/${r.partyId}: NI party "${r.partyName}" in ${c.country} constituency`
+                );
+              }
             }
           }
         }
 
-        expect(errors, `NI parties found:\n${errors.join('\n')}`).toHaveLength(0);
+        expect(errors, `NI parties outside NI:\n${errors.join('\n')}`).toHaveLength(0);
       });
 
       it('boundaryVersion matches expected mapping', () => {

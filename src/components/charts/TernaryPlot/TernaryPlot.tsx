@@ -20,6 +20,7 @@ interface TernaryPlotProps {
   hoveredConstituencyId?: string | null;
   onConstituencySelect?: (id: string | null) => void;
   onConstituencyHover?: (id: string | null) => void;
+  pinnedData?: TernaryDataPoint[];
 }
 
 interface TooltipData {
@@ -232,8 +233,8 @@ const AxisDecorations = memo(function AxisDecorations({
         <path d="M 30 0 L 40 0 M 37 -3 L 40 0 L 37 3" stroke="#DC241f" strokeWidth={1.5} fill="none" transform="translate(0, -6) rotate(-30, 35, 0)" />
       </g>
       <g transform={`translate(${(top.x + bottomRight.x) / 2 + 35}, ${(top.y + bottomRight.y) / 2}) rotate(60)`}>
-        <text x={0} y={0} textAnchor="middle" className="text-[12px] font-semibold" fill="#0087DC">Conservative %</text>
-        <path d="M 50 0 L 60 0 M 57 -3 L 60 0 L 57 3" stroke="#0087DC" strokeWidth={1.5} fill="none" transform="translate(0, -6) rotate(-30, 55, 0)" />
+        <text x={0} y={0} textAnchor="middle" className="text-[12px] font-semibold" fill="#0063A6">Conservative %</text>
+        <path d="M 50 0 L 60 0 M 57 -3 L 60 0 L 57 3" stroke="#0063A6" strokeWidth={1.5} fill="none" transform="translate(0, -6) rotate(-30, 55, 0)" />
       </g>
       <g transform={`translate(${(bottomRight.x + bottomLeft.x) / 2}, ${bottomRight.y + 35})`}>
         <text x={0} y={0} textAnchor="middle" className="text-[12px] font-semibold" fill="#666">Other %</text>
@@ -251,6 +252,7 @@ export function TernaryPlot({
   hoveredConstituencyId,
   onConstituencySelect,
   onConstituencyHover,
+  pinnedData,
 }: TernaryPlotProps) {
   const [tooltip, setTooltip] = useState<TooltipData | null>(null);
   const [showInfo, setShowInfo] = useState(false);
@@ -260,9 +262,18 @@ export function TernaryPlot({
   const animationRef = useRef<number | null>(null);
   const svgRef = useRef<SVGSVGElement>(null);
   const dataIdRef = useRef<string>(''); // Track data identity to detect real changes
-  const { availableYears, currentYear } = useElectionStore();
+  const { availableYears, currentYear, pinnedYear, electionData: storeElectionData } = useElectionStore();
+  const normalizeYr = (y: number) => y === 197402 ? 1974.2 : y === 197410 ? 1974.8 : y;
+  const chronoFlipped = pinnedYear !== null && normalizeYr(pinnedYear) > normalizeYr(currentYear);
   const { ternaryZoom, setTernaryZoom, resetTernaryZoom } = useUIStore();
   const clipId = useId();
+
+  // Lookup map for finding winning candidate from election data
+  const electionDataMap = useMemo(() => {
+    const map = new Map<string, ElectionResult>();
+    storeElectionData.forEach(d => map.set(d.constituencyId, d));
+    return map;
+  }, [storeElectionData]);
 
   // Margins for labels: top needs less, bottom/sides need more for labels
   const marginTop = 25;
@@ -275,9 +286,12 @@ export function TernaryPlot({
   const maxRadiusFromHeight = (height - marginTop - marginBottom) / 1.5;
   const radius = Math.min(maxRadiusFromWidth, maxRadiusFromHeight);
 
-  // Position center so triangle fits with margins
+  // Scale dot/label sizes with plot size (reference radius ~250px = scale 1)
+  const sizeScale = radius / 250;
+
+  // Position center so triangle is vertically centered within available margins
   const centerX = width / 2;
-  const centerY = marginTop + radius; // Top vertex at marginTop from top
+  const centerY = (height + marginTop - marginBottom) / 2 + radius / 4;
 
   const config = useMemo(
     () => ({
@@ -293,6 +307,36 @@ export function TernaryPlot({
     () => transformTernaryPoints(data, config, radius, centerX, centerY),
     [data, config, radius, centerX, centerY]
   );
+
+  // Compute pinned point positions for comparison arrows
+  const pinnedPositions = useMemo(() => {
+    if (!pinnedData?.length) return null;
+    const points = transformTernaryPoints(pinnedData, config, radius, centerX, centerY);
+    const map = new Map<string, { x: number; y: number }>();
+    points.forEach(p => map.set(p.constituencyId, { x: p.x, y: p.y }));
+    return map;
+  }, [pinnedData, config, radius, centerX, centerY]);
+
+  // Comparison arrows: lines from earlier year position to later year position
+  const comparisonArrows = useMemo(() => {
+    if (!pinnedPositions || targetPoints.length === 0) return [];
+    return targetPoints
+      .map(p => {
+        const pinned = pinnedPositions.get(p.constituencyId);
+        if (!pinned) return null;
+        const dx = p.x - pinned.x;
+        const dy = p.y - pinned.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 2) return null; // skip tiny movements
+        // Arrow goes from earlier year to later year
+        const fromX = chronoFlipped ? p.x : pinned.x;
+        const fromY = chronoFlipped ? p.y : pinned.y;
+        const toX = chronoFlipped ? pinned.x : p.x;
+        const toY = chronoFlipped ? pinned.y : p.y;
+        return { id: p.constituencyId, x1: fromX, y1: fromY, x2: toX, y2: toY };
+      })
+      .filter((a): a is NonNullable<typeof a> => a !== null);
+  }, [pinnedPositions, targetPoints, chronoFlipped]);
 
   // Create a stable data identity based on year (not array reference)
   const dataId = useMemo(() => {
@@ -607,35 +651,36 @@ export function TernaryPlot({
     <div className="relative" style={{ width, height }}>
       {/* Zoom controls and info button */}
       <div className="absolute top-2 left-2 z-10 flex flex-col gap-1">
-        <div className="flex rounded-md border border-gray-300 overflow-hidden shadow-sm bg-white">
-          <button
-            onClick={handleZoomIn}
-            className="px-2 py-1 text-sm hover:bg-gray-50 border-r border-gray-300"
-            title="Zoom in"
-          >
-            +
-          </button>
-          <button
-            onClick={handleZoomOut}
-            className="px-2 py-1 text-sm hover:bg-gray-50"
-            title="Zoom out"
-          >
-            −
-          </button>
+        <div className="flex gap-1">
+          <div className="flex rounded-md border border-gray-300 overflow-hidden shadow-sm bg-white">
+            <button
+              onClick={handleZoomIn}
+              className="px-2 py-1 text-sm hover:bg-gray-50 border-r border-gray-300"
+              title="Zoom in"
+            >
+              +
+            </button>
+            <button
+              onClick={handleZoomOut}
+              className="px-2 py-1 text-sm hover:bg-gray-50"
+              title="Zoom out"
+            >
+              −
+            </button>
+          </div>
+          {isZoomed && (
+            <button
+              onClick={handleResetZoom}
+              className="flex items-center justify-center w-7 h-7 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50"
+              title="Reset zoom"
+            >
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor" className="text-gray-500">
+                <path d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z" />
+                <path d="M8 1v3.5l2.5-1.75L8 1z" />
+              </svg>
+            </button>
+          )}
         </div>
-        {isZoomed && (
-          <button
-            onClick={handleResetZoom}
-            className="flex items-center justify-center gap-1 px-2 py-1 text-xs bg-white border border-gray-300 rounded shadow-sm hover:bg-gray-50"
-            title="Reset zoom"
-          >
-            <svg width="10" height="10" viewBox="0 0 16 16" fill="currentColor" className="text-gray-500">
-              <path d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z" />
-              <path d="M8 1v3.5l2.5-1.75L8 1z" />
-            </svg>
-            Reset
-          </button>
-        )}
         <div className="relative" ref={infoRef}>
           <button
             onClick={() => setShowInfo(prev => !prev)}
@@ -666,9 +711,8 @@ export function TernaryPlot({
         aria-label="Ternary plot showing vote share distribution across constituencies"
         style={{ cursor: 'grab' }}
       >
-        <title>UK Election Results Ternary Plot</title>
         <desc>
-          Triangle plot showing Labour, Conservative, and Other party vote shares
+          Ternary plot showing Labour, Conservative, and Other party vote shares
           for {data.length} constituencies
         </desc>
 
@@ -705,9 +749,9 @@ export function TernaryPlot({
                   <path
                     d={trajectoryData.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x - centerX} ${p.y - centerY}`).join(' ')}
                     fill="none"
-                    stroke="#333"
-                    strokeWidth={2 / ternaryZoom.k}
-                    opacity={0.8}
+                    stroke="#999"
+                    strokeWidth={1.5 / ternaryZoom.k}
+                    opacity={0.6}
                   />
                   {/* Points with year labels */}
                   {trajectoryData.map((p) => {
@@ -717,23 +761,40 @@ export function TernaryPlot({
                         <circle
                           cx={p.x - centerX}
                           cy={p.y - centerY}
-                          r={(isCurrent ? 5 : 3) / ternaryZoom.k}
+                          r={(isCurrent ? 5.5 : 3.3) * sizeScale / Math.pow(ternaryZoom.k, 0.6)}
                           fill={getPartyColor(p.winner)}
                           stroke={isCurrent ? '#000' : '#fff'}
-                          strokeWidth={(isCurrent ? 2 : 1) / ternaryZoom.k}
+                          strokeWidth={(isCurrent ? 2 : 1) * sizeScale / ternaryZoom.k}
                         />
                         <text
                           x={p.x - centerX}
-                          y={p.y - centerY - 8 / ternaryZoom.k}
+                          y={p.y - centerY - 8 * sizeScale / ternaryZoom.k}
                           textAnchor="middle"
                           className={`${isCurrent ? 'font-bold fill-black' : 'font-medium fill-gray-700'}`}
-                          style={{ fontSize: `${10 / ternaryZoom.k}px` }}
+                          style={{ fontSize: `${10 * sizeScale / ternaryZoom.k}px` }}
                         >
                           {p.year === 197402 ? "F'74" : p.year === 197410 ? "O'74" : p.year.toString().slice(-2)}
                         </text>
                       </g>
                     );
                   })}
+                </g>
+              )}
+
+              {/* Comparison arrows (pinned → current) */}
+              {comparisonArrows.length > 0 && (
+                <g className="comparison-arrows" opacity={0.4}>
+                  {comparisonArrows.map(a => (
+                    <line
+                      key={a.id}
+                      x1={a.x1 - centerX}
+                      y1={a.y1 - centerY}
+                      x2={a.x2 - centerX}
+                      y2={a.y2 - centerY}
+                      stroke="#000"
+                      strokeWidth={1 / ternaryZoom.k}
+                    />
+                  ))}
                 </g>
               )}
 
@@ -744,17 +805,18 @@ export function TernaryPlot({
                   const isHovered = hoveredConstituencyId === point.constituencyId;
                   const isHighlighted = isSelected || isHovered;
                   const hasSelection = selectedConstituencyId !== null;
+                  const strokeColor = isSelected ? '#000' : isHovered ? '#3b82f6' : 'none';
 
                   return (
                     <circle
                       key={point.constituencyId}
                       cx={point.x - centerX}
                       cy={point.y - centerY}
-                      r={(isHighlighted ? 6 : 4) / ternaryZoom.k}
+                      r={(isHighlighted ? 6.6 : 4.4) * sizeScale / Math.pow(ternaryZoom.k, 0.6)}
                       fill={getPartyColor(point.winner)}
-                      fillOpacity={hasSelection && !isHighlighted ? 0.2 : 0.7}
-                      stroke={isHighlighted ? '#000' : 'none'}
-                      strokeWidth={isHighlighted ? 2 / ternaryZoom.k : 0}
+                      fillOpacity={hasSelection && !isHighlighted ? 0.6 : 0.85}
+                      stroke={strokeColor}
+                      strokeWidth={isHighlighted ? 2 * sizeScale / ternaryZoom.k : 0}
                       style={{ cursor: 'pointer' }}
                       onMouseEnter={(e) => handlePointMouseEnter(point, e)}
                       onMouseLeave={handlePointMouseLeave}
@@ -806,7 +868,7 @@ export function TernaryPlot({
             <div className="flex items-center gap-2">
               <span
                 className="w-3 h-3 rounded-full"
-                style={{ backgroundColor: '#0087DC' }}
+                style={{ backgroundColor: '#0063A6' }}
               />
               <span>Conservative: {(tooltip.point.conservative * 100).toFixed(1)}%</span>
             </div>
@@ -819,7 +881,12 @@ export function TernaryPlot({
             </div>
           </div>
           <div className="mt-2 pt-2 border-t text-xs text-gray-500">
-            Winner: {tooltip.point.winner.toUpperCase()}
+            <span>Winner: {tooltip.point.winner.toUpperCase()}</span>
+            {(() => {
+              const constData = electionDataMap.get(tooltip.point.constituencyId);
+              const wr = constData?.results.find(r => r.partyId.toLowerCase() === tooltip.point.winner.toLowerCase());
+              return wr?.candidate ? <span> · {wr.candidate}</span> : null;
+            })()}
           </div>
         </div>
       )}

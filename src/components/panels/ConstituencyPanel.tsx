@@ -1,13 +1,16 @@
 import { useEffect, useState, useMemo, useRef, useCallback } from 'react';
-import { useElectionStore, getYearLabel } from '@/store/electionStore';
+import { useElectionStore, getYearLabel, getBoundaryVersion } from '@/store/electionStore';
 import { getPartyColor } from '@/types/party';
 import type { ElectionResult } from '@/types/election';
+import { useConstituencyWikipedia } from '@/hooks/useWikipedia';
+import { WikipediaSnippet } from '@/components/panels/WikipediaSnippet';
 
 // Search component for constituency lookup
 function ConstituencySearch() {
-  const { electionData, setSelectedConstituency } = useElectionStore();
+  const { electionData, setSelectedConstituency, zoomToConstituency } = useElectionStore();
   const [searchQuery, setSearchQuery] = useState('');
   const [isOpen, setIsOpen] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(-1);
   const inputRef = useRef<HTMLInputElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -35,11 +38,49 @@ function ConstituencySearch() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  // Reset active index when results change
+  useEffect(() => {
+    setActiveIndex(-1);
+  }, [filteredConstituencies.length, searchQuery]);
+
   const handleSelect = (id: string) => {
     setSelectedConstituency(id);
+    zoomToConstituency();
     setSearchQuery('');
     setIsOpen(false);
+    setActiveIndex(-1);
   };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (!isOpen || filteredConstituencies.length === 0) return;
+
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      setActiveIndex(prev =>
+        prev < filteredConstituencies.length - 1 ? prev + 1 : 0
+      );
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      setActiveIndex(prev =>
+        prev > 0 ? prev - 1 : filteredConstituencies.length - 1
+      );
+    } else if (e.key === 'Enter' && activeIndex >= 0) {
+      e.preventDefault();
+      handleSelect(filteredConstituencies[activeIndex].constituencyId);
+    } else if (e.key === 'Escape') {
+      setIsOpen(false);
+      setActiveIndex(-1);
+    }
+  };
+
+  // Scroll active item into view
+  useEffect(() => {
+    if (activeIndex < 0 || !dropdownRef.current) return;
+    const items = dropdownRef.current.children;
+    if (items[activeIndex]) {
+      (items[activeIndex] as HTMLElement).scrollIntoView({ block: 'nearest' });
+    }
+  }, [activeIndex]);
 
   return (
     <div className="relative w-64">
@@ -66,6 +107,7 @@ function ConstituencySearch() {
             setIsOpen(true);
           }}
           onFocus={() => setIsOpen(true)}
+          onKeyDown={handleKeyDown}
           placeholder="Search constituency..."
           className="w-full pl-9 pr-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
         />
@@ -75,11 +117,13 @@ function ConstituencySearch() {
           ref={dropdownRef}
           className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-64 overflow-y-auto"
         >
-          {filteredConstituencies.map((c) => (
+          {filteredConstituencies.map((c, i) => (
             <button
               key={c.constituencyId}
               onClick={() => handleSelect(c.constituencyId)}
-              className="w-full px-3 py-2 text-left text-sm hover:bg-gray-50 flex items-center justify-between"
+              className={`w-full px-3 py-2 text-left text-sm flex items-center justify-between ${
+                i === activeIndex ? 'bg-gray-100' : 'hover:bg-gray-50'
+              }`}
             >
               <span>{c.constituencyName}</span>
               <span
@@ -96,7 +140,7 @@ function ConstituencySearch() {
 
 interface HistoricalResult {
   year: number;
-  results: Array<{ partyId: string; votes: number; voteShare: number }>;
+  results: Array<{ partyId: string; candidate: string; votes: number; voteShare: number }>;
   winner: string;
   validVotes: number;
   electorate: number;
@@ -119,7 +163,14 @@ export function ConstituencyPanel({ height }: ConstituencyPanelProps) {
     availableYears,
     setSelectedConstituency,
     setYear,
+    pinnedYear,
+    pinnedElectionData,
+    pinnedBoundaryVersion,
+    zoomToConstituency,
   } = useElectionStore();
+
+  const isComparing = pinnedYear !== null;
+  const isSameEra = isComparing && pinnedBoundaryVersion === getBoundaryVersion(currentYear);
 
   const [historicalData, setHistoricalData] = useState<HistoricalResult[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -141,6 +192,12 @@ export function ConstituencyPanel({ height }: ConstituencyPanelProps) {
     if (!selectedConstituencyId) return null;
     return electionData.find((c) => c.constituencyId === selectedConstituencyId);
   }, [selectedConstituencyId, electionData]);
+
+  // Get pinned constituency data for comparison
+  const pinnedConstituency = useMemo(() => {
+    if (!isSameEra || !selectedConstituencyId) return null;
+    return pinnedElectionData.find((c) => c.constituencyId === selectedConstituencyId) ?? null;
+  }, [isSameEra, selectedConstituencyId, pinnedElectionData]);
 
   // Load historical data for the selected constituency
   useEffect(() => {
@@ -258,6 +315,10 @@ export function ConstituencyPanel({ height }: ConstituencyPanelProps) {
     return Array.from(partySet);
   }, [historicalData, currentConstituency]);
 
+  // Wikipedia integration
+  const { summary: wikiSummary, isLoading: wikiLoading, articleUrl: wikiUrl } = useConstituencyWikipedia(selectedConstituencyId);
+  const [wikiExpanded, setWikiExpanded] = useState(false);
+
   // Empty state when no constituency selected
   if (!selectedConstituencyId || !currentConstituency) {
     return (
@@ -365,7 +426,11 @@ export function ConstituencyPanel({ height }: ConstituencyPanelProps) {
       <div className="flex-1 border-r border-gray-100 p-4 overflow-y-auto">
         <div className="flex items-start justify-between mb-3">
           <div>
-            <h3 className="font-semibold text-gray-900 text-sm">
+            <h3
+              className="font-semibold text-gray-900 text-sm cursor-pointer hover:text-blue-600"
+              onClick={zoomToConstituency}
+              title="Zoom to constituency on map"
+            >
               {currentConstituency.constituencyName}
             </h3>
             <div className="flex items-center gap-2 mt-1">
@@ -377,6 +442,14 @@ export function ConstituencyPanel({ height }: ConstituencyPanelProps) {
                 {currentConstituency.winner.toUpperCase()} win
               </span>
             </div>
+            {(() => {
+              const winnerResult = currentConstituency.results.find(
+                r => r.partyId.toLowerCase() === currentConstituency.winner.toLowerCase()
+              );
+              return winnerResult?.candidate ? (
+                <div className="text-xs text-gray-500 mt-0.5">{winnerResult.candidate}</div>
+              ) : null;
+            })()}
           </div>
           <button
             onClick={() => setSelectedConstituency(null)}
@@ -407,6 +480,26 @@ export function ConstituencyPanel({ height }: ConstituencyPanelProps) {
             {isNew ? `Created: ${getYearLabel(firstYear!)}` : 'Boundary changes'}
           </div>
         )}
+
+        {/* Wikipedia section */}
+        {(wikiLoading || wikiSummary || wikiUrl) && (
+          <div className="mt-2">
+            <button
+              onClick={() => setWikiExpanded(!wikiExpanded)}
+              className="text-[10px] text-gray-500 hover:text-gray-700 flex items-center gap-1"
+            >
+              <svg width="8" height="8" viewBox="0 0 8 8" fill="none" stroke="currentColor" strokeWidth="1.5" className={`transition-transform ${wikiExpanded ? 'rotate-90' : ''}`}>
+                <path d="M2 1l4 3-4 3" />
+              </svg>
+              Wikipedia
+            </button>
+            {wikiExpanded && (
+              <div className="mt-1">
+                <WikipediaSnippet summary={wikiSummary} isLoading={wikiLoading} articleUrl={wikiUrl} variant="constituency" />
+              </div>
+            )}
+          </div>
+        )}
       </div>
 
       {/* Results for displayed year */}
@@ -423,22 +516,36 @@ export function ConstituencyPanel({ height }: ConstituencyPanelProps) {
               .sort((a, b) => a.localeCompare(b));
             return (
               <>
-                {activeResults.map((r) => (
-                  <div key={r.partyId} className="flex items-center gap-1.5">
-                    <span
-                      className="w-2 h-2 rounded shrink-0"
-                      style={{ backgroundColor: getPartyColor(r.partyId) }}
-                    />
-                    <span className="text-xs shrink-0 w-12 truncate">{r.partyId.toUpperCase()}</span>
-                    <div className="flex-1 h-1.5 bg-gray-100 rounded-full overflow-hidden">
-                      <div
-                        className="h-full rounded-full"
-                        style={{ width: `${r.voteShare}%`, backgroundColor: getPartyColor(r.partyId) }}
+                {activeResults.map((r) => {
+                  const pinnedResult = pinnedConstituency?.results.find(
+                    pr => pr.partyId.toLowerCase() === r.partyId.toLowerCase()
+                  );
+                  const chronoFlipped = pinnedYear !== null && normalizeYear(pinnedYear) > normalizeYear(displayYear);
+                  const rawDelta = pinnedResult ? r.voteShare - pinnedResult.voteShare : null;
+                  const delta = rawDelta !== null ? (chronoFlipped ? -rawDelta : rawDelta) : null;
+                  return (
+                    <div key={r.partyId} className="flex items-center gap-1.5">
+                      <span
+                        className="w-2 h-2 rounded shrink-0"
+                        style={{ backgroundColor: getPartyColor(r.partyId) }}
                       />
+                      <span className="text-xs shrink-0 w-12 truncate">{r.partyId.toUpperCase()}</span>
+                      <div className="w-16 h-1 bg-gray-100 rounded-full overflow-hidden shrink-0">
+                        <div
+                          className="h-full rounded-full"
+                          style={{ width: `${r.voteShare}%`, backgroundColor: getPartyColor(r.partyId) }}
+                        />
+                      </div>
+                      <span className="text-xs font-medium w-10 text-right shrink-0 ml-1">{r.voteShare.toFixed(1)}%</span>
+                      <span className="text-[10px] text-gray-400 w-[3.25rem] text-left shrink-0 ">{r.votes.toLocaleString()}</span>
+                      {delta !== null && Math.abs(delta) >= 0.1 && (
+                        <span className={`text-[9px] font-medium w-12 text-right shrink-0 ${delta > 0 ? 'text-green-600' : 'text-red-600'}`}>
+                          {delta > 0 ? '+' : ''}{delta.toFixed(1)}pp
+                        </span>
+                      )}
                     </div>
-                    <span className="text-xs font-medium w-10 text-right shrink-0">{r.voteShare.toFixed(1)}%</span>
-                  </div>
-                ))}
+                  );
+                })}
                 {inactiveParties.map((party) => (
                   <div key={party} className="flex items-center gap-1.5">
                     <span
@@ -446,8 +553,9 @@ export function ConstituencyPanel({ height }: ConstituencyPanelProps) {
                       style={{ backgroundColor: getPartyColor(party) }}
                     />
                     <span className="text-xs text-gray-400 shrink-0 w-12 truncate">{party.toUpperCase()}</span>
-                    <div className="flex-1 h-1.5 bg-gray-100 rounded-full overflow-hidden" />
+                    <div className="w-16 h-1 bg-gray-100 rounded-full overflow-hidden shrink-0" />
                     <span className="w-10 shrink-0" />
+                    <span className="w-12 shrink-0" />
                   </div>
                 ))}
               </>
@@ -457,10 +565,11 @@ export function ConstituencyPanel({ height }: ConstituencyPanelProps) {
       </div>
 
       </div>
+
       {/* Right half: Historical chart with legend */}
       <div ref={chartContainerRef} className="w-1/2 pl-2 pr-4 py-4">
         <div>
-          <h4 className="text-xs font-medium text-gray-500 mb-1">Vote Share</h4>
+          <h4 className="text-xs font-medium text-gray-500 mb-1">Constituency Vote Share</h4>
 
           {isLoading ? (
           <div className="flex items-center justify-center h-full">
@@ -525,6 +634,28 @@ export function ConstituencyPanel({ height }: ConstituencyPanelProps) {
                 );
               })}
 
+              {/* Pinned year marker (amber with yellow border) */}
+              {pinnedYear != null && yearsPresent.has(pinnedYear) && (
+                <>
+                  <line
+                    x1={xScale(pinnedYear)}
+                    y1={-5}
+                    x2={xScale(pinnedYear)}
+                    y2={plotHeight + 5}
+                    stroke="#fef3c7"
+                    strokeWidth={5}
+                  />
+                  <line
+                    x1={xScale(pinnedYear)}
+                    y1={-5}
+                    x2={xScale(pinnedYear)}
+                    y2={plotHeight + 5}
+                    stroke="#92400e"
+                    strokeWidth={2}
+                  />
+                </>
+              )}
+
               {/* Current year marker */}
               {yearsPresent.has(currentYear) && (
                 <line
@@ -566,14 +697,21 @@ export function ConstituencyPanel({ height }: ConstituencyPanelProps) {
                   {/* Tick and year label */}
                   {(() => {
                     const labelX = xScale(d.year) + getLabelXOffset(d.year);
+                    const isPinned = d.year === pinnedYear;
                     const isActive = d.year === currentYear;
                     const isHovered = d.year === hoveredYear;
+                    const tickColor = isPinned ? '#b45309' : isActive ? '#000' : isHovered ? '#3b82f6' : '#999';
+                    const textClass = isPinned
+                      ? 'text-[9px] font-bold'
+                      : isActive ? 'text-[9px] fill-black font-semibold'
+                      : isHovered ? 'text-[9px] fill-blue-500 font-medium'
+                      : 'text-[9px] fill-gray-500';
                     return (
                       <>
                         <line
                           x1={xScale(d.year)} y1={plotHeight}
                           x2={labelX} y2={plotHeight + 5}
-                          stroke={isActive ? '#000' : isHovered ? '#3b82f6' : '#999'}
+                          stroke={tickColor}
                           strokeWidth={1}
                           style={{ pointerEvents: 'none' }}
                         />
@@ -582,14 +720,14 @@ export function ConstituencyPanel({ height }: ConstituencyPanelProps) {
                           y={plotHeight + 10}
                           textAnchor="end"
                           transform={`rotate(-45, ${labelX}, ${plotHeight + 10})`}
-                          className={`text-[9px] ${
-                            isActive
-                              ? 'fill-black font-semibold'
-                              : isHovered
-                              ? 'fill-blue-600 font-medium'
-                              : 'fill-gray-500'
-                          }`}
+                          className={textClass}
                           style={{ pointerEvents: 'none' }}
+                          {...(isPinned ? {
+                            fill: '#92400e',
+                            stroke: '#fef3c7',
+                            strokeWidth: 3,
+                            paintOrder: 'stroke' as const,
+                          } : {})}
                         >
                           {getShortYearLabel(d.year)}
                         </text>

@@ -21,7 +21,7 @@ export const PARTIES: Record<string, Party> = {
     name: 'Conservative Party',
     shortName: 'Conservative',
     abbreviation: 'Con',
-    color: '#0087DC',
+    color: '#0063A6',
     altNames: ['conservative', 'con', 'tory', 'tories'],
   },
   ld: {

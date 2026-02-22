@@ -43,7 +43,7 @@ export const EXPECTED_BOUNDARY_COUNTS: Record<string, number> = {
   '1997': 641,
   '2005': 628,
   '2010': 632,
-  '2024': 632,
+  '2024': 650,
 };
 
 /** Regions that belong to Scotland. */
@@ -59,6 +59,9 @@ export const ENGLAND_REGIONS = [
   'london', 'south_east', 'south_west',
 ] as const;
 
+/** Regions that belong to Northern Ireland. */
+export const NI_REGIONS = ['northern_ireland'] as const;
+
 /** Map from region to country. */
 export const REGION_TO_COUNTRY: Record<string, string> = {
   scotland: 'scotland',
@@ -72,14 +75,15 @@ export const REGION_TO_COUNTRY: Record<string, string> = {
   london: 'england',
   south_east: 'england',
   south_west: 'england',
+  northern_ireland: 'northern_ireland',
 };
 
-/** Valid country values (GB only, no NI). */
-export const VALID_COUNTRIES = ['england', 'scotland', 'wales'] as const;
+/** Valid country values (GB + NI for 2024 onwards). */
+export const VALID_COUNTRIES = ['england', 'scotland', 'wales', 'northern_ireland'] as const;
 
-/** Valid region values (GB only, no NI). */
+/** Valid region values (GB + NI for 2024 onwards). */
 export const VALID_REGIONS = [
-  ...ENGLAND_REGIONS, ...SCOTLAND_REGIONS, ...WALES_REGIONS,
+  ...ENGLAND_REGIONS, ...SCOTLAND_REGIONS, ...WALES_REGIONS, ...NI_REGIONS,
 ] as const;
 
 /** GB bounding box for WGS84 coordinates. */
@@ -96,7 +100,10 @@ export const SNP_PARTY_IDS = ['snp'] as const;
 /** Plaid Cymru party IDs (Wales-only parties). */
 export const PLAID_PARTY_IDS = ['pc', 'plaid'] as const;
 
-/** Northern Ireland party IDs (should not appear). */
+/** Northern Ireland party IDs (should only appear in NI constituencies). */
 export const NI_PARTY_IDS = [
-  'sf', 'sinn_fein', 'dup', 'sdlp', 'uup', 'alliance_ni', 'tuv',
+  'sf', 'sinn_fein', 'dup', 'sdlp', 'uup', 'alliance', 'alliance_ni', 'tuv',
 ] as const;
+
+/** Election years that include NI constituencies. */
+export const YEARS_WITH_NI = [2024] as const;

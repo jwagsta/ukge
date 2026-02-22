@@ -8,7 +8,7 @@ export default {
     extend: {
       colors: {
         labour: '#DC241f',
-        conservative: '#0087DC',
+        conservative: '#0063A6',
         libdem: '#FDBB30',
         snp: '#FFF95D',
         green: '#6AB023',

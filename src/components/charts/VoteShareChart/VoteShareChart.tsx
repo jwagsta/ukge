@@ -9,9 +9,6 @@ interface VoteShareChartProps {
   height?: number;
 }
 
-const MIN_ZOOM = 1;
-const MAX_ZOOM = 5;
-
 // Stack order bottom→top: Other, LD, Con, Lab
 const STACK_PARTIES = ['other', 'ld', 'con', 'lab'] as const;
 const PARTY_COLORS: Record<string, string> = {
@@ -22,12 +19,10 @@ const PARTY_COLORS: Record<string, string> = {
 };
 
 export function VoteShareChart({ height = 100 }: VoteShareChartProps) {
-  const { currentYear, availableYears, setYear } = useElectionStore();
-  const { chartXZoom, setChartXZoom, resetChartXZoom, hoveredChartYear, setHoveredChartYear } = useUIStore();
+  const { currentYear, availableYears, setYear, pinnedYear } = useElectionStore();
+  const { hoveredChartYear, setHoveredChartYear } = useUIStore();
   const [dimensions, setDimensions] = useState({ width: 0 });
-  const [isDragging, setIsDragging] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
-  const dragRef = useRef<{ startMouseX: number; startZoomX: number } | null>(null);
   const clipId = useRef(`vote-clip-${Math.random().toString(36).slice(2)}`).current;
 
   useEffect(() => {
@@ -62,14 +57,7 @@ export function VoteShareChart({ height = 100 }: VoteShareChartProps) {
     return year.toString();
   };
 
-  // Nudge 1974 labels apart so they don't overlap
-  const getLabelXOffset = (year: number): number => {
-    if (year === 197402) return -8;
-    if (year === 197410) return 8;
-    return 0;
-  };
-
-  const xScaleBase = useMemo(() => {
+  const xScale = useMemo(() => {
     const years = data.map(d => normalizeYear(d.year));
     const minYear = Math.min(...years);
     const maxYear = Math.max(...years);
@@ -78,61 +66,27 @@ export function VoteShareChart({ height = 100 }: VoteShareChartProps) {
     };
   }, [data, chartWidth]);
 
-  const xScale = useCallback((year: number) => {
-    return xScaleBase(year) * chartXZoom.k + chartXZoom.x;
-  }, [xScaleBase, chartXZoom]);
+  // Only nudge pairs whose labels would actually overlap; leave the rest at 0
+  const labelXOffsets = useMemo(() => {
+    const MIN_LABEL_GAP = 20; // min px between anchor points at -45°
+    const positions = data.map(d => xScale(d.year));
+    const offsets = new Array(positions.length).fill(0);
+
+    for (let i = 1; i < positions.length; i++) {
+      const gap = positions[i] - positions[i - 1];
+      if (gap < MIN_LABEL_GAP) {
+        const push = (MIN_LABEL_GAP - gap) / 2;
+        offsets[i - 1] -= push;
+        offsets[i] += push;
+      }
+    }
+
+    const map = new Map<number, number>();
+    data.forEach((d, i) => map.set(d.year, offsets[i]));
+    return map;
+  }, [data, xScale]);
 
   const yScale = (pct: number) => chartHeight - (pct / 100) * chartHeight;
-
-  const clampX = useCallback((x: number, k: number) => {
-    return Math.min(0, Math.max(chartWidth - chartWidth * k, x));
-  }, [chartWidth]);
-
-  const handleWheel = useCallback((e: React.WheelEvent<SVGSVGElement>) => {
-    e.preventDefault();
-    const svgRect = e.currentTarget.getBoundingClientRect();
-    const mouseX = e.clientX - svgRect.left - padding.left;
-
-    const { k, x } = chartXZoom;
-    const factor = e.deltaY > 0 ? 0.9 : 1.1;
-    const newK = Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, k * factor));
-
-    const mouseXInBase = (mouseX - x) / k;
-    let newX = mouseX - mouseXInBase * newK;
-    newX = clampX(newX, newK);
-
-    setChartXZoom({ k: newK, x: newX });
-  }, [chartXZoom, padding.left, setChartXZoom, clampX]);
-
-  const handleMouseDown = useCallback((e: React.MouseEvent<SVGSVGElement>) => {
-    if (chartXZoom.k <= 1) return;
-    e.preventDefault();
-    dragRef.current = { startMouseX: e.clientX, startZoomX: chartXZoom.x };
-    setIsDragging(true);
-  }, [chartXZoom]);
-
-  useEffect(() => {
-    if (!isDragging) return;
-
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!dragRef.current) return;
-      const dx = e.clientX - dragRef.current.startMouseX;
-      const newX = clampX(dragRef.current.startZoomX + dx, chartXZoom.k);
-      setChartXZoom({ k: chartXZoom.k, x: newX });
-    };
-
-    const handleMouseUp = () => {
-      dragRef.current = null;
-      setIsDragging(false);
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('mouseup', handleMouseUp);
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mouseup', handleMouseUp);
-    };
-  }, [isDragging, chartXZoom.k, setChartXZoom, clampX]);
 
   // Compute cumulative stack positions for each year
   const stackedData = useMemo(() => {
@@ -191,12 +145,11 @@ export function VoteShareChart({ height = 100 }: VoteShareChartProps) {
   }
 
   const currentYearX = xScale(currentYear);
-  const isZoomed = chartXZoom.k > 1;
-  const cursor = isDragging ? 'grabbing' : isZoomed ? 'grab' : 'default';
+
 
   return (
-    <div ref={containerRef} className="w-full bg-white border-b border-gray-200 relative">
-      <svg width={width} height={height} onWheel={handleWheel} onMouseDown={handleMouseDown} style={{ cursor }}>
+    <div ref={containerRef} className="w-full bg-white border-b border-gray-200">
+      <svg width={width} height={height}>
         <defs>
           <clipPath id={clipId}>
             <rect x={-padding.left} y={-padding.top} width={chartWidth + padding.left} height={height} />
@@ -204,7 +157,7 @@ export function VoteShareChart({ height = 100 }: VoteShareChartProps) {
         </defs>
         <g transform={`translate(${padding.left}, ${padding.top})`}>
           {/* Chart label */}
-          <text x={2} y={-8} className="text-[11px] fill-gray-400 font-medium">Vote Share</text>
+          <text x={2} y={-8} className="text-[11px] fill-gray-400 font-medium">National Vote Share</text>
 
           {/* Y-axis labels (outside clip) */}
           {[0, 50, 100].map(pct => (
@@ -245,6 +198,17 @@ export function VoteShareChart({ height = 100 }: VoteShareChartProps) {
               />
             ))}
 
+            {/* Pinned year indicator (amber with yellow border) */}
+            {pinnedYear != null && (() => {
+              const px = xScale(pinnedYear);
+              return (
+                <>
+                  <line x1={px} y1={0} x2={px} y2={chartHeight} stroke="#fef3c7" strokeWidth={5} />
+                  <line x1={px} y1={0} x2={px} y2={chartHeight} stroke="#92400e" strokeWidth={2} />
+                </>
+              );
+            })()}
+
             {/* Current year indicator */}
             <line
               x1={currentYearX}
@@ -268,10 +232,18 @@ export function VoteShareChart({ height = 100 }: VoteShareChartProps) {
 
             {/* Clickable hit areas for each year */}
             {data.map(d => {
+              const isPinned = d.year === pinnedYear;
               const isActive = d.year === currentYear;
               const isHovered = d.year === hoveredChartYear;
               const x = xScale(d.year);
-              const labelX = x + getLabelXOffset(d.year);
+              const labelX = x + (labelXOffsets.get(d.year) ?? 0);
+
+              const tickColor = isPinned ? '#b45309' : isActive ? '#000' : isHovered ? '#3b82f6' : '#999';
+              const textClass = isPinned
+                ? 'text-[10px] font-bold'
+                : isActive ? 'text-[10px] fill-black font-bold'
+                : isHovered ? 'text-[10px] fill-blue-500 font-medium'
+                : 'text-[10px] fill-gray-500';
 
               return (
                 <g
@@ -284,14 +256,20 @@ export function VoteShareChart({ height = 100 }: VoteShareChartProps) {
                   <rect x={x - 15} y={0} width={30} height={chartHeight + 20} fill="transparent" />
                   <line
                     x1={x} y1={chartHeight} x2={labelX} y2={chartHeight + 5}
-                    stroke={isActive ? '#000' : isHovered ? '#3b82f6' : '#999'} strokeWidth={1}
+                    stroke={tickColor} strokeWidth={1}
                   />
                   <text
                     x={labelX}
                     y={chartHeight + 10}
                     textAnchor="end"
                     transform={`rotate(-45, ${labelX}, ${chartHeight + 10})`}
-                    className={`text-[11px] ${isActive ? 'fill-black font-bold' : isHovered ? 'fill-blue-500 font-medium' : 'fill-gray-500'}`}
+                    className={textClass}
+                    {...(isPinned ? {
+                      fill: '#92400e',
+                      stroke: '#fef3c7',
+                      strokeWidth: 3,
+                      paintOrder: 'stroke',
+                    } : {})}
                   >
                     {getShortYearLabel(d.year)}
                   </text>
@@ -302,15 +280,6 @@ export function VoteShareChart({ height = 100 }: VoteShareChartProps) {
         </g>
       </svg>
 
-      {/* Reset zoom button */}
-      {isZoomed && (
-        <button
-          onClick={resetChartXZoom}
-          className="absolute top-1 right-1 px-1.5 py-0.5 text-[10px] bg-white border border-gray-300 rounded text-gray-600 hover:bg-gray-100 shadow-sm"
-        >
-          Reset
-        </button>
-      )}
     </div>
   );
 }

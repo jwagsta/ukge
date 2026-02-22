@@ -1,0 +1,97 @@
+import type { WikipediaSummary } from '@/services/wikipedia';
+
+interface WikipediaSnippetProps {
+  summary: WikipediaSummary | null;
+  isLoading: boolean;
+  articleUrl: string | null;
+  variant: 'constituency' | 'election';
+}
+
+export function WikipediaSnippet({ summary, isLoading, articleUrl, variant }: WikipediaSnippetProps) {
+  if (isLoading) {
+    return (
+      <div className="space-y-1.5 animate-pulse">
+        <div className="h-2.5 bg-gray-200 rounded w-full" />
+        <div className="h-2.5 bg-gray-200 rounded w-4/5" />
+        {variant === 'constituency' && <div className="h-2.5 bg-gray-200 rounded w-3/5" />}
+      </div>
+    );
+  }
+
+  // Error or not found: just show a link
+  if (!summary || summary.status !== 'loaded') {
+    if (!articleUrl) return null;
+    return (
+      <a
+        href={articleUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-xs text-blue-600 hover:underline inline-flex items-center gap-1"
+      >
+        View on Wikipedia
+        <WikipediaLinkIcons />
+      </a>
+    );
+  }
+
+  if (variant === 'election') {
+    return (
+      <div className="text-xs text-gray-600 leading-relaxed">
+        <span>{truncateToSentence(summary.extract, 200)}</span>
+        {articleUrl && (
+          <a
+            href={articleUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-600 hover:underline ml-1 inline-flex items-center gap-0.5 whitespace-nowrap"
+          >
+            Wikipedia <WikipediaLinkIcons />
+          </a>
+        )}
+      </div>
+    );
+  }
+
+  // Constituency variant
+  return (
+    <div className="text-xs leading-relaxed text-gray-600">
+      <span>{summary.extract}</span>
+      {articleUrl && (
+        <a
+          href={articleUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-blue-600 hover:underline ml-1 inline-flex items-center"
+          title="View on Wikipedia"
+        >
+          <WikipediaLinkIcons />
+        </a>
+      )}
+    </div>
+  );
+}
+
+export function WikipediaLinkIcons({ size = 10 }: { size?: number }) {
+  const linkSize = size * 0.8;
+  return (
+    <span className="inline-flex items-center gap-px text-blue-600 shrink-0">
+      <svg width={size} height={size} viewBox="0 0 128 128" fill="currentColor">
+        <path d="M120.85,29.21c0,.41-.13,.78-.38,1.12-.26,.33-.53,.5-.84,.5-2.49,.24-4.54,1.04-6.12,2.41-1.59,1.36-3.22,3.97-4.91,7.81L82.8,99.19c-.17,.54-.64,.81-1.42,.81-.61,0-1.08-.27-1.42-.81L65.49,68.93,48.85,99.19c-.34,.54-.81,.81-1.42,.81-.74,0-1.23-.27-1.47-.81L20.61,41.05c-1.58-3.61-3.25-6.13-5.01-7.56-1.75-1.43-4.2-2.32-7.33-2.66-.27,0-.53-.14-.76-.43s-.36-.61-.36-.98c0-.95,.27-1.42,.81-1.42,2.26,0,4.62,.1,7.09,.3,2.29,.21,4.45,.31,6.47,.31,2.06,0,4.49-.1,7.29-.31,2.93-.2,5.53-.3,7.79-.3s3.41,.47,3.41,1.42c0,.94-.17,1.41-.5,1.41-2.26,.17-4.04,.75-5.34,1.72-1.3,.98-1.95,2.26-1.95,3.85,0,.81,.27,1.82,.81,3.03l20.95,47.31,11.89-22.46-11.08-23.23c-1.99-4.14-3.63-6.82-4.91-8.02s-3.22-1.93-5.82-2.2c-.24,0-.46-.14-.68-.43s-.33-.61-.33-.98c0-.95,.23-1.42,.71-1.42,2.26,0,4.33,.1,6.22,.3,1.82,.21,3.76,.31,5.82,.31,2.02,0,4.16-.1,6.42-.31,2.33-.2,4.62-.3,6.88-.3s3.41,.47,3.41,1.42c0,.94-.16,1.41-.5,1.41-4.52,.31-6.78,1.59-6.78,3.85,0,1.01,.52,2.58,1.57,4.7l7.33,14.88,7.29-13.61c1.01-1.92,1.52-3.54,1.52-4.86,0-3.1-2.26-4.75-6.78-4.96-.41,0-.61-.47-.61-1.41,0-.34,.1-.66,.3-.96s.41-.46,.61-.46c1.62,0,3.61,.1,5.97,.3,2.26,.21,4.12,.31,5.57,.31,1.04,0,2.58-.09,4.6-.26,2.56-.23,4.71-.35,6.43-.35s2.6,.4,2.6,1.21c0,1.08-.37,1.62-1.11,1.62-2.63,.27-4.75,1-6.35,2.18-1.6,1.18-3.6,3.86-5.99,8.04l-9.72,17.97,13.16,26.81,19.43-45.18c.67-1.65,1.01-3.17,1.01-4.55,0-3.31-2.26-5.06-6.78-5.27-.41,0-.61-.47-.61-1.41s.3-1.42,.91-1.42c1.65,0,3.61,.1,5.87,.3,2.09,.21,3.85,.31,5.26,.31s3.21-.1,5.16-.31c2.03-.2,3.85-.3,5.47-.3,.47,0,.71,.4,.71,1.21Z" />
+      </svg>
+      <svg width={linkSize} height={linkSize} viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5">
+        <path d="M4.5 1.5H2a.5.5 0 00-.5.5v8a.5.5 0 00.5.5h8a.5.5 0 00.5-.5V7.5M7 1.5h3.5V5M5.5 6.5l5-5" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    </span>
+  );
+}
+
+function truncateToSentence(text: string, maxLength: number): string {
+  if (text.length <= maxLength) return text;
+  // Try to break at a sentence boundary
+  const truncated = text.slice(0, maxLength);
+  const lastPeriod = truncated.lastIndexOf('. ');
+  if (lastPeriod > maxLength * 0.5) {
+    return truncated.slice(0, lastPeriod + 1);
+  }
+  return truncated.trimEnd() + '...';
+}

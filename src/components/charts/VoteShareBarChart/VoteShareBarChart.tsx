@@ -16,25 +16,35 @@ const PARTY_LABELS: Record<string, string> = {
   other: 'Oth',
 };
 
+const normalizeYear = (y: number) => y === 197402 ? 1974.2 : y === 197410 ? 1974.8 : y;
+
 export function VoteShareBarChart({ height = 100, width = 200 }: VoteShareBarChartProps) {
-  const { currentYear } = useElectionStore();
+  const { currentYear, pinnedYear } = useElectionStore();
   const { hoveredChartYear } = useUIStore();
   const displayYear = hoveredChartYear ?? currentYear;
+  const isComparing = pinnedYear !== null;
+  const chronoFlipped = isComparing && normalizeYear(pinnedYear!) > normalizeYear(displayYear);
 
   const yearData = useMemo(() => {
     return NATIONAL_VOTES.find(d => d.year === displayYear);
   }, [displayYear]);
+
+  const pinnedData = useMemo(() => {
+    if (!pinnedYear) return null;
+    return NATIONAL_VOTES.find(d => d.year === pinnedYear) ?? null;
+  }, [pinnedYear]);
 
   const bars = useMemo(() => {
     if (!yearData) return [];
     const parties = (['con', 'lab', 'ld', 'other'] as const).map(id => ({
       id,
       pct: (yearData[id] / yearData.total) * 100,
+      pinnedPct: pinnedData ? (pinnedData[id] / pinnedData.total) * 100 : 0,
       color: id === 'other' ? '#808080' : getPartyColor(id),
       label: PARTY_LABELS[id],
     }));
-    return parties.filter(p => p.pct > 0).sort((a, b) => b.pct - a.pct);
-  }, [yearData]);
+    return parties.filter(p => p.pct > 0 || (isComparing && p.pinnedPct > 0)).sort((a, b) => b.pct - a.pct);
+  }, [yearData, pinnedData, isComparing]);
 
   if (!yearData) return null;
 
@@ -56,6 +66,9 @@ export function VoteShareBarChart({ height = 100, width = 200 }: VoteShareBarCha
           {bars.map((bar, i) => {
             const y = barsYOffset + i * (barHeight + barGap);
             const barW = xScale(bar.pct);
+            const pinnedW = isComparing ? xScale(bar.pinnedPct) : 0;
+            const rawDelta = bar.pct - bar.pinnedPct;
+            const delta = chronoFlipped ? -rawDelta : rawDelta;
             return (
               <g key={bar.id}>
                 <text
@@ -67,6 +80,21 @@ export function VoteShareBarChart({ height = 100, width = 200 }: VoteShareBarCha
                 >
                   {bar.label}
                 </text>
+                {/* Ghost bar for pinned year */}
+                {isComparing && bar.pinnedPct > 0 && (
+                  <rect
+                    x={0}
+                    y={y}
+                    width={pinnedW}
+                    height={barHeight}
+                    fill="none"
+                    stroke={bar.color}
+                    strokeWidth={1}
+                    strokeDasharray="3,2"
+                    rx={2}
+                    opacity={0.6}
+                  />
+                )}
                 <rect
                   x={0}
                   y={y}
@@ -83,6 +111,18 @@ export function VoteShareBarChart({ height = 100, width = 200 }: VoteShareBarCha
                 >
                   {bar.pct.toFixed(1)}%
                 </text>
+                {/* Delta annotation */}
+                {isComparing && Math.abs(delta) >= 0.1 && (
+                  <text
+                    x={chartWidth}
+                    y={y + barHeight / 2}
+                    textAnchor="end"
+                    alignmentBaseline="central"
+                    className={`text-[9px] font-medium ${delta > 0 ? 'fill-green-600' : 'fill-red-600'}`}
+                  >
+                    {delta > 0 ? '+' : ''}{delta.toFixed(1)}pp
+                  </text>
+                )}
               </g>
             );
           })}

@@ -9,11 +9,6 @@ export interface ZoomTransform {
   y: number; // translate y
 }
 
-export interface ChartXZoom {
-  k: number;  // x-axis scale factor (1 = no zoom)
-  x: number;  // x-axis translate in pixels
-}
-
 export const MOBILE_BREAKPOINT = 640;
 
 interface UIState {
@@ -25,12 +20,13 @@ interface UIState {
   mobileTab: MobileTab;
   ternaryZoom: ZoomTransform;
   mapZoom: ZoomTransform;
-  chartXZoom: ChartXZoom;
   hoveredChartYear: number | null;
+  dotPartyFilter: Set<string>;
 
   setMapType: (type: MapType) => void;
   setMapColorMode: (mode: string) => void;
   setVotesPerDot: (value: number) => void;
+  toggleDotParty: (partyId: string) => void;
   toggleSidebar: () => void;
   setIsMobile: (value: boolean) => void;
   setMobileTab: (tab: MobileTab) => void;
@@ -38,13 +34,10 @@ interface UIState {
   resetTernaryZoom: () => void;
   setMapZoom: (transform: ZoomTransform) => void;
   resetMapZoom: () => void;
-  setChartXZoom: (zoom: ChartXZoom) => void;
-  resetChartXZoom: () => void;
   setHoveredChartYear: (year: number | null) => void;
 }
 
 const DEFAULT_ZOOM: ZoomTransform = { k: 1, x: 0, y: 0 };
-const DEFAULT_CHART_X_ZOOM: ChartXZoom = { k: 1, x: 0 };
 
 export const useUIStore = create<UIState>((set) => ({
   mapType: 'choropleth',
@@ -55,8 +48,8 @@ export const useUIStore = create<UIState>((set) => ({
   mobileTab: 'map',
   ternaryZoom: DEFAULT_ZOOM,
   mapZoom: DEFAULT_ZOOM,
-  chartXZoom: DEFAULT_CHART_X_ZOOM,
   hoveredChartYear: null,
+  dotPartyFilter: new Set<string>(),
 
   setMapType: (type) => set((state) => ({
     mapType: type,
@@ -64,6 +57,15 @@ export const useUIStore = create<UIState>((set) => ({
   })),
   setMapColorMode: (mode) => set({ mapColorMode: mode }),
   setVotesPerDot: (value) => set({ votesPerDot: value }),
+  toggleDotParty: (partyId) => set((state) => {
+    const next = new Set(state.dotPartyFilter);
+    if (next.has(partyId)) {
+      next.delete(partyId);
+    } else {
+      next.add(partyId);
+    }
+    return { dotPartyFilter: next };
+  }),
   toggleSidebar: () => set((state) => ({ sidebarOpen: !state.sidebarOpen })),
   setIsMobile: (value) => set({ isMobile: value, sidebarOpen: !value }),
   setMobileTab: (tab) => set({ mobileTab: tab }),
@@ -71,7 +73,5 @@ export const useUIStore = create<UIState>((set) => ({
   resetTernaryZoom: () => set({ ternaryZoom: DEFAULT_ZOOM }),
   setMapZoom: (transform) => set({ mapZoom: transform }),
   resetMapZoom: () => set({ mapZoom: DEFAULT_ZOOM }),
-  setChartXZoom: (zoom) => set({ chartXZoom: zoom }),
-  resetChartXZoom: () => set({ chartXZoom: DEFAULT_CHART_X_ZOOM }),
   setHoveredChartYear: (year) => set({ hoveredChartYear: year }),
 }));

@@ -12,6 +12,7 @@ An interactive web app for exploring UK General Election results across Great Br
 - **Linked Views** — Hover or select a constituency in any visualization to highlight it in all others
 - **Timeline Playback** — Animate through elections with play/pause/step controls
 - **Constituency Search** — Find and select constituencies by name
+- **Wikipedia Integration** — Election summary bar with expandable Wikipedia excerpt; per-constituency Wikipedia snippets in the detail panel
 
 ## Getting Started
 
@@ -79,20 +80,22 @@ Election and boundary data files are included in `public/data/` — no additiona
 ukge/
 ├── public/data/
 │   ├── elections/          # 19 election JSON files (1955–2024)
-│   └── boundaries/         # 7 era-specific boundary GeoJSON files
+│   ├── boundaries/         # 7 era-specific boundary GeoJSON files
+│   └── wikipedia/          # Constituency → Wikipedia article title mapping
 ├── src/
 │   ├── components/
 │   │   ├── charts/         # TernaryPlot, ChoroplethMap, DotDensityMap,
 │   │   │                   # HexMap, SeatsChart, VoteShareChart
 │   │   ├── controls/       # PlayButton (timeline playback)
-│   │   ├── layout/         # Header
-│   │   └── panels/         # ConstituencyPanel (search + details)
+│   │   ├── layout/         # Header, ElectionInfoBar
+│   │   └── panels/         # ConstituencyPanel, WikipediaSnippet
+│   ├── services/           # Wikipedia API client
 │   ├── store/              # Zustand stores (election data, UI state)
 │   ├── types/              # TypeScript interfaces (election, party, geography)
 │   ├── utils/              # D3 helpers, constituency name matching
-│   └── hooks/              # useWindowSize
+│   └── hooks/              # useWindowSize, useWikipedia
 ├── scripts/                # Data processing and validation scripts
-├── tests/data/             # 720 data validation tests
+├── tests/data/             # Data validation tests
 └── .github/                # CI/CD (GitHub Actions → GitHub Pages)
 ```
 
@@ -124,6 +127,7 @@ Scripts for preparing data from upstream sources (not needed for normal developm
 - `scripts/removeNorthernIreland.ts` — Filter Northern Ireland constituencies from election data
 - `scripts/validateBoundaryMatching.ts` — Validate constituency name matching between boundaries and elections
 - `scripts/fix_data.py` — Fix boundary IDs, polygon winding order, and election metadata (idempotent)
+- `scripts/buildWikipediaMapping.ts` — Build constituency ID → Wikipedia article title mapping
 
 ## Deployment
 

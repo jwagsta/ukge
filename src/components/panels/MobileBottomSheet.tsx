@@ -1,11 +1,13 @@
 import { useEffect, useState, useMemo, useCallback, useRef } from 'react';
-import { useElectionStore, getYearLabel } from '@/store/electionStore';
+import { useElectionStore, getYearLabel, getBoundaryVersion } from '@/store/electionStore';
 import { getPartyColor } from '@/types/party';
 import type { ElectionResult } from '@/types/election';
+import { useConstituencyWikipedia } from '@/hooks/useWikipedia';
+import { WikipediaSnippet } from '@/components/panels/WikipediaSnippet';
 
 interface HistoricalResult {
   year: number;
-  results: Array<{ partyId: string; votes: number; voteShare: number }>;
+  results: Array<{ partyId: string; candidate: string; votes: number; voteShare: number }>;
   winner: string;
   validVotes: number;
   electorate: number;
@@ -24,7 +26,14 @@ export function MobileBottomSheet() {
     availableYears,
     setSelectedConstituency,
     setYear,
+    pinnedYear,
+    pinnedElectionData,
+    pinnedBoundaryVersion,
+    zoomToConstituency,
   } = useElectionStore();
+
+  const isComparing = pinnedYear !== null;
+  const isSameEra = isComparing && pinnedBoundaryVersion === getBoundaryVersion(currentYear);
 
   const [historicalData, setHistoricalData] = useState<HistoricalResult[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -37,6 +46,12 @@ export function MobileBottomSheet() {
     if (!selectedConstituencyId) return null;
     return electionData.find((c) => c.constituencyId === selectedConstituencyId);
   }, [selectedConstituencyId, electionData]);
+
+  // Get pinned constituency data for comparison
+  const pinnedConstituency = useMemo(() => {
+    if (!isSameEra || !selectedConstituencyId) return null;
+    return pinnedElectionData.find((c) => c.constituencyId === selectedConstituencyId) ?? null;
+  }, [isSameEra, selectedConstituencyId, pinnedElectionData]);
 
   // Load historical data
   useEffect(() => {
@@ -148,6 +163,10 @@ export function MobileBottomSheet() {
     return Array.from(partySet);
   }, [historicalData, currentConstituency]);
 
+  // Wikipedia integration
+  const { summary: wikiSummary, isLoading: wikiLoading, articleUrl: wikiUrl } = useConstituencyWikipedia(selectedConstituencyId);
+  const [wikiExpanded, setWikiExpanded] = useState(false);
+
   if (!selectedConstituencyId || !currentConstituency) return null;
 
   const sortedResults = [...currentConstituency.results].sort((a, b) => b.voteShare - a.voteShare);
@@ -160,6 +179,7 @@ export function MobileBottomSheet() {
   const plotH = chartHeight - pad.top - pad.bottom;
 
   const normalizeYear = (y: number) => y === 197402 ? 1974.2 : y === 197410 ? 1974.8 : y;
+  const chronoFlipped = isComparing && normalizeYear(pinnedYear!) > normalizeYear(currentYear);
   const xScale = (year: number) => {
     if (historicalData.length <= 1) return plotW / 2;
     const years = historicalData.map((d) => normalizeYear(d.year));
@@ -220,7 +240,11 @@ export function MobileBottomSheet() {
         {/* Header row */}
         <div className="flex items-start justify-between px-4 pb-2">
           <div>
-            <h3 className="font-semibold text-gray-900 text-sm">
+            <h3
+              className="font-semibold text-gray-900 text-sm cursor-pointer hover:text-blue-600"
+              onClick={zoomToConstituency}
+              title="Zoom to constituency on map"
+            >
               {currentConstituency.constituencyName}
             </h3>
             <div className="flex items-center gap-2 mt-0.5">
@@ -230,6 +254,12 @@ export function MobileBottomSheet() {
               />
               <span className="text-xs text-gray-600">
                 {currentConstituency.winner.toUpperCase()} win
+                {(() => {
+                  const wr = currentConstituency.results.find(
+                    r => r.partyId.toLowerCase() === currentConstituency.winner.toLowerCase()
+                  );
+                  return wr?.candidate ? ` · ${wr.candidate}` : '';
+                })()}
               </span>
               <span className="text-xs text-gray-400">
                 Turnout: {currentConstituency.turnout.toFixed(1)}%
@@ -254,24 +284,57 @@ export function MobileBottomSheet() {
             {getYearLabel(currentYear)} Results
           </h4>
           <div className="grid grid-cols-2 gap-x-4 gap-y-1">
-            {sortedResults.map((r) => (
-              <div key={r.partyId} className="flex items-center gap-1.5">
-                <span
-                  className="w-2 h-2 rounded shrink-0"
-                  style={{ backgroundColor: getPartyColor(r.partyId) }}
-                />
-                <span className="text-xs shrink-0 w-12 truncate">{r.partyId.toUpperCase()}</span>
-                <div className="flex-1 h-1.5 bg-gray-100 rounded-full overflow-hidden">
-                  <div
-                    className="h-full rounded-full"
-                    style={{ width: `${r.voteShare}%`, backgroundColor: getPartyColor(r.partyId) }}
+            {sortedResults.map((r) => {
+              const pinnedResult = pinnedConstituency?.results.find(
+                pr => pr.partyId.toLowerCase() === r.partyId.toLowerCase()
+              );
+              const rawDelta = pinnedResult ? r.voteShare - pinnedResult.voteShare : null;
+              const delta = rawDelta !== null ? (chronoFlipped ? -rawDelta : rawDelta) : null;
+              return (
+                <div key={r.partyId} className="flex items-center gap-1.5">
+                  <span
+                    className="w-2 h-2 rounded shrink-0"
+                    style={{ backgroundColor: getPartyColor(r.partyId) }}
                   />
+                  <span className="text-xs shrink-0 w-12 truncate">{r.partyId.toUpperCase()}</span>
+                  <div className="w-16 h-1 bg-gray-100 rounded-full overflow-hidden shrink-0">
+                    <div
+                      className="h-full rounded-full"
+                      style={{ width: `${r.voteShare}%`, backgroundColor: getPartyColor(r.partyId) }}
+                    />
+                  </div>
+                  <span className="text-xs font-medium w-10 text-right shrink-0 ml-1">{r.voteShare.toFixed(1)}%</span>
+                  <span className="text-[10px] text-gray-400 w-[3.25rem] text-left shrink-0 ">{r.votes.toLocaleString()}</span>
+                  {delta !== null && Math.abs(delta) >= 0.1 && (
+                    <span className={`text-[9px] font-medium shrink-0 ${delta > 0 ? 'text-green-600' : 'text-red-600'}`}>
+                      {delta > 0 ? '+' : ''}{delta.toFixed(1)}
+                    </span>
+                  )}
                 </div>
-                <span className="text-xs font-medium w-10 text-right shrink-0">{r.voteShare.toFixed(1)}%</span>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
+
+        {/* Wikipedia section */}
+        {(wikiLoading || wikiSummary || wikiUrl) && (
+          <div className="px-4 pb-3">
+            <button
+              onClick={() => setWikiExpanded(!wikiExpanded)}
+              className="text-xs text-gray-500 hover:text-gray-700 flex items-center gap-1"
+            >
+              <svg width="8" height="8" viewBox="0 0 8 8" fill="none" stroke="currentColor" strokeWidth="1.5" className={`transition-transform ${wikiExpanded ? 'rotate-90' : ''}`}>
+                <path d="M2 1l4 3-4 3" />
+              </svg>
+              Wikipedia
+            </button>
+            {wikiExpanded && (
+              <div className="mt-1.5">
+                <WikipediaSnippet summary={wikiSummary} isLoading={wikiLoading} articleUrl={wikiUrl} variant="constituency" />
+              </div>
+            )}
+          </div>
+        )}
 
         {/* Historical chart */}
         <div className="px-4 pb-4">
@@ -301,6 +364,12 @@ export function MobileBottomSheet() {
                       strokeWidth={isMain ? 2 : 1.5} opacity={isMain ? 1 : 0.7} />
                   );
                 })}
+
+                {/* Pinned year marker (amber dashed) */}
+                {pinnedYear != null && yearsPresent.has(pinnedYear) && (
+                  <line x1={xScale(pinnedYear)} y1={-4} x2={xScale(pinnedYear)} y2={plotH + 4}
+                    stroke="#000" strokeWidth={2} strokeDasharray="4,3" />
+                )}
 
                 {yearsPresent.has(currentYear) && (
                   <line x1={xScale(currentYear)} y1={-4} x2={xScale(currentYear)} y2={plotH + 4}

@@ -63,7 +63,15 @@
       "WebFetch(domain:services1.arcgis.com)",
       "Bash(npm run test:data:*)",
       "Bash(/tmp/claude/debug_key.mjs:*)",
-      "Bash(node /tmp/claude/debug_key.mjs:*)"
+      "Bash(node /tmp/claude/debug_key.mjs:*)",
+      "Bash(git add:*)",
+      "Bash(git stash:*)",
+      "Bash(git pull:*)",
+      "Bash(git stash pop:*)",
+      "WebFetch(domain:en.wikipedia.org)",
+      "Bash(git branch:*)",
+      "Bash(git checkout:*)",
+      "WebFetch(domain:lucide.dev)"
     ]
   },
   "sandbox": {

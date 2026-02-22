@@ -46,11 +46,11 @@ export function PlayButton({ intervalMs = 2000 }: PlayButtonProps) {
     const ui = useUIStore.getState();
     ui.resetTernaryZoom();
     ui.resetMapZoom();
-    ui.resetChartXZoom();
     ui.setHoveredChartYear(null);
     ui.setMapType('choropleth');
     ui.setMapColorMode('winner');
     useElectionStore.getState().setSelectedConstituency(null);
+    useElectionStore.getState().unpinYear();
   };
 
   const handleStepBack = () => {

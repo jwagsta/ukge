@@ -16,25 +16,35 @@ const PARTY_LABELS: Record<string, string> = {
   other: 'Oth',
 };
 
+const normalizeYear = (y: number) => y === 197402 ? 1974.2 : y === 197410 ? 1974.8 : y;
+
 export function SeatsBarChart({ height = 120, width = 200 }: SeatsBarChartProps) {
-  const { currentYear } = useElectionStore();
+  const { currentYear, pinnedYear } = useElectionStore();
   const { hoveredChartYear } = useUIStore();
   const displayYear = hoveredChartYear ?? currentYear;
+  const isComparing = pinnedYear !== null;
+  const chronoFlipped = isComparing && normalizeYear(pinnedYear!) > normalizeYear(displayYear);
 
   const yearData = useMemo(() => {
     return NATIONAL_SEATS.find(d => d.year === displayYear);
   }, [displayYear]);
+
+  const pinnedData = useMemo(() => {
+    if (!pinnedYear) return null;
+    return NATIONAL_SEATS.find(d => d.year === pinnedYear) ?? null;
+  }, [pinnedYear]);
 
   const bars = useMemo(() => {
     if (!yearData) return [];
     const parties = (['con', 'lab', 'ld', 'other'] as const).map(id => ({
       id,
       seats: yearData[id],
+      pinnedSeats: pinnedData ? pinnedData[id] : 0,
       color: id === 'other' ? '#808080' : getPartyColor(id),
       label: PARTY_LABELS[id],
     }));
-    return parties.filter(p => p.seats > 0).sort((a, b) => b.seats - a.seats);
-  }, [yearData]);
+    return parties.filter(p => p.seats > 0 || (isComparing && p.pinnedSeats > 0)).sort((a, b) => b.seats - a.seats);
+  }, [yearData, pinnedData, isComparing]);
 
   if (!yearData) return null;
 
@@ -47,26 +57,53 @@ export function SeatsBarChart({ height = 120, width = 200 }: SeatsBarChartProps)
   const barsYOffset = Math.max(0, (chartHeight - totalBarsHeight) / 2);
 
   const majority = Math.ceil(yearData.total / 2);
-  const xScale = (seats: number) => (seats / yearData.total) * chartWidth;
+  const maxTotal = pinnedData ? Math.max(yearData.total, pinnedData.total) : yearData.total;
+  const xScale = (seats: number) => (seats / maxTotal) * chartWidth;
 
   return (
     <div className="bg-white border-b border-gray-200" style={{ width, height }}>
       <svg width={width} height={height}>
         <g transform={`translate(${padding.left}, ${padding.top})`}>
           {/* Year label */}
-          <text
-            x={chartWidth / 2}
-            y={-6}
-            textAnchor="middle"
-            className={`text-[11px] font-medium ${hoveredChartYear != null ? 'fill-blue-500' : 'fill-gray-500'}`}
-          >
-            {getYearLabel(displayYear)}
-          </text>
+          {isComparing ? (
+            <text
+              x={chartWidth / 2}
+              y={-6}
+              textAnchor="middle"
+              className="text-[11px] font-medium"
+            >
+              {chronoFlipped ? (
+                <>
+                  <tspan className={hoveredChartYear != null ? 'fill-blue-500' : 'fill-gray-500'}>{getYearLabel(displayYear)}</tspan>
+                  <tspan className={hoveredChartYear != null ? 'fill-blue-500' : 'fill-gray-500'}>{' → '}</tspan>
+                  <tspan fill="#92400e" stroke="#fef3c7" strokeWidth={3} paintOrder="stroke" className="font-bold">{getYearLabel(pinnedYear!)}</tspan>
+                </>
+              ) : (
+                <>
+                  <tspan fill="#92400e" stroke="#fef3c7" strokeWidth={3} paintOrder="stroke" className="font-bold">{getYearLabel(pinnedYear!)}</tspan>
+                  <tspan className={hoveredChartYear != null ? 'fill-blue-500' : 'fill-gray-500'}>{' → '}</tspan>
+                  <tspan className={hoveredChartYear != null ? 'fill-blue-500' : 'fill-gray-500'}>{getYearLabel(displayYear)}</tspan>
+                </>
+              )}
+            </text>
+          ) : (
+            <text
+              x={chartWidth / 2}
+              y={-6}
+              textAnchor="middle"
+              className={`text-[11px] font-medium ${hoveredChartYear != null ? 'fill-blue-500' : 'fill-gray-500'}`}
+            >
+              {getYearLabel(displayYear)}
+            </text>
+          )}
 
           {/* Bars */}
           {bars.map((bar, i) => {
             const y = barsYOffset + i * (barHeight + barGap);
             const barW = xScale(bar.seats);
+            const pinnedW = isComparing ? xScale(bar.pinnedSeats) : 0;
+            const rawDelta = bar.seats - bar.pinnedSeats;
+            const delta = chronoFlipped ? -rawDelta : rawDelta;
             return (
               <g key={bar.id}>
                 <text
@@ -78,6 +115,21 @@ export function SeatsBarChart({ height = 120, width = 200 }: SeatsBarChartProps)
                 >
                   {bar.label}
                 </text>
+                {/* Ghost bar for pinned year */}
+                {isComparing && bar.pinnedSeats > 0 && (
+                  <rect
+                    x={0}
+                    y={y}
+                    width={pinnedW}
+                    height={barHeight}
+                    fill="none"
+                    stroke={bar.color}
+                    strokeWidth={1}
+                    strokeDasharray="3,2"
+                    rx={2}
+                    opacity={0.6}
+                  />
+                )}
                 <rect
                   x={0}
                   y={y}
@@ -94,6 +146,18 @@ export function SeatsBarChart({ height = 120, width = 200 }: SeatsBarChartProps)
                 >
                   {bar.seats}
                 </text>
+                {/* Delta annotation */}
+                {isComparing && delta !== 0 && (
+                  <text
+                    x={chartWidth}
+                    y={y + barHeight / 2}
+                    textAnchor="end"
+                    alignmentBaseline="central"
+                    className={`text-[9px] font-medium ${delta > 0 ? 'fill-green-600' : 'fill-red-600'}`}
+                  >
+                    {delta > 0 ? `+${delta}` : delta}
+                  </text>
+                )}
               </g>
             );
           })}

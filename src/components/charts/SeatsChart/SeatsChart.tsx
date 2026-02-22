@@ -1,4 +1,4 @@
-import { useMemo, useEffect, useRef, useCallback, useState } from 'react';
+import { useMemo, useEffect, useRef, useState } from 'react';
 import { useElectionStore } from '@/store/electionStore';
 import { useUIStore } from '@/store/uiStore';
 import { getPartyColor } from '@/types/party';
@@ -8,16 +8,11 @@ interface SeatsChartProps {
   height?: number;
 }
 
-const MIN_ZOOM = 1;
-const MAX_ZOOM = 5;
-
 export function SeatsChart({ height = 120 }: SeatsChartProps) {
-  const { currentYear, availableYears, setYear } = useElectionStore();
-  const { chartXZoom, setChartXZoom, resetChartXZoom, hoveredChartYear, setHoveredChartYear } = useUIStore();
+  const { currentYear, availableYears, setYear, pinnedYear } = useElectionStore();
+  const { hoveredChartYear, setHoveredChartYear } = useUIStore();
   const [dimensions, setDimensions] = useState({ width: 0 });
-  const [isDragging, setIsDragging] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
-  const dragRef = useRef<{ startMouseX: number; startZoomX: number } | null>(null);
   const clipId = useRef(`seats-clip-${Math.random().toString(36).slice(2)}`).current;
 
   useEffect(() => {
@@ -44,7 +39,7 @@ export function SeatsChart({ height = 120 }: SeatsChartProps) {
 
   const normalizeYear = (y: number) => y === 197402 ? 1974.2 : y === 197410 ? 1974.8 : y;
 
-  const xScaleBase = useMemo(() => {
+  const xScale = useMemo(() => {
     const years = data.map(d => normalizeYear(d.year));
     const minYear = Math.min(...years);
     const maxYear = Math.max(...years);
@@ -53,65 +48,11 @@ export function SeatsChart({ height = 120 }: SeatsChartProps) {
     };
   }, [data, chartWidth]);
 
-  const xScale = useCallback((year: number) => {
-    return xScaleBase(year) * chartXZoom.k + chartXZoom.x;
-  }, [xScaleBase, chartXZoom]);
-
   const yScale = useMemo(() => {
     return (seats: number) => {
       return chartHeight - (seats / maxSeats) * chartHeight;
     };
   }, [chartHeight, maxSeats]);
-
-  const clampX = useCallback((x: number, k: number) => {
-    return Math.min(0, Math.max(chartWidth - chartWidth * k, x));
-  }, [chartWidth]);
-
-  const handleWheel = useCallback((e: React.WheelEvent<SVGSVGElement>) => {
-    e.preventDefault();
-    const svgRect = e.currentTarget.getBoundingClientRect();
-    const mouseX = e.clientX - svgRect.left - padding.left;
-
-    const { k, x } = chartXZoom;
-    const factor = e.deltaY > 0 ? 0.9 : 1.1;
-    const newK = Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, k * factor));
-
-    const mouseXInBase = (mouseX - x) / k;
-    let newX = mouseX - mouseXInBase * newK;
-    newX = clampX(newX, newK);
-
-    setChartXZoom({ k: newK, x: newX });
-  }, [chartXZoom, padding.left, setChartXZoom, clampX]);
-
-  const handleMouseDown = useCallback((e: React.MouseEvent<SVGSVGElement>) => {
-    if (chartXZoom.k <= 1) return;
-    e.preventDefault();
-    dragRef.current = { startMouseX: e.clientX, startZoomX: chartXZoom.x };
-    setIsDragging(true);
-  }, [chartXZoom]);
-
-  useEffect(() => {
-    if (!isDragging) return;
-
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!dragRef.current) return;
-      const dx = e.clientX - dragRef.current.startMouseX;
-      const newX = clampX(dragRef.current.startZoomX + dx, chartXZoom.k);
-      setChartXZoom({ k: chartXZoom.k, x: newX });
-    };
-
-    const handleMouseUp = () => {
-      dragRef.current = null;
-      setIsDragging(false);
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('mouseup', handleMouseUp);
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mouseup', handleMouseUp);
-    };
-  }, [isDragging, chartXZoom.k, setChartXZoom, clampX]);
 
   const generatePath = (party: 'con' | 'lab' | 'ld' | 'other') => {
     if (data.length === 0) return '';
@@ -127,12 +68,10 @@ export function SeatsChart({ height = 120 }: SeatsChartProps) {
   }
 
   const currentYearX = xScale(currentYear);
-  const isZoomed = chartXZoom.k > 1;
-  const cursor = isDragging ? 'grabbing' : isZoomed ? 'grab' : 'default';
 
   return (
-    <div ref={containerRef} className="w-full bg-white border-b border-gray-200 relative">
-      <svg width={width} height={height} onWheel={handleWheel} onMouseDown={handleMouseDown} style={{ cursor }}>
+    <div ref={containerRef} className="w-full bg-white border-b border-gray-200">
+      <svg width={width} height={height}>
         <defs>
           <clipPath id={clipId}>
             <rect x={0} y={-padding.top} width={chartWidth} height={height} />
@@ -170,6 +109,17 @@ export function SeatsChart({ height = 120 }: SeatsChartProps) {
                 strokeWidth={1}
               />
             ))}
+
+            {/* Pinned year indicator (amber with yellow border) */}
+            {pinnedYear != null && (() => {
+              const px = xScale(pinnedYear);
+              return (
+                <>
+                  <line x1={px} y1={0} x2={px} y2={chartHeight} stroke="#fef3c7" strokeWidth={5} />
+                  <line x1={px} y1={0} x2={px} y2={chartHeight} stroke="#92400e" strokeWidth={2} />
+                </>
+              );
+            })()}
 
             {/* Current year indicator */}
             <line
@@ -229,15 +179,6 @@ export function SeatsChart({ height = 120 }: SeatsChartProps) {
         </g>
       </svg>
 
-      {/* Reset zoom button */}
-      {isZoomed && (
-        <button
-          onClick={resetChartXZoom}
-          className="absolute top-1 right-1 px-1.5 py-0.5 text-[10px] bg-white border border-gray-300 rounded text-gray-600 hover:bg-gray-100 shadow-sm"
-        >
-          Reset
-        </button>
-      )}
     </div>
   );
 }

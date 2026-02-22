@@ -1,5 +1,5 @@
 import * as d3 from 'd3';
-import type { Feature, Polygon, MultiPolygon } from 'geojson';
+import type { Feature, FeatureCollection, Polygon, MultiPolygon } from 'geojson';
 import type { DotDensityPoint } from '@/types/election';
 import {
   type BoundaryProperties,
@@ -106,15 +106,27 @@ export function generateAllDots(
 }
 
 /**
- * Create a UK-centered Albers projection suitable for dot density maps.
+ * Create a UK-centered Albers projection suitable for geographic maps.
+ * When boundaries are provided, uses fitExtent for auto-scaling to the data extent.
+ * Otherwise falls back to hardcoded scale/translate.
  */
-export function createUKProjection(width: number, height: number): d3.GeoProjection {
-  return d3.geoAlbers()
+export function createUKProjection(
+  width: number,
+  height: number,
+  boundaries?: FeatureCollection
+): d3.GeoProjection {
+  const projection = d3.geoAlbers()
     .center([0, 55.4])
     .rotate([4.4, 0])
-    .parallels([50, 60])
-    .scale(Math.min(width, height) * 5)
-    .translate([width / 2, height / 2]);
+    .parallels([50, 60]);
+
+  if (boundaries) {
+    projection.fitExtent([[10, 10], [width - 10, height - 10]], boundaries);
+  } else {
+    projection.scale(Math.min(width, height) * 5).translate([width / 2, height / 2]);
+  }
+
+  return projection;
 }
 
 /**
