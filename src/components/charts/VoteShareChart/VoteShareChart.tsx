@@ -9,12 +9,13 @@ interface VoteShareChartProps {
   height?: number;
 }
 
-// Stack order bottom→top: Other, LD, Con, Lab
-const STACK_PARTIES = ['other', 'ld', 'con', 'lab'] as const;
+// Stack order bottom→top: Other, SNP, LD, Con, Lab
+const STACK_PARTIES = ['other', 'snp', 'ld', 'con', 'lab'] as const;
 const PARTY_COLORS: Record<string, string> = {
   con: getPartyColor('con'),
   lab: getPartyColor('lab'),
   ld: getPartyColor('ld'),
+  snp: getPartyColor('snp'),
   other: '#808080',
 };
 
@@ -45,6 +46,7 @@ export function VoteShareChart({ height = 100 }: VoteShareChartProps) {
       conPct: (d.con / d.total) * 100,
       labPct: (d.lab / d.total) * 100,
       ldPct: (d.ld / d.total) * 100,
+      snpPct: (d.snp / d.total) * 100,
       otherPct: (d.other / d.total) * 100,
     }));
   }, [availableYears]);
@@ -90,8 +92,9 @@ export function VoteShareChart({ height = 100 }: VoteShareChartProps) {
 
   // Compute cumulative stack positions for each year
   const stackedData = useMemo(() => {
-    const pctKeys: Record<typeof STACK_PARTIES[number], 'otherPct' | 'ldPct' | 'conPct' | 'labPct'> = {
+    const pctKeys: Record<typeof STACK_PARTIES[number], 'otherPct' | 'snpPct' | 'ldPct' | 'conPct' | 'labPct'> = {
       other: 'otherPct',
+      snp: 'snpPct',
       ld: 'ldPct',
       con: 'conPct',
       lab: 'labPct',

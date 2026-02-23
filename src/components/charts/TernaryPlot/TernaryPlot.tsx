@@ -21,6 +21,7 @@ interface TernaryPlotProps {
   onConstituencySelect?: (id: string | null) => void;
   onConstituencyHover?: (id: string | null) => void;
   pinnedData?: TernaryDataPoint[];
+  displayYear?: number;
 }
 
 interface TooltipData {
@@ -253,6 +254,7 @@ export function TernaryPlot({
   onConstituencySelect,
   onConstituencyHover,
   pinnedData,
+  displayYear,
 }: TernaryPlotProps) {
   const [tooltip, setTooltip] = useState<TooltipData | null>(null);
   const [showInfo, setShowInfo] = useState(false);
@@ -742,45 +744,6 @@ export function TernaryPlot({
                 ))}
               </g>
 
-              {/* Trajectory for selected constituency */}
-              {selectedConstituencyId && trajectoryData.length > 1 && (
-                <g className="trajectory">
-                  {/* Path connecting points */}
-                  <path
-                    d={trajectoryData.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x - centerX} ${p.y - centerY}`).join(' ')}
-                    fill="none"
-                    stroke="#999"
-                    strokeWidth={1.5 / ternaryZoom.k}
-                    opacity={0.6}
-                  />
-                  {/* Points with year labels */}
-                  {trajectoryData.map((p) => {
-                    const isCurrent = p.year === currentYear;
-                    return (
-                      <g key={p.year}>
-                        <circle
-                          cx={p.x - centerX}
-                          cy={p.y - centerY}
-                          r={(isCurrent ? 5.5 : 3.3) * sizeScale / Math.pow(ternaryZoom.k, 0.6)}
-                          fill={getPartyColor(p.winner)}
-                          stroke={isCurrent ? '#000' : '#fff'}
-                          strokeWidth={(isCurrent ? 2 : 1) * sizeScale / ternaryZoom.k}
-                        />
-                        <text
-                          x={p.x - centerX}
-                          y={p.y - centerY - 8 * sizeScale / ternaryZoom.k}
-                          textAnchor="middle"
-                          className={`${isCurrent ? 'font-bold fill-black' : 'font-medium fill-gray-700'}`}
-                          style={{ fontSize: `${10 * sizeScale / ternaryZoom.k}px` }}
-                        >
-                          {p.year === 197402 ? "F'74" : p.year === 197410 ? "O'74" : p.year.toString().slice(-2)}
-                        </text>
-                      </g>
-                    );
-                  })}
-                </g>
-              )}
-
               {/* Comparison arrows (pinned → current) */}
               {comparisonArrows.length > 0 && (
                 <g className="comparison-arrows" opacity={0.4}>
@@ -812,9 +775,9 @@ export function TernaryPlot({
                       key={point.constituencyId}
                       cx={point.x - centerX}
                       cy={point.y - centerY}
-                      r={(isHighlighted ? 6.6 : 4.4) * sizeScale / Math.pow(ternaryZoom.k, 0.6)}
+                      r={(isHighlighted ? 8 : 4.4) * sizeScale / Math.pow(ternaryZoom.k, 0.6)}
                       fill={getPartyColor(point.winner)}
-                      fillOpacity={hasSelection && !isHighlighted ? 0.6 : 0.85}
+                      fillOpacity={hasSelection && !isHighlighted ? 0.5 : 0.85}
                       stroke={strokeColor}
                       strokeWidth={isHighlighted ? 2 * sizeScale / ternaryZoom.k : 0}
                       style={{ cursor: 'pointer' }}
@@ -827,6 +790,189 @@ export function TernaryPlot({
                   );
                 })}
               </g>
+
+              {/* Trajectory for selected constituency (drawn on top of data points) */}
+              {selectedConstituencyId && trajectoryData.length > 1 && (() => {
+                const arrowLen = 8.5 * sizeScale / ternaryZoom.k;
+                const arrowHalfWidth = 5.1 * sizeScale / ternaryZoom.k;
+                const gap = 1.5 / ternaryZoom.k;
+                const fontSize = 18 * sizeScale / ternaryZoom.k;
+
+                // Precompute marker info
+                const markers = trajectoryData.map(p => {
+                  const effectiveYear = displayYear ?? currentYear;
+                  const isCurrent = p.year === effectiveYear;
+                  const size = (isCurrent ? 8 : 4.7) * sizeScale / Math.pow(ternaryZoom.k, 0.6);
+                  return { isCurrent, size, cx: p.x - centerX, cy: p.y - centerY };
+                });
+
+                // Boundary distance from marker center along unit direction (ux, uy)
+                const boundaryDist = (idx: number, ux: number, uy: number) => {
+                  const m = markers[idx];
+                  if (m.isCurrent) return m.size; // circle
+                  const maxComp = Math.max(Math.abs(ux), Math.abs(uy));
+                  return maxComp > 0.001 ? m.size / maxComp : m.size;
+                };
+
+                // Label placement: try 8 candidate positions around each marker,
+                // pick the one with least overlap with other markers
+                const candidateAngles = [
+                  -Math.PI / 2,   // above
+                  Math.PI / 2,    // below
+                  -Math.PI / 4,   // upper-right
+                  -3 * Math.PI / 4, // upper-left
+                  Math.PI / 4,    // lower-right
+                  3 * Math.PI / 4, // lower-left
+                  0,              // right
+                  Math.PI,        // left
+                ];
+                const labelPositions = markers.map((m, i) => {
+                  const labelDist = (m.isCurrent ? m.size + 8 : m.size + 6) * sizeScale / Math.pow(ternaryZoom.k, 0.5);
+                  // Approximate label bounding box half-sizes
+                  const labelHalfW = fontSize * 1.2;
+                  const labelHalfH = fontSize * 0.6;
+
+                  let bestAngle = candidateAngles[0];
+                  let bestScore = -Infinity;
+
+                  for (const angle of candidateAngles) {
+                    const lx = m.cx + Math.cos(angle) * labelDist;
+                    const ly = m.cy + Math.sin(angle) * labelDist;
+                    // Score = minimum distance to any other marker (higher is better)
+                    let minDist = Infinity;
+                    for (let j = 0; j < markers.length; j++) {
+                      if (j === i) continue;
+                      const o = markers[j];
+                      // Distance from label center to marker center, accounting for shapes
+                      const dx = Math.abs(lx - o.cx);
+                      const dy = Math.abs(ly - o.cy);
+                      // Overlap metric: how much the label box overlaps the marker
+                      const overlapX = Math.max(0, (labelHalfW + o.size) - dx);
+                      const overlapY = Math.max(0, (labelHalfH + o.size) - dy);
+                      const overlap = overlapX > 0 && overlapY > 0 ? overlapX * overlapY : 0;
+                      const dist = overlap > 0 ? -overlap : Math.sqrt(dx * dx + dy * dy);
+                      minDist = Math.min(minDist, dist);
+                    }
+                    if (minDist > bestScore) {
+                      bestScore = minDist;
+                      bestAngle = angle;
+                    }
+                  }
+
+                  const lx = m.cx + Math.cos(bestAngle) * labelDist;
+                  const ly = m.cy + Math.sin(bestAngle) * labelDist;
+                  // Text anchor based on horizontal position relative to marker
+                  const anchor: 'start' | 'middle' | 'end' = Math.abs(Math.cos(bestAngle)) < 0.3 ? 'middle'
+                    : Math.cos(bestAngle) > 0 ? 'start' : 'end';
+                  const baseline: 'middle' | 'hanging' | 'auto' = Math.abs(Math.sin(bestAngle)) < 0.3 ? 'middle'
+                    : Math.sin(bestAngle) > 0 ? 'hanging' : 'auto';
+                  return { x: lx, y: ly, anchor, baseline };
+                });
+
+                return (
+                  <g className="trajectory">
+                    {/* Arrow segments between consecutive points */}
+                    {trajectoryData.map((_p, i) => {
+                      if (i === 0) return null;
+                      const from = markers[i - 1];
+                      const to = markers[i];
+                      const dx = to.cx - from.cx;
+                      const dy = to.cy - from.cy;
+                      const dist = Math.sqrt(dx * dx + dy * dy);
+                      if (dist < 1) return null;
+                      const ux = dx / dist;
+                      const uy = dy / dist;
+
+                      const startDist = boundaryDist(i - 1, ux, uy) + gap;
+                      const endDist = boundaryDist(i, -ux, -uy) + gap;
+
+                      if (dist < startDist + endDist + arrowLen) {
+                        return (
+                          <line
+                            key={`seg-${i}`}
+                            x1={from.cx + ux * startDist} y1={from.cy + uy * startDist}
+                            x2={to.cx - ux * endDist} y2={to.cy - uy * endDist}
+                            stroke="#555" strokeWidth={1.5 / ternaryZoom.k} opacity={0.85}
+                          />
+                        );
+                      }
+
+                      const lineEndX = to.cx - ux * (endDist + arrowLen);
+                      const lineEndY = to.cy - uy * (endDist + arrowLen);
+                      const tipX = to.cx - ux * endDist;
+                      const tipY = to.cy - uy * endDist;
+                      const baseX = tipX - ux * arrowLen;
+                      const baseY = tipY - uy * arrowLen;
+                      const perpX = -uy * arrowHalfWidth;
+                      const perpY = ux * arrowHalfWidth;
+
+                      return (
+                        <g key={`seg-${i}`}>
+                          <line
+                            x1={from.cx + ux * startDist} y1={from.cy + uy * startDist}
+                            x2={lineEndX} y2={lineEndY}
+                            stroke="#555" strokeWidth={1.5 / ternaryZoom.k} opacity={0.85}
+                          />
+                          <polygon
+                            points={`${tipX},${tipY} ${baseX + perpX},${baseY + perpY} ${baseX - perpX},${baseY - perpY}`}
+                            fill="#555" opacity={0.85}
+                          />
+                        </g>
+                      );
+                    })}
+
+                    {/* Non-current year markers and labels (rendered first, behind) */}
+                    {trajectoryData.map((p, i) => {
+                      const m = markers[i];
+                      if (m.isCurrent) return null;
+                      const lp = labelPositions[i];
+                      return (
+                        <g key={p.year}>
+                          <rect
+                            x={m.cx - m.size} y={m.cy - m.size}
+                            width={m.size * 2} height={m.size * 2}
+                            fill={getPartyColor(p.winner)}
+                            stroke="#fff" strokeWidth={1 * sizeScale / ternaryZoom.k}
+                          />
+                          <text
+                            x={lp.x} y={lp.y}
+                            textAnchor={lp.anchor}
+                            dominantBaseline={lp.baseline}
+                            className="font-semibold fill-gray-500"
+                            style={{ fontSize: `${fontSize * 0.85}px` }}
+                          >
+                            {p.year === 197402 ? "F'74" : p.year === 197410 ? "O'74" : p.year.toString().slice(-2)}
+                          </text>
+                        </g>
+                      );
+                    })}
+                    {/* Current year marker and label (rendered last, on top) */}
+                    {trajectoryData.map((p, i) => {
+                      const m = markers[i];
+                      if (!m.isCurrent) return null;
+                      const lp = labelPositions[i];
+                      return (
+                        <g key={p.year}>
+                          <circle
+                            cx={m.cx} cy={m.cy} r={m.size}
+                            fill={getPartyColor(p.winner)}
+                            stroke="#000" strokeWidth={2 * sizeScale / ternaryZoom.k}
+                          />
+                          <text
+                            x={lp.x} y={lp.y}
+                            textAnchor={lp.anchor}
+                            dominantBaseline={lp.baseline}
+                            className="font-bold fill-black"
+                            style={{ fontSize: `${fontSize}px` }}
+                          >
+                            {p.year === 197402 ? "F'74" : p.year === 197410 ? "O'74" : p.year.toString().slice(-2)}
+                          </text>
+                        </g>
+                      );
+                    })}
+                  </g>
+                );
+              })()}
             </g>
           </g>
         </g>

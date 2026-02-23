@@ -54,7 +54,7 @@ export function SeatsChart({ height = 120 }: SeatsChartProps) {
     };
   }, [chartHeight, maxSeats]);
 
-  const generatePath = (party: 'con' | 'lab' | 'ld' | 'other') => {
+  const generatePath = (party: 'con' | 'lab' | 'ld' | 'snp' | 'other') => {
     if (data.length === 0) return '';
     return data.map((d, i) => {
       const x = xScale(d.year);
@@ -74,7 +74,7 @@ export function SeatsChart({ height = 120 }: SeatsChartProps) {
       <svg width={width} height={height}>
         <defs>
           <clipPath id={clipId}>
-            <rect x={0} y={-padding.top} width={chartWidth} height={height} />
+            <rect x={0} y={-padding.top} width={chartWidth + 8} height={height} />
           </clipPath>
         </defs>
         <g transform={`translate(${padding.left}, ${padding.top})`}>
@@ -134,8 +134,9 @@ export function SeatsChart({ height = 120 }: SeatsChartProps) {
             {/* Party lines */}
             <path d={generatePath('con')} fill="none" stroke={getPartyColor('con')} strokeWidth={2.5} />
             <path d={generatePath('lab')} fill="none" stroke={getPartyColor('lab')} strokeWidth={2.5} />
-            <path d={generatePath('ld')} fill="none" stroke={getPartyColor('ld')} strokeWidth={1.5} opacity={0.7} />
-            <path d={generatePath('other')} fill="none" stroke="#808080" strokeWidth={1.5} opacity={0.6} />
+            <path d={generatePath('ld')} fill="none" stroke={getPartyColor('ld')} strokeWidth={1.5} opacity={0.8} />
+            <path d={generatePath('snp')} fill="none" stroke={getPartyColor('snp')} strokeWidth={1.5} opacity={0.8} />
+            <path d={generatePath('other')} fill="none" stroke="#808080" strokeWidth={1.5} opacity={0.8} />
 
             {/* Blue hover vertical line */}
             {hoveredChartYear != null && hoveredChartYear !== currentYear && (() => {

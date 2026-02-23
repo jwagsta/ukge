@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, useMemo } from 'react';
 import type { FeatureCollection, Polygon, MultiPolygon } from 'geojson';
 import { useElectionStore, getBoundaryVersion, getYearLabel, isCrossBoundarySwing } from '@/store/electionStore';
 import { computeNotionalResults } from '@/utils/notionalResults';
+import { computeSeatStatus, type SeatStatusInfo } from '@/utils/seatStatus';
 import { useUIStore, MOBILE_BREAKPOINT } from '@/store/uiStore';
 import { useContainerDimensions, useWindowSize } from '@/hooks/useWindowSize';
 import { Header } from '@/components/layout/Header';
@@ -111,6 +112,17 @@ function App() {
     );
     return { pinnedNotionalSwingData: notionalData, pinnedSwingEstimatedIds: estimatedIds };
   }, [pinnedCanShowSwing, pinnedYear, pinnedIsCrossBoundary, pinnedTransitionMapping, pinnedElectionData, pinnedPreviousElectionData]);
+
+  // Compute seat status (hold/gain) for current year
+  const seatStatusMap = useMemo(() => {
+    return computeSeatStatus(electionData, previousElectionData, transitionMapping, isCrossBoundary);
+  }, [electionData, previousElectionData, transitionMapping, isCrossBoundary]);
+
+  // Compute seat status for pinned year (comparison mode)
+  const pinnedSeatStatusMap = useMemo(() => {
+    if (!pinnedYear || pinnedElectionData.length === 0) return new Map<string, SeatStatusInfo>();
+    return computeSeatStatus(pinnedElectionData, pinnedPreviousElectionData, pinnedTransitionMapping, pinnedIsCrossBoundary);
+  }, [pinnedYear, pinnedElectionData, pinnedPreviousElectionData, pinnedTransitionMapping, pinnedIsCrossBoundary]);
 
   const { mapType, mapColorMode, votesPerDot, mobileTab, setIsMobile, isMobile } = useUIStore();
 
@@ -274,6 +286,7 @@ function App() {
           boundaries: pinnedBounds,
           swingData: pinnedSwingData,
           swingEstimatedIds: pinnedEstIds,
+          seatStatusMap: pinnedSeatStatusMap,
         },
         later: null,
       };
@@ -292,6 +305,7 @@ function App() {
         boundaries: earlierIsPinned ? pinnedBounds : boundaries,
         swingData: earlierIsPinned ? pinnedSwingData : currentSwingData,
         swingEstimatedIds: earlierIsPinned ? pinnedEstIds : currentEstIds,
+        seatStatusMap: earlierIsPinned ? pinnedSeatStatusMap : seatStatusMap,
       },
       later: {
         year: laterYear,
@@ -302,9 +316,10 @@ function App() {
         boundaries: earlierIsPinned ? boundaries : pinnedBounds,
         swingData: earlierIsPinned ? currentSwingData : pinnedSwingData,
         swingEstimatedIds: earlierIsPinned ? currentEstIds : pinnedEstIds,
+        seatStatusMap: earlierIsPinned ? seatStatusMap : pinnedSeatStatusMap,
       },
     };
-  }, [isComparing, pinnedYear, currentYear, pinnedElectionData, electionData, pinnedTernaryData, ternaryData, boundaries, pinnedBoundaries, pinnedBoundaryVersion, currentBoundaryVersion, mapColorMode, canShowSwing, pinnedCanShowSwing, notionalSwingData, swingEstimatedIds, pinnedNotionalSwingData, pinnedSwingEstimatedIds]);
+  }, [isComparing, pinnedYear, currentYear, pinnedElectionData, electionData, pinnedTernaryData, ternaryData, boundaries, pinnedBoundaries, pinnedBoundaryVersion, currentBoundaryVersion, mapColorMode, canShowSwing, pinnedCanShowSwing, notionalSwingData, swingEstimatedIds, pinnedNotionalSwingData, pinnedSwingEstimatedIds, seatStatusMap, pinnedSeatStatusMap]);
 
   // Render helpers for comparison panels
   const renderMapPanel = (
@@ -312,6 +327,7 @@ function App() {
     panelWidth: number, panelHeight: number, label: string,
     isPinned: boolean, hideZoomControls?: boolean, hideSettingsControls?: boolean,
     panelSwingData?: ElectionResult[], panelSwingEstimatedIds?: Set<string>,
+    panelSeatStatusMap?: Map<string, SeatStatusInfo>,
   ) => (
     <div className="relative" style={{ width: panelWidth, height: panelHeight }}>
       {mapType === 'choropleth' && (
@@ -327,6 +343,7 @@ function App() {
           hideZoomControls={hideZoomControls}
           pinnedElectionData={panelSwingData}
           swingEstimatedIds={panelSwingEstimatedIds}
+          seatStatusMap={panelSeatStatusMap}
         />
       )}
       {mapType === 'dots' && (
@@ -357,6 +374,7 @@ function App() {
           hideZoomControls={hideZoomControls}
           pinnedElectionData={panelSwingData}
           swingEstimatedIds={panelSwingEstimatedIds}
+          seatStatusMap={panelSeatStatusMap}
         />
       )}
       <div className={`absolute top-2 right-2 z-10 text-xs font-semibold px-2 py-1 rounded ${
@@ -367,7 +385,7 @@ function App() {
     </div>
   );
 
-  const renderTernaryPanel = (panelTernaryData: TernaryDataPoint[], panelWidth: number, panelHeight: number, label: string, isPinned: boolean) => (
+  const renderTernaryPanel = (panelTernaryData: TernaryDataPoint[], panelWidth: number, panelHeight: number, label: string, isPinned: boolean, year?: number) => (
     <div className="relative" style={{ width: panelWidth, height: panelHeight }}>
       <TernaryPlot
         data={panelTernaryData}
@@ -377,6 +395,7 @@ function App() {
         hoveredConstituencyId={hoveredConstituencyId}
         onConstituencySelect={setSelectedConstituency}
         onConstituencyHover={setHoveredConstituency}
+        displayYear={year}
       />
       <div className={`absolute top-2 right-2 z-10 text-xs font-semibold px-2 py-1 rounded ${
         isPinned ? 'text-amber-700 bg-amber-50 border border-amber-200' : 'bg-white/90 shadow'
@@ -508,6 +527,7 @@ function App() {
           onConstituencyHover={setHoveredConstituency}
           pinnedElectionData={swingData}
           swingEstimatedIds={swingEstIds}
+          seatStatusMap={seatStatusMap}
         />
       )}
       {mapType === 'dots' && (
@@ -535,6 +555,7 @@ function App() {
           onConstituencyHover={setHoveredConstituency}
           pinnedElectionData={swingData}
           swingEstimatedIds={swingEstIds}
+          seatStatusMap={seatStatusMap}
         />
       )}
       {mapToggleOverlay}
@@ -618,10 +639,10 @@ function App() {
                   isComparing && comparisonData ? (
                     <div className="relative" style={{ width, height: mobileContentHeight }}>
                       <div className="flex">
-                        {renderMapPanel(comparisonData.earlier.electionData, comparisonData.earlier.boundaries, Math.floor(width / 2), mobileContentHeight, comparisonData.earlier.label, comparisonData.earlier.isPinned, true, undefined, comparisonData.earlier.swingData, comparisonData.earlier.swingEstimatedIds)}
+                        {renderMapPanel(comparisonData.earlier.electionData, comparisonData.earlier.boundaries, Math.floor(width / 2), mobileContentHeight, comparisonData.earlier.label, comparisonData.earlier.isPinned, true, undefined, comparisonData.earlier.swingData, comparisonData.earlier.swingEstimatedIds, comparisonData.earlier.seatStatusMap)}
                         <div className="border-l border-gray-300" />
                         {comparisonData.later
-                          ? renderMapPanel(comparisonData.later.electionData, comparisonData.later.boundaries, Math.floor(width / 2), mobileContentHeight, comparisonData.later.label, comparisonData.later.isPinned, false, true, comparisonData.later.swingData, comparisonData.later.swingEstimatedIds)
+                          ? renderMapPanel(comparisonData.later.electionData, comparisonData.later.boundaries, Math.floor(width / 2), mobileContentHeight, comparisonData.later.label, comparisonData.later.isPinned, false, true, comparisonData.later.swingData, comparisonData.later.swingEstimatedIds, comparisonData.later.seatStatusMap)
                           : renderEmptySlot(Math.floor(width / 2), mobileContentHeight)}
                       </div>
                       {mapToggleOverlay}
@@ -641,10 +662,10 @@ function App() {
                 {mobileTab === 'ternary' && (
                   isComparing && comparisonData ? (
                     <div className="flex flex-col" style={{ height: mobileContentHeight }}>
-                      {renderTernaryPanel(comparisonData.earlier.ternaryData, width, Math.floor(mobileContentHeight / 2), comparisonData.earlier.label, comparisonData.earlier.isPinned)}
+                      {renderTernaryPanel(comparisonData.earlier.ternaryData, width, Math.floor(mobileContentHeight / 2), comparisonData.earlier.label, comparisonData.earlier.isPinned, comparisonData.earlier.year)}
                       <div className="border-t border-gray-300" />
                       {comparisonData.later
-                        ? renderTernaryPanel(comparisonData.later.ternaryData, width, Math.floor(mobileContentHeight / 2), comparisonData.later.label, comparisonData.later.isPinned)
+                        ? renderTernaryPanel(comparisonData.later.ternaryData, width, Math.floor(mobileContentHeight / 2), comparisonData.later.label, comparisonData.later.isPinned, comparisonData.later.year)
                         : renderEmptySlot(width, Math.floor(mobileContentHeight / 2))}
                     </div>
                   ) : (
@@ -661,7 +682,7 @@ function App() {
                 )}
               </div>
               <MobileTabBar />
-              <MobileBottomSheet />
+              <MobileBottomSheet seatStatusMap={seatStatusMap} />
             </>
           ) : isWide ? (
             <>
@@ -683,10 +704,10 @@ function App() {
                   </div>
                   {isComparing && comparisonData ? (
                     <div className="flex" style={{ height: ternaryHeight }}>
-                      {renderTernaryPanel(comparisonData.earlier.ternaryData, Math.floor(leftWidth / 2), ternaryHeight, comparisonData.earlier.label, comparisonData.earlier.isPinned)}
+                      {renderTernaryPanel(comparisonData.earlier.ternaryData, Math.floor(leftWidth / 2), ternaryHeight, comparisonData.earlier.label, comparisonData.earlier.isPinned, comparisonData.earlier.year)}
                       <div className="border-l border-gray-300" />
                       {comparisonData.later
-                        ? renderTernaryPanel(comparisonData.later.ternaryData, Math.floor(leftWidth / 2), ternaryHeight, comparisonData.later.label, comparisonData.later.isPinned)
+                        ? renderTernaryPanel(comparisonData.later.ternaryData, Math.floor(leftWidth / 2), ternaryHeight, comparisonData.later.label, comparisonData.later.isPinned, comparisonData.later.year)
                         : renderEmptySlot(Math.floor(leftWidth / 2), ternaryHeight)}
                     </div>
                   ) : (
@@ -707,17 +728,17 @@ function App() {
                 {/* Right column: map full height */}
                 {isComparing && comparisonData ? (
                   <div className="relative flex" style={{ width: rightWidth, height: mapHeight }}>
-                    {renderMapPanel(comparisonData.earlier.electionData, comparisonData.earlier.boundaries, Math.floor(rightWidth / 2), mapHeight, comparisonData.earlier.label, comparisonData.earlier.isPinned, true, undefined, comparisonData.earlier.swingData, comparisonData.earlier.swingEstimatedIds)}
+                    {renderMapPanel(comparisonData.earlier.electionData, comparisonData.earlier.boundaries, Math.floor(rightWidth / 2), mapHeight, comparisonData.earlier.label, comparisonData.earlier.isPinned, true, undefined, comparisonData.earlier.swingData, comparisonData.earlier.swingEstimatedIds, comparisonData.earlier.seatStatusMap)}
                     <div className="border-l border-gray-300" />
                     {comparisonData.later
-                      ? renderMapPanel(comparisonData.later.electionData, comparisonData.later.boundaries, Math.floor(rightWidth / 2), mapHeight, comparisonData.later.label, comparisonData.later.isPinned, false, true, comparisonData.later.swingData, comparisonData.later.swingEstimatedIds)
+                      ? renderMapPanel(comparisonData.later.electionData, comparisonData.later.boundaries, Math.floor(rightWidth / 2), mapHeight, comparisonData.later.label, comparisonData.later.isPinned, false, true, comparisonData.later.swingData, comparisonData.later.swingEstimatedIds, comparisonData.later.seatStatusMap)
                       : renderEmptySlot(Math.floor(rightWidth / 2), mapHeight)}
                     {mapToggleOverlay}
                   </div>
                 ) : mapContent}
               </div>
 
-              <ConstituencyPanel height={BOTTOM_PANEL_HEIGHT} />
+              <ConstituencyPanel height={BOTTOM_PANEL_HEIGHT} seatStatusMap={seatStatusMap} />
             </>
           ) : (
             <>
@@ -739,17 +760,17 @@ function App() {
                 {isComparing && comparisonData ? (
                   <>
                     <div className="border-r border-gray-200 flex" style={{ width: ternaryWidth }}>
-                      {renderTernaryPanel(comparisonData.earlier.ternaryData, Math.floor(ternaryWidth / 2), ternaryHeight, comparisonData.earlier.label, comparisonData.earlier.isPinned)}
+                      {renderTernaryPanel(comparisonData.earlier.ternaryData, Math.floor(ternaryWidth / 2), ternaryHeight, comparisonData.earlier.label, comparisonData.earlier.isPinned, comparisonData.earlier.year)}
                       <div className="border-l border-gray-300" />
                       {comparisonData.later
-                        ? renderTernaryPanel(comparisonData.later.ternaryData, Math.floor(ternaryWidth / 2), ternaryHeight, comparisonData.later.label, comparisonData.later.isPinned)
+                        ? renderTernaryPanel(comparisonData.later.ternaryData, Math.floor(ternaryWidth / 2), ternaryHeight, comparisonData.later.label, comparisonData.later.isPinned, comparisonData.later.year)
                         : renderEmptySlot(Math.floor(ternaryWidth / 2), ternaryHeight)}
                     </div>
                     <div className="relative flex" style={{ width: mapWidth }}>
-                      {renderMapPanel(comparisonData.earlier.electionData, comparisonData.earlier.boundaries, Math.floor(mapWidth / 2), mapHeight, comparisonData.earlier.label, comparisonData.earlier.isPinned, true, undefined, comparisonData.earlier.swingData, comparisonData.earlier.swingEstimatedIds)}
+                      {renderMapPanel(comparisonData.earlier.electionData, comparisonData.earlier.boundaries, Math.floor(mapWidth / 2), mapHeight, comparisonData.earlier.label, comparisonData.earlier.isPinned, true, undefined, comparisonData.earlier.swingData, comparisonData.earlier.swingEstimatedIds, comparisonData.earlier.seatStatusMap)}
                       <div className="border-l border-gray-300" />
                       {comparisonData.later
-                        ? renderMapPanel(comparisonData.later.electionData, comparisonData.later.boundaries, Math.floor(mapWidth / 2), mapHeight, comparisonData.later.label, comparisonData.later.isPinned, false, true, comparisonData.later.swingData, comparisonData.later.swingEstimatedIds)
+                        ? renderMapPanel(comparisonData.later.electionData, comparisonData.later.boundaries, Math.floor(mapWidth / 2), mapHeight, comparisonData.later.label, comparisonData.later.isPinned, false, true, comparisonData.later.swingData, comparisonData.later.swingEstimatedIds, comparisonData.later.seatStatusMap)
                         : renderEmptySlot(Math.floor(mapWidth / 2), mapHeight)}
                       {mapToggleOverlay}
                     </div>
@@ -772,7 +793,7 @@ function App() {
                 )}
               </div>
 
-              <ConstituencyPanel height={BOTTOM_PANEL_HEIGHT} />
+              <ConstituencyPanel height={BOTTOM_PANEL_HEIGHT} seatStatusMap={seatStatusMap} />
             </>
           )
         )}

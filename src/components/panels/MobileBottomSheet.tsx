@@ -1,7 +1,8 @@
 import { useEffect, useState, useMemo, useCallback, useRef } from 'react';
 import { useElectionStore, getYearLabel, getBoundaryVersion } from '@/store/electionStore';
-import { getPartyColor } from '@/types/party';
+import { getPartyColor, getPartyById } from '@/types/party';
 import type { ElectionResult } from '@/types/election';
+import type { SeatStatusInfo } from '@/utils/seatStatus';
 import { useConstituencyWikipedia } from '@/hooks/useWikipedia';
 import { WikipediaSnippet } from '@/components/panels/WikipediaSnippet';
 
@@ -18,7 +19,11 @@ interface HistoricalResult {
 const historicalDataCache = new Map<string, HistoricalResult[]>();
 const MAX_HISTORICAL_CACHE = 5;
 
-export function MobileBottomSheet() {
+interface MobileBottomSheetProps {
+  seatStatusMap?: Map<string, SeatStatusInfo>;
+}
+
+export function MobileBottomSheet({ seatStatusMap }: MobileBottomSheetProps) {
   const {
     selectedConstituencyId,
     electionData,
@@ -180,12 +185,13 @@ export function MobileBottomSheet() {
 
   const normalizeYear = (y: number) => y === 197402 ? 1974.2 : y === 197410 ? 1974.8 : y;
   const chronoFlipped = isComparing && normalizeYear(pinnedYear!) > normalizeYear(currentYear);
+  const dotPadding = 4;
   const xScale = (year: number) => {
     if (historicalData.length <= 1) return plotW / 2;
     const years = historicalData.map((d) => normalizeYear(d.year));
     const min = Math.min(...years);
     const max = Math.max(...years);
-    return ((normalizeYear(year) - min) / (max - min)) * plotW;
+    return dotPadding + ((normalizeYear(year) - min) / (max - min)) * (plotW - 2 * dotPadding);
   };
   const yScale = (share: number) => plotH - (share / 100) * plotH;
 
@@ -253,7 +259,16 @@ export function MobileBottomSheet() {
                 style={{ backgroundColor: getPartyColor(currentConstituency.winner) }}
               />
               <span className="text-xs text-gray-600">
-                {currentConstituency.winner.toUpperCase()} win
+                {(() => {
+                  const statusInfo = seatStatusMap?.get(currentConstituency.constituencyId);
+                  if (statusInfo?.status === 'gain' && statusInfo.previousWinner) {
+                    const prevParty = getPartyById(statusInfo.previousWinner);
+                    return <>{currentConstituency.winner.toUpperCase()} <span className="font-semibold">gain</span> from <span style={{ color: prevParty.color }}>{statusInfo.previousWinner.toUpperCase()}</span></>;
+                  }
+                  if (statusInfo?.status === 'hold') return <>{currentConstituency.winner.toUpperCase()} hold</>;
+                  if (statusInfo?.status === 'new_boundaries') return <>{currentConstituency.winner.toUpperCase()} win <span className="text-gray-400">(new seat)</span></>;
+                  return <>{currentConstituency.winner.toUpperCase()} win</>;
+                })()}
                 {(() => {
                   const wr = currentConstituency.results.find(
                     r => r.partyId.toLowerCase() === currentConstituency.winner.toLowerCase()
@@ -291,20 +306,20 @@ export function MobileBottomSheet() {
               const rawDelta = pinnedResult ? r.voteShare - pinnedResult.voteShare : null;
               const delta = rawDelta !== null ? (chronoFlipped ? -rawDelta : rawDelta) : null;
               return (
-                <div key={r.partyId} className="flex items-center gap-1.5">
+                <div key={r.partyId} className="flex items-center gap-1">
                   <span
                     className="w-2 h-2 rounded shrink-0"
                     style={{ backgroundColor: getPartyColor(r.partyId) }}
                   />
-                  <span className="text-xs shrink-0 w-12 truncate">{r.partyId.toUpperCase()}</span>
-                  <div className="w-16 h-1 bg-gray-100 rounded-full overflow-hidden shrink-0">
+                  <span className="text-xs shrink-0 w-8 truncate">{getPartyById(r.partyId).abbreviation.toUpperCase()}</span>
+                  <div className="flex-1 min-w-0 h-1 bg-gray-100 rounded-full overflow-hidden">
                     <div
                       className="h-full rounded-full"
                       style={{ width: `${r.voteShare}%`, backgroundColor: getPartyColor(r.partyId) }}
                     />
                   </div>
-                  <span className="text-xs font-medium w-10 text-right shrink-0 ml-1">{r.voteShare.toFixed(1)}%</span>
-                  <span className="text-[10px] text-gray-400 w-[3.25rem] text-left shrink-0 ">{r.votes.toLocaleString()}</span>
+                  <span className="text-xs font-medium w-10 text-right shrink-0">{r.voteShare.toFixed(1)}%</span>
+                  <span className="text-[10px] text-gray-400 w-[3.25rem] text-left shrink-0 hidden min-[900px]:inline">{r.votes.toLocaleString()}</span>
                   {delta !== null && Math.abs(delta) >= 0.1 && (
                     <span className={`text-[9px] font-medium shrink-0 ${delta > 0 ? 'text-green-600' : 'text-red-600'}`}>
                       {delta > 0 ? '+' : ''}{delta.toFixed(1)}
@@ -361,11 +376,11 @@ export function MobileBottomSheet() {
                   const isMain = ['lab', 'con', 'ld', 'lib'].some(p => party.startsWith(p));
                   return (
                     <path key={party} d={path} fill="none" stroke={getPartyColor(party)}
-                      strokeWidth={isMain ? 2 : 1.5} opacity={isMain ? 1 : 0.7} />
+                      strokeWidth={isMain ? 2 : 1.5} />
                   );
                 })}
 
-                {/* Pinned year marker (amber dashed) */}
+                {/* Pinned year marker (amber dashed) — over lines, under dots */}
                 {pinnedYear != null && yearsPresent.has(pinnedYear) && (
                   <line x1={xScale(pinnedYear)} y1={-4} x2={xScale(pinnedYear)} y2={plotH + 4}
                     stroke="#000" strokeWidth={2} strokeDasharray="4,3" />
@@ -375,6 +390,37 @@ export function MobileBottomSheet() {
                   <line x1={xScale(currentYear)} y1={-4} x2={xScale(currentYear)} y2={plotH + 4}
                     stroke="#000" strokeWidth={2} />
                 )}
+
+                {/* Non-winner dots */}
+                {allParties.map((party) =>
+                  historicalData.map((d) => {
+                    if (d.winner.toLowerCase() === party.toLowerCase()) return null;
+                    const result = d.results.find(
+                      (res) => res.partyId.toLowerCase() === party.toLowerCase() ||
+                        res.partyId.toLowerCase().startsWith(party.toLowerCase())
+                    );
+                    if (!result) return null;
+                    return (
+                      <circle key={`dot-${party}-${d.year}`} cx={xScale(d.year)} cy={yScale(result.voteShare)}
+                        r={3.5} fill={getPartyColor(party)} />
+                    );
+                  })
+                )}
+
+                {/* Winner dots — drawn last with black stroke */}
+                {historicalData.map((d) => {
+                  const winnerParty = allParties.find(p => p.toLowerCase() === d.winner.toLowerCase());
+                  if (!winnerParty) return null;
+                  const result = d.results.find(
+                    (res) => res.partyId.toLowerCase() === winnerParty.toLowerCase() ||
+                      res.partyId.toLowerCase().startsWith(winnerParty.toLowerCase())
+                  );
+                  if (!result) return null;
+                  return (
+                    <circle key={`dot-winner-${d.year}`} cx={xScale(d.year)} cy={yScale(result.voteShare)}
+                      r={3.5} fill={getPartyColor(winnerParty)} stroke="#000" strokeWidth={1} />
+                  );
+                })}
 
                 {/* Year labels (tap to navigate) */}
                 {historicalData.map((d) => (

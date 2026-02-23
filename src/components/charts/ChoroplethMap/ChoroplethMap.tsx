@@ -3,6 +3,7 @@ import * as d3 from 'd3';
 import type { FeatureCollection, Feature, Polygon, MultiPolygon } from 'geojson';
 import type { ElectionResult } from '@/types/election';
 import { getPartyColor, getPartyById } from '@/types/party';
+import { getSeatFillOpacity, type SeatStatus, type SeatStatusInfo } from '@/utils/seatStatus';
 import { createUKProjection } from '@/utils/d3/dotDensity';
 import { shiftIslandFeatures } from '@/utils/islandInset';
 import { splitGBAndNI, getNIInsetBounds, createNIProjection } from '@/utils/d3/niInset';
@@ -29,6 +30,7 @@ interface ChoroplethMapProps {
   pinnedElectionData?: ElectionResult[];
   hideZoomControls?: boolean;
   swingEstimatedIds?: Set<string>;
+  seatStatusMap?: Map<string, SeatStatusInfo>;
 }
 
 interface TooltipData {
@@ -39,6 +41,8 @@ interface TooltipData {
   partyName?: string;
   swing?: number;
   isEstimated?: boolean;
+  seatStatus?: SeatStatus;
+  previousWinner?: string;
   x: number;
   y: number;
 }
@@ -92,6 +96,7 @@ export function ChoroplethMap({
   pinnedElectionData,
   hideZoomControls,
   swingEstimatedIds,
+  seatStatusMap,
 }: ChoroplethMapProps) {
   const svgRef = useRef<SVGSVGElement>(null);
   const gRef = useRef<SVGGElement>(null);
@@ -278,6 +283,8 @@ export function ChoroplethMap({
           r => r.partyId.toLowerCase() === winner.toLowerCase()
         )?.candidate;
 
+        const statusInfo = electionId ? seatStatusMap?.get(electionId) : undefined;
+
         setTooltip({
           constituencyName: displayName,
           winner,
@@ -286,6 +293,8 @@ export function ChoroplethMap({
           partyName,
           swing,
           isEstimated: !!(electionId && swingEstimatedIds?.has(electionId)),
+          seatStatus: statusInfo?.status,
+          previousWinner: statusInfo?.previousWinner,
           x: e.clientX,
           y: e.clientY,
         });
@@ -295,7 +304,7 @@ export function ChoroplethMap({
         onConstituencyHover?.(null);
       }
     },
-    [findConstituencyAtPoint, onConstituencyHover, winnerByName, idByName, mapColorMode, dataByName, swingEstimatedIds]
+    [findConstituencyAtPoint, onConstituencyHover, winnerByName, idByName, mapColorMode, dataByName, swingEstimatedIds, seatStatusMap]
   );
 
   const handleMouseLeave = useCallback(() => {
@@ -426,6 +435,7 @@ export function ChoroplethMap({
             const electionId = idByName.get(matchName);
             const winner = winnerByName.get(matchName);
             const isEstimated = electionId && swingEstimatedIds?.has(electionId);
+            const statusInfo = electionId ? seatStatusMap?.get(electionId) : undefined;
 
             const fill = getConstituencyFill(matchName, mapColorMode, partyColorScale, winnerByName, dataByName, swingColorScale, pinnedDataByName);
             const pathD = pathGenerator(feat) ?? '';
@@ -435,7 +445,7 @@ export function ChoroplethMap({
                 <path
                   d={pathD}
                   fill={fill}
-                  fillOpacity={winner ? 1 : 0.5}
+                  fillOpacity={getSeatFillOpacity(statusInfo?.status, mapColorMode, !!winner, 'choropleth')}
                   stroke="#fff"
                   strokeWidth={0.5 / transform.k}
                   style={{ cursor: 'pointer' }}
@@ -494,6 +504,7 @@ export function ChoroplethMap({
                 const electionId = idByName.get(matchName);
                 const winner = winnerByName.get(matchName);
                 const isEstimated = electionId && swingEstimatedIds?.has(electionId);
+                const statusInfo = electionId ? seatStatusMap?.get(electionId) : undefined;
 
                 const fill = getConstituencyFill(matchName, mapColorMode, partyColorScale, winnerByName, dataByName, swingColorScale, pinnedDataByName);
                 const pathD = niPathGenerator(feat) ?? '';
@@ -503,7 +514,7 @@ export function ChoroplethMap({
                     <path
                       d={pathD}
                       fill={fill}
-                      fillOpacity={winner ? 1 : 0.5}
+                      fillOpacity={getSeatFillOpacity(statusInfo?.status, mapColorMode, !!winner, 'choropleth')}
                       stroke="#fff"
                       strokeWidth={0.5 / transform.k}
                       style={{ cursor: 'pointer' }}
@@ -678,7 +689,16 @@ export function ChoroplethMap({
                 className="w-2 h-2 rounded-full"
                 style={{ backgroundColor: getPartyColor(tooltip.winner) }}
               />
-              <span className="text-gray-600 text-xs">{tooltip.winner.toUpperCase()}</span>
+              <span className="text-gray-600 text-xs">
+                {tooltip.seatStatus === 'gain' && tooltip.previousWinner
+                  ? <>{tooltip.winner.toUpperCase()} <span className="font-semibold">GAIN</span> from <span style={{ color: getPartyColor(tooltip.previousWinner) }}>{tooltip.previousWinner.toUpperCase()}</span></>
+                  : tooltip.seatStatus === 'hold'
+                    ? <>{tooltip.winner.toUpperCase()} hold</>
+                    : tooltip.seatStatus === 'new_boundaries'
+                      ? <>{tooltip.winner.toUpperCase()} win <span className="text-gray-400">(new seat)</span></>
+                      : tooltip.winner.toUpperCase()
+                }
+              </span>
             </div>
           ) : null}
         </div>

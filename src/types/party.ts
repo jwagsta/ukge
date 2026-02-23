@@ -29,7 +29,7 @@ export const PARTIES: Record<string, Party> = {
     name: 'Liberal Democrats',
     shortName: 'Lib Dem',
     abbreviation: 'LD',
-    color: '#FDBB30',
+    color: '#FAA61A',
     altNames: ['liberal democrat', 'libdem', 'lib dem', 'liberal', 'lib'],
   },
   snp: {

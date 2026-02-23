@@ -1,7 +1,8 @@
 import { useEffect, useState, useMemo, useRef, useCallback } from 'react';
-import { useElectionStore, getYearLabel, getBoundaryVersion } from '@/store/electionStore';
-import { getPartyColor } from '@/types/party';
+import { useElectionStore, getYearLabel } from '@/store/electionStore';
+import { getPartyColor, getPartyById } from '@/types/party';
 import type { ElectionResult } from '@/types/election';
+import type { SeatStatusInfo } from '@/utils/seatStatus';
 import { useConstituencyWikipedia } from '@/hooks/useWikipedia';
 import { WikipediaSnippet } from '@/components/panels/WikipediaSnippet';
 
@@ -149,13 +150,14 @@ interface HistoricalResult {
 
 interface ConstituencyPanelProps {
   height: number;
+  seatStatusMap?: Map<string, SeatStatusInfo>;
 }
 
 // Cache for historical data - limited to control memory
 const historicalDataCache = new Map<string, HistoricalResult[]>();
 const MAX_HISTORICAL_CACHE = 5;
 
-export function ConstituencyPanel({ height }: ConstituencyPanelProps) {
+export function ConstituencyPanel({ height, seatStatusMap }: ConstituencyPanelProps) {
   const {
     selectedConstituencyId,
     electionData,
@@ -165,12 +167,10 @@ export function ConstituencyPanel({ height }: ConstituencyPanelProps) {
     setYear,
     pinnedYear,
     pinnedElectionData,
-    pinnedBoundaryVersion,
     zoomToConstituency,
   } = useElectionStore();
 
   const isComparing = pinnedYear !== null;
-  const isSameEra = isComparing && pinnedBoundaryVersion === getBoundaryVersion(currentYear);
 
   const [historicalData, setHistoricalData] = useState<HistoricalResult[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -195,9 +195,9 @@ export function ConstituencyPanel({ height }: ConstituencyPanelProps) {
 
   // Get pinned constituency data for comparison
   const pinnedConstituency = useMemo(() => {
-    if (!isSameEra || !selectedConstituencyId) return null;
+    if (!isComparing || !selectedConstituencyId) return null;
     return pinnedElectionData.find((c) => c.constituencyId === selectedConstituencyId) ?? null;
-  }, [isSameEra, selectedConstituencyId, pinnedElectionData]);
+  }, [isComparing, selectedConstituencyId, pinnedElectionData]);
 
   // Load historical data for the selected constituency
   useEffect(() => {
@@ -367,12 +367,13 @@ export function ConstituencyPanel({ height }: ConstituencyPanelProps) {
   };
 
   // Scale functions for mini chart
+  const dotPadding = 4; // extra inset so dots at first/last year aren't clipped
   const xScale = (year: number) => {
     if (historicalData.length <= 1) return plotWidth / 2;
     const normalizedYears = historicalData.map((d) => normalizeYear(d.year));
     const minYear = Math.min(...normalizedYears);
     const maxYear = Math.max(...normalizedYears);
-    return ((normalizeYear(year) - minYear) / (maxYear - minYear)) * plotWidth;
+    return dotPadding + ((normalizeYear(year) - minYear) / (maxYear - minYear)) * (plotWidth - 2 * dotPadding);
   };
 
   const yScale = (share: number) => {
@@ -439,7 +440,16 @@ export function ConstituencyPanel({ height }: ConstituencyPanelProps) {
                 style={{ backgroundColor: getPartyColor(currentConstituency.winner) }}
               />
               <span className="text-xs text-gray-600">
-                {currentConstituency.winner.toUpperCase()} win
+                {(() => {
+                  const statusInfo = seatStatusMap?.get(currentConstituency.constituencyId);
+                  if (statusInfo?.status === 'gain' && statusInfo.previousWinner) {
+                    const prevParty = getPartyById(statusInfo.previousWinner);
+                    return <>{currentConstituency.winner.toUpperCase()} <span className="font-semibold">gain</span> from <span style={{ color: prevParty.color }}>{statusInfo.previousWinner.toUpperCase()}</span></>;
+                  }
+                  if (statusInfo?.status === 'hold') return <>{currentConstituency.winner.toUpperCase()} hold</>;
+                  if (statusInfo?.status === 'new_boundaries') return <>{currentConstituency.winner.toUpperCase()} win <span className="text-gray-400">(new seat)</span></>;
+                  return <>{currentConstituency.winner.toUpperCase()} win</>;
+                })()}
               </span>
             </div>
             {(() => {
@@ -514,48 +524,60 @@ export function ConstituencyPanel({ height }: ConstituencyPanelProps) {
             const inactiveParties = allParties
               .filter(p => !activeIds.has(p))
               .sort((a, b) => a.localeCompare(b));
+
+            // Reference constituency: pinned year in comparison mode, or current year when hovering in single-year mode
+            const refConstituency = pinnedConstituency ?? (hoveredYear && !isComparing ? currentConstituency : null);
+            const refYear = isComparing ? pinnedYear! : currentYear;
+
+            // Pre-compute deltas so we can decide column visibility once
+            const chronoFlipped = normalizeYear(refYear) > normalizeYear(displayYear);
+            const deltas = activeResults.map(r => {
+              const refResult = refConstituency?.results.find(
+                pr => pr.partyId.toLowerCase() === r.partyId.toLowerCase()
+              );
+              const rawDelta = refResult ? r.voteShare - refResult.voteShare : null;
+              return rawDelta !== null ? (chronoFlipped ? -rawDelta : rawDelta) : null;
+            });
+            const showSwingCol = deltas.some(d => d !== null && Math.abs(d) >= 0.1);
+
             return (
               <>
-                {activeResults.map((r) => {
-                  const pinnedResult = pinnedConstituency?.results.find(
-                    pr => pr.partyId.toLowerCase() === r.partyId.toLowerCase()
-                  );
-                  const chronoFlipped = pinnedYear !== null && normalizeYear(pinnedYear) > normalizeYear(displayYear);
-                  const rawDelta = pinnedResult ? r.voteShare - pinnedResult.voteShare : null;
-                  const delta = rawDelta !== null ? (chronoFlipped ? -rawDelta : rawDelta) : null;
+                {activeResults.map((r, i) => {
+                  const delta = deltas[i];
                   return (
-                    <div key={r.partyId} className="flex items-center gap-1.5">
+                    <div key={r.partyId} className="flex items-center gap-1">
                       <span
                         className="w-2 h-2 rounded shrink-0"
                         style={{ backgroundColor: getPartyColor(r.partyId) }}
                       />
-                      <span className="text-xs shrink-0 w-12 truncate">{r.partyId.toUpperCase()}</span>
-                      <div className="w-16 h-1 bg-gray-100 rounded-full overflow-hidden shrink-0">
+                      <span className="text-xs shrink-0 w-8 truncate">{getPartyById(r.partyId).abbreviation.toUpperCase()}</span>
+                      <div className="flex-1 min-w-0 h-1 bg-gray-100 rounded-full overflow-hidden">
                         <div
                           className="h-full rounded-full"
                           style={{ width: `${r.voteShare}%`, backgroundColor: getPartyColor(r.partyId) }}
                         />
                       </div>
-                      <span className="text-xs font-medium w-10 text-right shrink-0 ml-1">{r.voteShare.toFixed(1)}%</span>
-                      <span className="text-[10px] text-gray-400 w-[3.25rem] text-left shrink-0 ">{r.votes.toLocaleString()}</span>
-                      {delta !== null && Math.abs(delta) >= 0.1 && (
-                        <span className={`text-[9px] font-medium w-12 text-right shrink-0 ${delta > 0 ? 'text-green-600' : 'text-red-600'}`}>
-                          {delta > 0 ? '+' : ''}{delta.toFixed(1)}pp
+                      <span className="text-xs font-medium w-10 text-right shrink-0">{r.voteShare.toFixed(1)}%</span>
+                      <span className="text-[10px] text-gray-400 w-[3.25rem] text-left shrink-0 hidden min-[900px]:inline">{r.votes.toLocaleString()}</span>
+                      {showSwingCol && (
+                        <span className={`text-[9px] font-medium w-12 text-right shrink-0 ${delta !== null && Math.abs(delta) >= 0.1 ? (delta > 0 ? 'text-green-600' : 'text-red-600') : ''}`}>
+                          {delta !== null && Math.abs(delta) >= 0.1 ? `${delta > 0 ? '+' : ''}${delta.toFixed(1)}pp` : ''}
                         </span>
                       )}
                     </div>
                   );
                 })}
                 {inactiveParties.map((party) => (
-                  <div key={party} className="flex items-center gap-1.5">
+                  <div key={party} className="flex items-center gap-1">
                     <span
                       className="w-2 h-2 rounded shrink-0"
                       style={{ backgroundColor: getPartyColor(party) }}
                     />
-                    <span className="text-xs text-gray-400 shrink-0 w-12 truncate">{party.toUpperCase()}</span>
-                    <div className="w-16 h-1 bg-gray-100 rounded-full overflow-hidden shrink-0" />
+                    <span className="text-xs text-gray-400 shrink-0 w-8 truncate">{getPartyById(party).abbreviation.toUpperCase()}</span>
+                    <div className="flex-1 min-w-0 h-1 bg-gray-100 rounded-full overflow-hidden" />
                     <span className="w-10 shrink-0" />
-                    <span className="w-12 shrink-0" />
+                    <span className="w-[3.25rem] shrink-0 hidden min-[900px]:inline" />
+                    {showSwingCol && <span className="w-12 shrink-0" />}
                   </div>
                 ))}
               </>
@@ -618,7 +640,6 @@ export function ConstituencyPanel({ height }: ConstituencyPanelProps) {
               {allParties.map((party) => {
                 const path = generatePath(party);
                 if (!path) return null;
-                // Highlight main parties with thicker lines
                 const isMainParty = ['lab', 'labour', 'con', 'conservative', 'ld', 'lib', 'libdem'].some(
                   p => party.toLowerCase().startsWith(p)
                 );
@@ -629,12 +650,11 @@ export function ConstituencyPanel({ height }: ConstituencyPanelProps) {
                     fill="none"
                     stroke={getPartyColor(party)}
                     strokeWidth={isMainParty ? 2 : 1.5}
-                    opacity={isMainParty ? 1 : 0.7}
                   />
                 );
               })}
 
-              {/* Pinned year marker (amber with yellow border) */}
+              {/* Pinned year marker (amber with yellow border) — over lines, under dots */}
               {pinnedYear != null && yearsPresent.has(pinnedYear) && (
                 <>
                   <line
@@ -679,6 +699,51 @@ export function ConstituencyPanel({ height }: ConstituencyPanelProps) {
                   strokeWidth={2}
                 />
               )}
+
+              {/* Non-winner dots */}
+              {allParties.map((party) =>
+                historicalData.map((d) => {
+                  if (d.winner.toLowerCase() === party.toLowerCase()) return null;
+                  const result = d.results.find(
+                    (res) =>
+                      res.partyId.toLowerCase() === party.toLowerCase() ||
+                      res.partyId.toLowerCase().startsWith(party.toLowerCase())
+                  );
+                  if (!result) return null;
+                  return (
+                    <circle
+                      key={`dot-${party}-${d.year}`}
+                      cx={xScale(d.year)}
+                      cy={yScale(result.voteShare)}
+                      r={3.5}
+                      fill={getPartyColor(party)}
+                    />
+                  );
+                })
+              )}
+
+              {/* Winner dots — drawn last with black stroke */}
+              {historicalData.map((d) => {
+                const winnerParty = allParties.find(p => p.toLowerCase() === d.winner.toLowerCase());
+                if (!winnerParty) return null;
+                const result = d.results.find(
+                  (res) =>
+                    res.partyId.toLowerCase() === winnerParty.toLowerCase() ||
+                    res.partyId.toLowerCase().startsWith(winnerParty.toLowerCase())
+                );
+                if (!result) return null;
+                return (
+                  <circle
+                    key={`dot-winner-${d.year}`}
+                    cx={xScale(d.year)}
+                    cy={yScale(result.voteShare)}
+                    r={3.5}
+                    fill={getPartyColor(winnerParty)}
+                    stroke="#000"
+                    strokeWidth={1}
+                  />
+                );
+              })}
 
               {/* Interactive year hit areas */}
               {historicalData.map((d) => (

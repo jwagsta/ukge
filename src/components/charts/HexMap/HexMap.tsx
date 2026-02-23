@@ -3,6 +3,7 @@ import * as d3 from 'd3';
 import type { FeatureCollection, Polygon, MultiPolygon } from 'geojson';
 import type { ElectionResult } from '@/types/election';
 import { getPartyColor, getPartyById } from '@/types/party';
+import { getSeatFillOpacity, type SeatStatusInfo } from '@/utils/seatStatus';
 import { useUIStore } from '@/store/uiStore';
 import { useElectionStore } from '@/store/electionStore';
 import type { BoundaryProperties } from '@/utils/constituencyMatching';
@@ -52,6 +53,7 @@ interface HexMapProps {
   pinnedElectionData?: ElectionResult[];
   hideZoomControls?: boolean;
   swingEstimatedIds?: Set<string>;
+  seatStatusMap?: Map<string, SeatStatusInfo>;
 }
 
 export function HexMap({
@@ -66,6 +68,7 @@ export function HexMap({
   pinnedElectionData,
   hideZoomControls,
   swingEstimatedIds,
+  seatStatusMap,
 }: HexMapProps) {
   const svgRef = useRef<SVGSVGElement>(null);
   const [tooltip, setTooltip] = useState<{ x: number; y: number; data: ElectionResult } | null>(null);
@@ -453,6 +456,7 @@ export function HexMap({
               const { x, y } = hexToPixel(pos.q, pos.r, hexSize);
               const fill = getFill(data);
               const isEstimated = swingEstimatedIds?.has(pos.constituencyId);
+              const statusInfo = seatStatusMap?.get(pos.constituencyId);
 
               return (
                 <g
@@ -466,7 +470,7 @@ export function HexMap({
                   <path
                     d={hexPathD}
                     fill={fill}
-                    fillOpacity={0.85}
+                    fillOpacity={getSeatFillOpacity(statusInfo?.status, mapColorMode, !!data.winner, 'hex')}
                     stroke="#fff"
                     strokeWidth={0.5}
                   />
@@ -490,6 +494,7 @@ export function HexMap({
 
                   const fill = getFill(data);
                   const isEstimated = swingEstimatedIds?.has(pos.constituencyId);
+                  const statusInfo = seatStatusMap?.get(pos.constituencyId);
 
                   return (
                     <g
@@ -503,7 +508,7 @@ export function HexMap({
                       <path
                         d={hexPathD}
                         fill={fill}
-                        fillOpacity={0.85}
+                        fillOpacity={getSeatFillOpacity(statusInfo?.status, mapColorMode, !!data.winner, 'hex')}
                         stroke="#fff"
                         strokeWidth={0.5}
                       />
@@ -622,13 +627,25 @@ export function HexMap({
                 return pr ? `${pr.voteShare.toFixed(1)}%` : 'N/A';
               })()}
             </div>
-          ) : (
-            <div className="text-xs text-gray-600">
-              Winner: <span style={{ color: getPartyColor(tooltip.data.winner) }}>
-                {tooltip.data.winner.toUpperCase()}
-              </span>
-            </div>
-          )}
+          ) : (() => {
+            const statusInfo = seatStatusMap?.get(tooltip.data.constituencyId);
+            return (
+              <div className="text-xs text-gray-600">
+                {statusInfo?.status === 'gain' && statusInfo.previousWinner
+                  ? <>
+                      <span style={{ color: getPartyColor(tooltip.data.winner) }}>{tooltip.data.winner.toUpperCase()}</span>
+                      {' '}<span className="font-semibold">GAIN</span> from{' '}
+                      <span style={{ color: getPartyColor(statusInfo.previousWinner) }}>{statusInfo.previousWinner.toUpperCase()}</span>
+                    </>
+                  : statusInfo?.status === 'hold'
+                    ? <><span style={{ color: getPartyColor(tooltip.data.winner) }}>{tooltip.data.winner.toUpperCase()}</span> hold</>
+                    : statusInfo?.status === 'new_boundaries'
+                      ? <><span style={{ color: getPartyColor(tooltip.data.winner) }}>{tooltip.data.winner.toUpperCase()}</span> win <span className="text-gray-400">(new seat)</span></>
+                      : <>Winner: <span style={{ color: getPartyColor(tooltip.data.winner) }}>{tooltip.data.winner.toUpperCase()}</span></>
+                }
+              </div>
+            );
+          })()}
         </div>
       )}
     </div>
