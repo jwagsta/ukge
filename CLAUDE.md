@@ -9,7 +9,7 @@ npm run dev        # Start Vite dev server with HMR
 npm run build      # TypeScript check + production build
 npm run lint       # ESLint validation
 npm run preview    # Preview production build
-npm run test:data  # Run data validation tests (720 tests)
+npm run test:data  # Run data validation tests (743 tests)
 ```
 
 ## Data Setup
@@ -26,6 +26,7 @@ Data processing scripts (run with `npx ts-node` or `python3`):
 - `scripts/validateBoundaryMatching.ts` - Validate constituency name matching between boundaries and election data
 - `scripts/fix_data.py` - Fix boundary IDs, winding order, election metadata; idempotent, safe to re-run
 - `scripts/buildWikipediaMapping.ts` - Build constituency ID → Wikipedia article title mapping (run with `npx tsx`)
+- `scripts/buildBoundaryTransitions.ts` - Build boundary transition mappings for cross-era swing calculations
 
 Boundary processing pipeline order: `processParlconstBoundaries.ts` → `clip_to_coastline.py` → `fix_data.py`
 
@@ -79,7 +80,7 @@ Boundary processing pipeline order: `processParlconstBoundaries.ts` → `clip_to
 
 **Constituency Name Matching**: Boundaries use parlconst names (e.g., "Hereford & S Herefordshire"), election data uses Electoral Calculus names (e.g., "Hereford and South Herefordshire"). The `normalizeConstituencyName()` utility in `src/utils/constituencyMatching.ts` handles normalization.
 
-**Party definitions**: `src/types/party.ts` - 30+ parties with IDs, names, colors
+**Party definitions**: `src/types/party.ts` - 27 parties with IDs, names, colors
 
 ## Key Patterns
 

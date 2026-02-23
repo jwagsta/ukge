@@ -138,11 +138,13 @@ describe('Election Constraints', () => {
 
       it('year field in each constituency matches file year', () => {
         const data = loadElection(year);
+        // 197402/197410 files use calendar year 1974, disambiguated by date field
+        const expectedYear = (year === 197402 || year === 197410) ? 1974 : year;
         const mismatches: string[] = [];
 
         for (const c of data.constituencies) {
-          if (c.year !== year) {
-            mismatches.push(`${c.constituencyId}: constituency year=${c.year} but file year=${year}`);
+          if (c.year !== expectedYear) {
+            mismatches.push(`${c.constituencyId}: constituency year=${c.year} but file year=${expectedYear}`);
           }
         }
 

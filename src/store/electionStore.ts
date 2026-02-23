@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import type { ElectionResult, TernaryDataPoint, Region } from '@/types/election';
+import type { ElectionResult, TernaryDataPoint } from '@/types/election';
 import type { TransitionMapping } from '@/utils/notionalResults';
 
 // Module-level cache for election data - limited to control memory
@@ -74,7 +74,6 @@ interface ElectionState {
   currentBoundaryVersion: string;
   isLoading: boolean;
   error: string | null;
-  selectedRegions: Region[];
   selectedConstituencyId: string | null;
   hoveredConstituencyId: string | null;
   zoomToConstituencyTrigger: number; // increment to re-trigger zoom-to-constituency
@@ -99,7 +98,6 @@ interface ElectionState {
   setSelectedConstituency: (id: string | null) => void;
   zoomToConstituency: () => void;
   setHoveredConstituency: (id: string | null) => void;
-  setRegionFilter: (regions: Region[]) => void;
   pinYear: (year: number) => void;
   unpinYear: () => void;
 }
@@ -151,7 +149,6 @@ export const useElectionStore = create<ElectionState>((set, get) => ({
   currentBoundaryVersion: '2024',
   isLoading: false,
   error: null,
-  selectedRegions: [],
   selectedConstituencyId: null,
   hoveredConstituencyId: null,
   zoomToConstituencyTrigger: 0,
@@ -311,8 +308,6 @@ export const useElectionStore = create<ElectionState>((set, get) => ({
   setSelectedConstituency: (id) => set({ selectedConstituencyId: id }),
   zoomToConstituency: () => set((state) => ({ zoomToConstituencyTrigger: state.zoomToConstituencyTrigger + 1 })),
   setHoveredConstituency: (id) => set({ hoveredConstituencyId: id }),
-  setRegionFilter: (regions) => set({ selectedRegions: regions }),
-
   pinYear: (year) => {
     const { electionData, ternaryData, previousElectionData, transitionMapping } = get();
     set({

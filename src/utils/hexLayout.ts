@@ -236,12 +236,6 @@ function projectAndWarp(positions: ConstituencyPosition[]): ConstituencyPosition
     expansionFactors.set(region, Math.max(1.0, Math.min(raw, 3.0)));
   }
 
-  // Compute overall centroid for directional push
-  let overallCx = 0, overallCy = 0;
-  for (const p of positions) { overallCx += p.px; overallCy += p.py; }
-  overallCx /= positions.length;
-  overallCy /= positions.length;
-
   // Directional push: nudge peripheral regions outward so Scotland, Wales, and
   // SW "poke out" as distinct peninsulas. Magnitudes are proportional to the
   // overall geographic extent but tuned per-region to avoid disconnection.

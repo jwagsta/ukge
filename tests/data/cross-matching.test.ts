@@ -6,6 +6,10 @@ import { normalizeConstituencyName } from '@/utils/constituencyMatching';
 /**
  * Known unfixable mismatches between election and boundary data.
  *
+ * 1955/1959 Woodford: Election data uses "Woodford" (EC_WOODFORD) but the
+ * boundary file has "Wanstead and Woodford" (EC_WANSTEAD_AND_WOODFORD).
+ * The constituency was renamed between data sources.
+ *
  * 1992 Milton Keynes: The constituency was a single seat in 1983/1987 but split
  * into Milton Keynes NE and Milton Keynes SW for 1992, without a corresponding
  * boundary change. The boundary file has 1 feature (EC_MILTON_KEYNES) but
@@ -17,6 +21,16 @@ const KNOWN_EXCEPTIONS: Record<number, {
   extraBoundaryIds: string[];
   countDelta: number; // election count - boundary count
 }> = {
+  1955: {
+    extraElectionIds: ['EC_WOODFORD'],
+    extraBoundaryIds: ['EC_WANSTEAD_AND_WOODFORD'],
+    countDelta: 0, // 1:1 rename, counts still match
+  },
+  1959: {
+    extraElectionIds: ['EC_WOODFORD'],
+    extraBoundaryIds: ['EC_WANSTEAD_AND_WOODFORD'],
+    countDelta: 0,
+  },
   1992: {
     extraElectionIds: ['EC_MILTON_KEYNES_NORTH_EAST', 'EC_MILTON_KEYNES_SOUTH_WEST'],
     extraBoundaryIds: ['EC_MILTON_KEYNES'],

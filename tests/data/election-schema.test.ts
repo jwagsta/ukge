@@ -26,7 +26,9 @@ describe('Election Schema', () => {
 
       it('year field matches filename year', () => {
         const data = loadElection(year);
-        expect(data.year).toBe(year);
+        // 197402/197410 files use calendar year 1974, disambiguated by date field
+        const expectedYear = (year === 197402 || year === 197410) ? 1974 : year;
+        expect(data.year).toBe(expectedYear);
       });
 
       it('date is a valid date string', () => {

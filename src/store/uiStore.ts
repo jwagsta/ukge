@@ -15,7 +15,6 @@ interface UIState {
   mapType: MapType;
   mapColorMode: string;
   votesPerDot: number;
-  sidebarOpen: boolean;
   isMobile: boolean;
   mobileTab: MobileTab;
   ternaryZoom: ZoomTransform;
@@ -27,7 +26,6 @@ interface UIState {
   setMapColorMode: (mode: string) => void;
   setVotesPerDot: (value: number) => void;
   toggleDotParty: (partyId: string) => void;
-  toggleSidebar: () => void;
   setIsMobile: (value: boolean) => void;
   setMobileTab: (tab: MobileTab) => void;
   setTernaryZoom: (transform: ZoomTransform) => void;
@@ -43,7 +41,6 @@ export const useUIStore = create<UIState>((set) => ({
   mapType: 'choropleth',
   mapColorMode: 'winner',
   votesPerDot: 10000,
-  sidebarOpen: true,
   isMobile: false,
   mobileTab: 'map',
   ternaryZoom: DEFAULT_ZOOM,
@@ -66,8 +63,7 @@ export const useUIStore = create<UIState>((set) => ({
     }
     return { dotPartyFilter: next };
   }),
-  toggleSidebar: () => set((state) => ({ sidebarOpen: !state.sidebarOpen })),
-  setIsMobile: (value) => set({ isMobile: value, sidebarOpen: !value }),
+  setIsMobile: (value) => set({ isMobile: value }),
   setMobileTab: (tab) => set({ mobileTab: tab }),
   setTernaryZoom: (transform) => set({ ternaryZoom: transform }),
   resetTernaryZoom: () => set({ ternaryZoom: DEFAULT_ZOOM }),

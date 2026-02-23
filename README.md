@@ -9,6 +9,8 @@ An interactive web app for exploring UK General Election results across Great Br
 - **Dot Density Map** — Each dot represents a configurable number of votes, distributed geographically by constituency
 - **Hexagonal Cartogram** — Each constituency shown as an equal-sized hexagon, removing geographic distortion; supports the same color modes as the choropleth
 - **Seats Chart** — Line chart of national seat counts across all elections (top bar)
+- **Vote Share Chart** — Stacked area (stream) graph of national vote shares across all elections
+- **Comparison Mode** — Pin an election year for side-by-side comparison with any other year
 - **Linked Views** — Hover or select a constituency in any visualization to highlight it in all others
 - **Timeline Playback** — Animate through elections with play/pause/step controls
 - **Constituency Search** — Find and select constituencies by name
@@ -31,7 +33,7 @@ Election and boundary data files are included in `public/data/` — no additiona
 
 ## Data
 
-**Scope**: Great Britain only (England, Scotland, Wales). Northern Ireland is excluded.
+**Scope**: Great Britain (England, Scotland, Wales) for all years. Northern Ireland is included for 2024.
 
 **Elections**: 19 elections from 1955 to 2024, including both February and October 1974. Results are sourced from [Electoral Calculus](https://www.electoralcalculus.co.uk/) and stored as JSON in `public/data/elections/`.
 
@@ -81,14 +83,16 @@ ukge/
 ├── public/data/
 │   ├── elections/          # 19 election JSON files (1955–2024)
 │   ├── boundaries/         # 7 era-specific boundary GeoJSON files
+│   ├── transitions/        # Boundary transition mappings for cross-era swing
 │   └── wikipedia/          # Constituency → Wikipedia article title mapping
 ├── src/
 │   ├── components/
 │   │   ├── charts/         # TernaryPlot, ChoroplethMap, DotDensityMap,
-│   │   │                   # HexMap, SeatsChart, VoteShareChart
+│   │   │                   # HexMap, SeatsChart, VoteShareChart,
+│   │   │                   # SeatsBarChart, VoteShareBarChart
 │   │   ├── controls/       # PlayButton (timeline playback)
 │   │   ├── layout/         # Header, ElectionInfoBar
-│   │   └── panels/         # ConstituencyPanel, WikipediaSnippet
+│   │   └── panels/         # ConstituencyPanel, MobileBottomSheet, WikipediaSnippet
 │   ├── services/           # Wikipedia API client
 │   ├── store/              # Zustand stores (election data, UI state)
 │   ├── types/              # TypeScript interfaces (election, party, geography)
@@ -115,7 +119,7 @@ npm run dev          # Start dev server with hot reload
 npm run build        # TypeScript check + production build
 npm run lint         # ESLint
 npm run preview      # Preview production build
-npm run test:data    # Run 720 data validation tests
+npm run test:data    # Run 743 data validation tests
 ```
 
 ## Data Processing
@@ -128,6 +132,7 @@ Scripts for preparing data from upstream sources (not needed for normal developm
 - `scripts/validateBoundaryMatching.ts` — Validate constituency name matching between boundaries and elections
 - `scripts/fix_data.py` — Fix boundary IDs, polygon winding order, and election metadata (idempotent)
 - `scripts/buildWikipediaMapping.ts` — Build constituency ID → Wikipedia article title mapping
+- `scripts/buildBoundaryTransitions.ts` — Build boundary transition mappings for cross-era swing calculations
 
 ## Deployment
 
