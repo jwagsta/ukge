@@ -13,6 +13,7 @@ const PARTY_LABELS: Record<string, string> = {
   con: 'Con',
   lab: 'Lab',
   ld: 'LD',
+  snp: 'SNP',
   other: 'Oth',
 };
 
@@ -34,17 +35,24 @@ export function SeatsBarChart({ height = 120, width = 200 }: SeatsBarChartProps)
     return NATIONAL_SEATS.find(d => d.year === pinnedYear) ?? null;
   }, [pinnedYear]);
 
+  const previousData = useMemo(() => {
+    const idx = NATIONAL_SEATS.findIndex(d => d.year === displayYear);
+    if (idx <= 0) return null;
+    return NATIONAL_SEATS[idx - 1];
+  }, [displayYear]);
+
   const bars = useMemo(() => {
     if (!yearData) return [];
-    const parties = (['con', 'lab', 'ld', 'other'] as const).map(id => ({
+    const parties = (['con', 'lab', 'ld', 'snp', 'other'] as const).map(id => ({
       id,
       seats: yearData[id],
       pinnedSeats: pinnedData ? pinnedData[id] : 0,
+      previousSeats: previousData ? previousData[id] : 0,
       color: id === 'other' ? '#808080' : getPartyColor(id),
       label: PARTY_LABELS[id],
     }));
     return parties.filter(p => p.seats > 0 || (isComparing && p.pinnedSeats > 0)).sort((a, b) => b.seats - a.seats);
-  }, [yearData, pinnedData, isComparing]);
+  }, [yearData, pinnedData, previousData, isComparing]);
 
   if (!yearData) return null;
 
@@ -138,14 +146,25 @@ export function SeatsBarChart({ height = 120, width = 200 }: SeatsBarChartProps)
                   fill={bar.color}
                   rx={2}
                 />
-                <text
-                  x={barW + 3}
-                  y={y + barHeight / 2}
-                  alignmentBaseline="central"
-                  className="text-[10px] fill-gray-700 font-medium"
-                >
-                  {bar.seats}
-                </text>
+                {i < 2 ? (
+                  <text
+                    x={4}
+                    y={y + barHeight / 2}
+                    alignmentBaseline="central"
+                    className="text-[10px] fill-white font-medium"
+                  >
+                    {bar.seats}
+                  </text>
+                ) : (
+                  <text
+                    x={barW + 3}
+                    y={y + barHeight / 2}
+                    alignmentBaseline="central"
+                    className="text-[10px] fill-gray-700 font-medium"
+                  >
+                    {bar.seats}
+                  </text>
+                )}
                 {/* Delta annotation */}
                 {isComparing && delta !== 0 && (
                   <text
@@ -158,6 +177,21 @@ export function SeatsBarChart({ height = 120, width = 200 }: SeatsBarChartProps)
                     {delta > 0 ? `+${delta}` : delta}
                   </text>
                 )}
+                {/* Previous-election delta annotation (single view) */}
+                {!isComparing && previousData && (() => {
+                  const prevDelta = bar.seats - bar.previousSeats;
+                  return (
+                    <text
+                      x={chartWidth}
+                      y={y + barHeight / 2}
+                      textAnchor="end"
+                      alignmentBaseline="central"
+                      className={`text-[9px] font-medium ${prevDelta > 0 ? 'fill-green-600' : prevDelta < 0 ? 'fill-red-600' : 'fill-gray-400'}`}
+                    >
+                      {prevDelta > 0 ? `+${prevDelta}` : prevDelta === 0 ? '0' : prevDelta}
+                    </text>
+                  );
+                })()}
               </g>
             );
           })}

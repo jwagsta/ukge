@@ -13,6 +13,7 @@ const PARTY_LABELS: Record<string, string> = {
   con: 'Con',
   lab: 'Lab',
   ld: 'LD',
+  snp: 'SNP',
   other: 'Oth',
 };
 
@@ -34,17 +35,24 @@ export function VoteShareBarChart({ height = 100, width = 200 }: VoteShareBarCha
     return NATIONAL_VOTES.find(d => d.year === pinnedYear) ?? null;
   }, [pinnedYear]);
 
+  const previousData = useMemo(() => {
+    const idx = NATIONAL_VOTES.findIndex(d => d.year === displayYear);
+    if (idx <= 0) return null;
+    return NATIONAL_VOTES[idx - 1];
+  }, [displayYear]);
+
   const bars = useMemo(() => {
     if (!yearData) return [];
-    const parties = (['con', 'lab', 'ld', 'other'] as const).map(id => ({
+    const parties = (['con', 'lab', 'ld', 'snp', 'other'] as const).map(id => ({
       id,
       pct: (yearData[id] / yearData.total) * 100,
       pinnedPct: pinnedData ? (pinnedData[id] / pinnedData.total) * 100 : 0,
+      previousPct: previousData ? (previousData[id] / previousData.total) * 100 : 0,
       color: id === 'other' ? '#808080' : getPartyColor(id),
       label: PARTY_LABELS[id],
     }));
     return parties.filter(p => p.pct > 0 || (isComparing && p.pinnedPct > 0)).sort((a, b) => b.pct - a.pct);
-  }, [yearData, pinnedData, isComparing]);
+  }, [yearData, pinnedData, previousData, isComparing]);
 
   if (!yearData) return null;
 
@@ -103,14 +111,25 @@ export function VoteShareBarChart({ height = 100, width = 200 }: VoteShareBarCha
                   fill={bar.color}
                   rx={2}
                 />
-                <text
-                  x={barW + 3}
-                  y={y + barHeight / 2}
-                  alignmentBaseline="central"
-                  className="text-[10px] fill-gray-700 font-medium"
-                >
-                  {bar.pct.toFixed(1)}%
-                </text>
+                {i < 2 ? (
+                  <text
+                    x={4}
+                    y={y + barHeight / 2}
+                    alignmentBaseline="central"
+                    className="text-[10px] fill-white font-medium"
+                  >
+                    {bar.pct.toFixed(1)}%
+                  </text>
+                ) : (
+                  <text
+                    x={barW + 3}
+                    y={y + barHeight / 2}
+                    alignmentBaseline="central"
+                    className="text-[10px] fill-gray-700 font-medium"
+                  >
+                    {bar.pct.toFixed(1)}%
+                  </text>
+                )}
                 {/* Delta annotation */}
                 {isComparing && Math.abs(delta) >= 0.1 && (
                   <text
@@ -123,6 +142,21 @@ export function VoteShareBarChart({ height = 100, width = 200 }: VoteShareBarCha
                     {delta > 0 ? '+' : ''}{delta.toFixed(1)}pp
                   </text>
                 )}
+                {/* Previous-election delta annotation (single view) */}
+                {!isComparing && previousData && (() => {
+                  const prevDelta = bar.pct - bar.previousPct;
+                  return (
+                    <text
+                      x={chartWidth}
+                      y={y + barHeight / 2}
+                      textAnchor="end"
+                      alignmentBaseline="central"
+                      className={`text-[9px] font-medium ${prevDelta > 0.05 ? 'fill-green-600' : prevDelta < -0.05 ? 'fill-red-600' : 'fill-gray-400'}`}
+                    >
+                      {prevDelta > 0 ? '+' : ''}{prevDelta.toFixed(1)}pp
+                    </text>
+                  );
+                })()}
               </g>
             );
           })}
