@@ -18,6 +18,8 @@ import { VoteShareChart } from '@/components/charts/VoteShareChart/VoteShareChar
 import { VoteShareBarChart } from '@/components/charts/VoteShareBarChart/VoteShareBarChart';
 import { ConstituencyPanel } from '@/components/panels/ConstituencyPanel';
 import { MobileBottomSheet } from '@/components/panels/MobileBottomSheet';
+import { TutorialOverlay } from '@/components/tutorial/TutorialOverlay';
+import { WelcomePrompt } from '@/components/tutorial/WelcomePrompt';
 import { getPartyById } from '@/types/party';
 import type { ElectionResult, TernaryDataPoint } from '@/types/election';
 
@@ -439,7 +441,7 @@ function App() {
 
   // Shared map overlay JSX
   const mapToggleOverlay = (
-    <div className="absolute top-2 left-2 z-10 flex flex-col gap-1" style={{ touchAction: 'manipulation' }}>
+    <div data-tutorial="map-controls" className="absolute top-2 left-2 z-10 flex flex-col gap-1" style={{ touchAction: 'manipulation' }}>
       <div className="flex rounded-md border border-gray-300 overflow-hidden shadow-sm bg-white">
         {(['choropleth', 'hex', 'dots'] as const).map((type) => (
           <button
@@ -475,20 +477,52 @@ function App() {
         </select>
       )}
       {mapColorMode === 'winner' && (mapType === 'choropleth' || mapType === 'hex') && (
-        <label
-          className={`flex items-center gap-1.5 bg-white border border-gray-300 rounded shadow-sm cursor-pointer ${
-            isMobile ? 'px-3 py-2 text-sm' : 'px-2 py-1 text-xs'
-          }`}
-          style={isMobile ? { minHeight: 44 } : undefined}
-        >
-          <input
-            type="checkbox"
-            checked={showSeatStatus}
-            onChange={(e) => useUIStore.getState().setShowSeatStatus(e.target.checked)}
-            className="accent-blue-600"
-          />
-          Highlight gains
-        </label>
+        <>
+          <label
+            className={`flex items-center gap-1.5 bg-white border border-gray-300 rounded shadow-sm cursor-pointer ${
+              isMobile ? 'px-3 py-2 text-sm' : 'px-2 py-1 text-xs'
+            }`}
+            style={isMobile ? { minHeight: 44 } : undefined}
+          >
+            <input
+              type="checkbox"
+              checked={showSeatStatus}
+              onChange={(e) => useUIStore.getState().setShowSeatStatus(e.target.checked)}
+              className="accent-blue-600"
+            />
+            Highlight gains
+          </label>
+          {showSeatStatus && (
+            <div className="bg-white border border-gray-300 rounded shadow-sm px-2 py-1.5">
+              <div className="flex flex-col gap-1">
+                <div className="flex items-center gap-1.5 text-[10px] text-gray-600">
+                  <svg width="12" height="12" viewBox="0 0 12 12">
+                    <rect width="12" height="12" fill="#888" rx="1" />
+                  </svg>
+                  <span>Gain</span>
+                </div>
+                <div className="flex items-center gap-1.5 text-[10px] text-gray-600">
+                  <svg width="12" height="12" viewBox="0 0 12 12">
+                    <rect width="12" height="12" fill="#888" opacity="0.35" rx="1" />
+                  </svg>
+                  <span>Hold</span>
+                </div>
+                <div className="flex items-center gap-1.5 text-[10px] text-gray-600">
+                  <svg width="12" height="12" viewBox="0 0 12 12">
+                    <defs>
+                      <pattern id="legend-hatch" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+                        <line x1="0" y1="0" x2="0" y2="4" stroke="rgba(0,0,0,0.3)" strokeWidth="1" />
+                      </pattern>
+                    </defs>
+                    <rect width="12" height="12" fill="#888" opacity="0.55" rx="1" />
+                    <rect width="12" height="12" fill="url(#legend-hatch)" rx="1" />
+                  </svg>
+                  <span>New seat</span>
+                </div>
+              </div>
+            </div>
+          )}
+        </>
       )}
       {mapColorMode === 'swing' && (mapType === 'choropleth' || mapType === 'hex') && (
         <div className="bg-white border border-gray-300 rounded shadow-sm px-2 py-1.5">
@@ -530,7 +564,7 @@ function App() {
   const swingData = mapColorMode === 'swing' ? notionalSwingData : undefined;
   const swingEstIds = mapColorMode === 'swing' ? swingEstimatedIds : undefined;
   const mapContent = (
-    <div className="relative" style={{ width: mapWidth, height: mapHeight }}>
+    <div data-tutorial="geographic-map" className="relative" style={{ width: mapWidth, height: mapHeight }}>
       {mapType === 'choropleth' && (
         <ChoroplethMap
           electionData={electionData}
@@ -626,20 +660,28 @@ function App() {
       <Header />
       {isComparing && comparisonData ? (
         comparisonData.later ? (
-          <>
-            <ElectionInfoBar year={comparisonData.earlier.year} isPinned={comparisonData.earlier.isPinned} />
-            <ElectionInfoBar year={comparisonData.later.year} isPinned={comparisonData.later.isPinned} />
-          </>
+          <div className="flex border-b border-gray-200">
+            <div className="w-1/2 min-w-0 border-r border-gray-200">
+              <ElectionInfoBar year={comparisonData.earlier.year} isPinned={comparisonData.earlier.isPinned} noBorder />
+            </div>
+            <div className="w-1/2 min-w-0">
+              <ElectionInfoBar year={comparisonData.later.year} isPinned={comparisonData.later.isPinned} noBorder />
+            </div>
+          </div>
         ) : (
-          <>
-            <ElectionInfoBar year={currentYear} isPinned />
-            <div className="bg-amber-50 border-b border-amber-200 px-4 py-1.5">
+          <div className="flex border-b border-gray-200">
+            <div className="w-1/2 min-w-0 border-r border-gray-200">
+              <ElectionInfoBar year={currentYear} isPinned noBorder />
+            </div>
+            <div className="w-1/2 min-w-0 bg-amber-50 flex items-center px-4 py-1.5">
               <span className="text-xs text-amber-600">Select another year to compare</span>
             </div>
-          </>
+          </div>
         )
       ) : (
-        <ElectionInfoBar year={currentYear} />
+        <div data-tutorial="election-info-bar">
+          <ElectionInfoBar year={currentYear} />
+        </div>
       )}
 
       <div ref={containerRef} className="flex-1 flex flex-col overflow-hidden">
@@ -706,17 +748,19 @@ function App() {
               <div className="flex flex-1" style={{ height: contentHeight - BOTTOM_PANEL_HEIGHT }}>
                 {/* Left column: charts stacked above ternary */}
                 <div className="border-r border-gray-200 flex flex-col" style={{ width: leftWidth }}>
-                  <div className="flex">
-                    <div className="flex-1 min-w-0">
-                      <SeatsChart height={CHART_ROW_HEIGHT} />
+                  <div data-tutorial="national-charts">
+                    <div className="flex">
+                      <div className="flex-1 min-w-0">
+                        <SeatsChart height={CHART_ROW_HEIGHT} />
+                      </div>
+                      <SeatsBarChart height={CHART_ROW_HEIGHT} width={barChartWidth} />
                     </div>
-                    <SeatsBarChart height={CHART_ROW_HEIGHT} width={barChartWidth} />
-                  </div>
-                  <div className="flex">
-                    <div className="flex-1 min-w-0">
-                      <VoteShareChart height={CHART_ROW_HEIGHT} />
+                    <div className="flex">
+                      <div className="flex-1 min-w-0">
+                        <VoteShareChart height={CHART_ROW_HEIGHT} />
+                      </div>
+                      <VoteShareBarChart height={CHART_ROW_HEIGHT} width={barChartWidth} />
                     </div>
-                    <VoteShareBarChart height={CHART_ROW_HEIGHT} width={barChartWidth} />
                   </div>
                   {isComparing && comparisonData ? (
                     <div className="flex" style={{ height: ternaryHeight }}>
@@ -727,7 +771,7 @@ function App() {
                         : renderEmptySlot(Math.floor(leftWidth / 2), ternaryHeight)}
                     </div>
                   ) : (
-                    <div style={{ width: leftWidth, height: ternaryHeight }}>
+                    <div data-tutorial="ternary-plot" style={{ width: leftWidth, height: ternaryHeight }}>
                       <TernaryPlot
                         data={ternaryData}
                         width={leftWidth}
@@ -816,6 +860,8 @@ function App() {
 
         {emptyState}
       </div>
+      <TutorialOverlay />
+      <WelcomePrompt />
     </div>
   );
 }

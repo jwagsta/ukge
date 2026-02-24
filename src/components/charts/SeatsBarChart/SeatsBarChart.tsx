@@ -23,7 +23,7 @@ export function SeatsBarChart({ height = 120, width = 200 }: SeatsBarChartProps)
   const { currentYear, pinnedYear } = useElectionStore();
   const { hoveredChartYear } = useUIStore();
   const displayYear = hoveredChartYear ?? currentYear;
-  const isComparing = pinnedYear !== null;
+  const isComparing = pinnedYear !== null && pinnedYear !== displayYear;
   const chronoFlipped = isComparing && normalizeYear(pinnedYear!) > normalizeYear(displayYear);
 
   const yearData = useMemo(() => {
@@ -56,12 +56,23 @@ export function SeatsBarChart({ height = 120, width = 200 }: SeatsBarChartProps)
 
   if (!yearData) return null;
 
-  const padding = { top: 20, right: 8, bottom: 4, left: 30 };
+  const padding = { top: 16, right: 8, bottom: 4, left: 30 };
   const chartWidth = width - padding.left - padding.right;
   const chartHeight = height - padding.top - padding.bottom;
+  // Single-view layout
   const barGap = 2;
   const barHeight = Math.min(16, (chartHeight - (bars.length - 1) * barGap) / bars.length);
-  const totalBarsHeight = bars.length * barHeight + (bars.length - 1) * barGap;
+  // Comparison paired-bar layout (dynamic sizing to fit available height)
+  const pairGap = 3;
+  const n = bars.length;
+  const rawSub = Math.floor((chartHeight - n * pairGap) / (3 * n - 1));
+  const subBarHeight = Math.min(8, Math.max(4, rawSub));
+  const groupHeight = subBarHeight * 2 + pairGap;
+  const groupGap = n > 1 ? Math.min(subBarHeight + 1, Math.floor((chartHeight - n * groupHeight) / (n - 1))) : 0;
+
+  const totalBarsHeight = isComparing
+    ? n * groupHeight + Math.max(n - 1, 0) * groupGap
+    : bars.length * barHeight + (bars.length - 1) * barGap;
   const barsYOffset = Math.max(0, (chartHeight - totalBarsHeight) / 2);
 
   const majority = Math.ceil(yearData.total / 2);
@@ -107,93 +118,114 @@ export function SeatsBarChart({ height = 120, width = 200 }: SeatsBarChartProps)
 
           {/* Bars */}
           {bars.map((bar, i) => {
-            const y = barsYOffset + i * (barHeight + barGap);
-            const barW = xScale(bar.seats);
-            const pinnedW = isComparing ? xScale(bar.pinnedSeats) : 0;
-            const rawDelta = bar.seats - bar.pinnedSeats;
-            const delta = chronoFlipped ? -rawDelta : rawDelta;
-            return (
-              <g key={bar.id}>
-                <text
-                  x={-4}
-                  y={y + barHeight / 2}
-                  textAnchor="end"
-                  alignmentBaseline="central"
-                  className="text-[10px] fill-gray-600 font-medium"
-                >
-                  {bar.label}
-                </text>
-                {/* Ghost bar for pinned year */}
-                {isComparing && bar.pinnedSeats > 0 && (
+            if (isComparing) {
+              const groupY = barsYOffset + i * (groupHeight + groupGap);
+              const topSeats = chronoFlipped ? bar.seats : bar.pinnedSeats;
+              const bottomSeats = chronoFlipped ? bar.pinnedSeats : bar.seats;
+              const yellowOnTop = !chronoFlipped;
+              const topY = groupY;
+              const bottomY = groupY + subBarHeight + pairGap;
+              const rawDelta = bar.seats - bar.pinnedSeats;
+              const delta = chronoFlipped ? -rawDelta : rawDelta;
+              const centerY = groupY + groupHeight / 2;
+
+              return (
+                <g key={bar.id}>
+                  {/* Yellow background for pinned bar */}
                   <rect
-                    x={0}
-                    y={y}
-                    width={pinnedW}
-                    height={barHeight}
-                    fill="none"
-                    stroke={bar.color}
-                    strokeWidth={1}
-                    strokeDasharray="3,2"
-                    rx={2}
-                    opacity={0.6}
+                    x={-2}
+                    y={(yellowOnTop ? topY : bottomY) - 1}
+                    width={chartWidth - 40}
+                    height={subBarHeight + 2}
+                    fill="#fef3c7"
+                    rx={1}
                   />
-                )}
-                <rect
-                  x={0}
-                  y={y}
-                  width={barW}
-                  height={barHeight}
-                  fill={bar.color}
-                  rx={2}
-                />
-                {i < 2 ? (
-                  <text
-                    x={4}
-                    y={y + barHeight / 2}
-                    alignmentBaseline="central"
-                    className="text-[10px] fill-white font-medium"
-                  >
-                    {bar.seats}
+                  {/* Top sub-bar (earlier year) */}
+                  {topSeats > 0 && (
+                    <rect x={0} y={topY} width={xScale(topSeats)} height={subBarHeight} fill={bar.color} rx={1} {...(bar.id === 'snp' ? { stroke: '#000', strokeWidth: 0.5 } : {})} />
+                  )}
+                  <text x={Math.max(xScale(topSeats), 0) + 3} y={topY + subBarHeight / 2} alignmentBaseline="central" className="text-[9px] fill-gray-700 font-medium">
+                    {topSeats}
                   </text>
-                ) : (
-                  <text
-                    x={barW + 3}
-                    y={y + barHeight / 2}
-                    alignmentBaseline="central"
-                    className="text-[10px] fill-gray-700 font-medium"
-                  >
-                    {bar.seats}
+                  {/* Bottom sub-bar (later year) */}
+                  {bottomSeats > 0 && (
+                    <rect x={0} y={bottomY} width={xScale(bottomSeats)} height={subBarHeight} fill={bar.color} rx={1} {...(bar.id === 'snp' ? { stroke: '#000', strokeWidth: 0.5 } : {})} />
+                  )}
+                  <text x={Math.max(xScale(bottomSeats), 0) + 3} y={bottomY + subBarHeight / 2} alignmentBaseline="central" className="text-[9px] fill-gray-700 font-medium">
+                    {bottomSeats}
                   </text>
-                )}
-                {/* Delta annotation */}
-                {isComparing && delta !== 0 && (
+                  {/* Party label - centered on pair */}
+                  <text x={-4} y={centerY} textAnchor="end" alignmentBaseline="central" className="text-[10px] fill-gray-600 font-medium">
+                    {bar.label}
+                  </text>
+                  {/* Delta - centered on pair */}
+                  {delta !== 0 && (
+                    <text x={chartWidth} y={centerY} textAnchor="end" alignmentBaseline="central" className={`text-[9px] font-medium ${delta > 0 ? 'fill-green-600' : 'fill-red-600'}`}>
+                      {delta > 0 ? `+${delta}` : delta}
+                    </text>
+                  )}
+                </g>
+              );
+            } else {
+              const y = barsYOffset + i * (barHeight + barGap);
+              const barW = xScale(bar.seats);
+              return (
+                <g key={bar.id}>
                   <text
-                    x={chartWidth}
+                    x={-4}
                     y={y + barHeight / 2}
                     textAnchor="end"
                     alignmentBaseline="central"
-                    className={`text-[9px] font-medium ${delta > 0 ? 'fill-green-600' : 'fill-red-600'}`}
+                    className="text-[10px] fill-gray-600 font-medium"
                   >
-                    {delta > 0 ? `+${delta}` : delta}
+                    {bar.label}
                   </text>
-                )}
-                {/* Previous-election delta annotation (single view) */}
-                {!isComparing && previousData && (() => {
-                  const prevDelta = bar.seats - bar.previousSeats;
-                  return (
+                  <rect
+                    x={0}
+                    y={y}
+                    width={barW}
+                    height={barHeight}
+                    fill={bar.color}
+                    rx={2}
+                    {...(bar.id === 'snp' ? { stroke: '#000', strokeWidth: 0.5 } : {})}
+                  />
+                  {i < 2 ? (
                     <text
-                      x={chartWidth}
+                      x={4}
                       y={y + barHeight / 2}
-                      textAnchor="end"
                       alignmentBaseline="central"
-                      className={`text-[9px] font-medium ${prevDelta > 0 ? 'fill-green-600' : prevDelta < 0 ? 'fill-red-600' : 'fill-gray-400'}`}
+                      className="text-[10px] fill-white font-medium"
                     >
-                      {prevDelta > 0 ? `+${prevDelta}` : prevDelta === 0 ? '0' : prevDelta}
+                      {bar.seats}
                     </text>
-                  );
-                })()}
-              </g>
-            );
+                  ) : (
+                    <text
+                      x={barW + 3}
+                      y={y + barHeight / 2}
+                      alignmentBaseline="central"
+                      className="text-[10px] fill-gray-700 font-medium"
+                    >
+                      {bar.seats}
+                    </text>
+                  )}
+                  {/* Previous-election delta annotation (single view) */}
+                  {previousData && (() => {
+                    const prevDelta = bar.seats - bar.previousSeats;
+                    return (
+                      <text
+                        x={chartWidth}
+                        y={y + barHeight / 2}
+                        textAnchor="end"
+                        alignmentBaseline="central"
+                        className={`text-[9px] font-medium ${prevDelta > 0 ? 'fill-green-600' : prevDelta < 0 ? 'fill-red-600' : 'fill-gray-400'}`}
+                      >
+                        {prevDelta > 0 ? `+${prevDelta}` : prevDelta === 0 ? '0' : prevDelta}
+                      </text>
+                    );
+                  })()}
+                </g>
+              );
+            }
           })}
 
           {/* Majority line */}
@@ -208,7 +240,9 @@ export function SeatsBarChart({ height = 120, width = 200 }: SeatsBarChartProps)
           />
           <text
             x={xScale(majority) + 4}
-            y={barsYOffset + (bars.length - 1) * (barHeight + barGap) + barHeight / 2}
+            y={isComparing
+              ? barsYOffset + (bars.length - 1) * (groupHeight + groupGap) + groupHeight / 2
+              : barsYOffset + (bars.length - 1) * (barHeight + barGap) + barHeight / 2}
             textAnchor="start"
             alignmentBaseline="central"
             className="text-[9px] fill-gray-400"

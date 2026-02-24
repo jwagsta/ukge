@@ -173,15 +173,19 @@ function clampZoomToTriangle(zx: number, zy: number, k: number, R: number): { x:
 // Memoized axis labels and ticks - recomputes when radius or zoom changes
 const AxisDecorations = memo(function AxisDecorations({
   radius,
+  scale,
   zoomX,
   zoomY,
   zoomK,
 }: {
   radius: number;
+  scale: number;
   zoomX: number;
   zoomY: number;
   zoomK: number;
 }) {
+  const s = scale;
+
   const top = { x: 0, y: -radius };
   const bottomRight = { x: radius * Math.cos(Math.PI / 6), y: radius * Math.sin(Math.PI / 6) };
   const bottomLeft = { x: -radius * Math.cos(Math.PI / 6), y: radius * Math.sin(Math.PI / 6) };
@@ -195,7 +199,12 @@ const AxisDecorations = memo(function AxisDecorations({
   const rightNorm = edgeOutwardNormal(top, bottomRight);
   const bottomNorm = edgeOutwardNormal(bottomRight, bottomLeft);
 
-  const tickLen = 6;
+  const tickLen = 5 * s;
+  const tickLabelOffset = tickLen + 8 * s;
+  const tickFontSize = 10 * s;
+  const labelFontSize = 12 * s;
+  const labelOffset = 28 * s;
+  const bottomLabelOffset = 28 * s;
 
   function renderTicks(
     ticks: ReturnType<typeof computeEdgeTicks>,
@@ -208,14 +217,15 @@ const AxisDecorations = memo(function AxisDecorations({
           x1={x} y1={y}
           x2={x + norm.nx * tickLen} y2={y + norm.ny * tickLen}
           stroke="#666"
-          strokeWidth={1}
+          strokeWidth={Math.max(0.5, 1 * s)}
         />
         <text
-          x={x + norm.nx * (tickLen + 10)}
-          y={y + norm.ny * (tickLen + 10)}
+          x={x + norm.nx * tickLabelOffset}
+          y={y + norm.ny * tickLabelOffset}
           textAnchor="middle"
           alignmentBaseline="middle"
-          className="text-[10px] fill-gray-400"
+          className="fill-gray-400"
+          style={{ fontSize: `${tickFontSize}px` }}
         >
           {Math.round(value * 100)}
         </text>
@@ -223,23 +233,41 @@ const AxisDecorations = memo(function AxisDecorations({
     ));
   }
 
+  // Arrow geometry scaled (original base values from before scaling was added)
+  const arrowStart = 30 * s;
+  const arrowEnd = 40 * s;
+  const arrowBarb = 3 * s;
+  const arrowMid = arrowEnd - 3 * s;
+  const arrowYOff = -6 * s;
+  const arrowCenter = (arrowStart + arrowEnd) / 2;
+  // Conservative arrow (longer text, arrow further out)
+  const conArrowStart = 50 * s;
+  const conArrowEnd = 60 * s;
+  const conArrowMid = conArrowEnd - 3 * s;
+  const conArrowCenter = (conArrowStart + conArrowEnd) / 2;
+  // Other arrow (negative direction)
+  const othArrowStart = -40 * s;
+  const othArrowEnd = -30 * s;
+  const othArrowMid = othArrowStart + 3 * s;
+  const othArrowCenter = (othArrowStart + othArrowEnd) / 2;
+
   return (
     <>
       {renderTicks(leftTicks, leftNorm, 'left')}
       {renderTicks(rightTicks, rightNorm, 'right')}
       {renderTicks(bottomTicks, bottomNorm, 'bottom')}
       {/* Edge labels */}
-      <g transform={`translate(${(bottomLeft.x + top.x) / 2 - 35}, ${(bottomLeft.y + top.y) / 2}) rotate(-60)`}>
-        <text x={0} y={0} textAnchor="middle" className="text-[12px] font-semibold" fill="#DC241f">Labour %</text>
-        <path d="M 30 0 L 40 0 M 37 -3 L 40 0 L 37 3" stroke="#DC241f" strokeWidth={1.5} fill="none" transform="translate(0, -6) rotate(-30, 35, 0)" />
+      <g transform={`translate(${(bottomLeft.x + top.x) / 2 - labelOffset}, ${(bottomLeft.y + top.y) / 2}) rotate(-60)`}>
+        <text x={0} y={0} textAnchor="middle" className="font-semibold" style={{ fontSize: `${labelFontSize}px` }} fill="#DC241f">Labour %</text>
+        <path d={`M ${arrowStart} 0 L ${arrowEnd} 0 M ${arrowMid} ${-arrowBarb} L ${arrowEnd} 0 L ${arrowMid} ${arrowBarb}`} stroke="#DC241f" strokeWidth={Math.max(1, 1.5 * s)} fill="none" transform={`translate(0, ${arrowYOff}) rotate(-30, ${arrowCenter}, 0)`} />
       </g>
-      <g transform={`translate(${(top.x + bottomRight.x) / 2 + 35}, ${(top.y + bottomRight.y) / 2}) rotate(60)`}>
-        <text x={0} y={0} textAnchor="middle" className="text-[12px] font-semibold" fill="#0063A6">Conservative %</text>
-        <path d="M 50 0 L 60 0 M 57 -3 L 60 0 L 57 3" stroke="#0063A6" strokeWidth={1.5} fill="none" transform="translate(0, -6) rotate(-30, 55, 0)" />
+      <g transform={`translate(${(top.x + bottomRight.x) / 2 + labelOffset}, ${(top.y + bottomRight.y) / 2}) rotate(60)`}>
+        <text x={0} y={0} textAnchor="middle" className="font-semibold" style={{ fontSize: `${labelFontSize}px` }} fill="#0063A6">Conservative %</text>
+        <path d={`M ${conArrowStart} 0 L ${conArrowEnd} 0 M ${conArrowMid} ${-arrowBarb} L ${conArrowEnd} 0 L ${conArrowMid} ${arrowBarb}`} stroke="#0063A6" strokeWidth={Math.max(1, 1.5 * s)} fill="none" transform={`translate(0, ${arrowYOff}) rotate(-30, ${conArrowCenter}, 0)`} />
       </g>
-      <g transform={`translate(${(bottomRight.x + bottomLeft.x) / 2}, ${bottomRight.y + 35})`}>
-        <text x={0} y={0} textAnchor="middle" className="text-[12px] font-semibold" fill="#666">Other %</text>
-        <path d="M -40 0 L -30 0 M -37 -3 L -40 0 L -37 3" stroke="#666" strokeWidth={1.5} fill="none" transform="translate(0, -6) rotate(-30, -35, 0)" />
+      <g transform={`translate(${(bottomRight.x + bottomLeft.x) / 2}, ${bottomRight.y + bottomLabelOffset})`}>
+        <text x={0} y={0} textAnchor="middle" className="font-semibold" style={{ fontSize: `${labelFontSize}px` }} fill="#666">Other %</text>
+        <path d={`M ${othArrowStart} 0 L ${othArrowEnd} 0 M ${othArrowMid} ${-arrowBarb} L ${othArrowStart} 0 L ${othArrowMid} ${arrowBarb}`} stroke="#666" strokeWidth={Math.max(1, 1.5 * s)} fill="none" transform={`translate(0, ${arrowYOff}) rotate(-30, ${othArrowCenter}, 0)`} />
       </g>
     </>
   );
@@ -277,10 +305,13 @@ export function TernaryPlot({
     return map;
   }, [storeElectionData]);
 
-  // Margins for labels: top needs less, bottom/sides need more for labels
-  const marginTop = 25;
-  const marginBottom = 45;
-  const marginSide = 45;
+  // Scale axis labels/ticks with container size (reference 300px = scale 1)
+  const axisScale = Math.max(0.7, Math.min(width, height) / 300);
+
+  // Margins scale with label size so bottom label + ticks always fit
+  const marginTop = Math.max(8, 15 * axisScale);
+  const marginBottom = Math.max(20, 45 * axisScale);
+  const marginSide = Math.max(12, 20 * axisScale);
 
   // Triangle geometry: extends radius up, 0.5*radius down, 0.866*radius to sides
   // Calculate max radius that fits in each dimension
@@ -288,7 +319,7 @@ export function TernaryPlot({
   const maxRadiusFromHeight = (height - marginTop - marginBottom) / 1.5;
   const radius = Math.min(maxRadiusFromWidth, maxRadiusFromHeight);
 
-  // Scale dot/label sizes with plot size (reference radius ~250px = scale 1)
+  // Scale dot sizes with radius (reference radius ~250px = scale 1)
   const sizeScale = radius / 250;
 
   // Position center so triangle is vertically centered within available margins
@@ -988,7 +1019,7 @@ export function TernaryPlot({
           />
 
           {/* Axis labels and tick marks */}
-          <AxisDecorations radius={radius} zoomX={ternaryZoom.x} zoomY={ternaryZoom.y} zoomK={ternaryZoom.k} />
+          <AxisDecorations radius={radius} scale={axisScale} zoomX={ternaryZoom.x} zoomY={ternaryZoom.y} zoomK={ternaryZoom.k} />
         </g>
       </svg>
 

@@ -36,7 +36,7 @@ export function VoteShareChart({ height = 100 }: VoteShareChartProps) {
   }, []);
 
   const { width } = dimensions;
-  const padding = { top: 20, right: 20, bottom: 45, left: 40 };
+  const padding = { top: 14, right: 20, bottom: 35, left: 40 };
   const chartWidth = width - padding.left - padding.right;
   const chartHeight = height - padding.top - padding.bottom;
 
@@ -54,8 +54,8 @@ export function VoteShareChart({ height = 100 }: VoteShareChartProps) {
   const normalizeYear = (y: number) => y === 197402 ? 1974.2 : y === 197410 ? 1974.8 : y;
 
   const getShortYearLabel = (year: number): string => {
-    if (year === 197402) return "Feb'74";
-    if (year === 197410) return "Oct'74";
+    if (year === 197402) return "F'74";
+    if (year === 197410) return "O'74";
     return year.toString();
   };
 
@@ -160,7 +160,7 @@ export function VoteShareChart({ height = 100 }: VoteShareChartProps) {
         </defs>
         <g transform={`translate(${padding.left}, ${padding.top})`}>
           {/* Chart label */}
-          <text x={2} y={-8} className="text-[11px] fill-gray-400 font-medium">National Vote Share</text>
+          <text x={2} y={-4} className="text-[11px] fill-gray-400 font-medium">National Vote Share</text>
 
           {/* Y-axis labels (outside clip) */}
           {[0, 50, 100].map(pct => (
@@ -197,7 +197,7 @@ export function VoteShareChart({ height = 100 }: VoteShareChartProps) {
                 key={party}
                 d={generateAreaPath(party)}
                 fill={PARTY_COLORS[party]}
-                opacity={0.85}
+                opacity={1}
               />
             ))}
 
@@ -212,15 +212,13 @@ export function VoteShareChart({ height = 100 }: VoteShareChartProps) {
               );
             })()}
 
-            {/* Current year indicator */}
-            <line
-              x1={currentYearX}
-              y1={0}
-              x2={currentYearX}
-              y2={chartHeight}
-              stroke="#000"
-              strokeWidth={2}
-            />
+            {/* Current year indicator (hidden when same as pinned year) */}
+            {pinnedYear != null && pinnedYear !== currentYear && (
+              <line x1={currentYearX} y1={0} x2={currentYearX} y2={chartHeight} stroke="#d1d5db" strokeWidth={5} />
+            )}
+            {(pinnedYear == null || pinnedYear !== currentYear) && (
+              <line x1={currentYearX} y1={0} x2={currentYearX} y2={chartHeight} stroke="#000" strokeWidth={2} />
+            )}
 
             {/* Blue hover vertical line */}
             {hoveredChartYear != null && hoveredChartYear !== currentYear && (() => {
@@ -244,7 +242,7 @@ export function VoteShareChart({ height = 100 }: VoteShareChartProps) {
               const tickColor = isPinned ? '#b45309' : isActive ? '#000' : isHovered ? '#3b82f6' : '#999';
               const textClass = isPinned
                 ? 'text-[10px] font-bold'
-                : isActive ? 'text-[10px] fill-black font-bold'
+                : isActive ? (pinnedYear != null ? 'text-[10px] font-bold' : 'text-[10px] fill-black font-bold')
                 : isHovered ? 'text-[10px] fill-blue-500 font-medium'
                 : 'text-[10px] fill-gray-500';
 
@@ -270,6 +268,11 @@ export function VoteShareChart({ height = 100 }: VoteShareChartProps) {
                     {...(isPinned ? {
                       fill: '#92400e',
                       stroke: '#fef3c7',
+                      strokeWidth: 3,
+                      paintOrder: 'stroke',
+                    } : isActive && pinnedYear != null ? {
+                      fill: '#000',
+                      stroke: '#d1d5db',
                       strokeWidth: 3,
                       paintOrder: 'stroke',
                     } : {})}

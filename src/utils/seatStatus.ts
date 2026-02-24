@@ -141,15 +141,12 @@ export function getSeatFillOpacity(
 
 /**
  * Get stroke color for a constituency based on its hold/gain status.
- * Gains get a black border in winner mode when showSeatStatus is on.
+ * Always white — gains are distinguished by opacity, new boundaries by hatching.
  */
 export function getSeatStrokeColor(
-  status: SeatStatus | undefined,
-  mapColorMode: string,
-  showSeatStatus: boolean = true,
+  _status: SeatStatus | undefined,
+  _mapColorMode: string,
+  _showSeatStatus: boolean = true,
 ): string {
-  if (showSeatStatus && mapColorMode === 'winner' && status === 'gain') {
-    return '#000';
-  }
   return '#fff';
 }

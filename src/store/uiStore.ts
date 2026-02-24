@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { TUTORIAL_STEPS } from '@/components/tutorial/tutorialSteps';
 
 export type MapType = 'choropleth' | 'dots' | 'hex';
 export type MobileTab = 'map' | 'charts' | 'ternary';
@@ -10,6 +11,7 @@ export interface ZoomTransform {
 }
 
 export const MOBILE_BREAKPOINT = 640;
+export const TUTORIAL_MIN_WIDTH = 920;
 
 interface UIState {
   mapType: MapType;
@@ -22,6 +24,7 @@ interface UIState {
   hoveredChartYear: number | null;
   dotPartyFilter: Set<string>;
   showSeatStatus: boolean;
+  tutorialStep: number | null;
 
   setMapType: (type: MapType) => void;
   setMapColorMode: (mode: string) => void;
@@ -35,6 +38,10 @@ interface UIState {
   setMapZoom: (transform: ZoomTransform) => void;
   resetMapZoom: () => void;
   setHoveredChartYear: (year: number | null) => void;
+  startTutorial: () => void;
+  endTutorial: () => void;
+  nextTutorialStep: () => void;
+  prevTutorialStep: () => void;
 }
 
 const DEFAULT_ZOOM: ZoomTransform = { k: 1, x: 0, y: 0 };
@@ -49,7 +56,8 @@ export const useUIStore = create<UIState>((set) => ({
   mapZoom: DEFAULT_ZOOM,
   hoveredChartYear: null,
   dotPartyFilter: new Set<string>(),
-  showSeatStatus: true,
+  showSeatStatus: false,
+  tutorialStep: null,
 
   setMapType: (type) => set((state) => ({
     mapType: type,
@@ -74,4 +82,19 @@ export const useUIStore = create<UIState>((set) => ({
   resetMapZoom: () => set({ mapZoom: DEFAULT_ZOOM }),
   setHoveredChartYear: (year) => set({ hoveredChartYear: year }),
   setShowSeatStatus: (value) => set({ showSeatStatus: value }),
+  startTutorial: () => {
+    if (window.innerWidth < TUTORIAL_MIN_WIDTH) return;
+    set({ tutorialStep: 0 });
+  },
+  endTutorial: () => set({ tutorialStep: null }),
+  nextTutorialStep: () => set((state) => {
+    if (state.tutorialStep === null) return {};
+    const next = state.tutorialStep + 1;
+    if (next >= TUTORIAL_STEPS.length) return { tutorialStep: null };
+    return { tutorialStep: next };
+  }),
+  prevTutorialStep: () => set((state) => {
+    if (state.tutorialStep === null || state.tutorialStep <= 0) return {};
+    return { tutorialStep: state.tutorialStep - 1 };
+  }),
 }));

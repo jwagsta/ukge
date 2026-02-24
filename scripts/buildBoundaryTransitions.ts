@@ -3,7 +3,8 @@
  *
  * Computes area-weighted polygon intersection weights between adjacent boundary eras.
  * For each constituency in the NEW era, finds overlapping constituencies in the OLD era
- * and computes the fraction of overlap (by area).
+ * and computes the fraction of overlap (by area). Also computes reverse mappings showing
+ * what fraction of each OLD constituency went to each NEW constituency.
  *
  * Output: public/data/transitions/{old}_to_{new}.json
  *
@@ -34,6 +35,7 @@ interface TransitionMapping {
   from: string;
   to: string;
   mappings: Record<string, { oldId: string; weight: number }[]>;
+  reverseMappings: Record<string, { newId: string; weight: number }[]>;
 }
 
 // Adjacent boundary eras (old → new)
@@ -78,6 +80,8 @@ function buildTransition(fromVersion: string, toVersion: string): TransitionMapp
   }));
 
   const mappings: Record<string, { oldId: string; weight: number }[]> = {};
+  // Collect raw intersection areas for building reverse mappings
+  const rawOverlaps: { newId: string; oldId: string; area: number }[] = [];
   let nameMatchCount = 0;
   let overlapCount = 0;
   let noOverlapCount = 0;
@@ -115,6 +119,11 @@ function buildTransition(fromVersion: string, toVersion: string): TransitionMapp
       }
     }
 
+    // Collect raw areas for reverse mapping computation
+    for (const o of overlaps) {
+      rawOverlaps.push({ newId, oldId: o.oldId, area: o.area });
+    }
+
     if (overlaps.length === 0) {
       noOverlapCount++;
       mappings[newId] = [];
@@ -150,11 +159,40 @@ function buildTransition(fromVersion: string, toVersion: string): TransitionMapp
     mappings[newId] = weights;
   }
 
+  // Build reverse mappings: for each old constituency, what fraction went to each new constituency
+  const reverseByOld: Record<string, { newId: string; area: number }[]> = {};
+  for (const { newId: nId, oldId, area } of rawOverlaps) {
+    if (!reverseByOld[oldId]) reverseByOld[oldId] = [];
+    reverseByOld[oldId].push({ newId: nId, area });
+  }
+
+  const reverseMappings: Record<string, { newId: string; weight: number }[]> = {};
+  for (const [oldId, revOverlaps] of Object.entries(reverseByOld)) {
+    const totalArea = revOverlaps.reduce((sum, o) => sum + o.area, 0);
+    const weights = revOverlaps
+      .map(o => ({
+        newId: o.newId,
+        weight: Math.round((o.area / totalArea) * 10000) / 10000,
+      }))
+      .filter(w => w.weight >= 0.001)
+      .sort((a, b) => b.weight - a.weight);
+
+    // Re-normalize after filtering
+    const weightSum = weights.reduce((sum, w) => sum + w.weight, 0);
+    if (weightSum > 0 && Math.abs(weightSum - 1) > 0.001) {
+      weights.forEach(w => {
+        w.weight = Math.round((w.weight / weightSum) * 10000) / 10000;
+      });
+    }
+
+    reverseMappings[oldId] = weights;
+  }
+
   console.log(`  Name-match (single 100% overlap): ${nameMatchCount}`);
   console.log(`  Multi-source overlap: ${overlapCount}`);
   console.log(`  No overlap (NI or missing): ${noOverlapCount}`);
 
-  return { from: fromVersion, to: toVersion, mappings };
+  return { from: fromVersion, to: toVersion, mappings, reverseMappings };
 }
 
 // Main

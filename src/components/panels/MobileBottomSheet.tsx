@@ -1,23 +1,10 @@
 import { useEffect, useState, useMemo, useCallback, useRef } from 'react';
 import { useElectionStore, getYearLabel, getBoundaryVersion } from '@/store/electionStore';
 import { getPartyColor, getPartyById } from '@/types/party';
-import type { ElectionResult } from '@/types/election';
 import type { SeatStatusInfo } from '@/utils/seatStatus';
-import { useConstituencyWikipedia } from '@/hooks/useWikipedia';
-import { WikipediaSnippet } from '@/components/panels/WikipediaSnippet';
-
-interface HistoricalResult {
-  year: number;
-  results: Array<{ partyId: string; candidate: string; votes: number; voteShare: number }>;
-  winner: string;
-  validVotes: number;
-  electorate: number;
-  turnout: number;
-}
-
-// Shared cache with ConstituencyPanel
-const historicalDataCache = new Map<string, HistoricalResult[]>();
-const MAX_HISTORICAL_CACHE = 5;
+import { useConstituencyWikipediaUrl } from '@/hooks/useWikipedia';
+import { WikipediaLinkIcons } from '@/components/panels/WikipediaSnippet';
+import { useHistoricalData } from '@/hooks/useHistoricalData';
 
 interface MobileBottomSheetProps {
   seatStatusMap?: Map<string, SeatStatusInfo>;
@@ -40,8 +27,6 @@ export function MobileBottomSheet({ seatStatusMap }: MobileBottomSheetProps) {
   const isComparing = pinnedYear !== null;
   const isSameEra = isComparing && pinnedBoundaryVersion === getBoundaryVersion(currentYear);
 
-  const [historicalData, setHistoricalData] = useState<HistoricalResult[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
   const [expanded, setExpanded] = useState(false);
   const sheetRef = useRef<HTMLDivElement>(null);
   const dragStartY = useRef<number | null>(null);
@@ -49,7 +34,7 @@ export function MobileBottomSheet({ seatStatusMap }: MobileBottomSheetProps) {
 
   const currentConstituency = useMemo(() => {
     if (!selectedConstituencyId) return null;
-    return electionData.find((c) => c.constituencyId === selectedConstituencyId);
+    return electionData.find((c) => c.constituencyId === selectedConstituencyId) ?? null;
   }, [selectedConstituencyId, electionData]);
 
   // Get pinned constituency data for comparison
@@ -58,65 +43,12 @@ export function MobileBottomSheet({ seatStatusMap }: MobileBottomSheetProps) {
     return pinnedElectionData.find((c) => c.constituencyId === selectedConstituencyId) ?? null;
   }, [isSameEra, selectedConstituencyId, pinnedElectionData]);
 
-  // Load historical data
-  useEffect(() => {
-    if (!selectedConstituencyId || !currentConstituency) {
-      setHistoricalData([]);
-      return;
-    }
-
-    const cached = historicalDataCache.get(selectedConstituencyId);
-    if (cached) {
-      setHistoricalData(cached);
-      return;
-    }
-
-    setIsLoading(true);
-
-    const fetchHistoricalData = async () => {
-      const results: HistoricalResult[] = [];
-
-      for (const year of availableYears) {
-        try {
-          const response = await fetch(`${import.meta.env.BASE_URL}data/elections/${year}.json`);
-          if (!response.ok) continue;
-          const data = await response.json();
-          const constituencies: ElectionResult[] = data.constituencies || [];
-          let match = constituencies.find((c) => c.constituencyId === selectedConstituencyId);
-          if (!match && currentConstituency) {
-            match = constituencies.find(
-              (c) => c.constituencyName.toLowerCase() === currentConstituency.constituencyName.toLowerCase()
-            );
-          }
-          if (match) {
-            results.push({
-              year,
-              results: match.results,
-              winner: match.winner,
-              validVotes: match.validVotes,
-              electorate: match.electorate,
-              turnout: match.turnout,
-            });
-          }
-        } catch {
-          // Skip failed fetches
-        }
-      }
-
-      const sortYear = (y: number) => y === 197402 ? 1974.2 : y === 197410 ? 1974.8 : y;
-      results.sort((a, b) => sortYear(a.year) - sortYear(b.year));
-
-      if (historicalDataCache.size >= MAX_HISTORICAL_CACHE) {
-        const firstKey = historicalDataCache.keys().next().value;
-        if (firstKey) historicalDataCache.delete(firstKey);
-      }
-      historicalDataCache.set(selectedConstituencyId, results);
-      setHistoricalData(results);
-      setIsLoading(false);
-    };
-
-    fetchHistoricalData();
-  }, [selectedConstituencyId, currentConstituency, availableYears]);
+  // Historical data with boundary break detection
+  const { historicalData, breakPoints, isLoading, allParties } = useHistoricalData(
+    selectedConstituencyId,
+    currentConstituency,
+    availableYears,
+  );
 
   // Expand when constituency is selected
   useEffect(() => {
@@ -159,18 +91,8 @@ export function MobileBottomSheet({ seatStatusMap }: MobileBottomSheetProps) {
     setTimeout(() => setSelectedConstituency(null), 300);
   }, [setSelectedConstituency]);
 
-  const allParties = useMemo(() => {
-    const partySet = new Set<string>();
-    historicalData.forEach(d => d.results.forEach(r => partySet.add(r.partyId.toLowerCase())));
-    if (currentConstituency) {
-      currentConstituency.results.forEach(r => partySet.add(r.partyId.toLowerCase()));
-    }
-    return Array.from(partySet);
-  }, [historicalData, currentConstituency]);
-
   // Wikipedia integration
-  const { summary: wikiSummary, isLoading: wikiLoading, articleUrl: wikiUrl } = useConstituencyWikipedia(selectedConstituencyId);
-  const [wikiExpanded, setWikiExpanded] = useState(false);
+  const wikiUrl = useConstituencyWikipediaUrl(selectedConstituencyId);
 
   if (!selectedConstituencyId || !currentConstituency) return null;
 
@@ -198,7 +120,9 @@ export function MobileBottomSheet({ seatStatusMap }: MobileBottomSheetProps) {
   const generatePath = (partyId: string) => {
     let path = '';
     let needsMove = true;
-    for (const d of historicalData) {
+    for (let i = 0; i < historicalData.length; i++) {
+      if (breakPoints.has(i)) needsMove = true;
+      const d = historicalData[i];
       const result = d.results.find(
         (r) => r.partyId.toLowerCase() === partyId.toLowerCase() ||
           r.partyId.toLowerCase().startsWith(partyId.toLowerCase())
@@ -331,23 +255,17 @@ export function MobileBottomSheet({ seatStatusMap }: MobileBottomSheetProps) {
           </div>
         </div>
 
-        {/* Wikipedia section */}
-        {(wikiLoading || wikiSummary || wikiUrl) && (
+        {/* Wikipedia link */}
+        {wikiUrl && (
           <div className="px-4 pb-3">
-            <button
-              onClick={() => setWikiExpanded(!wikiExpanded)}
-              className="text-xs text-gray-500 hover:text-gray-700 flex items-center gap-1"
+            <a
+              href={wikiUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-0.5 text-xs text-blue-600 hover:underline"
             >
-              <svg width="8" height="8" viewBox="0 0 8 8" fill="none" stroke="currentColor" strokeWidth="1.5" className={`transition-transform ${wikiExpanded ? 'rotate-90' : ''}`}>
-                <path d="M2 1l4 3-4 3" />
-              </svg>
-              Wikipedia
-            </button>
-            {wikiExpanded && (
-              <div className="mt-1.5">
-                <WikipediaSnippet summary={wikiSummary} isLoading={wikiLoading} articleUrl={wikiUrl} variant="constituency" />
-              </div>
-            )}
+              Wikipedia <WikipediaLinkIcons size={10} />
+            </a>
           </div>
         )}
 
@@ -370,6 +288,33 @@ export function MobileBottomSheet({ seatStatusMap }: MobileBottomSheetProps) {
                   </g>
                 ))}
 
+                {/* Boundary break markers */}
+                {Array.from(breakPoints).map((idx) => {
+                  const prevX = xScale(historicalData[idx - 1].year);
+                  const currX = xScale(historicalData[idx].year);
+                  const midX = (prevX + currX) / 2;
+                  return (
+                    <g key={`break-${idx}`}>
+                      <line
+                        x1={midX} y1={-2}
+                        x2={midX} y2={plotH + 2}
+                        stroke="#d97706"
+                        strokeWidth={1}
+                        strokeDasharray="3,3"
+                      />
+                      <text
+                        x={midX}
+                        y={-3}
+                        textAnchor="middle"
+                        className="fill-amber-600"
+                        style={{ fontSize: '6px', pointerEvents: 'none' }}
+                      >
+                        New boundaries
+                      </text>
+                    </g>
+                  );
+                })}
+
                 {allParties.map((party) => {
                   const path = generatePath(party);
                   if (!path) return null;
@@ -380,12 +325,21 @@ export function MobileBottomSheet({ seatStatusMap }: MobileBottomSheetProps) {
                   );
                 })}
 
-                {/* Pinned year marker (amber dashed) — over lines, under dots */}
+                {/* Pinned year marker (amber/brown double-layer) — over lines, under dots */}
                 {pinnedYear != null && yearsPresent.has(pinnedYear) && (
-                  <line x1={xScale(pinnedYear)} y1={-4} x2={xScale(pinnedYear)} y2={plotH + 4}
-                    stroke="#000" strokeWidth={2} strokeDasharray="4,3" />
+                  <>
+                    <line x1={xScale(pinnedYear)} y1={-4} x2={xScale(pinnedYear)} y2={plotH + 4}
+                      stroke="#fef3c7" strokeWidth={5} />
+                    <line x1={xScale(pinnedYear)} y1={-4} x2={xScale(pinnedYear)} y2={plotH + 4}
+                      stroke="#92400e" strokeWidth={2} />
+                  </>
                 )}
 
+                {/* Current year marker (gray halo when comparing) */}
+                {pinnedYear != null && pinnedYear !== currentYear && yearsPresent.has(currentYear) && (
+                  <line x1={xScale(currentYear)} y1={-4} x2={xScale(currentYear)} y2={plotH + 4}
+                    stroke="#d1d5db" strokeWidth={5} />
+                )}
                 {yearsPresent.has(currentYear) && (
                   <line x1={xScale(currentYear)} y1={-4} x2={xScale(currentYear)} y2={plotH + 4}
                     stroke="#000" strokeWidth={2} />
@@ -439,8 +393,14 @@ export function MobileBottomSheet({ seatStatusMap }: MobileBottomSheetProps) {
                       y={plotH + 10}
                       textAnchor="end"
                       transform={`rotate(-45, ${xScale(d.year)}, ${plotH + 10})`}
-                      className={`text-[8px] ${d.year === currentYear ? 'fill-black font-semibold' : 'fill-gray-400'}`}
+                      className={`text-[8px] ${d.year === pinnedYear ? 'font-bold' : d.year === currentYear ? 'fill-black font-semibold' : 'fill-gray-400'}`}
                       style={{ pointerEvents: 'none' }}
+                      {...(d.year === pinnedYear ? {
+                        fill: '#92400e',
+                        stroke: '#fef3c7',
+                        strokeWidth: 3,
+                        paintOrder: 'stroke' as const,
+                      } : {})}
                     >
                       {d.year === 197402 ? "Feb'74" : d.year === 197410 ? "Oct'74" : d.year}
                     </text>

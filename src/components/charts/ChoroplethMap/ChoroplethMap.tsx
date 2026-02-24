@@ -3,7 +3,7 @@ import * as d3 from 'd3';
 import type { FeatureCollection, Feature, Polygon, MultiPolygon } from 'geojson';
 import type { ElectionResult } from '@/types/election';
 import { getPartyColor, getPartyById } from '@/types/party';
-import { getSeatFillOpacity, getSeatStrokeColor, type SeatStatus, type SeatStatusInfo } from '@/utils/seatStatus';
+import { getSeatFillOpacity, type SeatStatus, type SeatStatusInfo } from '@/utils/seatStatus';
 import { createUKProjection } from '@/utils/d3/dotDensity';
 import { shiftIslandFeatures } from '@/utils/islandInset';
 import { splitGBAndNI, getNIInsetBounds, createNIProjection } from '@/utils/d3/niInset';
@@ -130,10 +130,10 @@ export function ChoroplethMap({
     };
   }, [boundaries]);
 
-  // GB projection (fits only to GB features)
+  // GB projection (fixed reference extent — identical across all boundary eras)
   const projection = useMemo(
-    () => createUKProjection(width, height, shiftedGBCollection ?? undefined),
-    [width, height, shiftedGBCollection]
+    () => createUKProjection(width, height),
+    [width, height]
   );
 
   // Path generator for GB
@@ -418,10 +418,13 @@ export function ChoroplethMap({
         aria-label="Choropleth map of UK election results"
       >
 
-        {/* Hatching pattern for estimated swing constituencies */}
+        {/* Hatching patterns */}
         <defs>
-          <pattern id="estimated-hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+          <pattern id="estimated-hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform={`rotate(45) scale(${1 / transform.k})`}>
             <line x1="0" y1="0" x2="0" y2="6" stroke="rgba(0,0,0,0.2)" strokeWidth="1.5" />
+          </pattern>
+          <pattern id="new-boundaries-hatch" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform={`rotate(45) scale(${1 / transform.k})`}>
+            <line x1="0" y1="0" x2="0" y2="4" stroke="rgba(0,0,0,0.3)" strokeWidth="1.5" />
           </pattern>
         </defs>
 
@@ -430,22 +433,13 @@ export function ChoroplethMap({
           ref={gRef}
           transform={`translate(${transform.x}, ${transform.y}) scale(${transform.k})`}
         >
-          {/* Render gains last so their black borders aren't occluded */}
-          {(showSeatStatus && mapColorMode === 'winner'
-            ? [...gbFeatures].sort((a, b) => {
-                const aId = idByName.get(getBoundaryMatchName(a.properties));
-                const bId = idByName.get(getBoundaryMatchName(b.properties));
-                const aGain = aId && seatStatusMap?.get(aId)?.status === 'gain' ? 1 : 0;
-                const bGain = bId && seatStatusMap?.get(bId)?.status === 'gain' ? 1 : 0;
-                return aGain - bGain;
-              })
-            : gbFeatures
-          ).map((feat, idx) => {
+          {gbFeatures.map((feat, idx) => {
             const matchName = getBoundaryMatchName(feat.properties);
             const electionId = idByName.get(matchName);
             const winner = winnerByName.get(matchName);
             const isEstimated = electionId && swingEstimatedIds?.has(electionId);
             const statusInfo = electionId ? seatStatusMap?.get(electionId) : undefined;
+            const isNewBoundaries = showSeatStatus && mapColorMode === 'winner' && statusInfo?.status === 'new_boundaries';
 
             const fill = getConstituencyFill(matchName, mapColorMode, partyColorScale, winnerByName, dataByName, swingColorScale, pinnedDataByName);
             const pathD = pathGenerator(feat) ?? '';
@@ -456,10 +450,17 @@ export function ChoroplethMap({
                   d={pathD}
                   fill={fill}
                   fillOpacity={getSeatFillOpacity(statusInfo?.status, mapColorMode, !!winner, 'choropleth', showSeatStatus)}
-                  stroke={getSeatStrokeColor(statusInfo?.status, mapColorMode, showSeatStatus)}
-                  strokeWidth={(showSeatStatus && mapColorMode === 'winner' && statusInfo?.status === 'gain' ? 1 : 0.5) / transform.k}
+                  stroke="#fff"
+                  strokeWidth={0.5 / transform.k}
                   style={{ cursor: 'pointer' }}
                 />
+                {isNewBoundaries && (
+                  <path
+                    d={pathD}
+                    fill="url(#new-boundaries-hatch)"
+                    pointerEvents="none"
+                  />
+                )}
                 {isEstimated && (
                   <path
                     d={pathD}
@@ -509,21 +510,13 @@ export function ChoroplethMap({
                 strokeDasharray={`${4 / transform.k} ${3 / transform.k}`}
               />
 
-              {(showSeatStatus && mapColorMode === 'winner'
-                ? [...niFeatures].sort((a, b) => {
-                    const aId = idByName.get(getBoundaryMatchName(a.properties));
-                    const bId = idByName.get(getBoundaryMatchName(b.properties));
-                    const aGain = aId && seatStatusMap?.get(aId)?.status === 'gain' ? 1 : 0;
-                    const bGain = bId && seatStatusMap?.get(bId)?.status === 'gain' ? 1 : 0;
-                    return aGain - bGain;
-                  })
-                : niFeatures
-              ).map((feat, idx) => {
+              {niFeatures.map((feat, idx) => {
                 const matchName = getBoundaryMatchName(feat.properties);
                 const electionId = idByName.get(matchName);
                 const winner = winnerByName.get(matchName);
                 const isEstimated = electionId && swingEstimatedIds?.has(electionId);
                 const statusInfo = electionId ? seatStatusMap?.get(electionId) : undefined;
+                const isNewBoundaries = showSeatStatus && mapColorMode === 'winner' && statusInfo?.status === 'new_boundaries';
 
                 const fill = getConstituencyFill(matchName, mapColorMode, partyColorScale, winnerByName, dataByName, swingColorScale, pinnedDataByName);
                 const pathD = niPathGenerator(feat) ?? '';
@@ -534,10 +527,17 @@ export function ChoroplethMap({
                       d={pathD}
                       fill={fill}
                       fillOpacity={getSeatFillOpacity(statusInfo?.status, mapColorMode, !!winner, 'choropleth', showSeatStatus)}
-                      stroke={getSeatStrokeColor(statusInfo?.status, mapColorMode, showSeatStatus)}
-                      strokeWidth={(showSeatStatus && mapColorMode === 'winner' && statusInfo?.status === 'gain' ? 1 : 0.5) / transform.k}
+                      stroke="#fff"
+                      strokeWidth={0.5 / transform.k}
                       style={{ cursor: 'pointer' }}
                     />
+                    {isNewBoundaries && (
+                      <path
+                        d={pathD}
+                        fill="url(#new-boundaries-hatch)"
+                        pointerEvents="none"
+                      />
+                    )}
                     {isEstimated && (
                       <path
                         d={pathD}

@@ -101,10 +101,10 @@ export function DotDensityMap({
     };
   }, [boundaries]);
 
-  // Projections
+  // Projections (fixed reference extent — identical across all boundary eras)
   const projection = useMemo(
-    () => createUKProjection(width, height, shiftedGBCollection ?? undefined),
-    [width, height, shiftedGBCollection]
+    () => createUKProjection(width, height),
+    [width, height]
   );
   // Path generator for GB
   const pathGenerator = useMemo(() => d3.geoPath().projection(projection), [projection]);

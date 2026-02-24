@@ -25,7 +25,7 @@ export function SeatsChart({ height = 120 }: SeatsChartProps) {
   }, []);
 
   const { width } = dimensions;
-  const padding = { top: 20, right: 20, bottom: 5, left: 40 };
+  const padding = { top: 14, right: 20, bottom: 5, left: 40 };
   const chartWidth = width - padding.left - padding.right;
   const chartHeight = height - padding.top - padding.bottom;
 
@@ -79,7 +79,7 @@ export function SeatsChart({ height = 120 }: SeatsChartProps) {
         </defs>
         <g transform={`translate(${padding.left}, ${padding.top})`}>
           {/* Chart label */}
-          <text x={2} y={-8} className="text-[11px] fill-gray-400 font-medium">Seats</text>
+          <text x={2} y={-4} className="text-[11px] fill-gray-400 font-medium">Seats</text>
 
           {/* Y-axis labels (outside clip) */}
           {[0, 100, 200, 300, 400].map(seats => (
@@ -121,15 +121,13 @@ export function SeatsChart({ height = 120 }: SeatsChartProps) {
               );
             })()}
 
-            {/* Current year indicator */}
-            <line
-              x1={currentYearX}
-              y1={0}
-              x2={currentYearX}
-              y2={chartHeight}
-              stroke="#000"
-              strokeWidth={2}
-            />
+            {/* Current year indicator (hidden when same as pinned year) */}
+            {pinnedYear != null && pinnedYear !== currentYear && (
+              <line x1={currentYearX} y1={0} x2={currentYearX} y2={chartHeight} stroke="#d1d5db" strokeWidth={5} />
+            )}
+            {(pinnedYear == null || pinnedYear !== currentYear) && (
+              <line x1={currentYearX} y1={0} x2={currentYearX} y2={chartHeight} stroke="#000" strokeWidth={2} />
+            )}
 
             {/* Party lines */}
             <path d={generatePath('con')} fill="none" stroke={getPartyColor('con')} strokeWidth={2.5} />
@@ -151,6 +149,7 @@ export function SeatsChart({ height = 120 }: SeatsChartProps) {
 
             {/* Clickable hit areas for each year */}
             {data.map(d => {
+              const isPinned = d.year === pinnedYear;
               const isActive = d.year === currentYear;
               const isHovered = d.year === hoveredChartYear;
               const x = xScale(d.year);
@@ -168,10 +167,10 @@ export function SeatsChart({ height = 120 }: SeatsChartProps) {
                   <circle
                     cx={x}
                     cy={yScale(winner === 'con' ? d.con : d.lab)}
-                    r={isActive || isHovered ? 5 : 3}
+                    r={isPinned ? 6 : isActive || isHovered ? 5 : 3}
                     fill={getPartyColor(winner)}
-                    stroke={isActive ? '#000' : isHovered ? '#666' : 'none'}
-                    strokeWidth={2}
+                    stroke={isPinned ? '#fef3c7' : isActive ? (pinnedYear != null ? '#d1d5db' : '#000') : isHovered ? '#666' : 'none'}
+                    strokeWidth={isPinned ? 3 : 2}
                   />
                 </g>
               );

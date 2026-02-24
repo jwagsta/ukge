@@ -1,5 +1,5 @@
 import * as d3 from 'd3';
-import type { Feature, FeatureCollection, Polygon, MultiPolygon } from 'geojson';
+import type { Feature, Polygon, MultiPolygon } from 'geojson';
 import type { DotDensityPoint } from '@/types/election';
 import {
   type BoundaryProperties,
@@ -106,25 +106,60 @@ export function generateAllDots(
 }
 
 /**
+ * Fixed geographic reference points spanning GB's extremes (including shifted O&S).
+ * Projected at unit scale to derive a consistent bounding box in Albers coordinates.
+ * This ensures the projection is identical across all boundary eras.
+ */
+const GB_REFERENCE_POINTS: [number, number][] = [
+  [-5.7, 49.9],   // S: Cornwall / Isles of Scilly
+  [1.8, 51.5],    // SE: Kent / East Anglia
+  [1.8, 52.8],    // E: Norfolk coast
+  [-0.5, 58.4],   // NE: shifted Orkney & Shetland
+  [-5.2, 58.6],   // N: mainland Scotland (Cape Wrath)
+  [-7.6, 57.8],   // NW: Western Isles
+  [-5.3, 55.2],   // W: Ayrshire coast
+  [-5.2, 51.7],   // SW: Pembrokeshire
+];
+
+/**
  * Create a UK-centered Albers projection suitable for geographic maps.
- * When boundaries are provided, uses fitExtent for auto-scaling to the data extent.
- * Otherwise falls back to hardcoded scale/translate.
+ * Uses fixed reference points to derive scale and translate, ensuring the
+ * projection is identical across all boundary eras — maps don't shift
+ * when switching between elections from different eras.
  */
 export function createUKProjection(
   width: number,
   height: number,
-  boundaries?: FeatureCollection
 ): d3.GeoProjection {
   const projection = d3.geoAlbers()
     .center([0, 55.4])
     .rotate([4.4, 0])
-    .parallels([50, 60]);
+    .parallels([50, 60])
+    .scale(1)
+    .translate([0, 0]);
 
-  if (boundaries) {
-    projection.fitExtent([[10, 10], [width - 10, height - 10]], boundaries);
-  } else {
-    projection.scale(Math.min(width, height) * 5).translate([width / 2, height / 2]);
+  // Project reference points at unit scale to find projected bounding box
+  let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+  for (const pt of GB_REFERENCE_POINTS) {
+    const [px, py] = projection(pt)!;
+    if (px < minX) minX = px;
+    if (py < minY) minY = py;
+    if (px > maxX) maxX = px;
+    if (py > maxY) maxY = py;
   }
+
+  // Compute scale and translate to fit the reference extent with padding
+  const padding = 10;
+  const scale = Math.min(
+    (width - 2 * padding) / (maxX - minX),
+    (height - 2 * padding) / (maxY - minY),
+  );
+  const midX = (minX + maxX) / 2;
+  const midY = (minY + maxY) / 2;
+
+  projection
+    .scale(scale)
+    .translate([width / 2 - midX * scale, height / 2 - midY * scale]);
 
   return projection;
 }

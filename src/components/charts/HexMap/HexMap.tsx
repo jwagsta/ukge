@@ -3,7 +3,7 @@ import * as d3 from 'd3';
 import type { FeatureCollection, Polygon, MultiPolygon } from 'geojson';
 import type { ElectionResult } from '@/types/election';
 import { getPartyColor, getPartyById } from '@/types/party';
-import { getSeatFillOpacity, getSeatStrokeColor, type SeatStatusInfo } from '@/utils/seatStatus';
+import { getSeatFillOpacity, type SeatStatusInfo } from '@/utils/seatStatus';
 import { useUIStore } from '@/store/uiStore';
 import { useElectionStore } from '@/store/electionStore';
 import type { BoundaryProperties } from '@/utils/constituencyMatching';
@@ -439,25 +439,20 @@ export function HexMap({
         height={height}
         style={{ cursor: 'grab', background: '#f8fafc' }}
       >
-        {/* Hatching pattern for estimated swing constituencies */}
+        {/* Hatching patterns */}
         <defs>
-          <pattern id="hex-estimated-hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+          <pattern id="hex-estimated-hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform={`rotate(45) scale(${1 / mapZoom.k})`}>
             <line x1="0" y1="0" x2="0" y2="6" stroke="rgba(0,0,0,0.2)" strokeWidth="1.5" />
+          </pattern>
+          <pattern id="hex-new-boundaries-hatch" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform={`rotate(45) scale(${1 / mapZoom.k})`}>
+            <line x1="0" y1="0" x2="0" y2="4" stroke="rgba(0,0,0,0.3)" strokeWidth="1.5" />
           </pattern>
         </defs>
 
         {/* GB hexes (zoom-transformed) */}
         <g transform={`translate(${mapZoom.x}, ${mapZoom.y}) scale(${mapZoom.k})`}>
           <g transform={`translate(${offsetX}, ${offsetY})`}>
-            {/* Render gains last so their black borders aren't occluded */}
-            {(showSeatStatus && mapColorMode === 'winner'
-              ? [...hexPositions].sort((a, b) => {
-                  const aGain = seatStatusMap?.get(a.constituencyId)?.status === 'gain' ? 1 : 0;
-                  const bGain = seatStatusMap?.get(b.constituencyId)?.status === 'gain' ? 1 : 0;
-                  return aGain - bGain;
-                })
-              : hexPositions
-            ).map(pos => {
+            {hexPositions.map(pos => {
               const data = dataMap.get(pos.constituencyId);
               if (!data) return null;
 
@@ -465,6 +460,7 @@ export function HexMap({
               const fill = getFill(data);
               const isEstimated = swingEstimatedIds?.has(pos.constituencyId);
               const statusInfo = seatStatusMap?.get(pos.constituencyId);
+              const isNewBoundaries = showSeatStatus && mapColorMode === 'winner' && statusInfo?.status === 'new_boundaries';
 
               return (
                 <g
@@ -479,9 +475,16 @@ export function HexMap({
                     d={hexPathD}
                     fill={fill}
                     fillOpacity={getSeatFillOpacity(statusInfo?.status, mapColorMode, !!data.winner, 'hex', showSeatStatus)}
-                    stroke={getSeatStrokeColor(statusInfo?.status, mapColorMode, showSeatStatus)}
-                    strokeWidth={showSeatStatus && mapColorMode === 'winner' && statusInfo?.status === 'gain' ? 1 : 0.5}
+                    stroke="#fff"
+                    strokeWidth={0.5}
                   />
+                  {isNewBoundaries && (
+                    <path
+                      d={hexPathD}
+                      fill="url(#hex-new-boundaries-hatch)"
+                      pointerEvents="none"
+                    />
+                  )}
                   {isEstimated && (
                     <path
                       d={hexPathD}
@@ -496,20 +499,14 @@ export function HexMap({
             {/* NI hexes (same size as GB, positioned west at NI latitude) */}
             {hasNI && (
               <g>
-                {(showSeatStatus && mapColorMode === 'winner'
-                  ? [...niHexPositions].sort((a, b) => {
-                      const aGain = seatStatusMap?.get(a.constituencyId)?.status === 'gain' ? 1 : 0;
-                      const bGain = seatStatusMap?.get(b.constituencyId)?.status === 'gain' ? 1 : 0;
-                      return aGain - bGain;
-                    })
-                  : niHexPositions
-                ).map(pos => {
+                {niHexPositions.map(pos => {
                   const data = dataMap.get(pos.constituencyId);
                   if (!data) return null;
 
                   const fill = getFill(data);
                   const isEstimated = swingEstimatedIds?.has(pos.constituencyId);
                   const statusInfo = seatStatusMap?.get(pos.constituencyId);
+                  const isNewBoundaries = showSeatStatus && mapColorMode === 'winner' && statusInfo?.status === 'new_boundaries';
 
                   return (
                     <g
@@ -524,9 +521,16 @@ export function HexMap({
                         d={hexPathD}
                         fill={fill}
                         fillOpacity={getSeatFillOpacity(statusInfo?.status, mapColorMode, !!data.winner, 'hex', showSeatStatus)}
-                        stroke={getSeatStrokeColor(statusInfo?.status, mapColorMode, showSeatStatus)}
-                        strokeWidth={showSeatStatus && mapColorMode === 'winner' && statusInfo?.status === 'gain' ? 1 : 0.5}
+                        stroke="#fff"
+                        strokeWidth={0.5}
                       />
+                      {isNewBoundaries && (
+                        <path
+                          d={hexPathD}
+                          fill="url(#hex-new-boundaries-hatch)"
+                          pointerEvents="none"
+                        />
+                      )}
                       {isEstimated && (
                         <path
                           d={hexPathD}
@@ -550,7 +554,7 @@ export function HexMap({
                   d={hexPathD}
                   fill="none"
                   stroke="#000"
-                  strokeWidth={2}
+                  strokeWidth={0.5}
                   pointerEvents="none"
                 />
               );
@@ -563,7 +567,7 @@ export function HexMap({
                   d={hexPathD}
                   fill="none"
                   stroke="#000"
-                  strokeWidth={2}
+                  strokeWidth={0.5}
                   pointerEvents="none"
                 />
               );
@@ -582,7 +586,7 @@ export function HexMap({
                   d={hexPathD}
                   fill="none"
                   stroke="#3b82f6"
-                  strokeWidth={2}
+                  strokeWidth={0.5}
                   pointerEvents="none"
                 />
               );
@@ -595,7 +599,7 @@ export function HexMap({
                   d={hexPathD}
                   fill="none"
                   stroke="#3b82f6"
-                  strokeWidth={2}
+                  strokeWidth={0.5}
                   pointerEvents="none"
                 />
               );

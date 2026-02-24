@@ -133,7 +133,7 @@ function transformToTernaryData(results: ElectionResult[]): TernaryDataPoint[] {
 }
 
 export const useElectionStore = create<ElectionState>((set, get) => ({
-  currentYear: 2024,
+  currentYear: 1997,
   electionData: [],
   ternaryData: [],
   // Full list of available years including both 1974 elections
@@ -146,7 +146,7 @@ export const useElectionStore = create<ElectionState>((set, get) => ({
     1997, 2001, 2005,
     2010, 2015, 2017, 2019, 2024
   ],
-  currentBoundaryVersion: '2024',
+  currentBoundaryVersion: '1997',
   isLoading: false,
   error: null,
   selectedConstituencyId: null,
