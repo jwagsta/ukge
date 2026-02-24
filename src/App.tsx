@@ -124,7 +124,7 @@ function App() {
     return computeSeatStatus(pinnedElectionData, pinnedPreviousElectionData, pinnedTransitionMapping, pinnedIsCrossBoundary);
   }, [pinnedYear, pinnedElectionData, pinnedPreviousElectionData, pinnedTransitionMapping, pinnedIsCrossBoundary]);
 
-  const { mapType, mapColorMode, votesPerDot, mobileTab, setIsMobile, isMobile } = useUIStore();
+  const { mapType, mapColorMode, votesPerDot, mobileTab, setIsMobile, isMobile, showSeatStatus } = useUIStore();
 
   // Track mobile state
   useEffect(() => {
@@ -473,6 +473,22 @@ function App() {
             <option key={p.id} value={p.id}>{p.shortName}</option>
           ))}
         </select>
+      )}
+      {mapColorMode === 'winner' && (mapType === 'choropleth' || mapType === 'hex') && (
+        <label
+          className={`flex items-center gap-1.5 bg-white border border-gray-300 rounded shadow-sm cursor-pointer ${
+            isMobile ? 'px-3 py-2 text-sm' : 'px-2 py-1 text-xs'
+          }`}
+          style={isMobile ? { minHeight: 44 } : undefined}
+        >
+          <input
+            type="checkbox"
+            checked={showSeatStatus}
+            onChange={(e) => useUIStore.getState().setShowSeatStatus(e.target.checked)}
+            className="accent-blue-600"
+          />
+          Highlight gains
+        </label>
       )}
       {mapColorMode === 'swing' && (mapType === 'choropleth' || mapType === 'hex') && (
         <div className="bg-white border border-gray-300 rounded shadow-sm px-2 py-1.5">

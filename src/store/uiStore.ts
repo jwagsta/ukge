@@ -21,11 +21,13 @@ interface UIState {
   mapZoom: ZoomTransform;
   hoveredChartYear: number | null;
   dotPartyFilter: Set<string>;
+  showSeatStatus: boolean;
 
   setMapType: (type: MapType) => void;
   setMapColorMode: (mode: string) => void;
   setVotesPerDot: (value: number) => void;
   toggleDotParty: (partyId: string) => void;
+  setShowSeatStatus: (value: boolean) => void;
   setIsMobile: (value: boolean) => void;
   setMobileTab: (tab: MobileTab) => void;
   setTernaryZoom: (transform: ZoomTransform) => void;
@@ -47,6 +49,7 @@ export const useUIStore = create<UIState>((set) => ({
   mapZoom: DEFAULT_ZOOM,
   hoveredChartYear: null,
   dotPartyFilter: new Set<string>(),
+  showSeatStatus: true,
 
   setMapType: (type) => set((state) => ({
     mapType: type,
@@ -70,4 +73,5 @@ export const useUIStore = create<UIState>((set) => ({
   setMapZoom: (transform) => set({ mapZoom: transform }),
   resetMapZoom: () => set({ mapZoom: DEFAULT_ZOOM }),
   setHoveredChartYear: (year) => set({ hoveredChartYear: year }),
+  setShowSeatStatus: (value) => set({ showSeatStatus: value }),
 }));

@@ -3,7 +3,7 @@ import * as d3 from 'd3';
 import type { FeatureCollection, Feature, Polygon, MultiPolygon } from 'geojson';
 import type { ElectionResult } from '@/types/election';
 import { getPartyColor, getPartyById } from '@/types/party';
-import { getSeatFillOpacity, type SeatStatus, type SeatStatusInfo } from '@/utils/seatStatus';
+import { getSeatFillOpacity, getSeatStrokeColor, type SeatStatus, type SeatStatusInfo } from '@/utils/seatStatus';
 import { createUKProjection } from '@/utils/d3/dotDensity';
 import { shiftIslandFeatures } from '@/utils/islandInset';
 import { splitGBAndNI, getNIInsetBounds, createNIProjection } from '@/utils/d3/niInset';
@@ -101,7 +101,7 @@ export function ChoroplethMap({
   const svgRef = useRef<SVGSVGElement>(null);
   const gRef = useRef<SVGGElement>(null);
   const [tooltip, setTooltip] = useState<TooltipData | null>(null);
-  const { mapZoom, setMapZoom, mapColorMode } = useUIStore();
+  const { mapZoom, setMapZoom, mapColorMode, showSeatStatus } = useUIStore();
   const { zoomToConstituencyTrigger } = useElectionStore();
 
   const zoomRef = useRef<d3.ZoomBehavior<SVGSVGElement, unknown> | null>(null);
@@ -430,7 +430,17 @@ export function ChoroplethMap({
           ref={gRef}
           transform={`translate(${transform.x}, ${transform.y}) scale(${transform.k})`}
         >
-          {gbFeatures.map((feat, idx) => {
+          {/* Render gains last so their black borders aren't occluded */}
+          {(showSeatStatus && mapColorMode === 'winner'
+            ? [...gbFeatures].sort((a, b) => {
+                const aId = idByName.get(getBoundaryMatchName(a.properties));
+                const bId = idByName.get(getBoundaryMatchName(b.properties));
+                const aGain = aId && seatStatusMap?.get(aId)?.status === 'gain' ? 1 : 0;
+                const bGain = bId && seatStatusMap?.get(bId)?.status === 'gain' ? 1 : 0;
+                return aGain - bGain;
+              })
+            : gbFeatures
+          ).map((feat, idx) => {
             const matchName = getBoundaryMatchName(feat.properties);
             const electionId = idByName.get(matchName);
             const winner = winnerByName.get(matchName);
@@ -445,9 +455,9 @@ export function ChoroplethMap({
                 <path
                   d={pathD}
                   fill={fill}
-                  fillOpacity={getSeatFillOpacity(statusInfo?.status, mapColorMode, !!winner, 'choropleth')}
-                  stroke="#fff"
-                  strokeWidth={0.5 / transform.k}
+                  fillOpacity={getSeatFillOpacity(statusInfo?.status, mapColorMode, !!winner, 'choropleth', showSeatStatus)}
+                  stroke={getSeatStrokeColor(statusInfo?.status, mapColorMode, showSeatStatus)}
+                  strokeWidth={(showSeatStatus && mapColorMode === 'winner' && statusInfo?.status === 'gain' ? 1 : 0.5) / transform.k}
                   style={{ cursor: 'pointer' }}
                 />
                 {isEstimated && (
@@ -499,7 +509,16 @@ export function ChoroplethMap({
                 strokeDasharray={`${4 / transform.k} ${3 / transform.k}`}
               />
 
-              {niFeatures.map((feat, idx) => {
+              {(showSeatStatus && mapColorMode === 'winner'
+                ? [...niFeatures].sort((a, b) => {
+                    const aId = idByName.get(getBoundaryMatchName(a.properties));
+                    const bId = idByName.get(getBoundaryMatchName(b.properties));
+                    const aGain = aId && seatStatusMap?.get(aId)?.status === 'gain' ? 1 : 0;
+                    const bGain = bId && seatStatusMap?.get(bId)?.status === 'gain' ? 1 : 0;
+                    return aGain - bGain;
+                  })
+                : niFeatures
+              ).map((feat, idx) => {
                 const matchName = getBoundaryMatchName(feat.properties);
                 const electionId = idByName.get(matchName);
                 const winner = winnerByName.get(matchName);
@@ -514,9 +533,9 @@ export function ChoroplethMap({
                     <path
                       d={pathD}
                       fill={fill}
-                      fillOpacity={getSeatFillOpacity(statusInfo?.status, mapColorMode, !!winner, 'choropleth')}
-                      stroke="#fff"
-                      strokeWidth={0.5 / transform.k}
+                      fillOpacity={getSeatFillOpacity(statusInfo?.status, mapColorMode, !!winner, 'choropleth', showSeatStatus)}
+                      stroke={getSeatStrokeColor(statusInfo?.status, mapColorMode, showSeatStatus)}
+                      strokeWidth={(showSeatStatus && mapColorMode === 'winner' && statusInfo?.status === 'gain' ? 1 : 0.5) / transform.k}
                       style={{ cursor: 'pointer' }}
                     />
                     {isEstimated && (

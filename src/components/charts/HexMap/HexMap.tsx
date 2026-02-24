@@ -3,7 +3,7 @@ import * as d3 from 'd3';
 import type { FeatureCollection, Polygon, MultiPolygon } from 'geojson';
 import type { ElectionResult } from '@/types/election';
 import { getPartyColor, getPartyById } from '@/types/party';
-import { getSeatFillOpacity, type SeatStatusInfo } from '@/utils/seatStatus';
+import { getSeatFillOpacity, getSeatStrokeColor, type SeatStatusInfo } from '@/utils/seatStatus';
 import { useUIStore } from '@/store/uiStore';
 import { useElectionStore } from '@/store/electionStore';
 import type { BoundaryProperties } from '@/utils/constituencyMatching';
@@ -72,7 +72,7 @@ export function HexMap({
 }: HexMapProps) {
   const svgRef = useRef<SVGSVGElement>(null);
   const [tooltip, setTooltip] = useState<{ x: number; y: number; data: ElectionResult } | null>(null);
-  const { mapZoom, setMapZoom, mapColorMode } = useUIStore();
+  const { mapZoom, setMapZoom, mapColorMode, showSeatStatus } = useUIStore();
   const { zoomToConstituencyTrigger } = useElectionStore();
 
   const zoomRef = useRef<d3.ZoomBehavior<SVGSVGElement, unknown> | null>(null);
@@ -449,7 +449,15 @@ export function HexMap({
         {/* GB hexes (zoom-transformed) */}
         <g transform={`translate(${mapZoom.x}, ${mapZoom.y}) scale(${mapZoom.k})`}>
           <g transform={`translate(${offsetX}, ${offsetY})`}>
-            {hexPositions.map(pos => {
+            {/* Render gains last so their black borders aren't occluded */}
+            {(showSeatStatus && mapColorMode === 'winner'
+              ? [...hexPositions].sort((a, b) => {
+                  const aGain = seatStatusMap?.get(a.constituencyId)?.status === 'gain' ? 1 : 0;
+                  const bGain = seatStatusMap?.get(b.constituencyId)?.status === 'gain' ? 1 : 0;
+                  return aGain - bGain;
+                })
+              : hexPositions
+            ).map(pos => {
               const data = dataMap.get(pos.constituencyId);
               if (!data) return null;
 
@@ -470,9 +478,9 @@ export function HexMap({
                   <path
                     d={hexPathD}
                     fill={fill}
-                    fillOpacity={getSeatFillOpacity(statusInfo?.status, mapColorMode, !!data.winner, 'hex')}
-                    stroke="#fff"
-                    strokeWidth={0.5}
+                    fillOpacity={getSeatFillOpacity(statusInfo?.status, mapColorMode, !!data.winner, 'hex', showSeatStatus)}
+                    stroke={getSeatStrokeColor(statusInfo?.status, mapColorMode, showSeatStatus)}
+                    strokeWidth={showSeatStatus && mapColorMode === 'winner' && statusInfo?.status === 'gain' ? 1 : 0.5}
                   />
                   {isEstimated && (
                     <path
@@ -488,7 +496,14 @@ export function HexMap({
             {/* NI hexes (same size as GB, positioned west at NI latitude) */}
             {hasNI && (
               <g>
-                {niHexPositions.map(pos => {
+                {(showSeatStatus && mapColorMode === 'winner'
+                  ? [...niHexPositions].sort((a, b) => {
+                      const aGain = seatStatusMap?.get(a.constituencyId)?.status === 'gain' ? 1 : 0;
+                      const bGain = seatStatusMap?.get(b.constituencyId)?.status === 'gain' ? 1 : 0;
+                      return aGain - bGain;
+                    })
+                  : niHexPositions
+                ).map(pos => {
                   const data = dataMap.get(pos.constituencyId);
                   if (!data) return null;
 
@@ -508,9 +523,9 @@ export function HexMap({
                       <path
                         d={hexPathD}
                         fill={fill}
-                        fillOpacity={getSeatFillOpacity(statusInfo?.status, mapColorMode, !!data.winner, 'hex')}
-                        stroke="#fff"
-                        strokeWidth={0.5}
+                        fillOpacity={getSeatFillOpacity(statusInfo?.status, mapColorMode, !!data.winner, 'hex', showSeatStatus)}
+                        stroke={getSeatStrokeColor(statusInfo?.status, mapColorMode, showSeatStatus)}
+                        strokeWidth={showSeatStatus && mapColorMode === 'winner' && statusInfo?.status === 'gain' ? 1 : 0.5}
                       />
                       {isEstimated && (
                         <path

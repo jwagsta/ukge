@@ -111,6 +111,7 @@ export function getSeatFillOpacity(
   mapColorMode: string,
   hasWinner: boolean,
   variant: 'choropleth' | 'hex',
+  showSeatStatus: boolean = true,
 ): number {
   // Non-winner modes: use existing defaults
   if (mapColorMode !== 'winner') {
@@ -120,15 +121,35 @@ export function getSeatFillOpacity(
 
   if (!hasWinner) return 0.5;
 
+  // When seat status display is off, use uniform opacity
+  if (!showSeatStatus) {
+    return variant === 'choropleth' ? 1.0 : 0.85;
+  }
+
   switch (status) {
     case 'gain':
       return variant === 'choropleth' ? 1.0 : 0.95;
     case 'hold':
-      return 0.55;
+      return 0.35;
     case 'new_boundaries':
-      return 0.75;
+      return 0.55;
     default:
       // null/undefined: no status data (e.g. 1955 or NI)
       return variant === 'choropleth' ? 1.0 : 0.85;
   }
+}
+
+/**
+ * Get stroke color for a constituency based on its hold/gain status.
+ * Gains get a black border in winner mode when showSeatStatus is on.
+ */
+export function getSeatStrokeColor(
+  status: SeatStatus | undefined,
+  mapColorMode: string,
+  showSeatStatus: boolean = true,
+): string {
+  if (showSeatStatus && mapColorMode === 'winner' && status === 'gain') {
+    return '#000';
+  }
+  return '#fff';
 }
